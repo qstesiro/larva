@@ -3,7 +3,7 @@ package com.runbox.debug.parser.statement.token;
 import com.runbox.debug.parser.Lexer;
 
 /**
- * Created by huangmengmeng01 on 2016/5/18.
+ * Created by qstesiro
  */
 public class StringParser implements Lexer {
 

@@ -1,11 +1,10 @@
 package com.runbox.debug.command.machine;
 
-import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.MachineManager;
 
 /**
- * Created by huangmengmeng01 on 2016/5/25.
+ * Created by qstesiro
  */
 public class MachineVersionCommand extends Command {
 

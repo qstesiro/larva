@@ -1,9 +1,7 @@
 package com.runbox.debug.command.variant;
 
-import com.runbox.debug.command.Command;
-
 /**
- * Created by qstesiro on 2016/5/29.
+ * Created by qstesiro
  */
 public class VariantFieldCommand extends VariantCommand {
 

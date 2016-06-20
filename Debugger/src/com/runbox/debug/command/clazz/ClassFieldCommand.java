@@ -7,7 +7,7 @@ import com.sun.jdi.ReferenceType;
 import java.util.List;
 
 /**
- * Created by huangmengmeng01 on 2016/4/26.
+ * Created by qstesiro
  */
 public class ClassFieldCommand extends Command {
 

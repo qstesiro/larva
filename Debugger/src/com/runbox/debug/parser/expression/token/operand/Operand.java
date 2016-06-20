@@ -1,12 +1,11 @@
 package com.runbox.debug.parser.expression.token.operand;
 
-import com.runbox.debug.Debugger;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.expression.token.Token;
 import com.sun.jdi.*;
 
 /**
- * Created by huangmengmeng01 on 2016/5/10.
+ * Created by qstesiro
  */
 public class Operand extends Token {
 

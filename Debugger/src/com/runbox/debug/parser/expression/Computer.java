@@ -7,7 +7,7 @@ import com.sun.jdi.*;
 import java.util.List;
 
 /**
- * Created by qstesiro on 2016/5/15.
+ * Created by qstesiro
  */
 public class Computer {
 

@@ -5,7 +5,7 @@ import com.sun.jdi.LocalVariable;
 import com.sun.jdi.StackFrame;
 
 /**
- * Created by huangmengmeng01 on 2016/5/9.
+ * Created by qstesiro
  */
 public class Token extends com.runbox.debug.parser.Token {
 

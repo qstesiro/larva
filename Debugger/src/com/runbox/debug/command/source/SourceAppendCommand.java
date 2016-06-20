@@ -6,7 +6,7 @@ import com.runbox.debug.manager.SourceManager;
 import java.io.File;
 
 /**
- * Created by qstesiro on 2016/5/22.
+ * Created by qstesiro
  */
 public class SourceAppendCommand extends Command {
 

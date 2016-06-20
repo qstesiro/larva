@@ -3,7 +3,7 @@ package com.runbox.debug.event.machine;
 import com.runbox.debug.event.Event;
 
 /**
- * Created by huangmengmeng01 on 2016/4/27.
+ * Created by qstesiro
  */
 public class MachineDeathEvent extends Event<com.sun.jdi.event.VMDeathEvent> {
 

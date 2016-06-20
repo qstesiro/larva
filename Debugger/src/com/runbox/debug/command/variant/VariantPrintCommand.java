@@ -7,7 +7,7 @@ import com.runbox.debug.manager.ContextManager;
 import com.sun.jdi.*;
 
 /**
- * Created by huangmengmeng01 on 2016/5/17.
+ * Created by qstesiro
  */
 public class VariantPrintCommand extends VariantCommand {
 

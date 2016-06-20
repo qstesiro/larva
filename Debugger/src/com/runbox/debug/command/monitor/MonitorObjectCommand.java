@@ -1,6 +1,5 @@
 package com.runbox.debug.command.monitor;
 
-import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.expression.Expression;
@@ -14,7 +13,7 @@ import com.sun.jdi.ThreadReference;
 import java.util.List;
 
 /**
- * Created by huangmengmeng01 on 2016/6/15.
+ * Created by qstesiro
  */
 public class MonitorObjectCommand extends Command {
 

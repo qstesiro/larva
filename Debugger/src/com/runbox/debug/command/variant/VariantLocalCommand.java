@@ -1,7 +1,7 @@
 package com.runbox.debug.command.variant;
 
 /**
- * Created by qstesiro on 2016/5/29.
+ * Created by qstesiro
  */
 public class VariantLocalCommand extends VariantCommand {
 

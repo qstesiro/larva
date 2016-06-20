@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by huangmengmeng01 on 2016/6/6.
+ * Created by qstesiro
  */
 public class BlockManager extends Manager {
 

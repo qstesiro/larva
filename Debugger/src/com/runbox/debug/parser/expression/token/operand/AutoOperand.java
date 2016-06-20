@@ -6,7 +6,7 @@ import com.sun.jdi.Value;
 import com.sun.tools.javac.util.Pair;
 
 /**
- * Created by qstesiro on 2016/5/21.
+ * Created by qstesiro
  */
 public class AutoOperand extends Operand {
 

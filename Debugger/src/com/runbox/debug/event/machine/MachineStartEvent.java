@@ -2,8 +2,9 @@ package com.runbox.debug.event.machine;
 
 import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.event.Event;
+
 /**
- * Created by huangmengmeng01 on 2016/4/27.
+ * Created by qstesiro
  */
 public class MachineStartEvent extends Event<com.sun.jdi.event.VMStartEvent> {
 

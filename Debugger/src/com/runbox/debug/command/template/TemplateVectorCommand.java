@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by huangmengmeng01 on 2016/6/1.
+ * Created by qstesiro
  */
 public class TemplateVectorCommand extends TemplateCommand {
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by huangmengmeng01 on 2016/5/25.
+ * Created by qstesiro
  */
 public class AutoManager extends Manager {
 

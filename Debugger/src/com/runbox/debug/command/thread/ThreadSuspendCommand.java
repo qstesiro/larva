@@ -1,6 +1,5 @@
 package com.runbox.debug.command.thread;
 
-import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.ThreadReference;
@@ -9,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by qstesiro on 2016/4/30.
+ * Created by qstesiro
  */
 public class ThreadSuspendCommand extends Command {
 

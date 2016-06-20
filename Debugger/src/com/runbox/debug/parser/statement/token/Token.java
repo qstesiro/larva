@@ -1,7 +1,7 @@
 package com.runbox.debug.parser.statement.token;
 
 /**
- * Created by huangmengmeng01 on 2016/5/18.
+ * Created by qstesiro
  */
 public class Token extends com.runbox.debug.parser.Token {
 

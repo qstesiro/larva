@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.*;
 
 /**
- * Created by huangmengmeng01 on 2016/5/24.
+ * Created by qstesiro
  */
 public class SourceManager extends Manager {
 

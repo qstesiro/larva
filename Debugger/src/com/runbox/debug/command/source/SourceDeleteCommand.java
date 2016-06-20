@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by qstesiro on 2016/5/22.
+ * Created by qstesiro
  */
 public class SourceDeleteCommand extends Command {
 

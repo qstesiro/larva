@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by qstesiro on 2016/5/29.
+ * Created by qstesiro
  */
 public class VariantCommand extends Command {
 

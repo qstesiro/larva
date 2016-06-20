@@ -3,7 +3,7 @@ package com.runbox.debug.event.clazz;
 import com.runbox.debug.event.Event;
 
 /**
- * Created by qstesiro on 2016/4/30.
+ * Created by qstesiro
  */
 public class ClassUnloadEvent extends Event<com.sun.jdi.event.ClassUnloadEvent> {
 

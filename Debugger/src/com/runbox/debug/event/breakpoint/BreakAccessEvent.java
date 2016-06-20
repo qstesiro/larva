@@ -1,18 +1,15 @@
 package com.runbox.debug.event.breakpoint;
 
-import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.event.Event;
 import com.runbox.debug.manager.SourceManager;
-import com.runbox.debug.parser.statement.node.BlockNode;
 import com.sun.jdi.event.AccessWatchpointEvent;
-import com.sun.jdi.request.EventRequest;
 
 import java.io.File;
 import java.util.Map;
 
 /**
- * Created by huangmengmeng01 on 2016/4/27.
+ * Created by qstesiro
  */
 public class BreakAccessEvent extends Event<AccessWatchpointEvent> {
 

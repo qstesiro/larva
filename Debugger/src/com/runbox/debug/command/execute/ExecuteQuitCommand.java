@@ -1,10 +1,9 @@
 package com.runbox.debug.command.execute;
 
 import com.runbox.debug.Debugger;
-import com.runbox.debug.manager.MachineManager;
 
 /**
- * Created by huangmengmeng01 on 2016/4/27.
+ * Created by qstesiro
  */
 public class ExecuteQuitCommand extends ExecuteCommand {
 

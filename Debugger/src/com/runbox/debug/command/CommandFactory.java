@@ -24,7 +24,7 @@ import com.runbox.debug.command.variant.VariantLocalCommand;
 import com.runbox.debug.command.variant.VariantPrintCommand;
 
 /**
- * Created by huangmengmeng01 on 2016/4/26.
+ * Created by qstesiro
  */
 public class CommandFactory {
 

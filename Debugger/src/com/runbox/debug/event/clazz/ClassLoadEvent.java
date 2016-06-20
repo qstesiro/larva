@@ -4,7 +4,7 @@ import com.runbox.debug.event.Event;
 import com.sun.jdi.event.ClassPrepareEvent;
 
 /**
- * Created by huangmengmeng01 on 2016/4/29.
+ * Created by qstesiro
  */
 public class ClassLoadEvent extends Event<ClassPrepareEvent> {
 

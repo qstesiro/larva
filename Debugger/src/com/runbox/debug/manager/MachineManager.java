@@ -3,7 +3,7 @@ package com.runbox.debug.manager;
 import com.sun.jdi.VirtualMachine;
 
 /**
- * Created by huangmengmeng01 on 2016/6/16.
+ * Created by qstesiro
  */
 public class MachineManager extends Manager {
 

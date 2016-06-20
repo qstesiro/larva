@@ -3,7 +3,7 @@ package com.runbox.debug.command.execute;
 import com.runbox.debug.Debugger;
 
 /**
- * Created by qstesiro on 2016/5/22.
+ * Created by qstesiro
  */
 public class ExecuteDetachCommand extends ExecuteCommand {
 

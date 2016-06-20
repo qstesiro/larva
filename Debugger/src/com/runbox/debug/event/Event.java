@@ -1,7 +1,7 @@
 package com.runbox.debug.event;
 
 /**
- * Created by huangmengmeng01 on 2016/4/27.
+ * Created by qstesiro
  */
 public class Event<T> {
 

@@ -1,7 +1,3 @@
-/**
- * Created by huangmengmeng01 on 2015/9/28.
- */
-
 package com.runbox.debug;
 
 import com.runbox.debug.event.*;
@@ -20,6 +16,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+/**
+ * Created by qstesiro
+ */
 
 public class Debugger implements SignalHandler {
 

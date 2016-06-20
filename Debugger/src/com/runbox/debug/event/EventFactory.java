@@ -17,9 +17,8 @@ import com.runbox.debug.event.machine.MachineStartEvent;
 import com.sun.jdi.event.*;
 import com.sun.jdi.request.StepRequest;
 
-
 /**
- * Created by huangmengmeng01 on 2015/9/30.
+ * Created by qstesiro
  */
 public class EventFactory {
 

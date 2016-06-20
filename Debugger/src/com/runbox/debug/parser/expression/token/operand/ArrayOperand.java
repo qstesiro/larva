@@ -3,7 +3,7 @@ package com.runbox.debug.parser.expression.token.operand;
 import com.sun.jdi.*;
 
 /**
- * Created by qstesiro on 2016/5/15.
+ * Created by qstesiro
  */
 public class ArrayOperand extends Operand {
 
