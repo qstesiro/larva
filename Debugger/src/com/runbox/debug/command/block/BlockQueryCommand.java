@@ -13,18 +13,11 @@ public class BlockQueryCommand extends Command {
 
     public BlockQueryCommand(String command) throws Exception {
         super(command);
-        if (null != argument) {
-            name = argument.trim();
-            if (null == BlockManager.instance().get(name)) {
-                throw new Exception("invalid block name");
-            }
-        }
     }
-
-    private String name = null;
 
     @Override
     public boolean execute() throws Exception {
+        String name = name();
         if (null != name) {
             System.out.println(BlockManager.instance().string(name));
         } else {
@@ -34,5 +27,16 @@ public class BlockQueryCommand extends Command {
             }
         }
         return super.execute();
+    }
+
+    private String name() throws Exception {
+        if (null != argument) {
+            String name = argument.trim();
+            if (null == BlockManager.instance().get(name)) {
+                throw new Exception("invalid block name");
+            }
+            return name;
+        }
+        return null;
     }
 }
