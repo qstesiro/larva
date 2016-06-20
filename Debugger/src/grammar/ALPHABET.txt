@@ -1,0 +1,33 @@
+A -> U \ L
+U -> A-Z
+L -> a-z
+N -> 0-9
+
+CLS -> _\L(L\N)*
+VAR -> _\L(L\N)*
+NUM -> N-0(N)*\0x(N)+4
+CHA -> 'A'
+STR -> "(A)*"
+PMT -> byte char short int long boolean float double
+
+null
+true false
+
+OPR_H -> ( [ .
+OPR_G -> <-
+OPR_F -> ! ~ +++ ++ --- -- + -
+OPR_D -> * / %
+OPR_D -> + -
+OPR_C -> << >> >>>
+OPR_B -> < <= > >= instanceof
+OPR_A -> == !=
+OPR_9 -> &
+OPR_8 -> ^
+OPR_7 -> |
+OPR_6 -> &&
+OPR_5 -> ||
+OPR_4 -> ? :
+OPR_3 -> = += -= *= /= %= &= ^= ~= <<= >>= >>>=
+OPR_2 -> ++ --
+OPR_1 -> ) ]
+OPR_0 -> #

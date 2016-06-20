@@ -1,0 +1,17 @@
+android
+index   ability
+ 0      addMethod: false
+ 1      beModified: true
+ 2      getBytecode: true
+ 3      getCurrentContendedMonitor: true
+ 4      getMonitorInfo: true
+ 5      getOwnedMonitorInfo: true
+ 6      getSourceDebugExExtension: false
+ 7      getSyntheticAttribute: true
+ 8      popFrames: false
+ 9      redefineClasses: false
+ 10     requestVMDeathEvent: false
+ 11     unrestrictedlyRedefineClasses: false
+ 12     useInstanceFilters: true
+ 13     watchFieldAccess: true
+ 14     watchFieldModification: true

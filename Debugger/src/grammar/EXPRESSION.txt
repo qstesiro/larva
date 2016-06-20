@@ -1,0 +1,51 @@
+OPD_CLS -> CLS -> (.CLS)* -> #
+
+OPD_VAR -> OPD_CLS -> (.VAR([EXPRESS])*)+  -> #
+        -> VAR -> (.VAR([EXPRESS])*)*  -> #
+
+OPD_NUM -> DEC\OCT\HEX
+
+OPD_LER -> 'A'
+OPD_STR -> "(A)*"
+
+EXPRESS_TAIL_1 -> OPR_3\4\5\6\7\8\9\A\B\C\F -> EXPRESS
+EXPRESS_TAIL_2 -> ? EXPRESS : EXPRESS
+
+EXPRESS_1 -> ! -> OPD_NUM -> EXPRESS_TAIL_1
+                          -> EXPRESS_TAIL_2
+                          -> #
+EXPRESS_2 -> ~ -> OPD_NUM -> EXPRESS_TAIL_1
+                          -> EXPRESS_TAIL_2
+                          -> #
+EXPRESS_3 -> ++ -> OPD_VAR -> EXPRESS_TAIL_1
+                           -> EXPRESS_TAIL_2
+                           -> # 
+EXPRESS_4 -> -- -> OPD_VAR -> EXPRESS_TAIL_1
+                           -> ? EXPRESS_TAIL_2
+                           -> #
+EXPRESS_5 -> + -> OPD_DEC\OPD_VAR -> EXPRESS_TAIL_1
+                                  -> EXPRESS_TAIL_2
+                                  -> #
+EXPRESS_6 -> - -> OPD_DEC\OPD_VAR -> EXPRESS_TAIL_1
+                                  -> EXPRESS_TAIL_2
+                                  -> #
+EXPRESS_7 -> OPD_VAR -> (++\--)*1 -> EXPRESS_TAIL_1
+                                  -> EXPRESS_TAIL_2
+                                  -> #
+                     -> OPR_E -> EXPRESS
+                     -> EXPRESS_TAIL_2
+                     -> #
+EXPRESS_8 -> OPD_NUM -> EXPRESS_TAIL_1
+                     -> EXPRESS_TAIL_2
+                     -> #
+EXPRESS_9 -> OPD_STR -> + -> EXPRESS
+                     -> #
+EXPRESS_A -> OPD_LER
+EXPRESS_B -> ( -> PMT -> ) -> EXPRESS_7
+                           -> EXPRESS_8
+               -> OPD_CLS -> ) -> EXPRESS_7
+               -> EXPRESS -> ) -> EXPRESS_TAIL_1
+                               -> EXPRESS_TAIL_2
+                               -> #
+                                  
+EXPRESS -> EXPRESS_1\2\3\4\5\6\7\8\9\A\B
