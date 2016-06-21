@@ -1,6 +1,7 @@
 package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.command.Command;
+import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.RequestManager;
 import com.sun.jdi.ReferenceType;
@@ -35,7 +36,7 @@ public class ClassLoadCommand extends Command {
 
     private List<String> classes() {
         List<String> classes = new LinkedList<>();
-        List<ReferenceType> types = MachineManager.instance().allClasses();
+        List<ReferenceType> types = ClassManager.instance().allClasses();
         for (ReferenceType type : types) {
             if (Command.match(argument, type.name())) {
                 classes.add(type.name());

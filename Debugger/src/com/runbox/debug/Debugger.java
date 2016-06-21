@@ -141,7 +141,9 @@ public class Debugger implements SignalHandler {
         synchronized (this) {
             boolean flag = false;
             Event event = iterator.nextEvent();
-            if (BreakManager.instance().need(event)) {
+            if (ClassManager.instance().need(event)) {
+                flag = ClassManager.instance().handle(event);
+            } else if (BreakManager.instance().need(event)) {
                 flag = BreakManager.instance().handle(event);
             } else if (ExecuteManager.instance().need(event)) {
                 flag = ExecuteManager.instance().handle(event);
@@ -207,10 +209,12 @@ public class Debugger implements SignalHandler {
     private void monitor(boolean flag) {
         if (DISCONNECT != this.flag) {
             if (!flag) {
+                ClassManager.instance().clean();
                 BreakManager.instance().clean();
                 ExecuteManager.instance().clean();
                 ExceptionManager.instance().clean();
             }
+            ClassManager.instance().monitor(flag);
             BreakManager.instance().monitor(flag);
             ExecuteManager.instance().monitor(flag);
             ExceptionManager.instance().monitor(flag);

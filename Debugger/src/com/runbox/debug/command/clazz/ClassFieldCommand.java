@@ -1,6 +1,7 @@
 package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.command.Command;
+import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.Field;
 import com.sun.jdi.ReferenceType;
@@ -26,7 +27,7 @@ public class ClassFieldCommand extends Command {
 
     private void print(String clazz, String field) {
         int index = 0;
-        List<ReferenceType> types = MachineManager.instance().allClasses();
+        List<ReferenceType> types = ClassManager.instance().allClasses();
         System.out.println("index\tclass.field");
         for (ReferenceType type : types) {
             if (Command.match(clazz, type.name())) {

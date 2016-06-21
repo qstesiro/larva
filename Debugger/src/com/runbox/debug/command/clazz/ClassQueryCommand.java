@@ -2,6 +2,7 @@ package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
+import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.ReferenceType;
 
@@ -23,7 +24,7 @@ public class ClassQueryCommand extends Command {
     public boolean execute() throws Exception {
         String clazz = Command.convert(argument.trim());
         int index = 0;
-        List<ReferenceType> list = MachineManager.instance().allClasses();
+        List<ReferenceType> list = ClassManager.instance().allClasses();
         System.out.println("index\tclass");
         for (ReferenceType type : list) {
             if (null != clazz) {

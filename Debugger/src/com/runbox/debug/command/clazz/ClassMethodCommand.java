@@ -1,6 +1,7 @@
 package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.command.Command;
+import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.Method;
 import com.sun.jdi.ReferenceType;
@@ -27,7 +28,7 @@ public class ClassMethodCommand extends Command {
 
     private void print(String clazz, String method) {
         int index = 0;
-        List<ReferenceType> types = MachineManager.instance().allClasses();
+        List<ReferenceType> types = ClassManager.instance().allClasses();
         System.out.println("index\tclass.method");
         for (ReferenceType type : types) {
             if (Command.match(clazz, type.name())) {

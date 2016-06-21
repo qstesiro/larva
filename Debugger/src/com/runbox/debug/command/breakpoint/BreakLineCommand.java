@@ -1,5 +1,6 @@
 package com.runbox.debug.command.breakpoint;
 
+import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.command.breakpoint.Number;
 import com.runbox.debug.parser.command.breakpoint.Lexer;
@@ -35,7 +36,7 @@ public class BreakLineCommand extends Command {
 
     private void search(LineBreakPoint point) {
         if (null != point) {
-            List<ReferenceType> types = MachineManager.instance().allClasses();
+            List<ReferenceType> types = ClassManager.instance().allClasses();
             for (ReferenceType type : types) {
                 BreakManager.instance().match(point, type);
             }
