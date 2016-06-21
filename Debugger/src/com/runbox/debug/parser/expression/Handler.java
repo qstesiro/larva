@@ -654,7 +654,7 @@ public class Handler {
                 } else if (!(Token.local(operand.name()) && Token.field(operand.name()))) {
                     if (Token.local(operand.name())) {
                         return new LocalOperand(operand.name());
-                    } else {
+                    } else if (Token.field(operand.name())) {
                         StackFrame frame = ContextManager.instance().frame();
                         if (null != frame) {
                             return new FieldOperand(frame.thisObject(), operand.name());

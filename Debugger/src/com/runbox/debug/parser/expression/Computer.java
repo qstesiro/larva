@@ -1,5 +1,6 @@
 package com.runbox.debug.parser.expression;
 
+import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.expression.token.Token;
 import com.runbox.debug.parser.expression.token.operand.*;
 import com.sun.jdi.*;
@@ -31,9 +32,27 @@ public class Computer {
                 if ((operand1.value() instanceof ObjectReference) && !(operand2 instanceof ConstOperand)) {
                     return new FieldOperand((ObjectReference)operand1.value(), operand2.name());
                 }
+            } else {
+                ReferenceType type = match(operand1);
+                if (null != type) {
+                    if (Token.field(type, operand2.name())) {
+                        return new FieldOperand((ClassType)type, operand2.name());
+                    }
+                }
+                return new Operand(operand1.name() + "." + operand2.name());
             }
         }
         throw new Exception("invalid variant");
+    }
+
+    public static ReferenceType match(Operand operand) {
+        List<ReferenceType> types = MachineManager.instance().allClasses();
+        for (ReferenceType type : types) {
+            if (type.name().equals(operand.name())) {
+                return type;
+            }
+        }
+        return null;
     }
 
     public static Operand computeG32(Operand operand1, Operand operand2) throws Exception { // .

@@ -3,6 +3,7 @@ package com.runbox.debug;
 import com.runbox.debug.event.*;
 import com.runbox.debug.manager.*;
 import com.sun.jdi.Bootstrap;
+import com.sun.jdi.ThreadReference;
 import com.sun.jdi.connect.*;
 import com.sun.jdi.event.*;
 import com.sun.jdi.event.Event;
@@ -109,12 +110,14 @@ public class Debugger implements SignalHandler {
         }
     }
 
+    private final static int TIMEOUT = 1000;
+
     private void loop() {
         EventQueue queue = MachineManager.instance().eventQueue();
         while (CONTINUE == Debugger.instance().flag()) {
             EventSet set = null;
             try {
-                set = queue.remove();
+                set = queue.remove(TIMEOUT);
                 if (null != set) {
                     EventIterator iterator = set.eventIterator();
                     while (iterator.hasNext()) {
@@ -162,7 +165,7 @@ public class Debugger implements SignalHandler {
                         return;
                     }
                 } else {
-                    manual();
+                    manual(ContextManager.instance().thread());
                     return;
                 }
             } catch (Exception e) {
@@ -171,10 +174,10 @@ public class Debugger implements SignalHandler {
         }
     }
 
-    private void manual() {
+    private void manual(ThreadReference thread) {
         synchronized (this) {
             ContextManager.instance().store();
-            ContextManager.instance().thread(null);
+            ContextManager.instance().thread(thread);
             while (true) {
                 try {
                     printTip();
@@ -227,7 +230,7 @@ public class Debugger implements SignalHandler {
     @Override
     public void handle(Signal signal) {
         MachineManager.instance().suspend();
-        manual();
+        manual(null);
         MachineManager.instance().resume();
     }
 
