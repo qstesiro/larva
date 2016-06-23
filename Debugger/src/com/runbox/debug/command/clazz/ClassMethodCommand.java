@@ -2,7 +2,6 @@ package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.ClassManager;
-import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.Method;
 import com.sun.jdi.ReferenceType;
 
