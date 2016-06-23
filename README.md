@@ -6,12 +6,12 @@ breakpoints (method/line/access/modify points, create, delete, enable, disable, 
 sources code manage (append, delete, etc.)
 threads (query, switch, suspend, resume, etc.)
 stack (query frame, switch frame, etc.)
-exeutes (source code debug, step over, step into, etc.) 
+executes (source code debug, step over, step into, etc.)
 class (query, query field, query method, etc.)
 variant (print, field, locals, etc.)
 template (support list, map, vector, queue, etc.)
 monitor (wait chain, wait object, etc.)
-virtual machin information
+virtual machine information
 script called Larva script (support standard java expression excepting new object and invoking method)
 
 Of course, there are a lot of debug in Larva and it do need to be perfected. 
