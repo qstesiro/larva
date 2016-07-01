@@ -27,26 +27,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TemplateHelpCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/template/TemplateHelpCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="688">
-              <caret line="47" column="62" selection-start-line="41" selection-start-column="4" selection-end-line="47" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThreadHelpCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/thread/ThreadHelpCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="61" selection-start-line="45" selection-start-column="61" selection-end-line="45" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="VariantHelpCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/variant/VariantHelpCommand.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -87,11 +67,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassFieldCommand.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClassFieldCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/clazz/ClassFieldCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+            <state relative-caret-position="240">
+              <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockHelpCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/block/BlockHelpCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="268">
+              <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Command.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/Command.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-600">
+              <caret line="27" column="55" selection-start-line="27" selection-start-column="55" selection-end-line="27" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommandFactory.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/CommandFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="705">
+              <caret line="47" column="51" selection-start-line="47" selection-start-column="51" selection-end-line="47" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -117,16 +127,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StackHelpCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/stack/StackHelpCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="60" selection-start-line="30" selection-start-column="4" selection-end-line="37" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -145,8 +145,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakMethodCommand.java" />
-        <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakLineCommand.java" />
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakModifyCommand.java" />
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakAccessCommand.java" />
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakQueryCommand.java" />
@@ -196,6 +194,8 @@
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/thread/ThreadHelpCommand.java" />
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/block/BlockHelpCommand.java" />
         <option value="$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakHelpCommand.java" />
+        <option value="$PROJECT_DIR$/src/com/runbox/debug/command/Command.java" />
+        <option value="$PROJECT_DIR$/src/com/runbox/debug/command/CommandFactory.java" />
       </list>
     </option>
   </component>
@@ -1381,14 +1381,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakMethodCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="93" column="5" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/breakpoint/BreakModifyCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="439">
@@ -1557,14 +1549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="72" column="45" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/template/TemplateMapCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="439">
@@ -1657,14 +1641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="439">
           <caret line="88" column="5" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/block/BlockHelpCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="46" column="116" selection-start-line="46" selection-start-column="116" selection-end-line="46" selection-end-column="116" />
           <folding />
         </state>
       </provider>
@@ -1783,8 +1759,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/clazz/ClassFieldCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+        <state relative-caret-position="240">
+          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/block/BlockHelpCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-600">
+          <caret line="27" column="55" selection-start-line="27" selection-start-column="55" selection-end-line="27" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/runbox/debug/command/CommandFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="47" column="51" selection-start-line="47" selection-start-column="51" selection-end-line="47" selection-end-column="51" />
           <folding />
         </state>
       </provider>

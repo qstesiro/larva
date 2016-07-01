@@ -1,27 +1,29 @@
 package com.runbox.debug.command;
 
 import com.runbox.debug.command.block.BlockFormatCommand;
+import com.runbox.debug.command.block.BlockHelpCommand;
 import com.runbox.debug.command.block.BlockQueryCommand;
 import com.runbox.debug.command.breakpoint.*;
 import com.runbox.debug.command.clazz.*;
 import com.runbox.debug.command.execute.*;
 import com.runbox.debug.command.help.HelpCommand;
 import com.runbox.debug.command.machine.MachineAbilityCommand;
+import com.runbox.debug.command.machine.MachineHelpCommand;
 import com.runbox.debug.command.machine.MachineNameCommand;
 import com.runbox.debug.command.machine.MachineVersionCommand;
+import com.runbox.debug.command.monitor.MonitorHelpCommand;
 import com.runbox.debug.command.monitor.MonitorObjectCommand;
 import com.runbox.debug.command.monitor.MonitorThreadCommand;
 import com.runbox.debug.command.source.SourceAppendCommand;
 import com.runbox.debug.command.source.SourceDeleteCommand;
+import com.runbox.debug.command.source.SourceHelpCommand;
 import com.runbox.debug.command.source.SourceQueryCommand;
 import com.runbox.debug.command.stack.StackFrameCommand;
+import com.runbox.debug.command.stack.StackHelpCommand;
 import com.runbox.debug.command.stack.StackSwitchCommand;
 import com.runbox.debug.command.template.*;
 import com.runbox.debug.command.thread.*;
-import com.runbox.debug.command.variant.VariantAutoCommand;
-import com.runbox.debug.command.variant.VariantFieldCommand;
-import com.runbox.debug.command.variant.VariantLocalCommand;
-import com.runbox.debug.command.variant.VariantPrintCommand;
+import com.runbox.debug.command.variant.*;
 
 /**
  * Created by qstesiro
@@ -36,6 +38,8 @@ public class CommandFactory {
             return new MachineVersionCommand(command);
         } else if (key.equals(Command.MACHINE_ABILITY)) {
             return new MachineAbilityCommand(command);
+        } else if (key.equals(Command.MACHINE_HELP)) {
+            return new MachineHelpCommand(command);
         } else if (key.equals(Command.CLASS_QUERY)) {
             return new ClassQueryCommand(command);
         } else if (key.equals(Command.CLASS_FIELD)) {
@@ -46,6 +50,8 @@ public class CommandFactory {
             return new ClassLoadCommand(command);
         } else if (key.equals(Command.CLASS_UNLOAD)) {
             return new ClassUnloadCommand(command);
+        } else if (key.equals(Command.CLASS_HELP)) {
+            return new ClassHelpCommand(command);
         } else if (key.equals(Command.THREAD_QUERY)) {
             return new ThreadQueryCommand(command);
         } else if (key.equals(Command.THREAD_SWITCH)) {
@@ -54,14 +60,20 @@ public class CommandFactory {
             return new ThreadSuspendCommand(command);
         } else if (key.equals(Command.THREAD_RESUME)) {
             return new ThreadResumeCommand(command);
+        } else if (key.equals(Command.THREAD_HELP)) {
+            return new ThreadHelpCommand(command);
         } else if (key.equals(Command.STACK_FRAME)) {
             return new StackFrameCommand(command);
         } else if (key.equals(Command.STACK_SWITCH)) {
             return new StackSwitchCommand(command);
+        } else if (key.equals(Command.STACK_HELP)) {
+            return new StackHelpCommand(command);
         } else if (key.equals(Command.MONITOR_THREAD)) {
             return new MonitorThreadCommand(command);
         } else if (key.equals(Command.MONITOR_OBJECT)) {
             return new MonitorObjectCommand(command);
+        } else if (key.equals(Command.MONITOR_HELP)) {
+            return new MonitorHelpCommand(command);
         } else if (key.equals(Command.BREAK_METHOD)) {
             return new BreakMethodCommand(command);
         } else if (key.equals(Command.BREAK_LINE)) {
@@ -78,6 +90,8 @@ public class CommandFactory {
             return new BreakEnableCommand(command);
         } else if (key.equals(Command.BREAK_DISABLE)) {
             return new BreakDisableCommand(command);
+        } else if (key.equals(Command.BREAK_HELP)) {
+            return new BreakHelpCommand(command);
         } else if (key.equals(Command.EXECUTE_RUN)) {
             return new ExecuteRunCommand(command);
         } else if (key.equals(Command.EXECUTE_NEXT)) {
@@ -90,6 +104,8 @@ public class CommandFactory {
             return new ExecuteDetachCommand(command);
         } else if (key.equals(Command.EXECUTE_QUIT)) {
             return new ExecuteQuitCommand(command);
+        } else if (key.equals(Command.EXECUTE_HELP)) {
+            return new ExecuteHelpCommand(command);
         } else if (key.equals(Command.VARIANT_PRINT)) {
             return new VariantPrintCommand(command);
         } else if (key.equals(Command.VARIANT_FIELD)) {
@@ -98,6 +114,8 @@ public class CommandFactory {
             return new VariantLocalCommand(command);
         } else if (key.equals(Command.VARIANT_AUTO)) {
             return new VariantAutoCommand(command);
+        } else if (key.equals(Command.VARIANT_HELP)) {
+            return new VariantHelpCommand(command);
         } else if (key.equals(Command.TEMPLATE_LIST)) {
             return new TemplateListCommand(command);
         } else if (key.equals(Command.TEMPLATE_MAP)) {
@@ -108,16 +126,22 @@ public class CommandFactory {
             return new TemplateQueueCommand(command);
         } else if (key.equals(Command.TEMPLATE_STACK)) {
             return new TemplateStackCommand(command);
+        } else if (key.equals(Command.TEMPLATE_HELP)) {
+            return new TemplateHelpCommand(command);
         } else if (key.equals(Command.SOURCE_APPEND)) {
             return new SourceAppendCommand(command);
         } else if (key.equals(Command.SOURCE_DELETE)) {
             return new SourceDeleteCommand(command);
         } else if (key.equals(Command.SOURCE_QUERY)) {
             return new SourceQueryCommand(command);
+        } else if (key.equals(Command.SOURCE_HELP)) {
+            return new SourceHelpCommand(command);
         } else if (key.equals(Command.BLOCK_QUERY)) {
             return new BlockQueryCommand(command);
         } else if (key.equals(Command.BLOCK_FORMAT)) {
             return new BlockFormatCommand(command);
+        } else if (key.equals(Command.BLOCK_HELP)) {
+            return new BlockHelpCommand(command);
         } else if (key.equals(Command.HELP)) {
             return new HelpCommand(command);
         }
