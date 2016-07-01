@@ -43,16 +43,4 @@ public class ClassLoadCommand extends Command {
         }
         return classes;
     }
-
-    @Override
-    public void help() {
-        String help = "\r\n";
-        help += "description\r\n";
-        help += "";
-        help += "note";
-        help += "";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

@@ -39,17 +39,4 @@ public class BlockFormatCommand extends Command {
         }
         return null;
     }
-
-    @Override
-    public void help() {
-        String help = "block.format [name]\r\n";
-        help += "description\r\n";
-        help += "print block statement formatted. the format style is as same as standard Java code. ";
-        help += "arguments";
-        help += "name is optional, if it`s omitted debugger will print all blocks defined. Otherwise, debugger will \r\n" +
-                "print single block if it`s existence";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

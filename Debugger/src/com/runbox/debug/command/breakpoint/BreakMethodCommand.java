@@ -92,20 +92,4 @@ public class BreakMethodCommand extends Command {
         }
         throw new Exception("invalid method break argument");
     }
-
-    @Override
-    public void help() {
-        String help = "break.method method(arguments)\r\n";
-        help += "description\r\n";
-        help += "set a method breakpoint, if the class which owns the field variable which is watched has been " +
-                "loaded by virtual machine, the access breakpoint will be enabled, otherwise, the breakpoint will was" +
-                "pending until class is loaded.";
-        help += "arguments";
-        help += "method(arguments) is a full method signature, arguments of method need full class name";
-        help += "note";
-        help += "Dalvik machine could not support method breakpoint.";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

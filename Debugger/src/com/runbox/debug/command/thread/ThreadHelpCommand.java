@@ -16,14 +16,32 @@ public class ThreadHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(THREAD_QUERY);
+            System.out.println(THREAD_SWITCH);
+            System.out.println(THREAD_SUSPEND);
+            System.out.println(THREAD_RESUME);
+        }
         return super.execute();
     }
 
     private List<String> list = new LinkedList<String>() {{
-        add(THREAD_QUERY);
-        add(THREAD_SWITCH);
-        add(THREAD_SUSPEND);
-        add(THREAD_RESUME);
+        add(THREAD_QUERY_REFERENCE);
+        add(THREAD_SWITCH_REFERENCE);
+        add(THREAD_SUSPEND_REFERENCE);
+        add(THREAD_RESUME_REFERENCE);
     }};
+
+    private static final String THREAD_QUERY_REFERENCE = "";
+
+    private static final String THREAD_SWITCH_REFERENCE = "";
+
+    private static final String THREAD_SUSPEND_REFERENCE = "";
+
+    private static final String THREAD_RESUME_REFERENCE = "";
 }

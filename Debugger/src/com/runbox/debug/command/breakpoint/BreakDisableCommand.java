@@ -33,16 +33,4 @@ public class BreakDisableCommand extends Command {
         }
         return numbers;
     }
-
-    @Override
-    public void help() {
-        String help = "break.disable number[, number]* \r\n";
-        help += "description\r\n";
-        help += "disable a breakpoint or several breakpoints";
-        help += "arguments";
-        help += "number is at least one, if there are several numbers, they must be separated by semicolon";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

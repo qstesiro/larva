@@ -35,16 +35,4 @@ public class MachineAbilityCommand extends Command {
         System.out.println(index++ + "\twatchFieldModification: " + machine.canWatchFieldModification());
         return super.execute();
     }
-
-    @Override
-    public void help() {
-        String help = "\r\n";
-        help += "description\r\n";
-        help += "";
-        help += "note";
-        help += "";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

@@ -57,18 +57,4 @@ public class BreakAccessCommand extends Command {
         }
         throw new Exception("invalid method break argument");
     }
-
-    @Override
-    public void help() {
-        String help = "break.access variable \r\n";
-        help += "description\r\n";
-        help += "set a access breakpoint, if the class which owns the field variable which is watched has been " +
-                "loaded by virtual machine, the access breakpoint will be enabled, otherwise, the breakpoint will was" +
-                "pending until class is loaded.";
-        help += "note";
-        help += "breakpoint is triggered after the variable is accessed.";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

@@ -107,19 +107,6 @@ public class Command {
         return true;
     }
 
-    public boolean isHelp() {
-        if (null != argument) {
-            if (argument.equals("?") || argument.equals("help")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void help() {
-
-    }
-
     public String command() {
         return command;
     }
@@ -131,22 +118,6 @@ public class Command {
     public String argument() {
         return argument;
     }
-
-    protected static Map<Integer, String> types = new HashMap<Integer, String>() {{
-        put(COMMAND_MACHINE, "machine command");
-        put(COMMAND_CLASS, "class command");
-        put(COMMAND_THREAD, "thread command");
-        put(COMMAND_STACK, "stack command");
-        put(COMMAND_MONITOR, "monitor command");
-        put(COMMAND_BREAK, "break command");
-        put(COMMAND_EXECUTE, "execute command");
-        put(COMMAND_VARIANT, "variant command");
-        put(COMMAND_TEMPLATE, "template command");
-        put(COMMAND_SOURCE, "source command");
-        put(COMMAND_BLOCK, "block command");
-        put(COMMAND_EXCEPTION, "exception command");
-        put(COMMAND_HELP, "help");
-    }};
 
     protected static List<String> commands = new LinkedList<String>() {{
         // machine command

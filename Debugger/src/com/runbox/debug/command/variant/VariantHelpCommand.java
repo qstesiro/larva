@@ -17,16 +17,40 @@ public class VariantHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(VARIANT_PRINT);
+            System.out.println(VARIANT_FIELD);
+            System.out.println(VARIANT_LOCAL);
+            System.out.println(VARIANT_AUTO);
+            System.out.println(VARIANT_ARRAY);
+            System.out.println(VARIANT_STRING);
+        }
         return super.execute();
     }
 
-    private List<String> list = new LinkedList<String>() {{
-        add(VARIANT_PRINT);
-        add(VARIANT_FIELD);
-        add(VARIANT_LOCAL);
-        add(VARIANT_AUTO);
-        add(VARIANT_ARRAY);
-        add(VARIANT_STRING);
+    private static List<String> list = new LinkedList<String>() {{
+        add(VARIANT_PRINT_REFERENCE);
+        add(VARIANT_FIELD_REFERENCE);
+        add(VARIANT_LOCAL_REFERENCE);
+        add(VARIANT_AUTO_REFERENCE);
+        add(VARIANT_ARRAY_REFERENCE);
+        add(VARIANT_STRING_REFERENCE);
     }};
+
+    private static final String VARIANT_PRINT_REFERENCE = "";
+
+    private static final String VARIANT_FIELD_REFERENCE = "";
+
+    private static final String VARIANT_LOCAL_REFERENCE = "";
+
+    private static final String VARIANT_AUTO_REFERENCE = "";
+
+    private static final String VARIANT_ARRAY_REFERENCE = "";
+
+    private static final String VARIANT_STRING_REFERENCE = "";
 }

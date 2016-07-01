@@ -2,6 +2,9 @@ package com.runbox.debug.command.help;
 
 import com.runbox.debug.command.Command;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by qstesiro
  */
@@ -27,6 +30,22 @@ public class HelpCommand extends Command {
             System.out.println(key + ". " + types.get(key));
         }
     }
+
+    private static Map<Integer, String> types = new HashMap<Integer, String>() {{
+        put(COMMAND_MACHINE, "machine command");
+        put(COMMAND_CLASS, "class command");
+        put(COMMAND_THREAD, "thread command");
+        put(COMMAND_STACK, "stack command");
+        put(COMMAND_MONITOR, "monitor command");
+        put(COMMAND_BREAK, "break command");
+        put(COMMAND_EXECUTE, "execute command");
+        put(COMMAND_VARIANT, "variant command");
+        put(COMMAND_TEMPLATE, "template command");
+        put(COMMAND_SOURCE, "source command");
+        put(COMMAND_BLOCK, "block command");
+        put(COMMAND_EXCEPTION, "exception command");
+        put(COMMAND_HELP, "help");
+    }};
 
     private void print(int type) {
         switch (type) {

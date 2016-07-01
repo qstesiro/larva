@@ -55,16 +55,4 @@ public class ClassMethodCommand extends Command {
         }
         throw new Exception("invalid argument");
     }
-
-    @Override
-    public void help() {
-        String help = "\r\n";
-        help += "description\r\n";
-        help += "";
-        help += "note";
-        help += "";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

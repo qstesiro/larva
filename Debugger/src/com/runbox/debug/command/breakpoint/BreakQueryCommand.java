@@ -66,15 +66,4 @@ public class BreakQueryCommand extends Command {
         }
         return "unknown";
     }
-
-    @Override
-    public void help() {
-        String help = "break.query\r\n";
-        help += "description\r\n";
-        help += "print all breakpoints which have been set. each breakpoint entry has five attributes:" +
-                "index, number (it`s a unique number which identify a breakpoint), type, status, location";
-        help += "example";
-        help += "";
-        System.out.println(help);
-    }
 }

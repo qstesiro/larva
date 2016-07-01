@@ -16,13 +16,28 @@ public class SourceHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(SOURCE_APPEND);
+            System.out.println(SOURCE_DELETE);
+            System.out.println(SOURCE_QUERY);
+        }
         return super.execute();
     }
 
-    private List<String> list = new LinkedList<String>() {{
-        add(SOURCE_APPEND);
-        add(SOURCE_DELETE);
-        add(SOURCE_QUERY);
+    private static List<String> list = new LinkedList<String>() {{
+        add(SOURCE_APPEND_REFERENCE);
+        add(SOURCE_DELETE_REFERENCE);
+        add(SOURCE_QUERY_REFERENCE);
     }};
+
+    private static final String SOURCE_APPEND_REFERENCE = "";
+
+    private static final String SOURCE_DELETE_REFERENCE = "";
+
+    private static final String SOURCE_QUERY_REFERENCE = "";
 }

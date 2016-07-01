@@ -16,12 +16,36 @@ public class TemplateHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(TEMPLATE_LIST);
+            System.out.println(TEMPLATE_MAP);
+            System.out.println(TEMPLATE_VECTOR);
+            System.out.println(TEMPLATE_QUEUE);
+            System.out.println(TEMPLATE_STACK);
+        }
         return super.execute();
     }
 
-    private List<String> list = new LinkedList<String>() {{
-        add(BLOCK_QUERY);
-        add(BLOCK_FORMAT);
+    private static List<String> list = new LinkedList<String>() {{
+        add(TEMPLATE_LIST_REFERENCE);
+        add(TEMPLATE_MAP_REFERENCE);
+        add(TEMPLATE_VECTOR_REFERENCE);
+        add(TEMPLATE_QUEUE_REFERENCE);
+        add(TEMPLATE_STACK_REFERENCE);
     }};
+
+    private static final String TEMPLATE_LIST_REFERENCE = "";
+
+    private static final String TEMPLATE_MAP_REFERENCE = "";
+
+    private static final String TEMPLATE_VECTOR_REFERENCE = "";
+
+    private static final String TEMPLATE_QUEUE_REFERENCE = "";
+
+    private static final String TEMPLATE_STACK_REFERENCE = "";
 }

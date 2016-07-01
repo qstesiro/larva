@@ -16,13 +16,28 @@ public class MachineHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(MACHINE_NAME);
+            System.out.println(MACHINE_VERSION);
+            System.out.println(MACHINE_ABILITY);
+        }
         return super.execute();
     }
 
-    private List<String> list = new LinkedList<String>() {{
-        add(MACHINE_NAME);
-        add(MACHINE_VERSION);
-        add(MACHINE_ABILITY);
+    private static List<String> list = new LinkedList<String>() {{
+        add(MACHINE_NAME_REFERENCE);
+        add(MACHINE_VERSION_REFERENCE);
+        add(MACHINE_ABILITY_REFERENCE);
     }};
+
+    private static final String MACHINE_NAME_REFERENCE = "";
+
+    private static final String MACHINE_VERSION_REFERENCE = "";
+
+    private static final String MACHINE_ABILITY_REFERENCE = "";
 }

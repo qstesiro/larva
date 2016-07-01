@@ -16,12 +16,24 @@ public class StackHelpCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        help(list);
+        if (null != argument) {
+            String reference = list.get(Integer.valueOf(String.valueOf(argument.trim())) - 1);
+            if (null != reference) {
+                System.out.println(reference);
+            }
+        } else {
+            System.out.println(STACK_FRAME);
+            System.out.println(STACK_SWITCH);
+        }
         return super.execute();
     }
 
-    private List<String> list = new LinkedList<String>() {{
-        add(STACK_FRAME);
-        add(STACK_SWITCH);
+    private static List<String> list = new LinkedList<String>() {{
+        add(STACK_FRAME_REFERENCE);
+        add(STACK_SWITCH_REFERENCE);
     }};
+
+    private static final String STACK_FRAME_REFERENCE = "";
+
+    private static final String STACK_SWITCH_REFERENCE = "";
 }
