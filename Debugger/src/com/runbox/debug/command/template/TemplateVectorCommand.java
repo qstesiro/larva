@@ -53,4 +53,16 @@ public class TemplateVectorCommand extends TemplateCommand {
         }
         return false;
     }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
+    }
 }

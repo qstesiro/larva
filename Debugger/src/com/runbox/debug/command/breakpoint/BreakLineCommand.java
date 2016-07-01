@@ -1,6 +1,5 @@
 package com.runbox.debug.command.breakpoint;
 
-import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.command.breakpoint.Number;
 import com.runbox.debug.parser.command.breakpoint.Lexer;
@@ -36,7 +35,7 @@ public class BreakLineCommand extends Command {
 
     private void search(LineBreakPoint point) {
         if (null != point) {
-            List<ReferenceType> types = ClassManager.instance().allClasses();
+            List<ReferenceType> types = MachineManager.instance().allClasses();
             for (ReferenceType type : types) {
                 BreakManager.instance().match(point, type);
             }
@@ -60,5 +59,20 @@ public class BreakLineCommand extends Command {
             }
         }
         throw new Exception("invalid method break argument");
+    }
+
+    @Override
+    public void help() {
+        String help = "break.method class:line\r\n";
+        help += "description\r\n";
+        help += "set a line breakpoint, if the class which owns the field variable which is watched has been " +
+                "loaded by virtual machine, the access breakpoint will be enabled, otherwise, the breakpoint will was" +
+                "pending until class is loaded.";
+        help += "arguments";
+        help += "class:line is a full method signature, class is name of the class which must be a short class name;" +
+                "line is line number of the class file.";
+        help += "example";
+        help += "";
+        System.out.println(help);
     }
 }

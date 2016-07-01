@@ -1,6 +1,5 @@
 package com.runbox.debug.command.breakpoint;
 
-import com.runbox.debug.manager.ClassManager;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.parser.command.breakpoint.Number;
 import com.runbox.debug.parser.command.breakpoint.Lexer;
@@ -35,7 +34,7 @@ public class BreakModifyCommand extends Command {
     }
 
     private void search(ModifyBreakPoint point) {
-        List<ReferenceType> types = ClassManager.instance().allClasses();
+        List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
             BreakManager.instance().match(point, type);
         }
@@ -57,5 +56,19 @@ public class BreakModifyCommand extends Command {
             }
         }
         throw new Exception("invalid method break argument");
+    }
+
+    @Override
+    public void help() {
+        String help = "break.modify variable \r\n";
+        help += "description \r\n";
+        help += "set a modified breakpoint, if the class which owns the field variable which is watched has been " +
+                "loaded by virtual machine, the access breakpoint will be enabled, otherwise, the breakpoint will was" +
+                "pending until class is loaded.";
+        help += "note";
+        help += "breakpoint is triggered after the variable is modified.";
+        help += "example";
+        help += "";
+        System.out.println(help);
     }
 }

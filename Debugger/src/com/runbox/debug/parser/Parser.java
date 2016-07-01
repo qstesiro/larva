@@ -119,6 +119,10 @@ public class Parser {
             command.block(block);
         }
         next = next.right();
+        if (command.isHelp()) {
+            command.help();
+            return true;
+        }
         return command.execute();
     }
 

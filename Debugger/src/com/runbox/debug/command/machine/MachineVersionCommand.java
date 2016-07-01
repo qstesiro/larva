@@ -17,4 +17,16 @@ public class MachineVersionCommand extends Command {
         System.out.println(MachineManager.instance().version());
         return super.execute();
     }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
+    }
 }

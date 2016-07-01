@@ -79,4 +79,16 @@ public class MonitorObjectCommand extends Command {
         }
         return null;
     }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
+    }
 }

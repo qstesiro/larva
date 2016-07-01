@@ -2,7 +2,6 @@ package com.runbox.debug.parser.expression.token;
 
 import com.runbox.debug.manager.ContextManager;
 import com.sun.jdi.LocalVariable;
-import com.sun.jdi.ReferenceType;
 import com.sun.jdi.StackFrame;
 
 /**
@@ -82,16 +81,6 @@ public class Token extends com.runbox.debug.parser.Token {
                 if (null != field) {
                     return true;
                 }
-            }
-        }
-        return false;
-    }
-
-    public static boolean field(ReferenceType type, String name) {
-        if (null != type && null != name) {
-            com.sun.jdi.Field field = type.fieldByName(name.toString());
-            if (null != field) {
-                return true;
             }
         }
         return false;

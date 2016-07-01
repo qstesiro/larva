@@ -1,7 +1,8 @@
 package com.runbox.debug.command.clazz;
 
+import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
-import com.runbox.debug.manager.ClassManager;
+import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.RequestManager;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.request.ClassUnloadRequest;
@@ -35,12 +36,24 @@ public class ClassUnloadCommand extends Command {
 
     private List<String> classes() {
         List<String> classes = new LinkedList<>();
-        List<ReferenceType> types = ClassManager.instance().allClasses();
+        List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
             if (Command.match(argument, type.name())) {
                 classes.add(type.name());
             }
         }
         return classes;
+    }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
     }
 }

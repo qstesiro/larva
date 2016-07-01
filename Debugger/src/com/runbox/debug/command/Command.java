@@ -17,7 +17,6 @@ public class Command {
     public final static String MACHINE_NAME = "machine.name";
     public final static String MACHINE_VERSION = "machine.version";
     public final static String MACHINE_ABILITY = "machine.ability";
-    public final static String MACHINE_HELP = "machine.help";
 
     public final static int COMMAND_CLASS = COMMAND_MACHINE + 1;
     public final static String CLASS_QUERY = "class.query";
@@ -25,24 +24,20 @@ public class Command {
     public final static String CLASS_METHOD = "class.method";
     public final static String CLASS_LOAD = "class.load";
     public final static String CLASS_UNLOAD = "class.unload";
-    public final static String CLASS_HELP = "class.help";
 
     public final static int COMMAND_THREAD = COMMAND_CLASS + 1;
     public final static String THREAD_QUERY = "thread.query";
     public final static String THREAD_SWITCH = "thread.switch";
     public final static String THREAD_SUSPEND = "thread.suspend";
     public final static String THREAD_RESUME = "thread.resume";
-    public final static String THREAD_HELP = "thread.help";
 
     public final static int COMMAND_STACK = COMMAND_THREAD + 1;
     public final static String STACK_FRAME = "stack.frame";
     public final static String STACK_SWITCH = "stack.switch";
-    public final static String STACK_HELP = "stack.help";
 
     public final static int COMMAND_MONITOR = COMMAND_STACK + 1;
     public final static String MONITOR_THREAD = "monitor.thread";
     public final static String MONITOR_OBJECT = "monitor.object";
-    public final static String MONITOR_HELP = "monitor.help";
 
     public final static int COMMAND_BREAK = COMMAND_MONITOR + 1;
     public final static String BREAK_METHOD = "break.method";
@@ -53,7 +48,6 @@ public class Command {
     public final static String BREAK_DELETE = "break.delete";
     public final static String BREAK_ENABLE = "break.enable";
     public final static String BREAK_DISABLE = "break.disable";
-    public final static String BREAK_HELP = "break.help";
 
     public final static int COMMAND_EXECUTE = COMMAND_BREAK + 1;
     public final static String EXECUTE_RUN = "execute.run";
@@ -62,7 +56,6 @@ public class Command {
     public final static String EXECUTE_DETACH = "execute.detach";
     public final static String EXECUTE_FILE = "execute.file";
     public final static String EXECUTE_QUIT = "execute.quit";
-    public final static String EXECUTE_HELP = "execute.help";
 
     public final static int COMMAND_VARIANT = COMMAND_EXECUTE + 1;
     public final static String VARIANT_PRINT = "variant.print";
@@ -71,7 +64,6 @@ public class Command {
     public final static String VARIANT_AUTO = "variant.auto";
     public final static String VARIANT_ARRAY = "variant.array";
     public final static String VARIANT_STRING = "variant.string";
-    public final static String VARIANT_HELP = "variant.help";
 
     public final static int COMMAND_TEMPLATE = COMMAND_VARIANT + 1;
     public final static String TEMPLATE_LIST = "template.list";
@@ -79,18 +71,15 @@ public class Command {
     public final static String TEMPLATE_VECTOR = "template.vector";
     public final static String TEMPLATE_QUEUE = "template.queue";
     public final static String TEMPLATE_STACK = "template.stack";
-    public final static String TEMPLATE_HELP = "template.help";
 
     public final static int COMMAND_SOURCE = COMMAND_TEMPLATE + 1;
     public final static String SOURCE_APPEND = "source.append";
     public final static String SOURCE_DELETE = "source.delete";
     public final static String SOURCE_QUERY = "source.query";
-    public final static String SOURCE_HELP = "source.help";
 
     public final static int COMMAND_BLOCK = COMMAND_SOURCE + 1;
     public final static String BLOCK_QUERY = "block.query";
     public final static String BLOCK_FORMAT = "block.format";
-    public final static String BLOCK_HELP = "block.help";
 
     public final static int COMMAND_EXCEPTION = COMMAND_BLOCK + 1;
 
@@ -107,7 +96,7 @@ public class Command {
             int index = this.command.indexOf(' ');
             if (-1 != index) {
                 key = command.substring(0, index).toLowerCase();
-                argument = command.substring(index + 1);
+                argument = command.substring(index + 1).toLowerCase().trim();
             } else {
                 key = this.command;
             }
@@ -116,6 +105,19 @@ public class Command {
 
     public boolean execute() throws Exception {
         return true;
+    }
+
+    public boolean isHelp() {
+        if (null != argument) {
+            if (argument.equals("?") || argument.equals("help")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void help() {
+
     }
 
     public String command() {
@@ -151,28 +153,23 @@ public class Command {
         add(MACHINE_NAME);
         add(MACHINE_VERSION);
         add(MACHINE_ABILITY);
-        add(MACHINE_HELP);
         // class command
         add(CLASS_QUERY);
         add(CLASS_FIELD);
         add(CLASS_METHOD);
         add(CLASS_LOAD);
         add(CLASS_UNLOAD);
-        add(CLASS_HELP);
         // thread command
         add(THREAD_QUERY);
         add(THREAD_SWITCH);
         add(THREAD_SUSPEND);
         add(THREAD_RESUME);
-        add(THREAD_HELP);
         // stack command
         add(STACK_FRAME);
         add(STACK_SWITCH);
-        add(STACK_HELP);
         // monitor command
         add(MONITOR_THREAD);
         add(MONITOR_OBJECT);
-        add(MONITOR_HELP);
         // break command
         add(BREAK_METHOD);
         add(BREAK_LINE);
@@ -182,7 +179,6 @@ public class Command {
         add(BREAK_DELETE);
         add(BREAK_ENABLE);
         add(BREAK_DISABLE);
-        add(BREAK_HELP);
         // execute command
         add(EXECUTE_RUN);
         add(EXECUTE_NEXT);
@@ -190,7 +186,6 @@ public class Command {
         add(EXECUTE_DETACH);
         add(EXECUTE_FILE);
         add(EXECUTE_QUIT);
-        add(EXECUTE_HELP);
         // variant command
         add(VARIANT_PRINT);
         add(VARIANT_FIELD);
@@ -198,41 +193,22 @@ public class Command {
         add(VARIANT_AUTO);
         add(VARIANT_ARRAY);
         add(VARIANT_STRING);
-        add(VARIANT_HELP);
         // template command
         add(TEMPLATE_LIST);
         add(TEMPLATE_MAP);
         add(TEMPLATE_VECTOR);
         add(TEMPLATE_QUEUE);
         add(TEMPLATE_STACK);
-        add(TEMPLATE_HELP);
         // source command
         add(SOURCE_APPEND);
         add(SOURCE_DELETE);
         add(SOURCE_QUERY);
-        add(SOURCE_HELP);
         // block command
         add(BLOCK_QUERY);
         add(BLOCK_FORMAT);
-        add(BLOCK_HELP);
         // help command
         add(HELP);
     }};
-
-    protected void help(List<String> commands) {
-        if (null != commands) {
-            int index = 0;
-            for (String command : commands) {
-                System.out.println(++index + ". " + command);
-            }
-        }
-    }
-
-    protected void help(String help) {
-        if (null != help) {
-            System.out.print(help);
-        }
-    }
 
     public static boolean isCommand(String command) {
         String lookup = lookup(command);

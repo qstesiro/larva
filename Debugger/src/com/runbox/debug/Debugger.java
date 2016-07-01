@@ -3,7 +3,6 @@ package com.runbox.debug;
 import com.runbox.debug.event.*;
 import com.runbox.debug.manager.*;
 import com.sun.jdi.Bootstrap;
-import com.sun.jdi.ThreadReference;
 import com.sun.jdi.connect.*;
 import com.sun.jdi.event.*;
 import com.sun.jdi.event.Event;
@@ -110,14 +109,12 @@ public class Debugger implements SignalHandler {
         }
     }
 
-    private final static int TIMEOUT = 1000;
-
     private void loop() {
         EventQueue queue = MachineManager.instance().eventQueue();
         while (CONTINUE == Debugger.instance().flag()) {
             EventSet set = null;
             try {
-                set = queue.remove(TIMEOUT);
+                set = queue.remove();
                 if (null != set) {
                     EventIterator iterator = set.eventIterator();
                     while (iterator.hasNext()) {
@@ -141,9 +138,7 @@ public class Debugger implements SignalHandler {
         synchronized (this) {
             boolean flag = false;
             Event event = iterator.nextEvent();
-            if (ClassManager.instance().need(event)) {
-                flag = ClassManager.instance().handle(event);
-            } else if (BreakManager.instance().need(event)) {
+            if (BreakManager.instance().need(event)) {
                 flag = BreakManager.instance().handle(event);
             } else if (ExecuteManager.instance().need(event)) {
                 flag = ExecuteManager.instance().handle(event);
@@ -167,7 +162,7 @@ public class Debugger implements SignalHandler {
                         return;
                     }
                 } else {
-                    manual(ContextManager.instance().thread());
+                    manual();
                     return;
                 }
             } catch (Exception e) {
@@ -176,10 +171,10 @@ public class Debugger implements SignalHandler {
         }
     }
 
-    private void manual(ThreadReference thread) {
+    private void manual() {
         synchronized (this) {
             ContextManager.instance().store();
-            ContextManager.instance().thread(thread);
+            ContextManager.instance().thread(null);
             while (true) {
                 try {
                     printTip();
@@ -209,12 +204,10 @@ public class Debugger implements SignalHandler {
     private void monitor(boolean flag) {
         if (DISCONNECT != this.flag) {
             if (!flag) {
-                ClassManager.instance().clean();
                 BreakManager.instance().clean();
                 ExecuteManager.instance().clean();
                 ExceptionManager.instance().clean();
             }
-            ClassManager.instance().monitor(flag);
             BreakManager.instance().monitor(flag);
             ExecuteManager.instance().monitor(flag);
             ExceptionManager.instance().monitor(flag);
@@ -234,7 +227,7 @@ public class Debugger implements SignalHandler {
     @Override
     public void handle(Signal signal) {
         MachineManager.instance().suspend();
-        manual(null);
+        manual();
         MachineManager.instance().resume();
     }
 

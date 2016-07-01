@@ -1,7 +1,8 @@
 package com.runbox.debug.command.clazz;
 
+import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
-import com.runbox.debug.manager.ClassManager;
+import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.ReferenceType;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ClassQueryCommand extends Command {
     public boolean execute() throws Exception {
         String clazz = Command.convert(argument.trim());
         int index = 0;
-        List<ReferenceType> list = ClassManager.instance().allClasses();
+        List<ReferenceType> list = MachineManager.instance().allClasses();
         System.out.println("index\tclass");
         for (ReferenceType type : list) {
             if (null != clazz) {
@@ -34,5 +35,17 @@ public class ClassQueryCommand extends Command {
             }
         }
         return super.execute();
+    }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
     }
 }

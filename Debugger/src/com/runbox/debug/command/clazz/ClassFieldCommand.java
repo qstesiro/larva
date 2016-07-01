@@ -1,7 +1,7 @@
 package com.runbox.debug.command.clazz;
 
 import com.runbox.debug.command.Command;
-import com.runbox.debug.manager.ClassManager;
+import com.runbox.debug.manager.MachineManager;
 import com.sun.jdi.Field;
 import com.sun.jdi.ReferenceType;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ClassFieldCommand extends Command {
 
     private void print(String clazz, String field) {
         int index = 0;
-        List<ReferenceType> types = ClassManager.instance().allClasses();
+        List<ReferenceType> types = MachineManager.instance().allClasses();
         System.out.println("index\tclass.field");
         for (ReferenceType type : types) {
             if (Command.match(clazz, type.name())) {
@@ -54,5 +54,17 @@ public class ClassFieldCommand extends Command {
             return Command.convert(argument.substring(index + 1).trim());
         }
         throw new Exception("invalid argument");
+    }
+
+    @Override
+    public void help() {
+        String help = "\r\n";
+        help += "description\r\n";
+        help += "";
+        help += "note";
+        help += "";
+        help += "example";
+        help += "";
+        System.out.println(help);
     }
 }
