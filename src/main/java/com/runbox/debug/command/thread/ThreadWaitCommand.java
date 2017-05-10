@@ -42,7 +42,7 @@ public class ThreadWaitCommand extends ThreadCommand {
 	private void print(ObjectReference object) throws Exception {
 		if (null != object) {
 			System.out.printf("%5s%-10s", "", "object");
-			System.out.printf("%-8d%s\n", object.uniqueID(), object.referenceType().name().replace("$", "."));
+			System.out.printf("%-8d%s\n", object.uniqueID(), object.referenceType().name());
 			System.out.printf("%5s%-10s", "", "holding");
 			ThreadReference thread = object.owningThread();
 			System.out.printf("%-8s\n", ((null != thread) ? String.valueOf(thread.uniqueID()) : "none"));

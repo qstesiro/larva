@@ -41,9 +41,7 @@ public class ThreadHoldCommand extends ThreadCommand {
 		if (0 < objects.size()) {
 			int index = 0; for (ObjectReference object : objects) {				
 				System.out.printf("%5s%-10s", "", "object");
-				System.out.printf("%-8d%s\n",
-								  object.uniqueID(),
-								  object.referenceType().name().replace("$", "."));
+				System.out.printf("%-8d%s\n", object.uniqueID(), object.referenceType().name());
 				System.out.printf("%5s%-10s", "", "waiting");
 				System.out.println(object.waitingThreads());
 			}

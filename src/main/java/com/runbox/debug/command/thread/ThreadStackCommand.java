@@ -18,9 +18,7 @@ public class ThreadStackCommand extends ThreadCommand {
             System.out.printf("%-5s%s\n", "#", "location");
             for (StackFrame frame : thread.frames()) {
 				Location location = frame.location();
-                System.out.printf("%-5d%s.%s\n", index++,
-								  location.declaringType().name().replace("$", "."),
-								  location.method().name());
+                System.out.printf("%-5d%s.%s\n", index++, location.declaringType().name(), location.method().name());
             }
         }
         return super.execute();

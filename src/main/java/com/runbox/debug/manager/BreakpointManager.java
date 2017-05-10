@@ -198,7 +198,7 @@ public class BreakpointManager extends Manager {
     }    
     
     public Location find(MethodBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {            
+		if (type.name().equals(breakpoint.clazz())) {            
             List<Method> methods = type.methods();
             for (Method method : methods) {                
                 if (method.name().equals(breakpoint.method())) {                    
@@ -212,7 +212,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Location find(LineBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             try {
                 List<Location> locations = type.locationsOfLine(breakpoint.line());
                 for (Location location : locations) {
@@ -228,7 +228,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Field find(AccessBreakpoint breakpoint, ReferenceType type) {        
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             List<Field> fields = type.allFields();
             for (Field field : fields) {
                 if (field.name().equals(breakpoint.field())) {
@@ -240,7 +240,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Field find(ModifyBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             List<Field> fields = type.allFields();
             for (Field field : fields) {
                 if (field.name().equals(breakpoint.field())) {

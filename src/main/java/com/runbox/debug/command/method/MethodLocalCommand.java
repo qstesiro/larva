@@ -20,8 +20,7 @@ public class MethodLocalCommand extends MethodCommand {
         int index = 0; String clazz = clazz(); String method = method();    
         List<ReferenceType> types = MachineManager.instance().allClasses();		        
         for (ReferenceType type : types) {
-			String name = type.name().replace("$", ".");
-            if (name.equals(clazz)) {
+            if (type.name().equals(clazz)) {
                 List<Method> methods = type.allMethods();
                 for (Method item : methods) {
                     if (item.name().equals(method)) {
@@ -45,7 +44,7 @@ public class MethodLocalCommand extends MethodCommand {
 	private void printLocals(List<LocalVariable> variables) {
 		if (0 < variables.size()) {
 			int index = 0; for (LocalVariable variable : variables) {			   				
-				System.out.printf("%-5s%-16s%s\n", "", variable.name(), variable.typeName().replace("$", "."));
+				System.out.printf("%-5s%-16s%s\n", "", variable.name(), variable.typeName());
 			}
 		} else {
 			System.out.printf("%-5s%s\n", "", "none");

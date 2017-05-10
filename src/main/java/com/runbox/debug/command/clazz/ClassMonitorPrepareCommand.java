@@ -34,9 +34,8 @@ public class ClassMonitorPrepareCommand extends ClassCommand {
         List<String> classes = new LinkedList<String>();
         List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
-			String name = type.name().replace("$", ".");
-            if (Pattern.compile(clazz).matcher(name).matches()) {
-                classes.add(name);
+            if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+                classes.add(type.name());
             }
         }
         return classes;

@@ -39,8 +39,7 @@ public class ClassQueryCommand extends ClassCommand {
             List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
             for (ReferenceType type : classes) {
-				String name = type.name().replace("$", ".");
-                if (Pattern.compile(clazz).matcher(name).matches()) {
+                if (Pattern.compile(clazz).matcher(type.name()).matches()) {
 					System.out.printf(format(), arguments(index++, type));
                 }
             }
@@ -49,7 +48,6 @@ public class ClassQueryCommand extends ClassCommand {
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
             for (ReferenceType type : classes) {
-                String name = type.name().replace("$", ".");
 				System.out.printf(format(), arguments(index++, type));
             }
         }        
@@ -220,7 +218,7 @@ public class ClassQueryCommand extends ClassCommand {
 				objects.add("none");
 			}
 		}
-		objects.add(type.name().replace("$", "."));
+		objects.add(type.name());
 		return objects.toArray();
 	}
 }
