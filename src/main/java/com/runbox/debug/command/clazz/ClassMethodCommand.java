@@ -42,7 +42,8 @@ public class ClassMethodCommand extends ClassCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
 		System.out.printf(format(), arguments());
         for (ReferenceType type : types) {
-            if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+            String name = type.name().replace("$", ".");
+            if (Pattern.compile(clazz).matcher(name).matches()) {
                 List<Method> methods = type.allMethods();
                 for (Method item : methods) {
                     if (Pattern.compile(method).matcher(item.name()).matches()) {
@@ -298,10 +299,10 @@ public class ClassMethodCommand extends ClassCommand {
 			}			
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(method.declaringType().name());
+			objects.add(method.declaringType().name().replace("$", "."));
 		}			
 		if (FLAG_RETURN == (FLAG_RETURN & flags)) {
-			objects.add(method.returnTypeName());
+			objects.add(method.returnTypeName().replace("$", "."));
 		}				
 		return objects.toArray();
 	}

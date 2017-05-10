@@ -40,7 +40,8 @@ public class ClassFieldCommand extends ClassCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
 		System.out.printf(format(), arguments());
         for (ReferenceType type : types) {
-            if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+			String name = type.name().replace("$", ".");
+            if (Pattern.compile(clazz).matcher(name).matches()) {				
                 List<Field> fields = type.allFields();
                 for (Field item : fields) {
                     if (Pattern.compile(field).matcher(item.name()).matches()) {
@@ -241,10 +242,10 @@ public class ClassFieldCommand extends ClassCommand {
 			objects.add(String.valueOf(field.isVolatile()));
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(field.declaringType().name());
+			objects.add(field.declaringType().name().replace("$", "."));
 		}
 		if (FLAG_TYPE == (FLAG_TYPE & flags)) {
-			objects.add(field.typeName());
+			objects.add(field.typeName().replace("$", "."));
 		}		
 		return objects.toArray();
 	}
