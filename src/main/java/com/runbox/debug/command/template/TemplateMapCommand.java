@@ -133,7 +133,7 @@ public class TemplateMapCommand extends TemplateCommand {
         return pairs;
     }
 
-    private List<Pair> linkedPairs() {        
+    private List<Pair> linkedPairs() throws Exception {        
 		List<Pair> pairs = new LinkedList<Pair>();
         Operand element = field("head");
 		if (null != element) {

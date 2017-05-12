@@ -52,7 +52,8 @@ public class VariantCommand extends Command {
             for (LocalVariable local : locals) {
                 operands.add(new LocalOperand(local.name()));
             }
-        }
+			System.out.println(frame.getArgumentValues().size());
+        }		
         return operands;
     }        
 }

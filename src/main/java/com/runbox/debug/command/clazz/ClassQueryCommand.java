@@ -219,7 +219,7 @@ public class ClassQueryCommand extends ClassCommand {
 				objects.add("none");
 			}
 		}
-		objects.add(type.name().replace("$", ".")));
+		objects.add(type.name().replace("$", "."));
 		return objects.toArray();
 	}
 }

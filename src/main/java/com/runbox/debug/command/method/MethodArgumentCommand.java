@@ -44,7 +44,7 @@ public class MethodArgumentCommand extends MethodCommand {
 	
 	private void printLocals(List<LocalVariable> variables) {
 		if (0 < variables.size()) {
-			int index = 0; for (LocalVariable variable : variables) {			   
+			int index = 0; for (LocalVariable variable : variables) {
 				System.out.printf("%-5s%-16s%s\n", "", variable.name(), variable.typeName().replace("$", "."));
 			}
 		} else {
