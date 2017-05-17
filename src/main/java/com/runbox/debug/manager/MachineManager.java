@@ -105,6 +105,12 @@ public class MachineManager extends Manager {
 		}
 	}
 
+	public void dispose() {
+		if (null != machine) {
+			machine.dispose();
+		}
+	}
+
 	public Process process() {
 		if (null != machine) {
 			return machine.process();

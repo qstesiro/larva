@@ -12,6 +12,7 @@ import com.sun.jdi.ShortValue;
 import com.sun.jdi.IntegerValue;
 import com.sun.jdi.StringReference;
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.ArrayType;
 import com.sun.jdi.LocalVariable;
 import com.sun.jdi.AbsentInformationException;
 
@@ -42,15 +43,16 @@ public class ClassMethodCommand extends ClassCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
 		System.out.printf(format(), arguments());
         for (ReferenceType type : types) {
-            String name = type.name().replace("$", ".");
-            if (Pattern.compile(clazz).matcher(name).matches()) {
-                List<Method> methods = type.allMethods();
-                for (Method item : methods) {
-                    if (Pattern.compile(method).matcher(item.name()).matches()) {
-						System.out.printf(format(), arguments(index++, item));
+			if (!(type instanceof ArrayType)) {
+				if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+					List<Method> methods = type.allMethods();
+					for (Method item : methods) {
+						if (Pattern.compile(method).matcher(item.name()).matches()) {
+							System.out.printf(format(), arguments(index++, item));
+						}
 					}
-                }
-            }
+				}
+			}
         }
         return super.execute();
     }
@@ -299,10 +301,10 @@ public class ClassMethodCommand extends ClassCommand {
 			}			
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(method.declaringType().name().replace("$", "."));
+			objects.add(method.declaringType().name());
 		}			
 		if (FLAG_RETURN == (FLAG_RETURN & flags)) {
-			objects.add(method.returnTypeName().replace("$", "."));
+			objects.add(method.returnTypeName());
 		}				
 		return objects.toArray();
 	}

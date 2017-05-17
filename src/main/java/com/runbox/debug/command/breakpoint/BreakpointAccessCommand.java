@@ -12,7 +12,7 @@ import com.runbox.debug.manager.RequestManager;
 public class BreakpointAccessCommand extends BreakpointCommand {
 
     public BreakpointAccessCommand(String command) throws Exception {
-        super(command);        
+        super(command);
     }
 
     @Override
@@ -29,7 +29,10 @@ public class BreakpointAccessCommand extends BreakpointCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
             Field field = BreakpointManager.instance().find(breakpoint, type);
-            if (null != field) RequestManager.instance().createBreakpointRequest(field, breakpoint);
+            if (null != field) {
+				System.out.println("aaaaaaaaaaaaaaaa");
+				RequestManager.instance().createBreakpointRequest(field, breakpoint);
+			}
         }
     }
 }

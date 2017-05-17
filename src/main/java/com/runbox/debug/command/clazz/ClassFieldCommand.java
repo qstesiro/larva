@@ -12,6 +12,7 @@ import com.sun.jdi.ShortValue;
 import com.sun.jdi.IntegerValue;
 import com.sun.jdi.StringReference;
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.ArrayType;
 
 import com.runbox.debug.command.clazz.ClassCommand;
 import com.runbox.debug.manager.MachineManager;
@@ -40,15 +41,16 @@ public class ClassFieldCommand extends ClassCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
 		System.out.printf(format(), arguments());
         for (ReferenceType type : types) {
-			String name = type.name().replace("$", ".");
-            if (Pattern.compile(clazz).matcher(name).matches()) {				
-                List<Field> fields = type.allFields();
-                for (Field item : fields) {
-                    if (Pattern.compile(field).matcher(item.name()).matches()) {
-                        System.out.printf(format(), arguments(index++, item));
-                    }
-                }
-            }
+			if (!(type instanceof ArrayType)) {
+				if (Pattern.compile(clazz).matcher(type.name()).matches()) {				
+					List<Field> fields = type.allFields();
+					for (Field item : fields) {
+						if (Pattern.compile(field).matcher(item.name()).matches()) {
+							System.out.printf(format(), arguments(index++, item));
+						}
+					}
+				}
+			}
         }        
         return super.execute();
     }			
@@ -242,10 +244,10 @@ public class ClassFieldCommand extends ClassCommand {
 			objects.add(String.valueOf(field.isVolatile()));
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(field.declaringType().name().replace("$", "."));
+			objects.add(field.declaringType().name());
 		}
 		if (FLAG_TYPE == (FLAG_TYPE & flags)) {
-			objects.add(field.typeName().replace("$", "."));
+			objects.add(field.typeName());
 		}		
 		return objects.toArray();
 	}

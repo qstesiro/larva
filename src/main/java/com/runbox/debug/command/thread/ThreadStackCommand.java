@@ -16,12 +16,12 @@ public class ThreadStackCommand extends ThreadCommand {
         if (null != thread) {
             int index = 0;
             System.out.printf("%-5s%s\n", "#", "location");
-            for (StackFrame frame : thread.frames()) {
-				Location location = frame.location();
-                System.out.printf("%-5d%s.%s\n", index++, 
-                                  location.declaringType().name().replace("$", "."), 
-                                  location.method().name());
-            }
+			if (0 < thread.frameCount()) {
+				for (StackFrame frame : thread.frames()) {
+					Location location = frame.location();
+					System.out.printf("%-5d%s.%s\n", index++, location.declaringType().name(), location.method().name());
+				}
+			}
         }
         return super.execute();
     }    

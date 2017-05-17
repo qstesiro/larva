@@ -29,6 +29,11 @@ public class BreakpointManager extends Manager {
 
     @Override
     public void clean() throws Exception {
+        cleanBreakpoints();
+        cleanRequests();
+    }
+
+    public void cleanBreakpoints() {
         if (0 < map.size()) {
             for (Integer key : map.keySet()) {
                 if (null != map.get(key).request()) {
@@ -36,6 +41,17 @@ public class BreakpointManager extends Manager {
                 }
             }
             map.clear();
+        }
+    }
+
+    public void cleanRequests() {
+        if (0 < requests.size()) {
+            for (String key : requests.keySet()) {
+                Entry entry = requests.get(key);
+                RequestManager.instance().deleteEventRequest(entry.prepare());
+                RequestManager.instance().deleteEventRequest(entry.unload());
+            }
+            requests.clear();
         }
     }
 
@@ -50,6 +66,7 @@ public class BreakpointManager extends Manager {
             }
         }
         map.put(id(), breakpoint);
+        append(breakpoint.clazz());
         return true;
     }
 
@@ -62,6 +79,7 @@ public class BreakpointManager extends Manager {
             }
         }
         map.put(id(), breakpoint);
+        append(breakpoint.clazz());
         return true;
     }
 
@@ -74,6 +92,7 @@ public class BreakpointManager extends Manager {
             }
         }
         map.put(id(), breakpoint);
+        append(breakpoint.clazz());
         return true;
     }
 
@@ -86,13 +105,16 @@ public class BreakpointManager extends Manager {
             }
         }
         map.put(id(), breakpoint);
+        append(breakpoint.clazz());
         return true;
     }
 
     public boolean delete(int id) {
         for (Integer key : map.keySet()) {
-            if (key == id) {
-				erase(map.remove(key)); return true;
+            if (key == id) {                
+                delete(map.get(key).clazz());
+				erase(map.remove(key));                                 
+                return true;
             }
         }
         return false;
@@ -100,6 +122,7 @@ public class BreakpointManager extends Manager {
 
 	public void delete() {
 		for (Integer key : map.keySet()) {
+            delete(map.get(key).clazz());
 			erase(map.get(key));			
         }
 		map.clear();
@@ -198,11 +221,11 @@ public class BreakpointManager extends Manager {
     }    
     
     public Location find(MethodBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {            
+		if (type.name().equals(breakpoint.clazz())) {            
             List<Method> methods = type.methods();
             for (Method method : methods) {                
                 if (method.name().equals(breakpoint.method())) {                    
-                    if (breakpoint.equals(method.argumentTypeNames())) {
+                    if (breakpoint.equals(method.argumentTypeNames())) {						
                         return method.location();
                     }
                 }
@@ -212,7 +235,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Location find(LineBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             try {
                 List<Location> locations = type.locationsOfLine(breakpoint.line());
                 for (Location location : locations) {
@@ -228,7 +251,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Field find(AccessBreakpoint breakpoint, ReferenceType type) {        
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             List<Field> fields = type.allFields();
             for (Field field : fields) {
                 if (field.name().equals(breakpoint.field())) {
@@ -240,7 +263,7 @@ public class BreakpointManager extends Manager {
     }
 
     public Field find(ModifyBreakpoint breakpoint, ReferenceType type) {
-		if (type.name().replace("$", ".").equals(breakpoint.clazz())) {
+		if (type.name().equals(breakpoint.clazz())) {
             List<Field> fields = type.allFields();
             for (Field field : fields) {
                 if (field.name().equals(breakpoint.field())) {
@@ -260,48 +283,93 @@ public class BreakpointManager extends Manager {
 
     public Map<Integer, Breakpoint> breakpoints() {
         return map;
+    }    
+
+    private Map<String, Entry> requests = new HashMap<String, Entry>();           
+
+    private void append(String clazz) {
+        if (!requests.containsKey(clazz)) {
+            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD),
+                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD)));
+        }
+        requests.get(clazz).increase();
     }
 
-    private ClassPrepareRequest prepare = null;
-    private ClassUnloadRequest unload = null;
-
-    @Override
-    public void monitor(boolean flag) {
-        if (flag) {
-            if (null == prepare && null == unload) {
-                prepare = RequestManager.instance().createClassPrepareRequest(null);                
-                unload = RequestManager.instance().createClassUnloadRequest(null);
-            }
-        } else {
-            if (null != prepare && null != unload) {
-                RequestManager.instance().deleteEventRequest(prepare); prepare = null;
-                RequestManager.instance().deleteEventRequest(unload); unload = null;
+    private void delete(String clazz) {
+        if (requests.containsKey(clazz)) {
+            Entry entry = requests.get(clazz);
+            if (0 == entry.decrease()) {
+                RequestManager.instance().deleteEventRequest(entry.prepare());
+                RequestManager.instance().deleteEventRequest(entry.unload());
+                requests.remove(entry);
             }
         }
     }
 
+    private static class Entry {
+
+        public Entry(ClassPrepareRequest prepare, ClassUnloadRequest unload) {
+            this.prepare = prepare;
+            this.unload = unload;
+        }
+
+        private int count = 0;
+
+        public int increase() {
+            return ++count;
+        }
+
+        public int decrease() {
+            return --count;
+        }   
+
+        private ClassPrepareRequest prepare = null;
+
+        public ClassPrepareRequest prepare() {
+            return prepare;
+        }
+
+        private ClassUnloadRequest unload = null;
+
+        public ClassUnloadRequest unload() {
+            return unload;
+        }
+    }
+
+	private int index = 0;
+	
     @Override
-    public boolean need(Event event) {
-        if (event instanceof ClassPrepareEvent || event instanceof ClassUnloadEvent) {
-            if (prepare == event.request() || unload == event.request()) {
-                return true;
+    public boolean need(Event event) {        
+        String clazz = null;
+        if (event instanceof ClassPrepareEvent) {
+            clazz = ((ClassPrepareEvent)event).referenceType().name();
+        } else if (event instanceof ClassUnloadEvent) {
+            clazz = ((ClassUnloadEvent)event).className();
+        }
+        if (null != clazz) {
+            for (String key : requests.keySet()) {                
+                if (key.equals(clazz)) {
+                    return true;
+                }
             }
-        }        
+        }
         return false;
     }
 
     @Override
-    public boolean handle(Event event) throws Exception {        
+    public boolean handle(Event event) throws Exception {	   
         for (Integer id : map.keySet()) {
 			Breakpoint breakpoint = map.get(id);
             if (!breakpoint.solve()) {
                 if (breakpoint instanceof MethodBreakpoint) {
                     if (event instanceof ClassPrepareEvent) {
-                        Location location = find((MethodBreakpoint)breakpoint, ((ClassPrepareEvent)event).referenceType());
-                        if (null != location) {
-							RequestManager.instance().createBreakpointRequest(location, breakpoint);
-                            // fill((MethodBreakpoint)breakpoint, location);                        
-                        }
+						ClassPrepareEvent prepare = (ClassPrepareEvent)event;
+						if (!(prepare.referenceType() instanceof ArrayType)) {
+							Location location = find((MethodBreakpoint)breakpoint, prepare.referenceType());
+							if (null != location) {
+								RequestManager.instance().createBreakpointRequest(location, breakpoint);
+							}
+						}
                     } else if (event instanceof ClassUnloadEvent) {
                         if (breakpoint.clazz().equals(((ClassUnloadEvent)event).className())) {
                             erase(breakpoint);
@@ -309,11 +377,13 @@ public class BreakpointManager extends Manager {
                     }
                 } else if (breakpoint instanceof LineBreakpoint) {
                     if (event instanceof ClassPrepareEvent) {
-                        Location location = find((LineBreakpoint)breakpoint, ((ClassPrepareEvent)event).referenceType());
-                        if (null != location) {
-							RequestManager.instance().createBreakpointRequest(location, breakpoint);
-                            // fill((LineBreakpoint)breakpoint, location);                        
-                        }
+						ClassPrepareEvent prepare = (ClassPrepareEvent)event;
+						if (!(prepare.referenceType() instanceof ArrayType)) {
+							Location location = find((LineBreakpoint)breakpoint, prepare.referenceType());
+							if (null != location) {
+								RequestManager.instance().createBreakpointRequest(location, breakpoint);								
+							}
+						}
                     } else if (event instanceof ClassUnloadEvent) {
                         if (breakpoint.clazz().equals(((ClassUnloadEvent)event).className())) {
                             erase(breakpoint);
@@ -321,11 +391,13 @@ public class BreakpointManager extends Manager {
                     }                    
                 } else if (breakpoint instanceof AccessBreakpoint) {
                     if (event instanceof ClassPrepareEvent) {
-                        Field field = find((AccessBreakpoint)breakpoint, ((ClassPrepareEvent)event).referenceType());
-                        if (null != field) {
-							RequestManager.instance().createBreakpointRequest(field, breakpoint);
-                            // fill((AccessBreakpoint)breakpoint, field);                        
-                        }
+						ClassPrepareEvent prepare = (ClassPrepareEvent)event;
+						if (!(prepare.referenceType() instanceof ArrayType)) {
+							Field field = find((AccessBreakpoint)breakpoint, prepare.referenceType());
+							if (null != field) {
+								RequestManager.instance().createBreakpointRequest(field, breakpoint);								
+							}
+						}
                     } else if (event instanceof ClassUnloadEvent) {
                         if (breakpoint.clazz().equals(((ClassUnloadEvent)event).className())) {
                             erase(breakpoint);
@@ -333,11 +405,13 @@ public class BreakpointManager extends Manager {
                     }                    
                 } else if (breakpoint instanceof ModifyBreakpoint) {
                     if (event instanceof ClassPrepareEvent) {
-                        Field field = find((ModifyBreakpoint)breakpoint, ((ClassPrepareEvent)event).referenceType());
-                        if (null != field) {
-							RequestManager.instance().createBreakpointRequest(field, breakpoint);
-                            // fill((ModifyBreakpoint)breakpoint, field);                        
-                        }
+						ClassPrepareEvent prepare = (ClassPrepareEvent)event;
+						if (!(prepare.referenceType() instanceof ArrayType)) {
+							Field field = find((ModifyBreakpoint)breakpoint, prepare.referenceType());
+							if (null != field) {
+								RequestManager.instance().createBreakpointRequest(field, breakpoint);								
+							}
+						}
                     } else if (event instanceof ClassUnloadEvent) {
                         if (breakpoint.clazz().equals(((ClassUnloadEvent)event).className())) {
                             erase(breakpoint);
@@ -376,7 +450,7 @@ public class BreakpointManager extends Manager {
 
 		public boolean status() {
 			return status;
-		}
+		}		
 		
         private String clazz = null;
 
@@ -386,7 +460,7 @@ public class BreakpointManager extends Manager {
 
         public String clazz() {
             return clazz;
-        }
+        }		
 
         private EventRequest request = null;
 

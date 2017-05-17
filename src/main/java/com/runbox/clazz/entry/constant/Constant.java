@@ -91,10 +91,6 @@ public class Constant extends Entry {
         return null;
     }
 
-	public static String convertClass(String string) {
-		return string.replace("$", ".").replace("/", ".");
-	}
-
 	public static String convertType(String string) {
 		if (string.equals("B")) return "byte";
 		else if (string.equals("C")) return "char";
@@ -106,12 +102,8 @@ public class Constant extends Entry {
 		else if (string.equals("Z")) return "boolean";
 		else if (string.equals("V")) return "void";
 		else if ('L' == string.charAt(0)) {						
-			return convertClass(string.substring(1, string.length() - 1));
+			return string.substring(1, string.length() - 1).replace("/", ".");
 		} else if ('[' == string.charAt(0)) {
-			// String brackets = "[]";
-			// int i = 1; while ('[' == string.charAt(i)) {
-			// 	brackets += "[]"; ++i;
-			// }
 			return convertType(string.substring(1, string.length())) + "[]";
 		}
 		return null;
@@ -181,13 +173,8 @@ public class Constant extends Entry {
 					while (';' != string.charAt(index)) {
 						clazz += string.charAt(index); ++index;
 					}
-					++index; return convertClass(clazz);
+					++index; return clazz.replace("/", ".");
 				} else if ('[' == letter) {
-					// String brackets = "[]";
-					// while ('[' == string.charAt(index)) {
-					// 	brackets += "[]"; ++index;
-					// }
-					// ++index; return next();
 					return next() + "[]";
 				}
 			}

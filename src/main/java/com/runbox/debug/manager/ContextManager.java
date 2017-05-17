@@ -22,18 +22,18 @@ public class ContextManager extends Manager {
     private ThreadReference thread = null;
 
     public void thread(ThreadReference thread) {
-        this.thread = thread;
-        if (null != thread) {            
+        this.thread = thread; frame = null;
+        if (null != thread) {
             try {
-                List<StackFrame> frames = thread.frames();
-                if (0 < frames.size()) {                    
-                    frame = frames.get(0);
-                }
+				if (0 < thread.frameCount()) {
+					List<StackFrame> frames = thread.frames();
+					if (0 < frames.size()) {                    
+						frame = frames.get(0);
+					}
+				}
             } catch (IncompatibleThreadStateException e) {
                 e.printStackTrace();
             }
-        } else {
-            frame = null;
         }
     }
 

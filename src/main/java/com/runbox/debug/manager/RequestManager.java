@@ -26,10 +26,10 @@ public class RequestManager extends Manager {
         return instance.manager;
     }
 
-    public ClassPrepareRequest createClassPrepareRequest(String clazz) {
+    public ClassPrepareRequest createClassPrepareRequest(String clazz, int suspend) {
         if (null != manager) {
-            ClassPrepareRequest request = manager.createClassPrepareRequest();
-            request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
+            ClassPrepareRequest request = manager.createClassPrepareRequest();            
+			request.setSuspendPolicy(suspend);
             if (null != clazz)  {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);
@@ -40,10 +40,10 @@ public class RequestManager extends Manager {
         return null;
     }
 
-    public ClassUnloadRequest createClassUnloadRequest(String clazz) {
+    public ClassUnloadRequest createClassUnloadRequest(String clazz, int suspend) {
         if (null != manager) {
             ClassUnloadRequest request = manager.createClassUnloadRequest();
-            request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
+            request.setSuspendPolicy(suspend);
             if (null != clazz)  {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);

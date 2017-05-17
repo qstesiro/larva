@@ -13,6 +13,6 @@ public class ClassConstant extends ClassStringConstant {
 	}   	
 
 	public String className() {
-		return convertClass(reader().getUTF8(index()).string());	
+		return reader().getUTF8(index()).string().replace("/", ".");	
 	}
 }

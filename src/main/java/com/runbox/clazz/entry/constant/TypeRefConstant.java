@@ -42,7 +42,7 @@ public class TypeRefConstant extends Constant {
     }
 
 	public String className() {
-		return convertClass(reader().getUTF8(reader().getClass(clazz).index()).string());
+		return reader().getUTF8(reader().getClass(clazz).index()).string().replace("/", ".");
 	}
 
 	public String fieldName() {		

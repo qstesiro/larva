@@ -13,11 +13,11 @@ import com.runbox.debug.manager.RequestManager;
 public class BreakpointMethodCommand extends BreakpointCommand {
 
     public BreakpointMethodCommand(String command) throws Exception {
-        super(command);        
+        super(command);
     }
 
     @Override
-    public boolean execute() throws Exception {                
+    public boolean execute() throws Exception {
         BreakpointManager.MethodBreakpoint breakpoint = new BreakpointManager.MethodBreakpoint(clazz(), method(), arguments(), routine());
         if (!BreakpointManager.instance().contain(breakpoint)) {
             BreakpointManager.instance().append(breakpoint);

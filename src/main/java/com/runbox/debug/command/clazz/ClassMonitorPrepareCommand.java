@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.ArrayType;
 import com.sun.jdi.request.ClassPrepareRequest;
 import com.sun.jdi.request.EventRequest;
 
@@ -22,9 +23,10 @@ public class ClassMonitorPrepareCommand extends ClassCommand {
     @Override
     public boolean execute() throws Exception {
 		String clazz = clazz();
+		System.out.println(clazz);
 		if (null != clazz) {
-			print(classes(clazz));		
-			ClassManager.instance().append(RequestManager.instance().createClassPrepareRequest(clazz));			
+			print(classes(clazz));
+			ClassManager.instance().append(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD));
             return super.execute();    
 		} 
 		throw new Exception("invalid arguement");				    
@@ -34,10 +36,11 @@ public class ClassMonitorPrepareCommand extends ClassCommand {
         List<String> classes = new LinkedList<String>();
         List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
-            String name = type.name().replace("$", ".");
-            if (Pattern.compile(clazz).matcher(name).matches()) {
-                classes.add(type.name());
-            }
+			if (!(type instanceof ArrayType)) {
+				if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+					classes.add(type.name());
+				}
+			}
         }
         return classes;
     }

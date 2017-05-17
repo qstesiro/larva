@@ -50,6 +50,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ClassMonitorDisableCommand(command);
 		} else if (key.equals(CLASS_MONITOR_DELETE)) {
 			return new ClassMonitorDeleteCommand(command);
+		} else if (key.equals(CLASS_CONSTANT)) {
+			return new ClassConstantCommand(command);
 		} else if (key.equals(METHOD_ARGUMENT)) {
 			return new MethodArgumentCommand(command);
 		} else if (key.equals(METHOD_LOCAL)) {
@@ -153,13 +155,14 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static int COMMAND_CLASS = COMMAND_MACHINE + 1;
     public final static String CLASS_QUERY = "class.query";    
     public final static String CLASS_FIELD = "class.field";
-    public final static String CLASS_METHOD = "class.method";
+    public final static String CLASS_METHOD = "class.method";	
     public final static String CLASS_MONITOR_QUERY = "class.monitor.query";
     public final static String CLASS_MONITOR_PREPARE = "class.monitor.prepare";
     public final static String CLASS_MONITOR_UNLOAD = "class.monitor.unload";
     public final static String CLASS_MONITOR_ENABLE = "class.monitor.enable";
     public final static String CLASS_MONITOR_DISABLE = "class.monitor.disable";
     public final static String CLASS_MONITOR_DELETE = "class.monitor.delete";
+	public final static String CLASS_CONSTANT = "class.constant";
 
     public final static int COMMAND_METHOD = COMMAND_CLASS + 1;
     public final static String METHOD_ARGUMENT = "method.argument";
@@ -244,6 +247,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(CLASS_MONITOR_ENABLE);
         add(CLASS_MONITOR_DISABLE);
         add(CLASS_MONITOR_DELETE);
+		add(CLASS_CONSTANT);
         // method command 
         add(METHOD_ARGUMENT);
         add(METHOD_LOCAL);

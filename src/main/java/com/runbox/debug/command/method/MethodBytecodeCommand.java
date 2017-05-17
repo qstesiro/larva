@@ -24,8 +24,7 @@ public class MethodBytecodeCommand extends MethodCommand {
         String clazz = clazz(); String method = method();    
         List<ReferenceType> types = MachineManager.instance().allClasses();		        
         for (ReferenceType type : types) {
-            String name = type.name().replace("$", ".");
-            if (name.equals(clazz)) {
+            if (type.name().equals(clazz)) {
                 List<Method> methods = type.allMethods();
                 for (Method item : methods) {
                     if (item.name().equals(method)) {

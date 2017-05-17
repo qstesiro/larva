@@ -11,9 +11,9 @@ import com.sun.jdi.ShortValue;
 import com.sun.jdi.IntegerValue;
 import com.sun.jdi.StringReference;
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.ArrayType;
 import com.sun.jdi.AbsentInformationException;
 
-import com.runbox.debug.command.clazz.ClassCommand;
 import com.runbox.debug.manager.MachineManager;
 
 import com.runbox.debug.script.expression.Expression;
@@ -39,17 +39,20 @@ public class ClassQueryCommand extends ClassCommand {
             List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
             for (ReferenceType type : classes) {
-                String name = type.name().replace("$", ".");
-                if (Pattern.compile(clazz).matcher(name).matches()) {
-					System.out.printf(format(), arguments(index++, type));
-                }
+				if (!(type instanceof ArrayType)) {
+					if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+						System.out.printf(format(), arguments(index++, type));
+					}
+				}
             }
         } else {
 			int index = 0;
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
-            for (ReferenceType type : classes) {				 
-				System.out.printf(format(), arguments(index++, type));
+            for (ReferenceType type : classes) {
+				if (!(type instanceof ArrayType)) {
+					System.out.printf(format(), arguments(index++, type));
+				}
             }
         }        
         return super.execute();
@@ -219,7 +222,7 @@ public class ClassQueryCommand extends ClassCommand {
 				objects.add("none");
 			}
 		}
-		objects.add(type.name().replace("$", "."));
+		objects.add(type.name());
 		return objects.toArray();
 	}
 }

@@ -102,14 +102,15 @@ public class Debugger implements SignalHandler {
 
     private void loop() throws Exception {
         EventQueue queue = MachineManager.instance().eventQueue();
-        while (CONTINUE == Debugger.instance().flag()) {
+        while (CONTINUE == flag) {
             EventSet set = null;
-            try {
-                set = queue.remove();
+			try {
+				final int TIMEOUT = 1000;
+                set = queue.remove(TIMEOUT);
                 if (null != set) {
                     EventIterator iterator = set.eventIterator();
                     while (iterator.hasNext()) {
-                        handle(iterator);
+                        handle(iterator); if (CONTINUE != flag) break;
                     }
                 }
             } finally {
@@ -146,19 +147,7 @@ public class Debugger implements SignalHandler {
             flag = EventFactory.build(event).handle();
         }
         if (!flag) {if (execute(event)) {execute();}}
-	}
-
-	private boolean execute(Event event) {
-        EventRequest request = event.request();
-        if (null != request.getProperty(Command.ROUTINE)) {            
-			try {
-				return new Script((RoutineNode)request.getProperty(Command.ROUTINE)).execute();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        }
-		return true;
-    }
+	}	
 	
     private boolean execute(String file) {
 		if (null != file) {
@@ -171,6 +160,18 @@ public class Debugger implements SignalHandler {
 		return true;
     }
 
+	private boolean execute(Event event) {
+        EventRequest request = event.request();
+        if (null != request.getProperty(Command.ROUTINE)) {
+			try {
+				return new Script((RoutineNode)request.getProperty(Command.ROUTINE)).execute();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+		return true;
+    }
+	
     private synchronized void execute() {
         while (true) {
             prompt();
@@ -199,7 +200,6 @@ public class Debugger implements SignalHandler {
                 ExecuteManager.instance().clean();
                 ExceptionManager.instance().clean();
             }
-            BreakpointManager.instance().monitor(flag);
             ExecuteManager.instance().monitor(flag);
             ExceptionManager.instance().monitor(flag);
         }
@@ -207,12 +207,10 @@ public class Debugger implements SignalHandler {
 
     private void exit() {
         if (QUIT == flag) {
-            MachineManager.instance().exit(0);
-            Process process = MachineManager.instance().process();
-            if (null != process) {
-                process.destroy();
-            }
-        }
+            MachineManager.instance().exit(0);			
+        } else if (DETACH == flag) {
+			MachineManager.instance().dispose();
+		}
     }
 
     @Override
@@ -221,7 +219,7 @@ public class Debugger implements SignalHandler {
         ContextManager.instance().store();
         ContextManager.instance().thread(null); execute();
         ContextManager.instance().restore();
-        MachineManager.instance().resume();
+        MachineManager.instance().resume();		
     }
 
     public final static int CONTINUE = 0;

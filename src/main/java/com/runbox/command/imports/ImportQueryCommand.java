@@ -12,7 +12,7 @@ public class ImportQueryCommand extends ImportCommand {
 
 	@Override
 	public boolean execute() throws Exception {
-		System.out.printf("%-5s%-24s%s\n", "#", "class", "path");
+		System.out.printf("%-5s%-24s%s\n", "#", "class", "package");
 		Map<String, String> classes = ImportManager.instance().classes();		
 		int index = 0; for (String clazz : classes.keySet()) {
 			String path = classes.get(clazz).equals("") ? "none" : classes.get(clazz);

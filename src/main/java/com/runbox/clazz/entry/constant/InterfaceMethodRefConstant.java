@@ -13,7 +13,7 @@ public class InterfaceMethodRefConstant extends TypeRefConstant {
     }
 
 	public String className() {
-		return convertClass(reader().getUTF8(reader().getClass(clazz()).index()).string());
+		return reader().getUTF8(reader().getClass(clazz()).index()).string().replace("/", ".");
 	}
 
 	public String methodName() {		
