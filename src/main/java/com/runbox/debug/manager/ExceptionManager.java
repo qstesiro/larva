@@ -51,17 +51,11 @@ public class ExceptionManager extends Manager {
 
     @Override
     public boolean handle(Event event) throws Exception {
-        Location location = ((ExceptionEvent)event).location();
-        File file = SourceManager.instance().find(location);
-        if (null != file) {
-            Map<Integer, String> lines = SourceManager.instance().lines(location, -10, 10);
-            if (null != lines) {
-                for (Integer key : lines.keySet()) {
-                    System.out.println(key + " " + lines.get(key));
-                }
-            }
-        }
-        print(((ExceptionEvent)event).exception());
+		ExceptionEvent exception = (ExceptionEvent)event;
+        Location location = exception.location();
+        String line = SourceManager.instance().line(exception.catchLocation());
+		if (null != line) System.out.println(line);
+        print(exception.exception());
         return false;
     }
 

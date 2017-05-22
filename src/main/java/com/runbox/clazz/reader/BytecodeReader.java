@@ -15,11 +15,13 @@ import com.runbox.clazz.entry.bytecode.Bytecode;
 public class BytecodeReader extends Reader {
 
     public BytecodeReader(DataInputStream stream, int size, ConstantReader reader) throws Exception {
-        super(stream, reader); this.size = size;
+        super(stream, reader);
+		this.size = size;
+		printer = new Printer(reader);
     }	
 	
-    private List<Bytecode> codes = new LinkedList<Bytecode>();
-
+    private List<Bytecode> codes = new LinkedList<Bytecode>();	
+	
     public List<Bytecode> get() {
         return codes;
     }
@@ -43,7 +45,7 @@ public class BytecodeReader extends Reader {
     }
 
 	private int size = 0;
-    private int offset = 0;
+    private long offset = 0;
 
 	@Override
 	protected byte[] read(int size) throws IOException {
@@ -96,13 +98,12 @@ public class BytecodeReader extends Reader {
     @Override
     protected BytecodeReader load() throws Exception {
 		while (0 < size) {
-			codes.add(load(readS1()));
+			codes.add(load(readS1(), offset - 1));
 		}
         return this;
     }    
 
-    private Bytecode load(byte opcode) throws Exception {
-        long offset = this.offset - 1;
+    private Bytecode load(byte opcode, long offset) throws Exception {        
         switch (opcode) {
         case Bytecode.AALOAD: return new Bytecode.AALOAD(offset);
 		case Bytecode.AASTORE: return new Bytecode.AASTORE(offset);
@@ -548,7 +549,557 @@ public class BytecodeReader extends Reader {
 		default: throw new Exception("invalid code #" + minor);
 		}
 	}	
-        
+
+	private Printer printer = null;
+	
+	public Printer printer() {
+		return printer;
+	}
+	
+	public static class Printer {
+
+		private Printer(ConstantReader reader) {
+			this.reader = reader;			
+		}
+
+		private ConstantReader reader = null;
+
+		public ConstantReader reader() {
+			return reader;
+		}
+
+		private String prefix = "";
+		
+		public Printer prefix(String prefix) {
+			this.prefix = prefix; return this;
+		}
+
+		public String prefix() {
+			return prefix;
+		}		
+		
+		public void print(Bytecode bytecode) throws Exception {		
+			switch (bytecode.opcode()) {
+			case Bytecode.ALOAD: {
+				Bytecode.ALOAD code = (Bytecode.ALOAD)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return; 		
+			}
+			case Bytecode.ANEWARRAY: {
+				Bytecode.ANEWARRAY code = (Bytecode.ANEWARRAY)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s\n", code.type()); 
+				return;        
+			}
+			case Bytecode.ASTORE: {
+				Bytecode.ASTORE code = (Bytecode.ASTORE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return; 
+			}
+			case Bytecode.BIPUSH: {
+				Bytecode.BIPUSH code = (Bytecode.BIPUSH)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.value());
+				return;
+			}
+			case Bytecode.CHECKCAST: {
+				Bytecode.CHECKCAST code = (Bytecode.CHECKCAST)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s\n", code.type()); 
+				return; 		
+			}
+			case Bytecode.DLOAD: {
+				Bytecode.DLOAD code = (Bytecode.DLOAD)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;		
+			}
+			case Bytecode.DSTORE: {
+				Bytecode.DSTORE code = (Bytecode.DSTORE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;	
+			}
+			case Bytecode.FLOAD: {
+				Bytecode.FLOAD code = (Bytecode.FLOAD)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;		
+			}
+			case Bytecode.FSTORE: {
+				Bytecode.FSTORE code = (Bytecode.FSTORE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;			
+			}
+			case Bytecode.GETFIELD: {
+				Bytecode.GETFIELD code = (Bytecode.GETFIELD)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s:%s\n", code.clazz(), code.field(), code.type()); 
+				return;
+			}	 
+			case Bytecode.GETSTATIC: {
+				Bytecode.GETSTATIC code = (Bytecode.GETSTATIC)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s:%s\n", code.clazz(), code.field(), code.type()); 
+				return;
+			}
+			case Bytecode.GOTO: {
+				Bytecode.GOTO code = (Bytecode.GOTO)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.target()); 
+				return;	
+			}
+			case Bytecode.GOTO_W: {
+				Bytecode.GOTO_W code = (Bytecode.GOTO_W)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.target()); 
+				return;	
+			}
+			case Bytecode.IF_ACMPEQ: {
+				Bytecode.IF_ACMPEQ code = (Bytecode.IF_ACMPEQ)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ACMPNE: {
+				Bytecode.IF_ACMPNE code = (Bytecode.IF_ACMPNE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPEQ: {
+				Bytecode.IF_ICMPEQ code = (Bytecode.IF_ICMPEQ)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPNE: {
+				Bytecode.IF_ICMPNE code = (Bytecode.IF_ICMPNE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPLT: {
+				Bytecode.IF_ICMPLT code = (Bytecode.IF_ICMPLT)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPGE: {
+				Bytecode.IF_ICMPGE code = (Bytecode.IF_ICMPGE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPGT: {
+				Bytecode.IF_ICMPGT code = (Bytecode.IF_ICMPGT)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IF_ICMPLE: {
+				Bytecode.IF_ICMPLE code = (Bytecode.IF_ICMPLE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFEQ: {
+				Bytecode.IFEQ code = (Bytecode.IFEQ)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFNE: {
+				Bytecode.IFNE code = (Bytecode.IFNE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFLT: {
+				Bytecode.IFLT code = (Bytecode.IFLT)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFGE: {
+				Bytecode.IFGE code = (Bytecode.IFGE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFGT: {
+				Bytecode.IFGT code = (Bytecode.IFGT)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFLE: {
+				Bytecode.IFLE code = (Bytecode.IFLE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFNONNULL: {
+				Bytecode.IFNONNULL code = (Bytecode.IFNONNULL)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IFNULL: {
+				Bytecode.IFNULL code = (Bytecode.IFNULL)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return;
+			}
+			case Bytecode.IINC: {
+				Bytecode.IINC code = (Bytecode.IINC)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x, %04x\n", code.index(), code.value()); 
+				return;	
+			}
+			case Bytecode.ILOAD: {
+				Bytecode.ILOAD code = (Bytecode.ILOAD)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return; 	
+			}
+			case Bytecode.INSTANCEOF: {
+				Bytecode.INSTANCEOF code = (Bytecode.INSTANCEOF)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s\n", code.type()); 
+				return; 
+			}
+			case Bytecode.INVOKEDYNAMIC: {            
+				Bytecode.INVOKEDYNAMIC code = (Bytecode.INVOKEDYNAMIC)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%04x, %s%s:%s\n", code.bootstrap(), code.method(), code.arguments(), code.type());
+				return; 
+			}
+			case Bytecode.INVOKEINTERFACE: {
+				Bytecode.INVOKEINTERFACE code = (Bytecode.INVOKEINTERFACE)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s%s:%s, %04x\n", code.clazz(), code.method(), code.arguments(), code.type(), code.count());
+				return; 
+			}
+			case Bytecode.INVOKESPECIAL: {
+				Bytecode.INVOKESPECIAL code = (Bytecode.INVOKESPECIAL)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s%s:%s\n", code.clazz(), code.method(), code.arguments(), code.type());
+				return; 
+			}
+			case Bytecode.INVOKESTATIC: {
+				Bytecode.INVOKESTATIC code = (Bytecode.INVOKESTATIC)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s%s:%s\n", code.clazz(), code.method(), code.arguments(), code.type());
+				return; 
+			}
+			case Bytecode.INVOKEVIRTUAL: {
+				Bytecode.INVOKEVIRTUAL code = (Bytecode.INVOKEVIRTUAL)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s%s:%s\n", code.clazz(), code.method(), code.arguments(), code.type());
+				return; 	
+			}
+			case Bytecode.ISTORE: {
+				Bytecode.ISTORE code = (Bytecode.ISTORE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return; 	
+			}
+			case Bytecode.JSR: {
+				Bytecode.JSR code = (Bytecode.JSR)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return; 
+			}
+			case Bytecode.JSR_W: {
+				Bytecode.JSR_W code = (Bytecode.JSR_W)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.branch()); 
+				return; 		
+			}
+			case Bytecode.LDC: print((Bytecode.LDC)bytecode, ((Bytecode.LDC)bytecode).index()); return;        
+			case Bytecode.LDC_W: print((Bytecode.LDC_W)bytecode, ((Bytecode.LDC_W)bytecode).index()); return;        
+			case Bytecode.LDC2_W: print((Bytecode.LDC2_W)bytecode); return;
+			case Bytecode.LLOAD: {
+				Bytecode.LLOAD code = (Bytecode.LLOAD)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;	
+			}
+			case Bytecode.LOOKUPSWITCH: print((Bytecode.LOOKUPSWITCH)bytecode);	return;        
+			case Bytecode.LSTORE: {
+				Bytecode.LSTORE code = (Bytecode.LSTORE)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;	
+			}
+			case Bytecode.MULTIANEWARRAY: {
+				Bytecode.MULTIANEWARRAY code = (Bytecode.MULTIANEWARRAY)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s[%04x]\n", code.type(), code.dimensions()); 
+				return;	
+			}
+			case Bytecode.NEW: {
+				Bytecode.NEW code = (Bytecode.NEW)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s\n", code.type()); 
+				return;	
+			}
+			case Bytecode.NEWARRAY: {
+				Bytecode.NEWARRAY code = (Bytecode.NEWARRAY)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.type()); 
+				return;		
+			}
+			case Bytecode.PUTFIELD: {
+				Bytecode.PUTFIELD code = (Bytecode.PUTFIELD)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s:%s\n", code.clazz(), code.field(), code.type()); 
+				return;	 
+			}
+			case Bytecode.PUTSTATIC: {
+				Bytecode.PUTSTATIC code = (Bytecode.PUTSTATIC)bytecode;
+				print(code.offset());
+				print(code.opcode(), code.index());
+				print(code.name());
+				System.out.printf("%s.%s:%s\n", code.clazz(), code.field(), code.type()); 
+				return;	 
+			}
+			case Bytecode.RET: {
+				Bytecode.RET code = (Bytecode.RET)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.index()); 
+				return;		
+			}
+			case Bytecode.SIPUSH: {
+				Bytecode.SIPUSH code = (Bytecode.SIPUSH)bytecode;
+				print(code.offset());
+				print(code.opcode());
+				print(code.name());
+				System.out.printf("%04x\n", code.value()); 
+				return;
+			}
+			case Bytecode.TABLESWITCH: print((Bytecode.TABLESWITCH)bytecode); return;        
+			case Bytecode.WIDE: print((Bytecode.WIDE)bytecode); return;
+			default: {
+				print(bytecode.offset());
+				print(bytecode.opcode());
+				print(bytecode.name());
+				System.out.println();
+			}}        
+		}
+
+		private void print(Bytecode.LDC_B code, int index) throws Exception {
+			print(code.offset());
+			if (code instanceof Bytecode.LDC) {
+				print(code.opcode(), index);
+			} else if (code instanceof Bytecode.LDC_W) {
+				print(code.opcode(), index);				
+			}
+			print(code.name());
+			switch (code.flag()) {
+			case Bytecode.LDC_B.FLAG_INTEGER: System.out.printf("%08x\n", code.intValue()); return;
+			case Bytecode.LDC_B.FLAG_FLOAT: System.out.printf("%08x\n", code.floatValue()); return;
+			case Bytecode.LDC_B.FLAG_STRING: System.out.printf("%s\n", "\"" + code.string() + "\""); return;
+			case Bytecode.LDC_B.FLAG_CLASS: System.out.printf("%s\n", code.clazz()); return;
+			case Bytecode.LDC_B.FLAG_METHODTYPE: System.out.printf("%s:%s\n", code.arguments(), code.returnType()); return;
+			case Bytecode.LDC_B.FLAG_METHODHANDLE: {				
+				if (MethodHandleConstant.REF_GETFIELD == code.kind() ||
+					MethodHandleConstant.REF_GETSTATIC == code.kind() ||
+					MethodHandleConstant.REF_PUTFIELD == code.kind() ||
+					MethodHandleConstant.REF_PUTSTATIC == code.kind()) {					
+					System.out.printf("%s.%s:%s\n", code.clazz(), code.field(), code.type());
+					return;
+				} else if (MethodHandleConstant.REF_INVOKEVIRTUAL == code.kind() ||
+						   MethodHandleConstant.REF_INVOKESTATIC == code.kind() ||
+						   MethodHandleConstant.REF_INVOKESPECIAL == code.kind() ||
+						   MethodHandleConstant.REF_NEWINVOKESPECIAL == code.kind() ||
+						   MethodHandleConstant.REF_INVOKEINTERFACE == code.kind()) {
+					System.out.printf("%s.%s%s:%s\n", code.clazz(), code.method(), code.arguments(), code.returnType());
+					return;
+				}
+			}
+			default: throw new Exception("invalid LDC flag #" + code.flag()); 		            
+			}
+		}
+
+		private void print(Bytecode.LDC2_W code) throws Exception {
+			print(code.offset());
+			print(code.opcode(), code.index());		
+			switch (code.flag()) {
+			case Bytecode.LDC_B.FLAG_LONG: print(code.name()); System.out.printf("%016x\n", code.longValue()); return;
+			case Bytecode.LDC_B.FLAG_DOUBLE: print(code.name()); System.out.printf("%f\n", code.doubleValue()); return;
+			default: throw new Exception("invalid LDC_W flag #" + code.flag());
+			}
+		}
+
+		private void print(Bytecode.LOOKUPSWITCH code)  {
+			print(code.offset());
+			print(code.opcode());
+			print(code.name());
+			Map<Integer, Integer> matches = code.matches();                        
+			int i = 0; for (Integer key : matches.keySet()) {
+				if (0 < i++) print();
+				System.out.printf("%08x: %08x\n", key.intValue(), matches.get(key).intValue());
+			}
+			print(); System.out.printf("%8s: %08x\n", "default", code.defaultOffset());
+		}
+
+		private void print(Bytecode.TABLESWITCH code) {		
+			print(code.offset());
+			print(code.opcode());
+			print(code.name());
+			List<Integer> jumps = code.jumps();            
+			int i = 0; for (Integer jump : jumps) {				
+				if (0 < i++) print();
+				System.out.printf("%08x\n", jump.intValue());
+			}
+			print(); System.out.printf("%08x\n", code.defaultOffset());
+		}
+
+		private void print(Bytecode.WIDE code) {
+			print(code.offset());
+			print(code.opcode());
+			switch (code.minor()) {
+			case Bytecode.ILOAD:
+			case Bytecode.FLOAD:
+			case Bytecode.ALOAD:
+			case Bytecode.LLOAD:
+			case Bytecode.DLOAD:
+			case Bytecode.ISTORE:
+			case Bytecode.FSTORE:
+			case Bytecode.ASTORE:
+			case Bytecode.LSTORE:
+			case Bytecode.DSTORE:
+			case Bytecode.RET: print(code.name()); System.out.printf("%04x\n", code.index()); return;		
+			case Bytecode.IINC: print(code.name()); System.out.printf("%04x, %04x\n", code.index(), code.value()); return;            
+			}
+		}
+
+		private static final String FORMAT_OFFSET = "%04x    ";
+		private static final String FORMAT_OPCODE_INDEX = "[%02x %04x]\t";
+		private static final String FORMAT_OPCODE = "[%02x %4s]\t";
+		private static final String FORMAT_NAME = "%-16s";
+		private static final String FORMAT_NONE = "%4s    %2s %4s \t%16s";
+		
+		private void print(long offset) {
+			System.out.printf(prefix + FORMAT_OFFSET, offset);			
+		}
+
+		private void print(byte opcode, int index) {
+			System.out.printf(FORMAT_OPCODE_INDEX, opcode, index);		
+		}
+		
+		private void print(byte opcode) {
+			System.out.printf(FORMAT_OPCODE, opcode, "");
+		}		
+
+		private void print(String name) {
+			System.out.printf(FORMAT_NAME, name);
+		}
+
+		private void print() {
+			System.out.printf(prefix + FORMAT_NONE, "", "", "", "");
+		}
+	}
+	
     // private static Map<Byte, String> opcodes = new HashMap<Byte, String>() {{
             
     //         put(AALOAD, "aaload");

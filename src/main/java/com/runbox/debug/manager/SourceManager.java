@@ -22,82 +22,109 @@ public class SourceManager extends Manager {
 
     @Override
     public  void clean() {
-        map.clear();
+        paths.clear(); files.clear();		
     }    
 
-    private Map<Integer, String> map = new HashMap<Integer, String>();
+    private Map<Integer, String> paths = new HashMap<Integer, String>();
+
+	public Map<Integer, String> paths() {
+        return paths;
+    }
+	
+	private Map<String, Map<Integer, String>> files = new HashMap<String, Map<Integer, String>>();
+
+	public Map<String, Map<Integer, String>> files() {
+		return files;
+	}
 
     public boolean append(String path) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key).equals(path)) {
-                return true;
-            }
-        }
-        map.put(id(), path);
-        return true;
-    }
-
+		if (null != path) {
+			for (Integer key : paths.keySet()) {
+				if (paths.get(key).equals(path)) {
+					return true;
+				}
+			}
+			paths.put(id(), path);
+		}
+		return true;
+    }	
+	
     public boolean delete(int id) {
-        for (Integer key : map.keySet()) {
+        for (Integer key : paths.keySet()) {
             if (key == id) {
-                map.remove(key);
-                return true;
+				delete(paths.remove(key));
+				return true;
             }
         }
         return false;
     }
 
-    public Map<Integer, String> lines(Location location, int front, int back) throws Exception {
-        return lines(find(location), location, front, back);
-    }
+	public void delete(String path) {
+		Iterator<Map.Entry<String, Map<Integer, String>>> iterator = files.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, Map<Integer, String>> entry = iterator.next();
+			if (0 == entry.getKey().indexOf(path)) {
+				iterator.remove();
+			}
+		}
+	}
 
-    public File find(Location location) {
-        for (Integer key : map.keySet()) {
+	public void delete() {
+		paths.clear(); files.clear();
+	}
+
+	public String line(Location location) throws Exception {
+		if (null != location) {
 			try {
-				File file = new File(map.get(key) + File.separator + location.sourcePath());
-				if (file.exists()) {
-					return file;
+				String path = location.sourcePath();				
+				Map<Integer, String> lines = find(path); if (null != lines) {
+					return lines.get(location.lineNumber());
+				}
+				lines = load(path); if (null != lines) {
+					return lines.get(location.lineNumber());
 				}
 			} catch (AbsentInformationException e) {
 				return null;
 			}
-        }
-        return null;
-    }
+		}
+		return null;
+	}
 
-    private Map<Integer, String> lines(File file, Location location, int front, int back) throws Exception {
-        if (null != file) {
-            if (location.lineNumber() >= 0 && front <= 0 && back >= 0) {
-                int start = location.lineNumber() + front;
-                start = (0 > start) ? 0 : start;
-                int end = location.lineNumber() + back;
-                if (file.exists()) {
-                    int number = 1;
-                    BufferedReader reader = null;
-                    try {
-                        reader = new BufferedReader(new FileReader(file));
-                        String code;
-                        Map<Integer, String> map = new HashMap<Integer, String>();
-                        while (null != (code = reader.readLine())) {
-                            if (number >= start && number <= end) {
-                                map.put(number, code);
-                            } else if (number > end) {
-                                return map;
-                            }
-                            ++number;
-                        }
-                    } finally {
-                        if (null != reader) {
-                            reader.close();
-                        }
-                    }
-                }
-            }			
-        }
-        return null;
-    }
+	public Map<Integer, String> find(String path) {
+		for (String key : files.keySet()) {
+			if (key.indexOf(path) + path.length() == key.length() - 1) {
+				return files.get(key);
+			}
+		}
+		return null;
+	}
 
-    public Map<Integer, String> paths() {
-        return map;
-    }
+	public Map<Integer, String> load(String path) throws Exception {
+		for (Integer key : paths.keySet()) {
+			File file = new File(paths.get(key) + File.separator + path);			
+			if (file.exists()) {
+				Map<Integer, String> lines = read(file);
+				files.put(file.getPath(), lines);
+				return lines;
+			}			
+		}
+		return null;
+	}
+
+	public Map<Integer, String> read(File file) throws Exception {
+		Map<Integer, String> lines = new HashMap<Integer, String>();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			String line = null;			
+			int i = 0; while (null != (line = reader.readLine())) {				
+				lines.put(++i, line);				
+			}
+		} finally {
+			if (null != reader) {
+				reader.close();
+			}
+		}
+		return lines;
+	}	       
 }

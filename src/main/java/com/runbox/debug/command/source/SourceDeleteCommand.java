@@ -3,33 +3,40 @@ package com.runbox.debug.command.source;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.SourceManager;
+import com.runbox.debug.script.expression.Expression;
+import com.runbox.debug.script.expression.token.operand.Operand;
 
-public class SourceDeleteCommand extends Command {
+public class SourceDeleteCommand extends SourceCommand {
 
     public SourceDeleteCommand(String command) throws Exception {
-        super(command);
-        if (null == argument()) {
-            throw new Exception("invalid argument");
-        }
+        super(command);        
     }
 
     @Override
     public boolean execute() throws Exception {
-        for (Integer number : numbers()) {
-            if (!SourceManager.instance().delete(number)) {
-                System.out.println("invalid number/" + number);
-            }
-        }
+		List<Integer> ids = ids();
+		if (null != ids) {
+			for (Integer id : ids) {
+				SourceManager.instance().delete(id);
+			}        
+		} else {
+			SourceManager.instance().delete();
+		}
         return super.execute();
     }
 
-    private List<Integer> numbers() {
-        List<Integer> numbers = new LinkedList<Integer>();
-        for (String number : argument().split(",")) {
-            numbers.add(Integer.valueOf(number.trim()));
-        }
-        return numbers;
-    }
+	public List<Integer> ids() throws Exception {
+		if (null != argument()) {
+			Expression.Values<Operand> values = new Expression(argument()).execute();
+			if (null != values) {
+				List<Integer> ids = new LinkedList<Integer>();
+				for (int i = 0; i < values.size(); ++i) {
+					ids.add(values.getInteger(i));
+				}            
+				return ids;
+			}
+		}
+		return null;
+	}       
 }

@@ -21,7 +21,7 @@ import sun.misc.SignalHandler;
 import com.runbox.manager.ConfigManager;
 
 import com.runbox.debug.command.Command;
-import com.runbox.debug.event.*;
+import com.runbox.debug.event.EventFactory;
 import com.runbox.debug.manager.*;
 
 import com.runbox.script.statement.Script;
