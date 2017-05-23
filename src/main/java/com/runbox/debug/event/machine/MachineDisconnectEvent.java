@@ -14,7 +14,7 @@ public class MachineDisconnectEvent extends Event<VMDisconnectEvent> {
     @Override
     public boolean handle() throws Exception {
         Debugger.instance().flag(Debugger.DISCONNECT);
-        System.out.println(event.toString());
+        System.out.println(event().toString());
         return true;
     }
 }

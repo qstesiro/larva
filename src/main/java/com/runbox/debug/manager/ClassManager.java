@@ -22,47 +22,7 @@ public class ClassManager extends Manager {
 
     public static ClassManager instance() {
         return instance;
-    }
-
-    // @Override
-    // public void clean() throws Exception {
-    //     if (null != prepare && null != unload) {
-    //         RequestManager.instance().deleteEventRequest(prepare); prepare = null;
-    //         RequestManager.instance().deleteEventRequest(unload); unload = null;
-    //     }
-    //     for (int key : map.keySet()) {
-    //         RequestManager.instance().deleteEventRequest(map.get(key));
-    //     }		
-    //     map.clear();
-    // }
-    
-    // private ClassPrepareRequest prepare = null;
-    // private ClassUnloadRequest unload = null;
-
-    // @Override
-    // public void monitor(boolean flag) {
-    //     if (flag) {
-    //         if (null == prepare && null == unload) {
-    //             prepare = RequestManager.instance().createClassPrepareRequest(null);                
-    //             unload = RequestManager.instance().createClassUnloadRequest(null);                
-    //         }
-    //     } else {
-    //         if (null != prepare && null != unload) {
-    //             RequestManager.instance().deleteEventRequest(prepare); prepare = null;
-    //             RequestManager.instance().deleteEventRequest(unload); unload = null;
-    //         }
-    //     }
-    // }
-
-    // @Override
-    // public boolean need(Event event) {
-    //     if (event instanceof ClassPrepareEvent || event instanceof ClassUnloadEvent) {
-    //         if (prepare == event.request() || unload == event.request()) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }    
+    }    
 
 	private Map<Integer, EventRequest> map = new HashMap<Integer, EventRequest>();       
     

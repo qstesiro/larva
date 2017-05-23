@@ -1,13 +1,14 @@
 package com.runbox.debug.manager;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import com.sun.jdi.ClassType;
 import com.sun.jdi.Field;
 import com.sun.jdi.Location;
 import com.sun.jdi.ObjectReference;
+import com.sun.jdi.ReferenceType;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.ExceptionEvent;
 import com.sun.jdi.request.EventRequest;
@@ -28,13 +29,46 @@ public class ExceptionManager extends Manager {
         return instance;
     }
 
+	public void clean() throws Exception {		
+		delete();		
+	}
+
+	private Map<Integer, ExceptionRequest> requests = new HashMap<Integer, ExceptionRequest>();
+
+	public Map<Integer, ExceptionRequest> requests() {
+		return requests;
+	}
+
+	public void append(ReferenceType type, boolean caught, boolean uncaught) {
+		for (int id : requests.keySet()) {
+			if (requests.get(id).exception().name().equals(type.name())) {
+				return;
+			}
+		}
+		requests.put(id(), RequestManager.instance().createExceptionRequest(type, caught, uncaught));
+	}
+
+	public void delete(int id) {
+		if (requests.containsKey(id)) {
+			RequestManager.instance().deleteEventRequest(requests.get(id));
+			requests.remove(id);
+		}
+	}
+
+	public void delete() {
+		for (int id : requests.keySet()) {
+			RequestManager.instance().deleteEventRequest(requests.get(id));
+		}
+		requests.clear();
+	}
+	
     private ExceptionRequest request = null;
 
     @Override
     public void monitor(boolean flag) {
-        if (flag) {
-            request = RequestManager.instance().createExceptionRequest(null, false, true);            
-        } else {
+        if (flag && null == request) {
+            request = RequestManager.instance().createExceptionRequest(null, false, true);
+        } else if (!flag && null != request) {
             RequestManager.instance().deleteEventRequest(request); request = null;
         }
     }
@@ -56,7 +90,7 @@ public class ExceptionManager extends Manager {
         String line = SourceManager.instance().line(exception.catchLocation());
 		if (null != line) System.out.println(line);
         print(exception.exception());
-        return false;
+        return !super.handle(event);
     }
 
     private void print(ObjectReference object) throws Exception {

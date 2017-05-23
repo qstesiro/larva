@@ -14,9 +14,9 @@ public class MachineStartEvent extends Event<VMStartEvent> {
 
     @Override
     public boolean handle() throws Exception {
-        String log = event.toString();
-        log += "/" + event.thread().name();
-        log += "/" + event.thread().threadGroup().toString();
+        String log = event().toString();
+        log += "/" + event().thread().name();
+        log += "/" + event().thread().threadGroup().toString();
         System.out.println(log);
         return super.handle();
     }

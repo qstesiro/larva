@@ -65,9 +65,9 @@ public class ExecuteManager extends Manager {
 
     @Override
     public void monitor(boolean flag) {
-        if (flag) {
+        if (flag && null == request) {
             request = RequestManager.instance().createThreadDeathRequest();
-        } else {
+        } else if (!flag && null != request) {
             RequestManager.instance().deleteEventRequest(request); request = null;
         }
     }

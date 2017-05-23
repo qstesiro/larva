@@ -127,7 +127,7 @@ public class BreakpointCommand extends Command {
         throw new Exception("invalid argument -> " + argument());
     }
 
-    public List<Integer> ids() throws Exception {
+    protected List<Integer> ids() throws Exception {
         if (null != values) {
             List<Integer> ids = new LinkedList<Integer>();
 			for (int i = 0; i < values.size(); ++i) {

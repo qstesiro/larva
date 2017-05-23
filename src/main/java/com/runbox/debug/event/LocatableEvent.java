@@ -25,8 +25,8 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 
     @Override
     public boolean handle() throws Exception {		
-		printCode(event.location());
-		printLine(event.location());		
+		printCode(event().location());
+		printLine(event().location());		
         return super.handle();
     }	
 	

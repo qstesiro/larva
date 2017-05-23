@@ -25,6 +25,7 @@ import com.runbox.debug.event.machine.MachineDisconnectEvent;
 import com.runbox.debug.event.machine.MachineStartEvent;
 import com.runbox.debug.event.thread.ThreadStartupEvent;
 import com.runbox.debug.event.thread.ThreadDeathEvent;
+import com.runbox.debug.event.exception.ExceptionEvent;
 
 public class EventFactory {
 
@@ -54,6 +55,7 @@ public class EventFactory {
         } else if (event instanceof StepEvent) {
             return build((StepEvent)event);
         } else if (event instanceof com.sun.jdi.event.ExceptionEvent) {
+			return new ExceptionEvent((com.sun.jdi.event.ExceptionEvent)event);
         }
         return new Event();
     }

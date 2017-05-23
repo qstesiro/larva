@@ -14,6 +14,7 @@ import com.runbox.debug.command.source.*;
 import com.runbox.debug.command.template.*;
 import com.runbox.debug.command.thread.*;
 import com.runbox.debug.command.variant.*;
+import com.runbox.debug.command.exception.*;
 import com.runbox.debug.command.quit.*;
 
 public class CommandFactory extends com.runbox.command.CommandFactory {
@@ -136,7 +137,13 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new SourceDeleteCommand(command);
 		} else if (key.equals(SOURCE_QUERY)) {
 			return new SourceQueryCommand(command);
-		} else if (key.equals(DETACH)) {
+		} else if (key.equals(EXCEPTION_MONITOR)) {
+			return new ExceptionMonitorCommand(command);
+		} else if (key.equals(EXCEPTION_DELETE)) {
+			return new ExceptionDeleteCommand(command);
+		} else if (key.equals(EXCEPTION_QUERY)) {
+			return new ExceptionQueryCommand(command);
+		} else if (key.equals(DETACH)) {			
 			return new DetachCommand(command);
 		} else if (key.equals(QUIT)) {
 			return new QuitCommand(command);
@@ -220,7 +227,10 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static String SOURCE_DELETE = "source.delete";
     public final static String SOURCE_QUERY = "source.query";
 
-    public final static int COMMAND_EXCEPTION = COMMAND_SOURCE + 1;	
+    public final static int COMMAND_EXCEPTION = COMMAND_SOURCE + 1;
+	public final static String EXCEPTION_MONITOR = "exception.monitor";
+	public final static String EXCEPTION_DELETE = "exception.delete";
+	public final static String EXCEPTION_QUERY = "exception.query";
 	
     public final static int COMMAND_QUIT = COMMAND_EXCEPTION + 1;
     public final static String QUIT = "quit";
@@ -296,7 +306,11 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         // source command
         add(SOURCE_APPEND);
         add(SOURCE_DELETE);
-        add(SOURCE_QUERY);     
+        add(SOURCE_QUERY);
+		// exception command
+		add(EXCEPTION_MONITOR);
+		add(EXCEPTION_DELETE);
+		add(EXCEPTION_QUERY);
         // quit 
         add(QUIT);     
         add(DETACH);

@@ -6,7 +6,7 @@ public class Event<T extends com.sun.jdi.event.Event> {
         event = null;
     }
 
-    protected T event;
+    private T event;
 
     public Event(T event) {
         this.event = event;

@@ -12,7 +12,7 @@ public class MachineDeathEvent extends Event<VMDeathEvent> {
 
     @Override
     public boolean handle() throws Exception {
-        System.out.println(event.toString());
+        System.out.println(event().toString());
         return true;
     }
 }

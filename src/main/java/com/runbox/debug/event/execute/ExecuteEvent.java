@@ -25,14 +25,14 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 	}
 
 	private int count() {
-		EventRequest request = event.request();
+		EventRequest request = event().request();
 		int count = (int)request.getProperty(ExecuteCommand.COUNT);
 		request.putProperty(ExecuteCommand.COUNT, --count);
 		return count;
 	}
 
 	private void print() {
-		StepRequest request = (StepRequest)event.request();
+		StepRequest request = (StepRequest)event().request();
 		String string = (StepRequest.STEP_LINE == request.size() ? "next" : "step");
 		string += " " + (StepRequest.STEP_OVER == request.depth() ? "over" : "into");		
 		System.out.println(string);

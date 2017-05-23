@@ -22,7 +22,8 @@ public class SourceManager extends Manager {
 
     @Override
     public  void clean() {
-        paths.clear(); files.clear();		
+        paths.clear(); 
+		files.clear();		
     }    
 
     private Map<Integer, String> paths = new HashMap<Integer, String>();
