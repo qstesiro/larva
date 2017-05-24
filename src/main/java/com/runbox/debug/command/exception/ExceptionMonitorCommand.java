@@ -5,6 +5,7 @@ import java.util.List;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.ArrayType;
 
+import com.runbox.manager.ImportManager;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.ExceptionManager;
@@ -50,11 +51,16 @@ public class ExceptionMonitorCommand extends Command {
 		if (null != values && CLASS < values.size()) {
 			String clazz = values.getString(CLASS);
 			if (!clazz.equals("")) {
-				return clazz;
+				return clazz(clazz);
 			}
 		}
 		throw new Exception("invalid operand");
 	}
+
+	private String clazz(String clazz) throws Exception {
+		String path = ImportManager.instance().find(clazz);			
+		return (null != path ? path + "." + clazz : clazz);
+	} 
 
 	public boolean caught = true;
 

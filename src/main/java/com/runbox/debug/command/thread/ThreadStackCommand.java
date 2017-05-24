@@ -13,13 +13,12 @@ public class ThreadStackCommand extends ThreadCommand {
     @Override
     public boolean execute() throws Exception {
         ThreadReference thread = ContextManager.instance().thread();
-        if (null != thread) {
-            int index = 0;
+        if (null != thread) {            
             System.out.printf("%-5s%s\n", "#", "location");
 			if (0 < thread.frameCount()) {
-				for (StackFrame frame : thread.frames()) {
+				int i = 0; for (StackFrame frame : thread.frames()) {
 					Location location = frame.location();
-					System.out.printf("%-5d%s.%s\n", index++, location.declaringType().name(), location.method().name());
+					System.out.printf("%-5d%s.%s\n", i++, location.declaringType().name(), location.method().name());
 				}
 			}
         }

@@ -9,6 +9,8 @@ import com.sun.jdi.Field;
 import com.sun.jdi.Location;
 import com.sun.jdi.ObjectReference;
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.ThreadReference;
+import com.sun.jdi.StackFrame;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.ExceptionEvent;
 import com.sun.jdi.request.EventRequest;
@@ -85,8 +87,7 @@ public class ExceptionManager extends Manager {
 
     @Override
     public boolean handle(Event event) throws Exception {
-		ExceptionEvent exception = (ExceptionEvent)event;
-        Location location = exception.location();
+		ExceptionEvent exception = (ExceptionEvent)event;        		
         String line = SourceManager.instance().line(exception.catchLocation());
 		if (null != line) System.out.println(line);
         print(exception.exception());
@@ -95,31 +96,15 @@ public class ExceptionManager extends Manager {
 
     private void print(ObjectReference object) throws Exception {
         ClassType type = (ClassType)object.referenceType();
-        System.out.println(type.name());
-        List<Field> fields = type.allFields();
-        for (Field field : fields) {
-            System.out.println(format(new FieldOperand(object, field.name())));
-        }
-    }
-
-    private String format(Operand operand) throws Exception {
-        String print = "";
-        if (null != operand.value()) {
-            if (null != operand.name()) {
-                print += operand.name();
-                print += " :" + operand.type().name();
-                print += " = ";
-            }
-            print += operand.value();
-            if (operand.value() instanceof ObjectReference) {
-                print += " :" + operand.value().type().name();
-            }
-        } else {
-            if (null != operand.name()) {
-                print = operand.name();
-            }
-            print += " = " + "null";
-        }
-        return print;
-    }
+        System.out.println("catch exception -> " + type.name());
+		ThreadReference thread = ContextManager.instance().thread();
+        if (null != thread) {
+			if (0 < thread.frameCount()) {
+			    for (StackFrame frame : thread.frames()) {
+					Location location = frame.location();
+					System.out.printf("   at %s.%s :%d\n", location.declaringType().name(), location.method().name(), location.lineNumber());
+				}
+			}
+        }        
+    }    
 }

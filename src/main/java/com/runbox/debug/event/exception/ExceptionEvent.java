@@ -7,6 +7,8 @@ import com.sun.jdi.Field;
 import com.sun.jdi.Location;
 import com.sun.jdi.ObjectReference;
 import com.sun.jdi.ReferenceType;
+import com.sun.jdi.StringReference;
+import com.sun.jdi.ArrayReference;
 
 import com.runbox.debug.event.Event;
 import com.runbox.debug.manager.SourceManager;
@@ -21,40 +23,7 @@ public class ExceptionEvent extends Event<com.sun.jdi.event.ExceptionEvent> {
 
 	@Override
 	public boolean handle() throws Exception {
-        Location location = event().location();
-        String line = SourceManager.instance().line(event().catchLocation());
-		if (null != line) System.out.println(line);
-        print(event().exception());        
+		System.out.println("catch exception -> " + event().exception().type().name());
 		return !super.handle();
-	}
-
-   private void print(ObjectReference object) throws Exception {
-        ClassType type = (ClassType)object.referenceType();
-        System.out.println(type.name());
-        List<Field> fields = type.allFields();
-        for (Field field : fields) {
-            System.out.println(format(new FieldOperand(object, field.name())));
-        }
-    }
-
-    private String format(Operand operand) throws Exception {
-        String print = "";
-        if (null != operand.value()) {
-            if (null != operand.name()) {
-                print += operand.name();
-                print += " :" + operand.type().name();
-                print += " = ";
-            }
-            print += operand.value();
-            if (operand.value() instanceof ObjectReference) {
-                print += " :" + operand.value().type().name();
-            }
-        } else {
-            if (null != operand.name()) {
-                print = operand.name();
-            }
-            print += " = " + "null";
-        }
-        return print;
-    }
+	}	
 }
