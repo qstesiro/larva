@@ -54,6 +54,7 @@ public class BreakLineCommand extends Command {
                     if (parser.peek().name().equals("#")) {
                         LineBreakPoint point = new LineBreakPoint(clazz, ((Number)token).number());
                         point.block(block());
+                        return point;
                     }
                 }
             }
