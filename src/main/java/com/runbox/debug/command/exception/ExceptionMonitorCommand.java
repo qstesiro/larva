@@ -32,7 +32,7 @@ public class ExceptionMonitorCommand extends Command {
             for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
 					if (type.name().equals(clazz)) {
-						ExceptionManager.instance().append(type, caught, uncaught);
+						ExceptionManager.instance().append(type, caught, uncaught, routine());
 					}
 				}
             }

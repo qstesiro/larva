@@ -219,7 +219,7 @@ public class Engine {
         this.breaks = new LinkedList<BreakNode>();
         Token token = lexer.token();        
         if (token.name().equals("{")) {
-            BeginNode begin = new BeginNode();            
+            BeginNode begin = new BeginNode();
             parent.right(begin);
             BlockNode block = this.block; this.block = parent;
             Node front = blockStatement(begin);
@@ -478,7 +478,7 @@ public class Engine {
 			while (!frames.empty()) {
 				if (pop() == block) {
 					break;
-				}								
+				}
 			}
 		}
 	}

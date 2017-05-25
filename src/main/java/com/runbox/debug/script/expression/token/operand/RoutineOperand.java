@@ -13,7 +13,7 @@ public class RoutineOperand extends Operand {
         super(name); routine = Engine.instance().findRoutine(name());
     }    
 
-	RoutineNode routine = null;
+	private RoutineNode routine = null;
 
 	public void arguments(List<Operand> autos) throws Exception {
 		if (null != routine) {

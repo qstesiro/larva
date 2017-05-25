@@ -689,7 +689,7 @@ public class Executer {
 				} else if (Token.auto(operand.name())) {
 					if (null != Engine.instance().findAuto(operand.name())) {
 						return (Operand)Engine.instance().findAuto(operand.name());
-					}					
+					}
 				}
 			}
 		}

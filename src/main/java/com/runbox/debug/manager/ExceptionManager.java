@@ -16,6 +16,7 @@ import com.sun.jdi.event.ExceptionEvent;
 import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.ExceptionRequest;
 
+import com.runbox.script.statement.node.RoutineNode;
 import com.runbox.debug.script.expression.token.operand.FieldOperand;
 import com.runbox.debug.script.expression.token.operand.Operand;
 
@@ -41,13 +42,13 @@ public class ExceptionManager extends Manager {
 		return requests;
 	}
 
-	public void append(ReferenceType type, boolean caught, boolean uncaught) {
+	public void append(ReferenceType type, boolean caught, boolean uncaught, RoutineNode routine) {
 		for (int id : requests.keySet()) {
 			if (requests.get(id).exception().name().equals(type.name())) {
 				return;
 			}
 		}
-		requests.put(id(), RequestManager.instance().createExceptionRequest(type, caught, uncaught));
+		requests.put(id(), RequestManager.instance().createExceptionRequest(type, caught, uncaught, routine));
 	}
 
 	public void delete(int id) {
@@ -69,7 +70,7 @@ public class ExceptionManager extends Manager {
     @Override
     public void monitor(boolean flag) {
         if (flag && null == request) {
-            request = RequestManager.instance().createExceptionRequest(null, false, true);
+            request = RequestManager.instance().createExceptionRequest(null, false, true, null);
         } else if (!flag && null != request) {
             RequestManager.instance().deleteEventRequest(request); request = null;
         }

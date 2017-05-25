@@ -79,7 +79,7 @@ public class Script {
     }    
 
     private void execute(ExpressionNode node) throws Exception {
-        ExpressionFactory.build(node.name()).execute();        
+        ExpressionFactory.build(node.name()).execute();
         next = node.next();
     }
 
@@ -90,7 +90,7 @@ public class Script {
         return command.execute();
     }
 
-	private void execute(ReturnNode node) throws Exception {        
+	private void execute(ReturnNode node) throws Exception {
         if (null != node.routine()) {
 			if (null != node.expression()) {
 				Expression.Values<? extends Token> values = ExpressionFactory.build(node.expression()).execute();
@@ -100,7 +100,7 @@ public class Script {
 			return;
         }
         throw new Exception("invalid return statement -> " + node.name() + " " + node.expression());
-    }	
+    }
 
 	private void execute(ContinueNode node) throws Exception {
 		Engine.instance().pop((BlockNode)node.next());

@@ -7,6 +7,7 @@ import com.sun.jdi.request.*;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.command.clazz.ClassCommand;
 import com.runbox.debug.manager.BreakpointManager;
+import com.runbox.script.statement.node.RoutineNode;
 
 public class RequestManager extends Manager {
 
@@ -26,21 +27,23 @@ public class RequestManager extends Manager {
         return instance.manager;
     }
 
-    public ClassPrepareRequest createClassPrepareRequest(String clazz, int suspend) {
+    public ClassPrepareRequest createClassPrepareRequest(String clazz, int suspend, RoutineNode routine) {
         if (null != manager) {
-            ClassPrepareRequest request = manager.createClassPrepareRequest();            
+            ClassPrepareRequest request = manager.createClassPrepareRequest();
 			request.setSuspendPolicy(suspend);
             if (null != clazz)  {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);
             }
-			request.enable();
-            return request;
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }
 
-    public ClassUnloadRequest createClassUnloadRequest(String clazz, int suspend) {
+    public ClassUnloadRequest createClassUnloadRequest(String clazz, int suspend, RoutineNode routine) {
         if (null != manager) {
             ClassUnloadRequest request = manager.createClassUnloadRequest();
             request.setSuspendPolicy(suspend);
@@ -48,8 +51,10 @@ public class RequestManager extends Manager {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);
             }
-			request.enable();
-            return request;
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }
@@ -75,9 +80,9 @@ public class RequestManager extends Manager {
 					request = manager.createModificationWatchpointRequest(field);
 				}
 				if (null != request) {
-					return fill(request, breakpoint);					
+					return fill(request, breakpoint);
 				}
-			} 
+			}
 		}
 		return null;
 	}
@@ -96,61 +101,82 @@ public class RequestManager extends Manager {
         return request;
     }
 
-    public StepRequest createStepRequest(ThreadReference thread, int size, int depth) {
+    public StepRequest createStepRequest(ThreadReference thread, int size, int depth, RoutineNode routine) {
         if (null != manager) {
             StepRequest request = manager.createStepRequest(thread, size, depth);
 			request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
 			return request;
         }
         return null;
     }
 
-    public ThreadStartRequest createThreadStartRequest() {
+    public ThreadStartRequest createThreadStartRequest(RoutineNode routine) {
         if (null != manager) {
             ThreadStartRequest request = manager.createThreadStartRequest();
             request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
-            request.enable();
-            return request;
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+            request.enable(); return request;
         }
         return null;
     }
 
-    public ThreadDeathRequest createThreadDeathRequest() {
+    public ThreadDeathRequest createThreadDeathRequest(RoutineNode routine) {
         if (null != manager) {
             ThreadDeathRequest request = manager.createThreadDeathRequest();
             request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
-            request.enable();
-            return request;
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }
 
-    public MethodEntryRequest createMethodEntryRequest() {
+    public MethodEntryRequest createMethodEntryRequest(RoutineNode routine) {
         if (null != manager) {
-            return manager.createMethodEntryRequest();
+            MethodEntryRequest request = manager.createMethodEntryRequest();
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }
 
-    public MethodExitRequest createMethodExitRequest() {
+    public MethodExitRequest createMethodExitRequest(RoutineNode routine) {
         if (null != manager) {
-            return manager.createMethodExitRequest();
+            MethodExitRequest request = manager.createMethodExitRequest();
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }
 
-    public ExceptionRequest createExceptionRequest(ReferenceType type, boolean caught, boolean uncaught) {
+    public ExceptionRequest createExceptionRequest(ReferenceType type, boolean caught, boolean uncaught, RoutineNode routine) {
         if (null != manager) {
             ExceptionRequest request = manager.createExceptionRequest(type, caught, uncaught);
             request.setSuspendPolicy(EventRequest.SUSPEND_ALL);
-            request.enable();
-            return request;
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+            request.enable(); return request;
         }
         return null;
     }    
-    public VMDeathRequest createVMDeathRequest() {
+    public VMDeathRequest createVMDeathRequest(RoutineNode routine) {
         if (null != manager) {
-            return manager.createVMDeathRequest();
+            VMDeathRequest request = manager.createVMDeathRequest();
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
+            }
+			request.enable(); return request;
         }
         return null;
     }

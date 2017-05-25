@@ -10,6 +10,8 @@ import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.StepRequest;
 import com.sun.jdi.request.ThreadDeathRequest;
 
+import com.runbox.script.statement.node.RoutineNode;
+
 public class ExecuteManager extends Manager {
 
     private ExecuteManager() {
@@ -41,9 +43,9 @@ public class ExecuteManager extends Manager {
         throw new Exception("invalid thread context");
 	}    
 	
-    public StepRequest create(ThreadReference thread, int size, int depth) throws Exception {
+    public StepRequest create(ThreadReference thread, int size, int depth, RoutineNode routine) throws Exception {
         if (null != thread) {			
-			StepRequest request = RequestManager.instance().createStepRequest(thread, size, depth);
+			StepRequest request = RequestManager.instance().createStepRequest(thread, size, depth, routine);
             map.put(thread, request);
             return request;
         }
@@ -66,7 +68,7 @@ public class ExecuteManager extends Manager {
     @Override
     public void monitor(boolean flag) {
         if (flag && null == request) {
-            request = RequestManager.instance().createThreadDeathRequest();
+            request = RequestManager.instance().createThreadDeathRequest(null);
         } else if (!flag && null != request) {
             RequestManager.instance().deleteEventRequest(request); request = null;
         }

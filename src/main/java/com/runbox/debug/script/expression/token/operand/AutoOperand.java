@@ -32,7 +32,7 @@ public class AutoOperand extends Operand {
     public Value value(Value value) throws Exception {
 		Value prev = this.value;
 		this.value = value;
-		return prev;	
+		return prev;
     }
 
     public Value value() throws Exception {

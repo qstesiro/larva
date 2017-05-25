@@ -28,13 +28,13 @@ public class ExecuteCommand extends Command {
 	protected StepRequest create() throws Exception {
 		if (null != ContextManager.instance().thread()) {
 			if (this instanceof ExecuteNextOverCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_OVER);
+				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_OVER, routine());
 			} else if (this instanceof ExecuteNextIntoCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_INTO);
+				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_INTO, routine());
 			} else if (this instanceof ExecuteStepOverCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_OVER);
+				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_OVER, routine());
 			} else if (this instanceof ExecuteStepIntoCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_INTO);
+				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_INTO, routine());
 			}			
 		}
 		throw new Exception("thread context is null, don`t execute.");	   

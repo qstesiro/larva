@@ -289,8 +289,8 @@ public class BreakpointManager extends Manager {
 
     private void append(String clazz) {
         if (!requests.containsKey(clazz)) {
-            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD),
-                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD)));
+            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null),
+                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null)));
         }
         requests.get(clazz).increase();
     }

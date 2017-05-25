@@ -146,7 +146,7 @@ public class Debugger implements SignalHandler {
         } else {
             flag = EventFactory.build(event).handle();
         }
-        if (!flag) {if (execute(event)) {execute();}}
+        if (!flag) execute();
 	}	
 	
     private boolean execute(String file) {
@@ -160,17 +160,17 @@ public class Debugger implements SignalHandler {
 		return true;
     }
 
-	private boolean execute(Event event) {
-        EventRequest request = event.request();
-        if (null != request.getProperty(Command.ROUTINE)) {
-			try {
-				return new Script((RoutineNode)request.getProperty(Command.ROUTINE)).execute();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        }
-		return true;
-    }
+	// private boolean execute(Event event) {
+    //     EventRequest request = event.request();
+    //     if (null != request.getProperty(Command.ROUTINE)) {
+	// 		try {
+	// 			return new Script((RoutineNode)request.getProperty(Command.ROUTINE)).execute();
+	// 		} catch (Exception e) {
+	// 			e.printStackTrace();
+	// 		}
+    //     }
+	// 	return true;
+    // }
 	
     private synchronized void execute() {
         while (true) {

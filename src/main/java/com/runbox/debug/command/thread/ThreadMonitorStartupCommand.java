@@ -20,7 +20,7 @@ public class ThreadMonitorStartupCommand extends ThreadCommand {
              if (status.equals("enable")) {
                  ThreadStartRequest request = ThreadManager.instance().startup();
                  if (null == request) {
-                     ThreadManager.instance().startup(RequestManager.instance().createThreadStartRequest());
+                     ThreadManager.instance().startup(RequestManager.instance().createThreadStartRequest(routine()));
                  }
              } else if (status.equals("disable")) {
                  ThreadStartRequest request = ThreadManager.instance().startup();

@@ -20,7 +20,7 @@ public class ThreadMonitorDeathCommand extends ThreadCommand {
              if (status.equals("enable")) {
                  ThreadDeathRequest request = ThreadManager.instance().death();
                  if (null == request) {
-                     ThreadManager.instance().death(RequestManager.instance().createThreadDeathRequest());
+                     ThreadManager.instance().death(RequestManager.instance().createThreadDeathRequest(routine()));
                  }
              } else if (status.equals("disable")) {
                  ThreadDeathRequest request = ThreadManager.instance().death();
