@@ -55,7 +55,10 @@ public class Engine {
         try {
 			BeginNode begin = new BeginNode(); root.right(begin);
 			EndNode end = new EndNode(root); root.left(end);
-			Node node = statement(begin);
+			List<CommandNode> commands = this.commands;
+			this.commands = new LinkedList<CommandNode>();
+			Node node = statement(begin); 
+			commands(root); this.commands = commands;
 			node.next(null).next(end); end.next(node);
             // print(root, "", "");
         } catch (Exception e) {
@@ -123,6 +126,8 @@ public class Engine {
     private EndNode defStatement(RoutineNode parent) throws Exception {
 		List<ReturnNode> returns = this.returns;
         this.returns = new LinkedList<ReturnNode>();
+		List<CommandNode> commands = this.commands;
+		this.commands = new LinkedList<CommandNode>();
         Token token = lexer.token();
         if (token.name().equals("{")) {
             BeginNode begin = new BeginNode();
@@ -135,6 +140,7 @@ public class Engine {
                 EndNode end = new EndNode(parent);
                 parent.left(end); front.next(end);
                 returns(parent); this.returns = returns;
+				commands(parent); this.commands = commands;
                 return end;
             }
         }
@@ -247,9 +253,11 @@ public class Engine {
         if (token.name().equals(";")) {
             skip();
             if (!blockEnd(lexer.peek(true))) {
+				commands.add(commands.size(), node);
                 return statement(node);
             }
-            return node;
+			commands.add(commands.size(), node);
+			return node;
         }
         throw new Exception("invalid command statement -> " + token.name());
     }
@@ -402,6 +410,14 @@ public class Engine {
         breaks.clear();
     }
 
+	private List<CommandNode> commands = null;
+
+	private void commands(BlockNode node) {
+		for (CommandNode entry : commands) {			
+			entry.end((EndNode)node.left());			
+		}
+	}
+	
 	private List<ReturnNode> returns = null;
 
     private void returns(RoutineNode node) {

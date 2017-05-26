@@ -49,14 +49,17 @@ public class Script {
             } else if (next instanceof ExpressionNode) {
                 execute((ExpressionNode)next);
             } else if (next instanceof CommandNode) {
-                if (!execute((CommandNode)next)) return false;
+				CommandNode command = (CommandNode)next;
+                if (!execute(command)) {
+					execute(command.end()); return false;
+				}
             } else if (next instanceof ReturnNode) {
                 execute((ReturnNode)next);
             } else if (next instanceof ContinueNode) {
 				execute((ContinueNode)next);
 			} else if (next instanceof EndNode) {
 				execute((EndNode)next);
-			} else {			   
+			} else {
                 next = next.next();
             }
         }
@@ -86,7 +89,7 @@ public class Script {
     private boolean execute(CommandNode node) throws Exception {
         Command command = CommandFactory.build(node.name());
 		command.routine(node.routine());		
-        next = node.next();		
+        next = node.next();
         return command.execute();
     }
 

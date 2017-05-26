@@ -27,11 +27,15 @@ public class Event<T extends com.sun.jdi.event.Event> {
 	
     public T event() {
         return event;
-    }
+    }		
+	
+    public boolean handle() throws Exception {
+        return true;
+    }	
 
 	private RoutineNode routine = null;
 	
-	protected RoutineNode routine() {
+	public RoutineNode routine() {
 		if (null == routine) {
 			EventRequest request = event.request();
 			if (null != request)  {
@@ -41,19 +45,15 @@ public class Event<T extends com.sun.jdi.event.Event> {
 			}
 		}
 		return routine;
-	}
-	
-    public boolean handle() throws Exception {
-        execute(); return true;
-    }
+	}	
 
 	private List<Operand> autos = new LinkedList<Operand>();
 	
 	protected void arguments(List<Operand> autos) {
 		this.autos = autos;
 	}
-
-	private void execute() throws Exception {
+	
+	public boolean execute() throws Exception {
 		if (null != routine) {
 			List<String> names = routine.arguments();
 			int i = 0; for (Operand item : autos) {
@@ -62,7 +62,8 @@ public class Event<T extends com.sun.jdi.event.Event> {
 				auto.value(item.value());
 				Engine.instance().append(auto);
 			}
-			new Script(routine).execute();
+			return new Script(routine).execute();
 		}
-	}
+		return true;
+	}	
 }

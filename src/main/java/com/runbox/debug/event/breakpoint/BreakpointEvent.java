@@ -14,6 +14,6 @@ public class BreakpointEvent<T extends com.sun.jdi.event.LocatableEvent> extends
 	public boolean handle() throws Exception {
 		System.out.println("hit breakpoint -> " +
 						   ((BreakpointManager.Breakpoint)event().request().getProperty(BreakpointManager.Breakpoint.OBJECT)).location());
-		return !super.handle();
+		return super.handle();
 	}
 }

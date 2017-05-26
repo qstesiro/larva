@@ -8,8 +8,10 @@ import java.util.Scanner;
 
 import com.sun.jdi.Bootstrap;
 import com.sun.jdi.connect.*;
-import com.sun.jdi.event.*;
-import com.sun.jdi.event.Event;
+import com.sun.jdi.event.EventQueue;
+import com.sun.jdi.event.EventSet;
+import com.sun.jdi.event.EventIterator;
+import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.request.EventRequest;
 
 import com.sun.tools.javac.util.Pair;
@@ -21,6 +23,7 @@ import sun.misc.SignalHandler;
 import com.runbox.manager.ConfigManager;
 
 import com.runbox.debug.command.Command;
+import com.runbox.debug.event.Event;
 import com.runbox.debug.event.EventFactory;
 import com.runbox.debug.manager.*;
 
@@ -122,7 +125,7 @@ public class Debugger implements SignalHandler {
     }
     
     private synchronized void handle(EventIterator iterator) throws Exception {                
-        Event event = iterator.nextEvent();
+        com.sun.jdi.event.Event event = iterator.nextEvent();
 		if (null != event.request()) {
 			MachineManager.instance().status(event.request(), true);
 		}
@@ -135,18 +138,18 @@ public class Debugger implements SignalHandler {
 		}
     }
 
-	private void handle(Event event) throws Exception {
+	private void handle(com.sun.jdi.event.Event event) throws Exception {
 		boolean flag = false;
-        if (BreakpointManager.instance().need(event)) {
-            flag = BreakpointManager.instance().handle(event);
-        } else if (ExecuteManager.instance().need(event)) {
-            flag = ExecuteManager.instance().handle(event);
-        } else if (ExceptionManager.instance().need(event)) {
-            flag = ExceptionManager.instance().handle(event);
-        } else {
-            flag = EventFactory.build(event).handle();
-        }
-        if (!flag) execute();
+        if (BreakpointManager.instance().need(event)) {			
+			BreakpointManager.instance().handle(event); flag = true;
+		}
+        if (ExecuteManager.instance().need(event)) {
+			ExecuteManager.instance().handle(event); flag = true;
+		}
+        if (ExceptionManager.instance().need(event)) {
+			ExceptionManager.instance().handle(event); flag = true;
+        } 		
+        if (!flag) if (execute(event)) execute();
 	}	
 	
     private boolean execute(String file) {
@@ -159,6 +162,17 @@ public class Debugger implements SignalHandler {
 		}
 		return true;
     }
+
+	private boolean execute(com.sun.jdi.event.Event object) throws Exception {
+		Event event = EventFactory.build(object);
+		if (event.handle()) {
+			if (null != event.routine()) {
+				return event.execute();
+			}
+			return true;
+		}
+		return false;
+	}
 
 	// private boolean execute(Event event) {
     //     EventRequest request = event.request();

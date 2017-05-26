@@ -6,6 +6,18 @@ public class CommandNode extends Node {
         super(command);
     }
 
+	private EndNode node = null;
+
+	public EndNode end(EndNode node) {
+		EndNode prev = this.node;
+		this.node = node;
+		return prev;
+	}
+
+	public EndNode end() {
+		return node;
+	}
+	
     private RoutineNode routine = null;
 
     public RoutineNode routine(RoutineNode routine) {

@@ -17,7 +17,7 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 
 	@Override
 	public boolean handle() throws Exception {		
-		if (0 == count()) {
+		if (0 != count()) {
 			// print();
 			return !super.handle();
 		}
