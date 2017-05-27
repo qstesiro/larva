@@ -33,13 +33,12 @@ public class ClassMonitorQueryCommand extends ClassCommand {
     }
 
     private void print(Map<Integer, EventRequest> map) throws Exception {
-        if (0 < map.size()) {
-			int index = 0;
+        if (0 < map.size()) {			
             System.out.printf("%-5s%-5s%-10s%-8s%s\n", "#", "id", "type", "status", "clazz");
-            for (int id : map.keySet()) {
+            int i = 0; for (int id : map.keySet()) {
                 EventRequest request = map.get(id);
 				System.out.printf("%-5s%-5d%-10s%-8b%s\n",
-								  index, id,
+								  i++, id,
 								  ((request instanceof ClassPrepareRequest) ? "prepare" : "unload"),
 								  request.isEnabled(),
 								  request.getProperty(ClassCommand.CLASS));

@@ -7,7 +7,7 @@ import com.runbox.debug.command.thread.ThreadCommand;
 import com.runbox.debug.manager.RequestManager;
 import com.runbox.debug.manager.ThreadManager;
 
-public class ThreadMonitorDeathCommand extends ThreadCommand {
+public class ThreadMonitorDeathCommand extends ThreadMonitorCommand {
 
     public ThreadMonitorDeathCommand(String command) throws Exception {
         super(command);

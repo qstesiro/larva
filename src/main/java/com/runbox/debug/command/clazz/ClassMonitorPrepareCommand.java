@@ -9,12 +9,11 @@ import com.sun.jdi.ArrayType;
 import com.sun.jdi.request.ClassPrepareRequest;
 import com.sun.jdi.request.EventRequest;
 
-import com.runbox.debug.command.clazz.ClassCommand;
 import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.RequestManager;
 import com.runbox.debug.manager.ClassManager;
 
-public class ClassMonitorPrepareCommand extends ClassCommand {
+public class ClassMonitorPrepareCommand extends ClassMonitorCommand {
 
     public ClassMonitorPrepareCommand(String command) throws Exception {
         super(command); 

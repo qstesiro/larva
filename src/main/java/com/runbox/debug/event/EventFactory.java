@@ -7,7 +7,6 @@ import com.sun.jdi.event.BreakpointEvent;
 import com.sun.jdi.event.AccessWatchpointEvent;
 import com.sun.jdi.event.ModificationWatchpointEvent;
 import com.sun.jdi.event.StepEvent;
-import com.sun.jdi.event.ThreadStartEvent;
 
 import com.sun.jdi.request.StepRequest;
 
@@ -23,7 +22,7 @@ import com.runbox.debug.event.execute.ExecuteStepEvent;
 import com.runbox.debug.event.machine.MachineDeathEvent;
 import com.runbox.debug.event.machine.MachineDisconnectEvent;
 import com.runbox.debug.event.machine.MachineStartEvent;
-import com.runbox.debug.event.thread.ThreadStartupEvent;
+import com.runbox.debug.event.thread.ThreadStartEvent;
 import com.runbox.debug.event.thread.ThreadDeathEvent;
 import com.runbox.debug.event.exception.ExceptionEvent;
 
@@ -42,8 +41,8 @@ public class EventFactory {
             return new ClassUnloadEvent((com.sun.jdi.event.ClassUnloadEvent)event);
         } else if (event instanceof com.sun.jdi.event.MethodEntryEvent) {
         } else if (event instanceof com.sun.jdi.event.MethodExitEvent) {
-        } else if (event instanceof ThreadStartEvent) {
-            return new ThreadStartupEvent((ThreadStartEvent)event);
+        } else if (event instanceof com.sun.jdi.event.ThreadStartEvent) {
+            return new ThreadStartEvent((com.sun.jdi.event.ThreadStartEvent)event);
         } else if (event instanceof com.sun.jdi.event.ThreadDeathEvent) {
             return new ThreadDeathEvent((com.sun.jdi.event.ThreadDeathEvent)event);
         } else if (event instanceof BreakpointEvent) {

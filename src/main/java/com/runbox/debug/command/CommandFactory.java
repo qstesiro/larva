@@ -79,8 +79,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ThreadHoldCommand(command);
 		} else if (key.equals(THREAD_WAIT)) {
 			return new ThreadWaitCommand(command);
-		} else if (key.equals(THREAD_MONITOR_STARTUP)) {
-			return new ThreadMonitorStartupCommand(command);
+		} else if (key.equals(THREAD_MONITOR_START)) {
+			return new ThreadMonitorStartCommand(command);
 		} else if (key.equals(THREAD_MONITOR_DEATH)) {
 			return new ThreadMonitorDeathCommand(command);
 		} else if (key.equals(BREAKPOINT_METHOD)) {
@@ -187,7 +187,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 	public final static String THREAD_STACK = "thread.stack";
 	public final static String THREAD_HOLD = "thread.hold";
 	public final static String THREAD_WAIT = "thread.wait";
-    public final static String THREAD_MONITOR_STARTUP = "thread.monitor.startup";
+    public final static String THREAD_MONITOR_START = "thread.monitor.start";
     public final static String THREAD_MONITOR_DEATH = "thread.monitor.death";     
 
     public final static int COMMAND_BREAKPOINT = COMMAND_THREAD + 1;
@@ -273,7 +273,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 		add(THREAD_STACK);
 		add(THREAD_HOLD);
 		add(THREAD_WAIT);
-        add(THREAD_MONITOR_STARTUP);
+        add(THREAD_MONITOR_START);
         add(THREAD_MONITOR_DEATH);
         // breakpoint command
         add(BREAKPOINT_METHOD);

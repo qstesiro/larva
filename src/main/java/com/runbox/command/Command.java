@@ -1,8 +1,5 @@
 package com.runbox.command;
 
-import com.runbox.manager.AliasManager;
-
-import com.runbox.script.statement.node.BlockNode;
 import com.runbox.script.statement.node.RoutineNode;
 
 public class Command {        	
@@ -42,17 +39,13 @@ public class Command {
         return argument;
     }
 
-    public static final String ROUTINE = "routine";
-
-    private RoutineNode routine = null;
-
-    public RoutineNode routine(RoutineNode routine) {
-        RoutineNode prev = this.routine;
-        this.routine = routine;
-        return prev;
+	public static final String ROUTINE = "routine";
+	
+	public RoutineNode routine(RoutineNode routine) throws Exception {
+        throw new Exception("invalid operate");
     }
 
-    public RoutineNode routine() {
-        return routine;
-    }	
+    public RoutineNode routine() throws Exception {
+		throw new Exception("invalid operate");
+    }
 }

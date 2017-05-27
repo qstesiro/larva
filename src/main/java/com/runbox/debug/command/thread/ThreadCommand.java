@@ -26,15 +26,15 @@ public class ThreadCommand extends Command {
 			this instanceof ThreadInterruptCommand ||
 			this instanceof ThreadHoldCommand ||
 			this instanceof ThreadWaitCommand ||
-			this instanceof ThreadMonitorStartupCommand ||
+			this instanceof ThreadMonitorStartCommand ||
 			this instanceof ThreadMonitorDeathCommand ||
 			this instanceof ThreadSwitchCommand) {
 			if (null != argument()) {
 				values = new Expression(argument()).execute();
 			}
 		}
-    }
-
+    }	
+	
 	private Expression.Values<Operand> values = null;
 	
 	protected List<Long> ids() throws Exception {	

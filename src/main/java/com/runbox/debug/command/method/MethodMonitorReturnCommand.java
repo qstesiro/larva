@@ -1,6 +1,6 @@
 package com.runbox.debug.command.method;
 
-public class MethodMonitorReturnCommand extends MethodCommand {
+public class MethodMonitorReturnCommand extends MethodMonitorCommand {
 
     public MethodMonitorReturnCommand(String command) throws Exception {
         super(command);

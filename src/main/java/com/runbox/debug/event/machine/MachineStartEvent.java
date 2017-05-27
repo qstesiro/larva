@@ -18,6 +18,6 @@ public class MachineStartEvent extends Event<VMStartEvent> {
         log += "/" + event().thread().name();
         log += "/" + event().thread().threadGroup().toString();
         System.out.println(log);
-        return super.handle();
+        return !super.handle();
     }
 }

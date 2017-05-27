@@ -31,7 +31,7 @@ public class ClassCommand extends Command {
     protected String clazz() throws Exception {
 		if (this instanceof ClassMonitorQueryCommand) {
 			if (null != values) {
-				return values.getString(0);
+				return clazz(values.getString(0));
 			}
 			return null;
 		} else if (this instanceof ClassMonitorPrepareCommand ||

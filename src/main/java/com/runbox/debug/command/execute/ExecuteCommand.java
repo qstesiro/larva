@@ -19,8 +19,8 @@ public class ExecuteCommand extends Command {
 				count = new Expression(argument()).execute().getInteger(0);
 			}
 		}
-    }
-
+    }	
+	
 	public static final String COUNT = "count";
 	
 	private int count = 1;

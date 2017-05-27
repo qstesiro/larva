@@ -12,6 +12,7 @@ import com.runbox.debug.manager.ExceptionManager;
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
 import com.runbox.debug.script.expression.token.operand.ArrayOperand;
+import com.runbox.script.statement.node.RoutineNode;
 
 public class ExceptionMonitorCommand extends Command {
 
@@ -23,6 +24,28 @@ public class ExceptionMonitorCommand extends Command {
 		}
 	}
 
+	private RoutineNode routine = null;
+	
+	@Override
+	public RoutineNode routine(RoutineNode routine) throws Exception {	
+        RoutineNode prev = this.routine;
+        this.routine = routine; arguments();
+        return prev;
+    }
+
+	@Override
+    public RoutineNode routine() throws Exception {
+		return routine;
+    }
+
+	private void arguments() {
+		if (null != routine) {
+			List<String> list = routine.arguments();		
+			list.add("@id");
+			list.add("@thread");			
+		}
+	}
+	
 	private Expression.Values<Operand> values = null;
 	
 	@Override

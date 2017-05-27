@@ -75,8 +75,7 @@ public class Script {
     private void execute(ConditionNode node) throws Exception {
         Expression.Values<? extends Token> values = ExpressionFactory.build(node.condition()).execute();
 		if (1 == values.size()) {			
-			next = (values.getBoolean(0) ? node.right() : node.left());
-			return;
+			next = (values.getBoolean(0) ? node.right() : node.left()); return;
 		}		
         throw new Exception("invalid expression -> " + node.condition());
     }    
@@ -88,7 +87,7 @@ public class Script {
 
     private boolean execute(CommandNode node) throws Exception {
         Command command = CommandFactory.build(node.name());
-		command.routine(node.routine());		
+		if (null != node.routine()) command.routine(node.routine());
         next = node.next();
         return command.execute();
     }

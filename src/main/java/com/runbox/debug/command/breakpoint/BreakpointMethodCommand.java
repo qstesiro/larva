@@ -10,7 +10,7 @@ import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.BreakpointManager;
 import com.runbox.debug.manager.RequestManager;
 
-public class BreakpointMethodCommand extends BreakpointCommand {
+public class BreakpointMethodCommand extends BreakpointSetCommand {
 
     public BreakpointMethodCommand(String command) throws Exception {
         super(command);

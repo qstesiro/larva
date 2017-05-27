@@ -12,7 +12,7 @@ import com.runbox.debug.manager.MachineManager;
 import com.runbox.debug.manager.RequestManager;
 import com.runbox.debug.manager.ClassManager;
 
-public class ClassMonitorUnloadCommand extends ClassCommand {
+public class ClassMonitorUnloadCommand extends ClassMonitorCommand {
 
     public ClassMonitorUnloadCommand(String command) throws Exception {
         super(command);

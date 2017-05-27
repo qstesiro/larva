@@ -1,8 +1,6 @@
 package com.runbox.debug.event.thread;
 
-import com.runbox.debug.event.Event;
-
-public class ThreadDeathEvent extends Event<com.sun.jdi.event.ThreadDeathEvent> {
+public class ThreadDeathEvent extends ThreadEvent<com.sun.jdi.event.ThreadDeathEvent> {
 
     public ThreadDeathEvent(com.sun.jdi.event.ThreadDeathEvent event) {
         super(event);
@@ -10,7 +8,7 @@ public class ThreadDeathEvent extends Event<com.sun.jdi.event.ThreadDeathEvent> 
 
     @Override
     public boolean handle() throws Exception {       
-        System.out.println(((com.sun.jdi.event.ThreadDeathEvent)event()).thread().name()); 
-        return !super.handle();
+        System.out.println(((com.sun.jdi.event.ThreadDeathEvent)event()).thread().name() + " -> death"); 
+        return super.handle();
     }
 }

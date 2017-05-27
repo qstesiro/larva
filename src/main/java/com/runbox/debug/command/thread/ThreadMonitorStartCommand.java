@@ -7,9 +7,9 @@ import com.runbox.debug.command.thread.ThreadCommand;
 import com.runbox.debug.manager.RequestManager;
 import com.runbox.debug.manager.ThreadManager;
 
-public class ThreadMonitorStartupCommand extends ThreadCommand {
+public class ThreadMonitorStartCommand extends ThreadMonitorCommand {
 
-    public ThreadMonitorStartupCommand(String command) throws Exception {
+    public ThreadMonitorStartCommand(String command) throws Exception {
         super(command);
     }
 

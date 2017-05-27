@@ -11,6 +11,7 @@ import com.sun.jdi.IntegerValue;
 import com.sun.jdi.StringReference;
 
 import com.runbox.manager.ImportManager;
+
 import com.runbox.debug.command.Command;
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
@@ -22,9 +23,9 @@ public class BreakpointCommand extends Command {
 		if (null != argument()) {
 			values = new Expression(argument()).execute();
 		}
-    }
-
-	private Expression.Values<Operand> values = null;
+    }	
+	
+	private Expression.Values<Operand> values = null;	
 	
     protected String clazz() throws Exception {
 		if (this instanceof BreakpointMethodCommand) {
