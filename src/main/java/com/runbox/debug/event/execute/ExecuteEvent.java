@@ -32,7 +32,7 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 
 	private int count() {
 		EventRequest request = event().request();
-		int count = (int)request.getProperty(ExecuteCommand.COUNT);
+		int count = (Integer)request.getProperty(ExecuteCommand.COUNT);
 		request.putProperty(ExecuteCommand.COUNT, --count);
 		return count;
 	}

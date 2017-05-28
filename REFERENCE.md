@@ -10,13 +10,14 @@ Larva是一个基于命令行调试器，使用Java语言编写，它可以调�
 类信息查询：查看类的基本信息，例如：访问权限、所有字段、所有方法、常量池等;
 方法查询：查看方法的基本信息，例如：访问权限、参数、局部变量、虚拟指令等;
 
+编译程序
+
 启动调试
 当前调试器只支持通过网络附着目标程序，首先启动被调试的程序，再启动调试器
-启动目标程序（参数详细意义可以参见Java官方文档）
-启动调试器 %JAVA_HOME%/java -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y "程序正常运行的需其它参数"
+启动目标程序（参数详细意义可以参见Java官方文档）%JAVA_HOME%/java -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y "程序正常运行的需其它参数"
 例：%JAVA_HOME%/java -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y -classpath ".\target\classes\" com.runbox.demo.Demo
-脚本语言 %JAVA_HOME%/java -classpath "%JAVA_HOME%\lib\tools.jar" -jar Larva.jar -address localhost:1025 -script "Larva脚本文件"
-例：%JAVA_HOME%/java -classpath "%JAVA_HOME%\lib\tools.jar" -jar Larva.jar -address localhost:1025 -script D:\demo\debug.jdb
+启动调试器 %JAVA_HOME%/java -jar larva.jar -address localhost:1025 -script "Larva脚本文件"
+例：%JAVA_HOME%/java -jar larva.jar -address localhost:1025 -script D:\demo\debug.jdb
 参数说明：
 -address 被调试目标的监听地址包括IP与Port（必须）
 -script 自定义的调试脚本（可选）
@@ -83,13 +84,13 @@ execute.next.into
 execute.step.over
 execute.step.into
 execute.file
-变量
-variant.print
-variant.field
-variant.local
-variant.array
-variant.string
-模板
+显示变量
+print.variable
+print.field
+print.local
+print.array
+print.string
+显示模板
 template.list
 template.map
 template.vector
