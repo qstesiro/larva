@@ -1,4 +1,4 @@
-package com.runbox.debug.command.variant;
+package com.runbox.debug.command.print;
 
 import com.sun.jdi.*;
 
@@ -7,9 +7,9 @@ import com.runbox.debug.script.expression.token.Token;
 import com.runbox.debug.script.expression.token.operand.*;
 import com.runbox.debug.manager.ContextManager;
 
-public class VariantPrintCommand extends VariantCommand {
+public class PrintVariableCommand extends PrintCommand {
 
-    public VariantPrintCommand(String command) throws Exception {
+    public PrintVariableCommand(String command) throws Exception {
         super(command);
 		if (null != argument()) {
 			values = new Expression(argument()).execute();

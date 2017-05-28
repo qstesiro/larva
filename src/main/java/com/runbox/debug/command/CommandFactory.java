@@ -13,7 +13,7 @@ import com.runbox.debug.command.machine.*;
 import com.runbox.debug.command.source.*;
 import com.runbox.debug.command.template.*;
 import com.runbox.debug.command.thread.*;
-import com.runbox.debug.command.variant.*;
+import com.runbox.debug.command.print.*;
 import com.runbox.debug.command.exception.*;
 import com.runbox.debug.command.quit.*;
 
@@ -111,16 +111,16 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExecuteStepIntoCommand(command);
 		} else if (key.equals(EXECUTE_FILE)) {
 			return new ExecuteFileCommand(command);
-		} else if (key.equals(VARIANT_PRINT)) {
-			return new VariantPrintCommand(command);
-		} else if (key.equals(VARIANT_FIELD)) {
-			return new VariantFieldCommand(command);
-		} else if (key.equals(VARIANT_LOCAL)) {
-			return new VariantLocalCommand(command);
-		} else if (key.equals(VARIANT_ARRAY)) {
-			return new VariantArrayCommand(command);
-		} else if (key.equals(VARIANT_STRING)) {
-			return new VariantStringCommand(command);
+		} else if (key.equals(PRINT_VARIABLE)) {
+			return new PrintVariableCommand(command);
+		} else if (key.equals(PRINT_FIELD)) {
+			return new PrintFieldCommand(command);
+		} else if (key.equals(PRINT_LOCAL)) {
+			return new PrintLocalCommand(command);
+		} else if (key.equals(PRINT_ARRAY)) {
+			return new PrintArrayCommand(command);
+		} else if (key.equals(PRINT_STRING)) {
+			return new PrintStringCommand(command);
 		} else if (key.equals(TEMPLATE_LIST)) {
 			return new TemplateListCommand(command);
 		} else if (key.equals(TEMPLATE_MAP)) {
@@ -208,14 +208,14 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 	public final static String EXECUTE_STEP_INTO = "execute.step.into";
     public final static String EXECUTE_FILE = "execute.file";    
 
-    public final static int COMMAND_VARIANT = COMMAND_EXECUTE + 1;
-    public final static String VARIANT_PRINT = "variant.print";
-    public final static String VARIANT_FIELD = "variant.field";
-    public final static String VARIANT_LOCAL = "variant.local";
-    public final static String VARIANT_ARRAY = "variant.array";
-    public final static String VARIANT_STRING = "variant.string";
+    public final static int COMMAND_PRINT = COMMAND_EXECUTE + 1;
+    public final static String PRINT_VARIABLE = "print.variable";
+    public final static String PRINT_FIELD = "print.field";
+    public final static String PRINT_LOCAL = "print.local";
+    public final static String PRINT_ARRAY = "print.array";
+    public final static String PRINT_STRING = "print.string";
 
-    public final static int COMMAND_TEMPLATE = COMMAND_VARIANT + 1;
+    public final static int COMMAND_TEMPLATE = COMMAND_PRINT + 1;
     public final static String TEMPLATE_LIST = "template.list";
     public final static String TEMPLATE_MAP = "template.map";
     public final static String TEMPLATE_VECTOR = "template.vector";
@@ -291,12 +291,12 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(EXECUTE_STEP_OVER);		
         add(EXECUTE_STEP_INTO);
         add(EXECUTE_FILE);
-        // variant command
-        add(VARIANT_PRINT);
-        add(VARIANT_FIELD);
-        add(VARIANT_LOCAL);
-        add(VARIANT_ARRAY);
-        add(VARIANT_STRING);
+        // print command
+        add(PRINT_VARIABLE);
+        add(PRINT_FIELD);
+        add(PRINT_LOCAL);
+        add(PRINT_ARRAY);
+        add(PRINT_STRING);
         // template command
         add(TEMPLATE_LIST);
         add(TEMPLATE_MAP);

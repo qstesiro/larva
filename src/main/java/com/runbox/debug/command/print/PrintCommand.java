@@ -1,4 +1,4 @@
-package com.runbox.debug.command.variant;
+package com.runbox.debug.command.print;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -12,9 +12,9 @@ import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.*;
 
-public class VariantCommand extends Command {
+public class PrintCommand extends Command {
 
-    public VariantCommand(String command) throws Exception {
+    public PrintCommand(String command) throws Exception {
         super(command);
     }
 

@@ -1,4 +1,4 @@
-package com.runbox.debug.command.variant;
+package com.runbox.debug.command.print;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import com.sun.jdi.ObjectReference;
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
 
-public class VariantLocalCommand extends VariantCommand {
+public class PrintLocalCommand extends PrintCommand {
 
-    public VariantLocalCommand(String command) throws Exception {
+    public PrintLocalCommand(String command) throws Exception {
         super(command);
 		if (null != argument()) {
 			flags = new Expression(argument()).execute().getInteger(0);

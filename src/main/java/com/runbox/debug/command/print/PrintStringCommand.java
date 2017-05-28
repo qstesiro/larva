@@ -1,4 +1,4 @@
-package com.runbox.debug.command.variant;
+package com.runbox.debug.command.print;
 
 import com.sun.jdi.Field;
 import com.sun.jdi.ClassType;
@@ -10,9 +10,9 @@ import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.FieldOperand;
 import com.runbox.debug.script.expression.token.operand.Operand;
 
-public class VariantStringCommand extends VariantCommand {
+public class PrintStringCommand extends PrintCommand {
 
-    public VariantStringCommand(String command) throws Exception {
+    public PrintStringCommand(String command) throws Exception {
         super(command);
 		if (null != argument()) {
 			values = new Expression(argument()).execute();			

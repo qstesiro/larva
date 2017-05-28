@@ -1,4 +1,4 @@
-package com.runbox.debug.command.variant;
+package com.runbox.debug.command.print;
 
 import com.sun.jdi.Value;
 import com.sun.jdi.ArrayType;
@@ -8,9 +8,9 @@ import com.sun.jdi.ArrayReference;
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
 
-public class VariantArrayCommand extends VariantCommand {
+public class PrintArrayCommand extends PrintCommand {
 
-    public VariantArrayCommand(String command) throws Exception {
+    public PrintArrayCommand(String command) throws Exception {
         super(command);
 		if (null != argument()) {
 			values = new Expression(argument()).execute();
