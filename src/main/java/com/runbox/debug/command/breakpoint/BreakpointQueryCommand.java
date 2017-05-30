@@ -18,13 +18,12 @@ public class BreakpointQueryCommand extends BreakpointCommand {
     }
 
     private void print(Map<Integer, BreakpointManager.Breakpoint> breakpoints) throws Exception {
-        int index = 0;
 		System.out.printf("%-5s%-5s%-8s%-8s%-8s%s\n",
 						  "#", "id", "type", "solve", "status", "location");
-        for (Integer id : breakpoints.keySet()) {
+        int i = 0; for (Integer id : breakpoints.keySet()) {
 			BreakpointManager.Breakpoint breakpoint = breakpoints.get(id);
 			System.out.printf("%-5d%-5d%-8s%-8b%-8b%s\n",
-							  index++, id,
+							  i++, id,
 							  type(breakpoint),
 							  breakpoint.solve(),
 							  breakpoint.status(),
