@@ -434,8 +434,8 @@ template.stack
 源代码
 source.append path
 说明：添加源码路径
-参数：path为源代码的路径，不包含包路径部分，例如：“d:\program\demo\com\runbox\demo\Demo.java”, 只需要添加"d:\program\demo"就可以了；
-样例：source.append "d:\program\demo"
+参数：path为源代码的路径，不包含包路径部分，例如："d:\\program\\demo\\com\\runbox\\demo\\Demo.java", 只需要添加"d:\\program\\demo\\"就可以了；
+样例：source.append "d:\\program\\demo"
 source.delete
 说明：
 格式：
