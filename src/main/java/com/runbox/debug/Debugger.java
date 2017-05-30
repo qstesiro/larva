@@ -27,8 +27,7 @@ import com.runbox.debug.event.Event;
 import com.runbox.debug.event.EventFactory;
 import com.runbox.debug.manager.*;
 
-import com.runbox.script.statement.Script;
-import com.runbox.script.statement.node.RoutineNode;
+import com.runbox.script.Engine;
 
 public class Debugger implements SignalHandler {
 
@@ -52,9 +51,7 @@ public class Debugger implements SignalHandler {
 		} loop();
         monitor(false);
         exit();
-    }
-
-    private Script script = null;    
+    }    
 
     // adb shell am start -D -n "com.example.administrator.datareport/com.example.administrator.datareport.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
     /*java -classpath ".\out\production\Debugger;D:\Program Files\Java\jdk1.8.0_45\lib\tools.jar" com.runbox.debug.Debugger*/
@@ -155,7 +152,7 @@ public class Debugger implements SignalHandler {
     private boolean execute(String file) {
 		if (null != file) {
 			try {
-				return new Script(new File(file)).execute();
+				return Engine.instance().execute(new File(file));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -178,11 +175,10 @@ public class Debugger implements SignalHandler {
         while (true) {
             prompt();
 			String command = new Scanner(System.in).nextLine();
-            try {
-                Script script = new Script(command + ";");
-                if (!script.execute()) return;
+            try {                
+                if (!Engine.instance().execute(command + ";")) return;
             } catch (Exception e) {
-                e.printStackTrace(); script = null;
+                e.printStackTrace();
             }
         }
     }

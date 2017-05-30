@@ -18,7 +18,7 @@ public class AliasDefineCommand extends AliasCommand {
         super(command); 
         if (null != argument()) {
             values = ExpressionFactory.build(argument()).execute();
-            this.name = name(); alias = alias();
+            this.command = commandKey(); alias = alias();
             return;
         }
         throw new Exception("invalid operand");
@@ -28,9 +28,7 @@ public class AliasDefineCommand extends AliasCommand {
 
     @Override
     public boolean execute() throws Exception {
-        if (!AliasManager.instance().append(name, alias)) {
-            throw new Exception("invalid alias -> " + alias);
-        }
+        AliasManager.instance().append(command, alias);
         return super.execute();
     }
 
@@ -38,13 +36,13 @@ public class AliasDefineCommand extends AliasCommand {
 	private static final int ALIAS = 1;
 	private static final int MAX = 2;	
 
-    private String name = null;
+    private String command = null;
 
-    private String name() throws Exception {
+    private String commandKey() throws Exception {
         if (null != values && COMMAND < values.size()) {
-            String name = values.getString(COMMAND);
-			if (!name.equals("")) {
-				return name;
+            String command = values.getString(COMMAND);
+			if (!command.equals("")) {
+				return command;
 			}
         }
         throw new Exception("inavlie command operand");

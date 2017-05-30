@@ -74,6 +74,110 @@ public class Expression implements com.runbox.script.expression.Expression {
 
     public class Values<T extends Token> extends com.runbox.script.expression.Expression.Values<T> {
 
+		@Override
+		public boolean isByte(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof ByteValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isShort(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof ShortValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isInteger(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof IntegerValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isLong(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof LongValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isFloat(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof FloatValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isDouble(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof DoubleValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isBoolean(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof BooleanValue) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+
+		@Override
+        public boolean isString(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand.value()) {
+                    if (operand.value() instanceof StringReference) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+		}
+				
         @Override
         public byte getByte(int index) throws Exception {
             if (operands.size() > index) {

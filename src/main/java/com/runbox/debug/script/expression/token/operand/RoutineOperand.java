@@ -3,7 +3,6 @@ package com.runbox.debug.script.expression.token.operand;
 import java.util.List;
 
 import com.runbox.script.Engine;
-import com.runbox.script.statement.Script;
 import com.runbox.script.statement.node.BlockNode;
 import com.runbox.script.statement.node.RoutineNode;
 
@@ -35,9 +34,8 @@ public class RoutineOperand extends Operand {
 	}
 
 	public Operand invoke() throws Exception {
-		if (null != routine) {
-			Script script = new Script(routine);
-			if (!script.execute()) {
+		if (null != routine) {			
+			if (!Engine.instance().execute(routine)) {
 				throw new Exception("execute vm command in routine context -> " + routine.name());
 			}
 			if (null != routine.result()) {

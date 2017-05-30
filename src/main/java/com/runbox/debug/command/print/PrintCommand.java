@@ -7,6 +7,9 @@ import java.util.Vector;
 import com.sun.jdi.*;
 import com.sun.tools.javac.util.Pair;
 
+import com.runbox.script.Engine;
+import com.runbox.script.statement.token.Token;
+
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.script.expression.Expression;
@@ -55,5 +58,15 @@ public class PrintCommand extends Command {
 			System.out.println(frame.getArgumentValues().size());
         }		
         return operands;
-    }        
+    }
+
+	protected List<Operand> autos() throws Exception {
+		List<Operand> autos = new LinkedList<Operand>();
+		for (Token auto : Engine.instance().autos()) {
+			if (auto instanceof Operand) {
+				autos.add((Operand)auto);
+			}
+		}
+		return autos;
+	}
 }

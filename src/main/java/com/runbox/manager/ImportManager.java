@@ -33,10 +33,12 @@ public class ImportManager extends Manager {
 		if (null != clazz) {
 			if (classes.containsKey(clazz)) {
 				classes.remove(clazz);
-			}		
-		} else {
-			classes.clear();
-		}		
+			}
+		}
+	}
+
+	public void delete() {
+		classes.clear();
 	}
 
 	public String find(String clazz) {
@@ -46,7 +48,7 @@ public class ImportManager extends Manager {
 		return null;
 	}
 	
-	public Map<String, String> classes() {
+	public Map<String, String> get() {
 		return classes;
 	}
 }

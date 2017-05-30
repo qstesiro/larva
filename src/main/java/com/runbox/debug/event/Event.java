@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import com.sun.jdi.request.EventRequest;
 
 import com.runbox.script.Engine;
-import com.runbox.script.statement.Script;
 import com.runbox.script.statement.node.RoutineNode;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.script.expression.token.operand.Operand;
@@ -50,19 +49,19 @@ public class Event<T extends com.sun.jdi.event.Event> {
 	private List<Operand> autos = new LinkedList<Operand>();
 	
 	protected void arguments(List<Operand> autos) {
-		this.autos = autos;
+		this.autos = autos;	   
 	}
 	
 	public boolean execute() throws Exception {
 		if (null != routine) {
-			List<String> names = routine.arguments();
+			List<String> names = routine.arguments();			
 			int i = 0; for (Operand item : autos) {
 				AutoOperand auto = new AutoOperand(names.get(i++));
 				auto.type(item.type());
 				auto.value(item.value());
 				Engine.instance().append(auto);
 			}
-			return new Script(routine).execute();
+			return Engine.instance().execute(routine);
 		}
 		return true;
 	}	

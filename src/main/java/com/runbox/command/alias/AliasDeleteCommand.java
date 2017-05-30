@@ -15,7 +15,7 @@ public class AliasDeleteCommand extends AliasCommand {
     public AliasDeleteCommand(String command) throws Exception {
         super(command);
         if (null != argument()) {
-            Expression.Values<? extends Token> values = ExpressionFactory.build(argument()).execute();
+            values = ExpressionFactory.build(argument()).execute();
         }
     }
 
@@ -34,10 +34,10 @@ public class AliasDeleteCommand extends AliasCommand {
         return super.execute();
     }
 
-    protected List<String> names() throws Exception {		
+    private List<String> names() throws Exception {
         if (null != values) {
             List<String> names = new LinkedList<String>();
-            for (int i = 0; i < values.size(); ++i) {                                				                    			
+            for (int i = 0; i < values.size(); ++i) {
 				names.add(values.getString(i));
 			}
 			return names;

@@ -10,6 +10,15 @@ public interface Expression {
     
     public abstract class Values<T extends Token> extends Stack<T> {
 
+		public abstract boolean isByte(int index) throws Exception;
+        public abstract boolean isShort(int index) throws Exception;
+        public abstract boolean isInteger(int index) throws Exception;
+        public abstract boolean isLong(int index) throws Exception;
+        public abstract boolean isFloat(int index) throws Exception;
+        public abstract boolean isDouble(int index) throws Exception;
+        public abstract boolean isBoolean(int index) throws Exception;
+        public abstract boolean isString(int index) throws Exception;
+		
         public abstract byte getByte(int index) throws Exception;
         public abstract short getShort(int index) throws Exception;
         public abstract int getInteger(int index) throws Exception;

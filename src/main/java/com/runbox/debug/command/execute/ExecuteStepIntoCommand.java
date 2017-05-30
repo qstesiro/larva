@@ -5,7 +5,7 @@ import com.sun.jdi.request.StepRequest;
 import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.manager.ExecuteManager;
 
-public class ExecuteStepIntoCommand extends ExecuteCommand {
+public class ExecuteStepIntoCommand extends ExecuteStepCommand {
 
     public ExecuteStepIntoCommand(String command) throws Exception {
         super(command);

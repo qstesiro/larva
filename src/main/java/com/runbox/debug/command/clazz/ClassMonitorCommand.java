@@ -26,7 +26,7 @@ public class ClassMonitorCommand extends ClassCommand {
 
 	private void arguments() {
 		if (null != routine) {
-			List<String> list = routine.arguments();
+			List<String> list = routine.arguments(); list.clear();
 			if (this instanceof ClassMonitorPrepareCommand) {
 				list.add("@id");
 				list.add("@thread");

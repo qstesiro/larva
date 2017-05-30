@@ -1,9 +1,7 @@
 package com.runbox.manager;
 
-import java.util.List;
-import java.util.LinkedList;
-
-import com.sun.tools.javac.util.Pair;
+import java.util.Map;
+import java.util.HashMap;
 
 public class AliasManager extends Manager {
 
@@ -18,44 +16,37 @@ public class AliasManager extends Manager {
     }
 
     public void clean() throws Exception {
-        list.clear();
+        alias.clear();
     }
 
-    private List<Pair<String, String>> list = new LinkedList<Pair<String, String>>();
+    private Map<String, String> alias = new HashMap<String, String>();
 
-    public boolean append(String command, String name) {
-        for (Pair<String, String> pair : list) {
-            if (pair.fst.equals(command) || pair.snd.equals(name)) {
-                return false;
-            }
-        }
-        list.add(new Pair<String, String>(command, name));		 
-        return true;
+    public void append(String command, String name) {
+        if (!alias.containsKey(name)) {
+            alias.put(name, command);
+        }               
 	}
 
-	public boolean delete(String name) {
-        for (Pair<String, String> pair : list) {
-            if (pair.snd.equals(name)) {
-                list.remove(pair); return true;
-            }
-        }
-        return false;		
+	public void delete(String name) {
+		if (null != name) {
+			if (alias.containsKey(name)) {
+				alias.remove(name);
+			}
+		}        
 	}
 
     public void delete() {
-        list.clear();
+        alias.clear();
     }
 
 	public String find(String name) {
-        for (Pair<String, String> pair : list) {
-            if (pair.snd.equals(name)) {
-                return pair.fst;
-            }
-        }		
+        if (alias.containsKey(name)) {
+			return alias.get(name);
+		}
 		return null;
 	}
 	
-	public List<Pair<String, String>> get() {
-		return list;
+	public Map<String, String> get() {
+		return alias;
 	}
 }

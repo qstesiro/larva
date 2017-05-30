@@ -10,25 +10,40 @@ import com.runbox.manager.ImportManager;
 
 import com.runbox.script.expression.Expression;
 import com.runbox.script.expression.ExpressionFactory;
+import com.runbox.script.expression.token.Token;
 
 public class ImportDeleteCommand extends ImportCommand {
 
 	public ImportDeleteCommand(String command) throws Exception {
 		super(command); 
-		if (null != argument()) {
-            clazz = ExpressionFactory.build(argument()).execute().getString(0);
+		if (null != argument()) {            
+			values = ExpressionFactory.build(argument()).execute();
         }		
 	}
 
-	private String clazz = null;	
+	private Expression.Values<? extends Token> values = null;	
 
 	@Override
 	public boolean execute() throws Exception {
-		if (null != clazz) {
-			ImportManager.instance().delete(clazz);
-		} else {
-			ImportManager.instance().delete(null);
+		List<String> classes = names();
+        if (null != classes) {
+            for (String clazz : classes) {
+				ImportManager.instance().delete(clazz);
+            }
+        } else {
+			ImportManager.instance().delete();
 		}
 		return super.execute();
+	}
+
+	private List<String> names() throws Exception {		
+        if (null != values) {
+            List<String> names = new LinkedList<String>();
+            for (int i = 0; i < values.size(); ++i) {
+				names.add(values.getString(i));
+			}
+			return names;
+		}
+		return null;
 	}
 }

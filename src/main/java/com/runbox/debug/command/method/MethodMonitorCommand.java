@@ -26,7 +26,7 @@ public class MethodMonitorCommand extends MethodCommand {
 
 	private void arguments() {
 		if (null != routine) {
-			List<String> list = routine.arguments();		
+			List<String> list = routine.arguments(); list.clear();
 			list.add("@id");
 			list.add("@thread");			
 		}

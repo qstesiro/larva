@@ -26,7 +26,7 @@ public class BreakpointSetCommand extends BreakpointCommand {
 
 	private void addArguments() {
 		if (null != routine) {
-			List<String> list = routine.arguments();
+			List<String> list = routine.arguments(); list.clear();
 			list.add("@id");
 			list.add("@thread");
 		}

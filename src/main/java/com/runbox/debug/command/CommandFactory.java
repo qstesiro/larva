@@ -19,138 +19,150 @@ import com.runbox.debug.command.quit.*;
 
 public class CommandFactory extends com.runbox.command.CommandFactory {
 
-    public static Command build(String command) throws Exception {
-		String key = new Command(command).key();            
-		if (key.equals(MACHINE_NAME)) {
-			return new MachineNameCommand(command);
-		} else if (key.equals(MACHINE_VERSION)) {
-			return new MachineVersionCommand(command);
-		} else if (key.equals(MACHINE_ABILITY)) {
-			return new MachineAbilityCommand(command);
-		} else if (key.equals(MACHINE_SUSPEND)) {
-			return new MachineSuspendCommand(command);
-		} else if (key.equals(MACHINE_RESUME)) {
-			return new MachineResumeCommand(command);
-		} else if (key.equals(MACHINE_STATUS)) {
-			return new MachineStatusCommand(command);
-		} else if (key.equals(CLASS_QUERY)) {
-			return new ClassQueryCommand(command);
-		} else if (key.equals(CLASS_FIELD)) {
-			return new ClassFieldCommand(command);
-		} else if (key.equals(CLASS_METHOD)) {
-			return new ClassMethodCommand(command);
-		} else if (key.equals(CLASS_MONITOR_QUERY)) {
-			return new ClassMonitorQueryCommand(command);
-		} else if (key.equals(CLASS_MONITOR_PREPARE)) {
-			return new ClassMonitorPrepareCommand(command);
-		} else if (key.equals(CLASS_MONITOR_UNLOAD)) {
-			return new ClassMonitorUnloadCommand(command);
-		} else if (key.equals(CLASS_MONITOR_ENABLE)) {
-			return new ClassMonitorEnableCommand(command);
-		} else if (key.equals(CLASS_MONITOR_DISABLE)) {
-			return new ClassMonitorDisableCommand(command);
-		} else if (key.equals(CLASS_MONITOR_DELETE)) {
-			return new ClassMonitorDeleteCommand(command);
-		} else if (key.equals(CLASS_CONSTANT)) {
-			return new ClassConstantCommand(command);
-		} else if (key.equals(METHOD_ARGUMENT)) {
-			return new MethodArgumentCommand(command);
-		} else if (key.equals(METHOD_LOCAL)) {
-			return new MethodLocalCommand(command);
-		} else if (key.equals(METHOD_BYTECODE)) {
-			return new MethodBytecodeCommand(command);
-		} else if (key.equals(METHOD_MONITOR_ENTRY)) {
-			return new MethodMonitorEntryCommand(command);
-		} else if (key.equals(METHOD_MONITOR_RETURN)) {
-			return new MethodMonitorReturnCommand(command);
-		} else if (key.equals(THREAD_QUERY)) {
-			return new ThreadQueryCommand(command);
-		} else if (key.equals(THREAD_SWITCH)) {
-			return new ThreadSwitchCommand(command);
-		} else if (key.equals(THREAD_SUSPEND)) {
-			return new ThreadSuspendCommand(command);
-		} else if (key.equals(THREAD_RESUME)) {
-			return new ThreadResumeCommand(command);
-		} else if (key.equals(THREAD_INTERRUPT)) {
-			return new ThreadInterruptCommand(command);
-		} else if (key.equals(THREAD_STACK)) {
-			return new ThreadStackCommand(command);
-		} else if (key.equals(THREAD_HOLD)) {
-			return new ThreadHoldCommand(command);
-		} else if (key.equals(THREAD_WAIT)) {
-			return new ThreadWaitCommand(command);
-		} else if (key.equals(THREAD_MONITOR_START)) {
-			return new ThreadMonitorStartCommand(command);
-		} else if (key.equals(THREAD_MONITOR_DEATH)) {
-			return new ThreadMonitorDeathCommand(command);
-		} else if (key.equals(BREAKPOINT_METHOD)) {
-			return new BreakpointMethodCommand(command);
-		} else if (key.equals(BREAKPOINT_LINE)) {
-			return new BreakpointLineCommand(command);
-		} else if (key.equals(BREAKPOINT_ACCESS)) {
-			return new BreakpointAccessCommand(command);
-		} else if (key.equals(BREAKPOINT_MODIFY)) {
-			return new BreakpointModifyCommand(command);
-		} else if (key.equals(BREAKPOINT_QUERY)) {
-			return new BreakpointQueryCommand(command);
-		} else if (key.equals(BREAKPOINT_DELETE)) {
-			return new BreakpointDeleteCommand(command);
-		} else if (key.equals(BREAKPOINT_ENABLE)) {
-			return new BreakpointEnableCommand(command);
-		} else if (key.equals(BREAKPOINT_DISABLE)) {
-			return new BreakpointDisableCommand(command);
-		} else if (key.equals(EXECUTE_RUN)) {
-			return new ExecuteRunCommand(command);
-		} else if (key.equals(EXECUTE_NEXT_OVER)) {
-			return new ExecuteNextOverCommand(command);
-		} else if (key.equals(EXECUTE_NEXT_INTO)) {
-			return new ExecuteNextIntoCommand(command);
-		} else if (key.equals(EXECUTE_STEP_OVER)) {
-			return new ExecuteStepOverCommand(command);
-		} else if (key.equals(EXECUTE_STEP_INTO)) {
-			return new ExecuteStepIntoCommand(command);
-		} else if (key.equals(EXECUTE_FILE)) {
-			return new ExecuteFileCommand(command);
-		} else if (key.equals(PRINT_VARIABLE)) {
-			return new PrintVariableCommand(command);
-		} else if (key.equals(PRINT_FIELD)) {
-			return new PrintFieldCommand(command);
-		} else if (key.equals(PRINT_LOCAL)) {
-			return new PrintLocalCommand(command);
-		} else if (key.equals(PRINT_ARRAY)) {
-			return new PrintArrayCommand(command);
-		} else if (key.equals(PRINT_STRING)) {
-			return new PrintStringCommand(command);
-		} else if (key.equals(TEMPLATE_LIST)) {
-			return new TemplateListCommand(command);
-		} else if (key.equals(TEMPLATE_MAP)) {
-			return new TemplateMapCommand(command);
-		} else if (key.equals(TEMPLATE_VECTOR)) {
-			return new TemplateVectorCommand(command);
-		} else if (key.equals(TEMPLATE_QUEUE)) {
-			return new TemplateQueueCommand(command);
-		} else if (key.equals(TEMPLATE_STACK)) {
-			return new TemplateStackCommand(command);
-		} else if (key.equals(SOURCE_APPEND)) {
-			return new SourceAppendCommand(command);
-		} else if (key.equals(SOURCE_DELETE)) {
-			return new SourceDeleteCommand(command);
-		} else if (key.equals(SOURCE_QUERY)) {
-			return new SourceQueryCommand(command);
-		} else if (key.equals(EXCEPTION_MONITOR)) {
-			return new ExceptionMonitorCommand(command);
-		} else if (key.equals(EXCEPTION_DELETE)) {
-			return new ExceptionDeleteCommand(command);
-		} else if (key.equals(EXCEPTION_QUERY)) {
-			return new ExceptionQueryCommand(command);
-		} else if (key.equals(DETACH)) {			
-			return new DetachCommand(command);
-		} else if (key.equals(QUIT)) {
-			return new QuitCommand(command);
+    public static Command build(String string) throws Exception {
+		Command command = new Command(string);
+		if (command.key().equals(MACHINE_NAME)) {
+			return new MachineNameCommand(command.command());
+		} else if (command.key().equals(MACHINE_VERSION)) {
+			return new MachineVersionCommand(command.command());
+		} else if (command.key().equals(MACHINE_ABILITY)) {
+			return new MachineAbilityCommand(command.command());
+		} else if (command.key().equals(MACHINE_SUSPEND)) {
+			return new MachineSuspendCommand(command.command());
+		} else if (command.key().equals(MACHINE_RESUME)) {
+			return new MachineResumeCommand(command.command());
+		} else if (command.key().equals(MACHINE_STATUS)) {
+			return new MachineStatusCommand(command.command());
+		} else if (command.key().equals(CLASS_QUERY)) {
+			return new ClassQueryCommand(command.command());
+		} else if (command.key().equals(CLASS_FIELD)) {
+			return new ClassFieldCommand(command.command());
+		} else if (command.key().equals(CLASS_METHOD)) {
+			return new ClassMethodCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_QUERY)) {
+			return new ClassMonitorQueryCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_PREPARE)) {
+			return new ClassMonitorPrepareCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_UNLOAD)) {
+			return new ClassMonitorUnloadCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_ENABLE)) {
+			return new ClassMonitorEnableCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_DISABLE)) {
+			return new ClassMonitorDisableCommand(command.command());
+		} else if (command.key().equals(CLASS_MONITOR_DELETE)) {
+			return new ClassMonitorDeleteCommand(command.command());
+		} else if (command.key().equals(CLASS_CONSTANT)) {
+			return new ClassConstantCommand(command.command());
+		} else if (command.key().equals(METHOD_ARGUMENT)) {
+			return new MethodArgumentCommand(command.command());
+		} else if (command.key().equals(METHOD_LOCAL)) {
+			return new MethodLocalCommand(command.command());
+		} else if (command.key().equals(METHOD_BYTECODE)) {
+			return new MethodBytecodeCommand(command.command());
+		} else if (command.key().equals(METHOD_MONITOR_ENTRY)) {
+			return new MethodMonitorEntryCommand(command.command());
+		} else if (command.key().equals(METHOD_MONITOR_RETURN)) {
+			return new MethodMonitorReturnCommand(command.command());
+		} else if (command.key().equals(THREAD_QUERY)) {
+			return new ThreadQueryCommand(command.command());
+		} else if (command.key().equals(THREAD_SWITCH)) {
+			return new ThreadSwitchCommand(command.command());
+		} else if (command.key().equals(THREAD_SUSPEND)) {
+			return new ThreadSuspendCommand(command.command());
+		} else if (command.key().equals(THREAD_RESUME)) {
+			return new ThreadResumeCommand(command.command());
+		} else if (command.key().equals(THREAD_INTERRUPT)) {
+			return new ThreadInterruptCommand(command.command());
+		} else if (command.key().equals(THREAD_STACK)) {
+			return new ThreadStackCommand(command.command());
+		} else if (command.key().equals(THREAD_HOLD)) {
+			return new ThreadHoldCommand(command.command());
+		} else if (command.key().equals(THREAD_WAIT)) {
+			return new ThreadWaitCommand(command.command());
+		} else if (command.key().equals(THREAD_MONITOR_START)) {
+			return new ThreadMonitorStartCommand(command.command());
+		} else if (command.key().equals(THREAD_MONITOR_DEATH)) {
+			return new ThreadMonitorDeathCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_METHOD)) {
+			return new BreakpointMethodCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_LINE)) {
+			return new BreakpointLineCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_ACCESS)) {
+			return new BreakpointAccessCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_MODIFY)) {
+			return new BreakpointModifyCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_QUERY)) {
+			return new BreakpointQueryCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_DELETE)) {
+			return new BreakpointDeleteCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_ENABLE)) {
+			return new BreakpointEnableCommand(command.command());
+		} else if (command.key().equals(BREAKPOINT_DISABLE)) {
+			return new BreakpointDisableCommand(command.command());
+		} else if (command.key().equals(EXECUTE_RUN)) {
+			return new ExecuteRunCommand(command.command());
+		} else if (command.key().equals(EXECUTE_NEXT_OVER)) {
+			return new ExecuteNextOverCommand(command.command());
+		} else if (command.key().equals(EXECUTE_NEXT_INTO)) {
+			return new ExecuteNextIntoCommand(command.command());
+		} else if (command.key().equals(EXECUTE_STEP_OVER)) {
+			return new ExecuteStepOverCommand(command.command());
+		} else if (command.key().equals(EXECUTE_STEP_INTO)) {
+			return new ExecuteStepIntoCommand(command.command());
+		} else if (command.key().equals(EXECUTE_FILE)) {
+			return new ExecuteFileCommand(command.command());
+		} else if (command.key().equals(PRINT_VARIABLE)) {
+			return new PrintVariableCommand(command.command());
+		} else if (command.key().equals(PRINT_FIELD)) {
+			return new PrintFieldCommand(command.command());
+		} else if (command.key().equals(PRINT_LOCAL)) {
+			return new PrintLocalCommand(command.command());
+		} else if (command.key().equals(PRINT_AUTO)) {
+			return new PrintAutoCommand(command.command());
+		} else if (command.key().equals(PRINT_ARRAY)) {
+			return new PrintArrayCommand(command.command());
+		} else if (command.key().equals(PRINT_STRING)) {
+			return new PrintStringCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_LIST)) {
+			return new TemplateListCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_MAP)) {
+			return new TemplateMapCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_VECTOR)) {
+			return new TemplateVectorCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_QUEUE)) {
+			return new TemplateQueueCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_STACK)) {
+			return new TemplateStackCommand(command.command());
+		} else if (command.key().equals(SOURCE_APPEND)) {
+			return new SourceAppendCommand(command.command());
+		} else if (command.key().equals(SOURCE_DELETE)) {
+			return new SourceDeleteCommand(command.command());
+		} else if (command.key().equals(SOURCE_QUERY)) {
+			return new SourceQueryCommand(command.command());
+		} else if (command.key().equals(EXCEPTION_MONITOR)) {
+			return new ExceptionMonitorCommand(command.command());
+		} else if (command.key().equals(EXCEPTION_DELETE)) {
+			return new ExceptionDeleteCommand(command.command());
+		} else if (command.key().equals(EXCEPTION_QUERY)) {
+			return new ExceptionQueryCommand(command.command());
+		} else if (command.key().equals(DETACH)) {			
+			return new DetachCommand(command.command());
+		} else if (command.key().equals(QUIT)) {
+			return new QuitCommand(command.command());
 		}        
         return null;
     }
 
+	public static boolean command(String string) throws Exception {
+		Command command = new Command(string);
+        for (String entry : commands) {
+            if (entry.equals(command.key())) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
     public final static int COMMAND_MACHINE = 1;
     public final static String MACHINE_NAME = "machine.name";
     public final static String MACHINE_VERSION = "machine.version";
@@ -212,8 +224,9 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static String PRINT_VARIABLE = "print.variable";
     public final static String PRINT_FIELD = "print.field";
     public final static String PRINT_LOCAL = "print.local";
+	public final static String PRINT_AUTO = "print.auto";
     public final static String PRINT_ARRAY = "print.array";
-    public final static String PRINT_STRING = "print.string";
+    public final static String PRINT_STRING = "print.string";	
 
     public final static int COMMAND_TEMPLATE = COMMAND_PRINT + 1;
     public final static String TEMPLATE_LIST = "template.list";
@@ -295,8 +308,9 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(PRINT_VARIABLE);
         add(PRINT_FIELD);
         add(PRINT_LOCAL);
+		add(PRINT_AUTO);
         add(PRINT_ARRAY);
-        add(PRINT_STRING);
+        add(PRINT_STRING);		
         // template command
         add(TEMPLATE_LIST);
         add(TEMPLATE_MAP);
@@ -316,15 +330,5 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(DETACH);
         // help command
         add(HELP);
-    }};
-
-    public static boolean command(String command) throws Exception {
-		String key = key(command);
-        for (String entry : commands) {
-            if (entry.equals(key)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    }};    
 }
