@@ -24,12 +24,16 @@ public class ConfigManager extends Manager {
     private final static int ARGUMENT_MINIMUM = 2;
     private final static int ARGUMENT_MAXIMUM = 4;
 
-    public void set(String arguments[]) throws Exception {
+    public void set(String arguments[]) throws Exception {		
         if (ARGUMENT_MINIMUM <= arguments.length && ARGUMENT_MAXIMUM <= arguments.length) {
             String address = find(arguments, ADDRESS);
             if (null != address) {
                 map.put(ADDRESS, address);
                 map.put(SCRIPT, find(arguments, SCRIPT));
+				String mode = find(arguments, MODE);
+				map.put(MODE, (null == mode ? "debug" : mode));
+				String language = find(arguments, LANGUAGE);
+				map.put(LANGUAGE, (null == language ? "java" : language));
                 this.arguments = arguments;
                 return;
             }
@@ -60,6 +64,7 @@ public class ConfigManager extends Manager {
     public final static String ADDRESS = "-address";
     public final static String SCRIPT = "-script";
     public final static String MODE = "-mode";
+	public final static String LANGUAGE = "-language";
 
     private String find(String arguments[], String key) {
         for (int i = 0; i < arguments.length; ++i) {
@@ -76,5 +81,6 @@ public class ConfigManager extends Manager {
         put(ADDRESS, null);
         put(SCRIPT, null);
         put(MODE, null);
+		put(LANGUAGE, null);
     }};
 }

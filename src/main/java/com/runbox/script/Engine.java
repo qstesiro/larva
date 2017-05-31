@@ -21,140 +21,23 @@ public class Engine {
 
     }    
 
-    private static Engine engine = new Engine();
+    private static Engine instance = new Engine();
 
     public static Engine instance() {
-        return engine;
+        return instance;
     }    		
 
 	public boolean execute(String script) throws Exception {
-		return new Executer(script).execute();
+		return ExecuterFactory.build(script).execute();
 	}
 
 	public boolean execute(File file) throws Exception {
-		return new Executer(file).execute();
+		return ExecuterFactory.build(file).execute();
 	}
 
 	public boolean execute(RoutineNode routine) throws Exception {
-		return new Executer(routine).execute();
-	}
-
-	private static class Executer {
-
-		public Executer(String script) throws Exception {
-			if (null != script && !script.equals("")) {
-				next = Script.instance().generate(script);
-			}
-		}
-
-		public Executer(File file) throws Exception {
-			if (null != file && 0 < file.length()) {
-				next = Script.instance().generate(file);
-			}
-		}
-
-		public Executer(RoutineNode routine) throws Exception {
-			if (null != routine) {
-				next = routine;
-			}
-		}
-
-		private Node next = null;
-		
-		public boolean execute() throws Exception {
-			while (null != next) {
-				push(next);
-				if (next instanceof ConditionNode) {
-					execute((ConditionNode)next);
-				} else if (next instanceof CommandNode) {					
-					if (!execute((CommandNode)next)) return false;
-				} else if (next instanceof UnsolvedNode) {
-					if (!execute((UnsolvedNode)next)) return false;
-				} else if (next instanceof ReturnNode) {
-					execute((ReturnNode)next);
-				} else if (next instanceof ContinueNode) {
-					execute((ContinueNode)next);
-				} else if (next instanceof EndNode) {
-					execute((EndNode)next);
-				} else {
-					next = next.next();
-				}
-			}
-			return true;
-		}
-
-		private void push(Node node) throws Exception {
-			if ((node instanceof BlockNode) && !(node instanceof RootNode)) {
-				Engine.instance().push((BlockNode)node);
-			}
-		}
-	
-		private void execute(ConditionNode node) throws Exception {
-			Expression.Values<? extends Token> values = ExpressionFactory.build(node.condition()).execute();
-			if (1 == values.size()) {			
-				next = (values.getBoolean(0) ? node.right() : node.left()); return;
-			}		
-			throw new Exception("invalid expression -> " + node.condition());
-		}    
-
-		private void execute(ExpressionNode node) throws Exception {
-			ExpressionFactory.build(node.name()).execute();
-			next = node.next();
-		}
-
-		private boolean execute(CommandNode node) throws Exception {
-			Command command = CommandFactory.build(node.name());
-			if (null != node.routine()) {
-				command.routine(node.routine());
-			}			
-			if (!command.execute()) {			   
-				execute(node.end()); return false;
-			}
-			next = node.next(); return true;
-		}
-
-		private boolean execute(UnsolvedNode node) throws Exception {
-			if (CommandFactory.command(node.name())) {
-				CommandNode command = new CommandNode(node.name());
-				command.next(node.next());
-				command.end(node.end());
-				return execute(command);
-			} else {
-				ExpressionNode expression = new ExpressionNode(node.name());
-				expression.next(node.next());
-				execute(expression);
-				return true;
-			}			
-		}
-
-		private void execute(ReturnNode node) throws Exception {
-			if (null != node.routine()) {
-				if (null != node.expression()) {
-					Expression.Values<? extends Token> values = ExpressionFactory.build(node.expression()).execute();
-					node.routine().result(values.firstElement());
-				}
-				next = node.next();
-				return;
-			}
-			throw new Exception("invalid return statement -> " + node.name() + " " + node.expression());
-		}
-
-		private void execute(ContinueNode node) throws Exception {
-			Engine.instance().pop((BlockNode)node.next());
-			next = node.next();
-		}
-	
-		private void execute(EndNode node) throws Exception {			
-			if (!(node.block() instanceof RootNode)) {				
-				Engine.instance().pop(node.block());
-			}
-			next = node.next();
-		}
-
-		public boolean terminal() {
-			return (null == next);		
-		}
-	}		
+		return ExecuterFactory.build(routine).execute();
+	}			
 	
     private Stack<Frame> frames = new Stack<Frame>() {{
 			push(new Frame(Script.instance().root(), 0));

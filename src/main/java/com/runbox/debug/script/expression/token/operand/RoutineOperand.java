@@ -10,10 +10,8 @@ public class RoutineOperand extends Operand {
 
     public RoutineOperand(String name) {
         super(name); routine = Engine.instance().findRoutine(name());
-    }    
-
-	private RoutineNode routine = null;
-
+    }    		
+	
 	public void arguments(List<Operand> autos) throws Exception {
 		if (null != routine) {
 			List<String> names = routine.arguments();
@@ -31,6 +29,12 @@ public class RoutineOperand extends Operand {
 			return routine.count();
 		}
 		return 0;
+	}
+
+	private RoutineNode routine = null;
+
+	public RoutineNode routine() {
+		return routine;
 	}
 
 	public Operand invoke() throws Exception {

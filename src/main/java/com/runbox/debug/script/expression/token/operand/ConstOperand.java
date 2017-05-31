@@ -2,11 +2,12 @@ package com.runbox.debug.script.expression.token.operand;
 
 import com.sun.jdi.Type;
 import com.sun.jdi.Value;
+import com.sun.jdi.VirtualMachine;
 
-public class ConstOperand extends Operand {
+import com.runbox.debug.manager.MachineManager;
 
-    private Value value = null;
-
+public class ConstOperand extends Operand {    
+	
     public ConstOperand(byte value) {
         super(null); this.value = machine().mirrorOf(value);
     }
@@ -49,8 +50,13 @@ public class ConstOperand extends Operand {
 
     public ConstOperand(Value value) {
         super(null); this.value = value;
-    }
+    }	
 
+	private VirtualMachine machine() {
+		return MachineManager.instance().get();
+	}
+	
+	@Override
     public Type type() throws Exception {
         if (null != value) {
             return value.type();
@@ -58,7 +64,10 @@ public class ConstOperand extends Operand {
         return null;
     }
 
+	private Value value = null;	
+	
+	@Override
     public Value value() throws Exception {
         return value;
-    }
+    }	
 }

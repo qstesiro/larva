@@ -33,11 +33,23 @@ public class FieldOperand extends Operand {
             }
         }
         throw new Exception("invalid filed name");
-    }
+    }	
 
 	private ObjectReference object = null;
-	private Field field = null;
+
+	public ObjectReference object(ObjectReference object) {
+		ObjectReference prev = this.object;
+		this.object = object;
+		return prev;
+	}
+
+	public ObjectReference object() {
+		return object;
+	}
 	
+	private Field field = null;	
+
+	@Override
     public Type type() throws Exception {
         if (null != field) {
 			try {
@@ -49,6 +61,7 @@ public class FieldOperand extends Operand {
         throw new Exception("invalid field");
     }
 
+	@Override
     public Value value(Value value) throws Exception {
         if (null != object && null != field) {
             Value previous = value();
@@ -58,10 +71,11 @@ public class FieldOperand extends Operand {
         throw new Exception("invalid variant");
     }
 
+	@Override
     public Value value() {
         if (null != object && null != field) {
             return object.getValue(field);
         }
         return null;
-    }
+    }	
 }

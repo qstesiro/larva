@@ -3,7 +3,10 @@ package com.runbox.script.statement;
 import java.io.File;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Stack;
+
+import com.runbox.script.ExecuterFactory;
 
 import com.runbox.script.statement.Lexer;
 import com.runbox.script.statement.token.*;
@@ -18,21 +21,24 @@ import com.runbox.command.CommandFactory;
 public class Script {		
 	
     private Script() {
-        
+		Map<String, List<String>> routines = ExecuterFactory.routines();
+		for (String name : routines.keySet()) {
+			new BuiltinRoutineNode(name, root).arguments(routines.get(name));
+		}
     }
 
     private static Script instance = new Script();
 
 	public static Script instance() {
 		return instance;
-	}
-
+	}	
+	
 	private RootNode root = new RootNode("$root");
 
 	public RootNode root() {
 		return root;
-	}   	
-		
+	}
+	
 	private Lexer lexer = null;	
 	private BlockNode block = null;
 	

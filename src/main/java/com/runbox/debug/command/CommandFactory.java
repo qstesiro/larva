@@ -111,8 +111,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExecuteStepIntoCommand(command.command());
 		} else if (command.key().equals(EXECUTE_FILE)) {
 			return new ExecuteFileCommand(command.command());
-		} else if (command.key().equals(PRINT_VARIABLE)) {
-			return new PrintVariableCommand(command.command());
+		} else if (command.key().equals(PRINT_VALUE)) {
+			return new PrintValueCommand(command.command());
 		} else if (command.key().equals(PRINT_FIELD)) {
 			return new PrintFieldCommand(command.command());
 		} else if (command.key().equals(PRINT_LOCAL)) {
@@ -221,7 +221,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static String EXECUTE_FILE = "execute.file";    
 
     public final static int COMMAND_PRINT = COMMAND_EXECUTE + 1;
-    public final static String PRINT_VARIABLE = "print.variable";
+    public final static String PRINT_VALUE = "print.value";
     public final static String PRINT_FIELD = "print.field";
     public final static String PRINT_LOCAL = "print.local";
 	public final static String PRINT_AUTO = "print.auto";
@@ -305,7 +305,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(EXECUTE_STEP_INTO);
         add(EXECUTE_FILE);
         // print command
-        add(PRINT_VARIABLE);
+        add(PRINT_VALUE);
         add(PRINT_FIELD);
         add(PRINT_LOCAL);
 		add(PRINT_AUTO);

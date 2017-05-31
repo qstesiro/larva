@@ -9,61 +9,226 @@ public class Operand extends Token {
 
     public Operand(String name) {
         super(name);
-    }
+    }    
+   	
+	public Type type(Type type) throws Exception {
+		throw new Exception("invalid operate");
+	}
+	
+	public Type type() throws Exception {
+		throw new Exception("invalid operate");
+	}
+	
+	public Value value(Value value) throws Exception {
+		throw new Exception("invalid operate");
+	}
+	
+	public Value value() throws Exception {
+		throw new Exception("invalid operate");
+	}  
 
-    private VirtualMachine machine = MachineManager.instance().get();
+	public boolean isByte() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof ByteValue) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    protected VirtualMachine machine() {
-        return machine;
-    }
+	public boolean isChar() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof CharValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public Type type(Type type) throws Exception {
-        throw new Exception("invalid invoke");
-    }
+	public boolean isShort() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof ShortValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public Type type() throws Exception {
-        throw new Exception("invalid invoke");
-    }
+	public boolean isInteger() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof IntegerValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public byte value(byte value) throws Exception {
-        return ((ByteValue)value(machine().mirrorOf(value))).value();
-    }
+	public boolean isLong() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof LongValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public char value(char value) throws Exception {
-        return ((CharValue)value(machine().mirrorOf(value))).value();
-    }
+	public boolean isFloat() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof FloatValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public short value(short value) throws Exception {
-        return ((ShortValue)value(machine().mirrorOf(value))).value();
-    }
+	public boolean isDouble() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof DoubleValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public int value(int value) throws Exception {
-        return ((IntegerValue)value(machine().mirrorOf(value))).value();
-    }
+	public boolean isBoolean() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof BooleanValue) {
+				return true;
+			}			
+		}
+		return false;
+	}
 
-    public long value(long value) throws Exception {
-        return ((LongValue)value(machine().mirrorOf(value))).value();
-    }
+	public boolean isString() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof StringReference) {
+				return true;
+			}			
+		}
+		return false;
+	}
+	
+	public byte byteValue() throws Exception {		
+		Value value = value();
+		if (null != value) {
+			if (value instanceof ByteValue) {
+				return ((ByteValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
 
-    public float value(float value) throws Exception {
-        return ((FloatValue)value(machine().mirrorOf(value))).value();
-    }
-
-    public double value(double value) throws Exception {
-        return ((DoubleValue)value(machine().mirrorOf(value))).value();
-    }
-
-    public boolean value(boolean value) throws Exception {
-        return ((BooleanValue)value(machine().mirrorOf(value))).value();
-    }
-
-    public Value value(Value value) throws Exception {
-        throw new Exception("invalid invoke");
-    }
-
-    public Value value() throws Exception {
-        throw new Exception("invalid invoke");
-    }
+	public char charValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof CharValue) {
+				return ((CharValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public short shortValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof ByteValue) {
+				return ((ByteValue)value).value();
+			} else if (value instanceof ShortValue) {
+				return ((ShortValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public int intValue() throws Exception {
+		Value value = value();
+		if (null != value) {			
+			if (value instanceof ByteValue) {
+				return ((ByteValue)value).value();
+			} else if (value instanceof ShortValue) {
+				return ((ShortValue)value).value();
+			} else if (value instanceof IntegerValue) {
+				return ((IntegerValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public long longValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof ByteValue) {
+				return ((ByteValue)value).value();
+			} else if (value instanceof ShortValue) {
+				return ((ShortValue)value).value();
+			} else if (value instanceof IntegerValue) {
+				return ((IntegerValue)value).value();
+			} else if (value instanceof LongValue) {
+				return ((LongValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public float floatValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof FloatValue) {
+				return ((FloatValue)value).value();
+			}				
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public double doubleValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof FloatValue) {
+				return ((FloatValue)value).value();
+			} else if (value instanceof DoubleValue) {
+				return ((DoubleValue)value).value();
+			}
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public boolean boolValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof BooleanValue) {
+				return ((BooleanValue)value).value();
+			} 
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}
+	
+	public String strValue() throws Exception {
+		Value value = value();
+		if (null != value) {
+			if (value instanceof StringReference) {
+				return ((StringReference)value).value();
+			} 
+			throw new Exception("error value type");
+		}
+		throw new Exception("invalid null value");
+	}		
 
     public static boolean subClass(Operand operand) {
         boolean condition = (operand instanceof ConstOperand);

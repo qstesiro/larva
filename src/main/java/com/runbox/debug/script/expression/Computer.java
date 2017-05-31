@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.sun.jdi.*;
 
+import com.runbox.debug.manager.MachineManager;
+
 import com.runbox.debug.script.expression.token.Token;
 import com.runbox.debug.script.expression.token.operand.*;
 
@@ -207,33 +209,34 @@ public class Computer {
     public static Operand computeE3(Operand operand) throws Exception { // +++
         if (null != operand) {
             if (null != operand.value()) {
+				VirtualMachine machine = MachineManager.instance().get();
                 if (operand.value() instanceof ByteValue) {
                     byte value = ((ByteValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof CharValue) {
                     char value = ((CharValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof ShortValue) {
                     short value = ((ShortValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof IntegerValue) {
                     int value = ((IntegerValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof LongValue) {
                     long value = ((LongValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof FloatValue) {
                     float value = ((FloatValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof DoubleValue) {
                     double value = ((DoubleValue)operand.value()).value();
-                    operand.value(++value);
+                    operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 }
             }
@@ -244,40 +247,41 @@ public class Computer {
     public static Operand computeE4(Operand operand) throws Exception { // ++
         if (null != operand) {
             if (null != operand.value()) {
+				VirtualMachine machine = MachineManager.instance().get();
                 if (operand.value() instanceof ByteValue) {
                     byte value = ((ByteValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof CharValue) {
                     char value = ((CharValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof ShortValue) {
                     short value = ((ShortValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof IntegerValue) {
                     int value = ((IntegerValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof LongValue) {
                     long value = ((LongValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof FloatValue) {
                     float value = ((FloatValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof DoubleValue) {
                     double value = ((DoubleValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value++);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 }
             }
@@ -288,33 +292,34 @@ public class Computer {
     public static Operand computeE5(Operand operand) throws Exception { // ---
         if (null != operand) {
             if (null != operand.value()) {
+				VirtualMachine machine = MachineManager.instance().get();
                 if (operand.value() instanceof ByteValue) {
                     byte value = ((ByteValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof CharValue) {
                     char value = ((CharValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof ShortValue) {
                     short value = ((ShortValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof IntegerValue) {
                     int value = ((IntegerValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof LongValue) {
                     long value = ((LongValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof FloatValue) {
                     float value = ((FloatValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 } else if (operand.value() instanceof DoubleValue) {
                     double value = ((DoubleValue)operand.value()).value();
-                    operand.value(--value);
+                    operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 }
             }
@@ -325,40 +330,41 @@ public class Computer {
     public static Operand computeE6(Operand operand) throws Exception { // --
         if (null != operand) {
             if (null != operand.value()) {
+				VirtualMachine machine = MachineManager.instance().get();
                 if (operand.value() instanceof ByteValue) {
                     byte value = ((ByteValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof CharValue) {
                     char value = ((CharValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof ShortValue) {
                     short value = ((ShortValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof IntegerValue) {
                     int value = ((IntegerValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof LongValue) {
                     long value = ((LongValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof FloatValue) {
                     float value = ((FloatValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 } else if (operand.value() instanceof DoubleValue) {
                     double value = ((DoubleValue)operand.value()).value();
                     ConstOperand constant = new ConstOperand(value--);
-                    operand.value(value);
+                    operand.value(machine.mirrorOf(value));
                     return constant;
                 }
             }
@@ -1098,7 +1104,37 @@ public class Computer {
                         double value2 = ((DoubleValue)operand2.value()).value();
                         return new ConstOperand(value1 + value2);
                     }
-                }
+                } else if (operand1.isString()) {
+					String value1 = operand1.strValue();
+					if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isBoolean()) {
+						boolean value2 = operand2.boolValue();
+						return new ConstOperand(value1 + value2);
+					} else if (operand2.isString()) {
+						String value2 = operand2.strValue();
+						return new ConstOperand(value1 + value2);
+					}
+				}
             }
         }
         throw new Exception("invalid operand");

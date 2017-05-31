@@ -11,6 +11,7 @@ public interface Expression {
     public abstract class Values<T extends Token> extends Stack<T> {
 
 		public abstract boolean isByte(int index) throws Exception;
+		public abstract boolean isChar(int index) throws Exception;
         public abstract boolean isShort(int index) throws Exception;
         public abstract boolean isInteger(int index) throws Exception;
         public abstract boolean isLong(int index) throws Exception;
@@ -20,6 +21,7 @@ public interface Expression {
         public abstract boolean isString(int index) throws Exception;
 		
         public abstract byte getByte(int index) throws Exception;
+		public abstract char getChar(int index) throws Exception;
         public abstract short getShort(int index) throws Exception;
         public abstract int getInteger(int index) throws Exception;
         public abstract long getLong(int index) throws Exception;

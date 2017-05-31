@@ -12,15 +12,12 @@ import com.sun.jdi.DoubleValue;
 import com.sun.jdi.BooleanValue;
 import com.sun.jdi.StringReference;
 
+import com.runbox.debug.script.expression.token.Lexer;
+import com.runbox.debug.script.expression.token.Token;
 import com.runbox.debug.script.expression.token.operand.Operand;
 import com.runbox.debug.script.expression.token.operator.Operator;
-import com.runbox.debug.script.expression.token.Token;
-import com.runbox.debug.script.expression.token.Lexer;
 
-public class Expression implements com.runbox.script.expression.Expression {
-
-    private Stack<Operator> operators = new Stack<Operator>();
-    private Values<Operand> operands = new Values<Operand>();
+public class Expression implements com.runbox.script.expression.Expression {    
 
     public Expression(String expression) throws Exception {
         if (null != expression) {
@@ -32,6 +29,18 @@ public class Expression implements com.runbox.script.expression.Expression {
         }
     }
 
+	private Stack<Operator> operators = new Stack<Operator>();
+
+	public Stack<Operator> operators() {
+		return operators;
+	}
+	
+    private Values<Operand> operands = new Values<Operand>();
+
+	public Values<Operand> operands() {
+		return operands;
+	}
+	
     private Lexer lexer = null;
 
     public void lexer(Lexer lexer) {
@@ -78,10 +87,19 @@ public class Expression implements com.runbox.script.expression.Expression {
 		public boolean isByte(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ByteValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isByte();
+                }
+            }
+            return false;
+		}
+
+		@Override
+		public boolean isChar(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand) {
+                    return operand.isChar();
                 }
             }
             return false;
@@ -91,10 +109,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isShort(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ShortValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isShort();
                 }
             }
             return false;
@@ -104,10 +120,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isInteger(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof IntegerValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isInteger();
                 }
             }
             return false;
@@ -117,10 +131,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isLong(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof LongValue) {
-                        return true;
-                    }
+                if (null != operand) {
+					return operand.isLong();
                 }
             }
             return false;
@@ -130,10 +142,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isFloat(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof FloatValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isFloat();
                 }
             }
             return false;
@@ -143,10 +153,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isDouble(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof DoubleValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isDouble();
                 }
             }
             return false;
@@ -156,10 +164,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isBoolean(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof BooleanValue) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isBoolean();
                 }
             }
             return false;
@@ -169,10 +175,8 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean isString(int index) throws Exception {
 			if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof StringReference) {
-                        return true;
-                    }
+                if (null != operand) {
+                    return operand.isString();
                 }
             }
             return false;
@@ -182,26 +186,31 @@ public class Expression implements com.runbox.script.expression.Expression {
         public byte getByte(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ByteValue) {
-                        return ((ByteValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.byteValue();
+				}
             }
             throw new Exception("invalid operand");
         }
 
+		@Override
+		public char getChar(int index) throws Exception {
+			if (operands.size() > index) {
+                Operand operand = operands.get(index);
+                if (null != operand) {
+					return operand.charValue();
+				}
+            }
+            throw new Exception("invalid operand");
+		}
+		
         @Override
         public short getShort(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ByteValue) {
-                        return (short)((ByteValue)operand.value()).value();
-                    } else if (operand.value() instanceof ShortValue) {
-                        return ((ShortValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.shortValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -210,15 +219,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public int getInteger(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ByteValue) {
-                        return (int)((ByteValue)operand.value()).value();
-                    } else if (operand.value() instanceof ShortValue) {
-                        return (int)((ShortValue)operand.value()).value();
-                    } else if (operand.value() instanceof IntegerValue) {
-                        return ((IntegerValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.intValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -227,17 +230,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public long getLong(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof ByteValue) {
-                        return (long)((ByteValue)operand.value()).value();
-                    } else if (operand.value() instanceof ShortValue) {
-                        return (long)((ShortValue)operand.value()).value();
-                    } else if (operand.value() instanceof IntegerValue) {
-                        return (long)((IntegerValue)operand.value()).value();
-                    } else if (operand.value() instanceof LongValue) {
-                        return ((LongValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.longValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -246,11 +241,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public float getFloat(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof FloatValue) {
-                        return ((FloatValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.floatValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -259,13 +252,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public double getDouble(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof FloatValue) {
-                        return (double)((FloatValue)operand.value()).value();
-                    } else if (operand.value() instanceof DoubleValue) {
-                        return ((DoubleValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.doubleValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -274,11 +263,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public boolean getBoolean(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof BooleanValue) {                    
-                        return ((BooleanValue)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.boolValue();
+				}
             }
             throw new Exception("invalid operand");
         }
@@ -287,11 +274,9 @@ public class Expression implements com.runbox.script.expression.Expression {
         public String getString(int index) throws Exception {
             if (operands.size() > index) {
                 Operand operand = operands.get(index);
-                if (null != operand.value()) {
-                    if (operand.value() instanceof StringReference) {
-                        return ((StringReference)operand.value()).value();
-                    }
-                }
+                if (null != operand) {
+					return operand.strValue();
+				}
             }
             throw new Exception("invalid operand");
         }

@@ -252,13 +252,13 @@ breakpoint.method [package.]className.method([argument[, argument]]) {block}
 样例：import.class "com.runbox.demo.Demo";
       import.class "com.runbox.demo.Demo$Inner";
       breakpoint.method "Demo.method(String, Integer, Map)" {
-            print.variable @id; 
+            print.value @id; 
             print.field @thread; 
-            print.variable "this is a method breakpoint"; 
+            print.value "this is a method breakpoint"; 
             execute.run;
       };
       breakpoint.method "Demo$Inner.method()" {execute.run;};
-      @method = "Demo.method()"; breakpoint.method @method {print.variable "hello debugger."};
+      @method = "Demo.method()"; breakpoint.method @method {print.value "hello debugger."};
 breakpoint.line [package.]className:lineNumber {block}
 说明：通过行号设置断点
 参数：package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
@@ -340,20 +340,20 @@ execute.file file --- 此功能当前未完成
       @file = ".\debug.jdb"; execute.file @file;
 
 显示变量
-print.variable expression[, flags]
-说明：计算一个表达式并显示其结果（虽然名称是显示变量，但其实也可以显示字面常量）
+print.value expression[, flags]
+说明：计算一个表达式并显示其结果
 参数：expression 标准的Larva脚本表达式（具体参见脚本说明部分）
       flags 是一个标志组合
       0x00 不显示任何类型（默认值）；
       0x01 显示变量类型；
       0x02 显示变量值类型；
       对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，但是某值可能为Object任何子类；
-样例： @var = "hello"; print.variable @var;
-      print.variant "dog, come on";
-      @var = 10; print.variant @var, 0x1;
-      @var = 10; print.variant @var, 0x2;
-      @var = 10; @flags = 0x1 | 0x3; print.variant @var, @flags;
-      print.variant this.inner.count;
+样例： @var = "hello"; print.value @var;
+      print.value "dog, come on";
+      @var = 10; print.value @var, 0x1;
+      @var = 10; print.value @var, 0x2;
+      @var = 10; @flags = 0x1 | 0x3; print.value @var, @flags;
+      print.value this.inner.count;
 print.field expression[, flags]
 说明：列出一具对象的所有字段
 参数：expression 标准larva脚本表达式，其运算结果必须为一个对象引用；

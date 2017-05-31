@@ -28,7 +28,8 @@ public class ArrayOperand extends Operand {
 	public int index() {
 		return index;
 	}
-	
+
+	@Override
     public Type type() throws Exception {
         if (null != array) {
             if (0 <= index && index < array.length()) {
@@ -38,6 +39,7 @@ public class ArrayOperand extends Operand {
         throw new Exception("invalid type");
     }
 
+	@Override
     public Value value(Value value) throws Exception {
         if (null != array) {
             if (0 <= index && index < array.length()) {
@@ -49,6 +51,7 @@ public class ArrayOperand extends Operand {
         throw new Exception("invalid array");
     }
 
+	@Override
     public Value value() throws Exception {
         if (null != array) {
             if (0 <= index && index < array.length()) {
@@ -56,5 +59,5 @@ public class ArrayOperand extends Operand {
             }
         }
         throw new Exception("invalid array");
-    }
+    }    
 }

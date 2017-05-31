@@ -11,7 +11,7 @@ import com.runbox.debug.manager.ContextManager;
 public class LocalOperand extends Operand {    
 
     public LocalOperand(String name) throws Exception {
-        super(name);		
+        super(name);
         if (null != name) {
 			frame = ContextManager.instance().frame();
             if (null != frame) {
@@ -24,9 +24,19 @@ public class LocalOperand extends Operand {
         throw new Exception("invalid local");
     }
 
-	private StackFrame frame = null;	
-	private LocalVariable local = null;
+	private StackFrame frame = null;
+
+	public StackFrame frame() {
+		return frame;
+	}
 	
+	private LocalVariable local = null;
+
+	public LocalVariable local() {
+		return local;
+	}	
+
+	@Override
     public Type type() throws Exception {
         if (null != local) {
 			try {
@@ -38,6 +48,7 @@ public class LocalOperand extends Operand {
         throw new Exception("invalid type");
     }
 
+	@Override
     public Value value(Value value) throws Exception {
         if (null != frame && null != local) {
             Value previous = value();
@@ -47,6 +58,7 @@ public class LocalOperand extends Operand {
         throw new Exception("invalid local");
     }
 
+	@Override
     public Value value() throws Exception {
         if (null != frame && null != local) {
             return frame.getValue(local);
