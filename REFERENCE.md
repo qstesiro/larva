@@ -11,7 +11,7 @@ Larva是一个基于命令行调试器，使用Java语言编写，它可以调�
 方法查询：查看方法的基本信息，例如：访问权限、参数、局部变量、虚拟指令等;
 编写这个调试的完全是出于个人爱好，程序中难免会存在一些Bug，只限于交流学习使用，如果在使用的过程中发现有任何的问题或有任何的意见、想法都可以联系：runbox@163.com
 
-特别提示：如果你喜欢在命令行下工作或是调试程序，但是主要的工作平台是window系统的话，我个人强烈建议你使用以下软件
+特别提示：如果你喜欢在命令行下工作或是调试程序，但是主要的工作平台是windows系统的话，我个人强烈建议你使用以下软件
          Online documentation: https://conemu.github.io/en/TableOfContents.html
          这个软件我用了有几年了，现在的功能已经比较稳定了，平时我在工作与学习时都使用它，强烈推荐：）
 
@@ -95,8 +95,8 @@ machine.version
 样例：machine.version
 machine.ability
 说明：获取当前被调试目标虚拟机的某些特性
-参数：
-样例：
+参数：无
+样例：machine ability
 machine.suspend
 说明：挂起当前被调试的目标虚拟机
 参数：无
@@ -111,36 +111,99 @@ machine.status
 样例：machine.status
 
 类信息
-class.query
-说明：
-格式：
-参数：
-样例：
-class.field
-说明：
-格式：
-参数：
-样例：
-class.method
-说明：
-格式：
-参数：
-样例：
-class.monitor.query
-说明：
-格式：
-参数：
-样例：
-class.monitor.prepare
-说明：
-格式：
-参数：
-样例：
-class.monitor.unload
-说明：
-格式：
-参数：
-样例：
+class.query [package.]className[, flags]
+说明：获取已装载的类信息
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
+      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      以上两部分必须是字符串类型，如果使用空串则显示所有当前已经被装载的类
+      flags 标志位
+      0x000 默认值显示类全路径
+      0x001 是否包私有
+      0x002 访问标志 
+      0x004 修改器（直译不太明白，需要查询JVM规范）
+      0x008 是否抽象
+      0x010 是否不可被继承
+      0x020 是否已被初始化
+      0x040 是否已预装载
+      0x080 是否静态
+      0x100 是否已被验证
+      0x200 编译版本
+      0x400 源文件     
+样例：class.query "java.lang.String", 0xff;
+      class.query "com.runbox.demo.Demo.*", 0x8;
+      class.query "java.lang..*";
+      import.class "java.lang.String"; class.query "String";
+      class.query "", 0xfff;
+class.field [package.]className.fieldName[, flags]
+说明：获取一个类的字段信息
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
+      className 类名称，必须的部分
+      fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      以上三部分必须是字符串类型
+      flags 标志位
+      0x000 默认值显示类全路径
+      0x001 是否包私有
+      0x002 访问标志 
+      0x004 修改器（直译不太明白，需要查询JVM规范）
+      0x008 是否不可被继承
+      0x010 是否静态
+      0x020 是否合成（直译不太明白，需要查询JVM规范）
+      0x040 是否枚举
+      0x080 是否transient
+      0x100 是否volatile
+      0x200 声明这个字段的类（与0x400互斥）
+      0x400 字段定义类型（与0x200互斥）
+样例：class.field "com.runbox.debug.Demo..*";
+      import "java.lang.String"; class.field "String..*";
+      class.field "Demo..*", 0x1ff;
+class.method [package.]className.methodName[, flags]
+说明：获取一个类的方法信息
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
+      className 类名称，必须的部分
+      fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      以上三部分必须是字符串类型
+      flags 标志位
+      0x0000 默认值显示类全路径
+      0x0001 是否包私有
+      0x0002 访问标志 
+      0x0004 修改器（直译不太明白，需要查询JVM规范）
+      0x0008 是否抽象
+      0x0010 是否不可继承
+      0x0020 是否静态 
+      0x0040 是否合成（直译不太明白，需要查询JVM规范）
+      0x0080 是否桥接（直译不太明白，需要查询JVM规范）
+      0x0100 是否native
+      0x0200 是否同步
+      0x0400 是否为构造方法
+      0x0800 是为静态初始化块      
+      0x1000 是否接受变长参数
+      0x2000 方法的起始行号
+      0x4000 声明这个方法的类（与0x8000互斥）
+      0x8000 方法返回类型（与0x4000互斥）
+样例：class.method "com.runbox.debug.Demo..*";
+      import "java.lang.String"; class.method "String.noti.*", 0x7fff;      
+class.monitor.query "prepare" | "unload"
+说明：查询当前被监控的所有类
+参数：prepare 被监控预装载的类
+      unload 被监控卸载的类
+      如果没有参数则显示两类监控都被显示
+样例：class.monitor.query "prepare";
+      class.monitor.query "unload";
+      class.monitor.query;
+class.monitor.prepare [package.]className
+说明：监控某一个或是某一批类的预装载
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
+      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      以上参数必须组成字符串类型；
+样例：import.class "com.runbox.demo.Demo"; class.monitor.prepare "Demo";
+      class.monitor.prepare "com.runbox.demo.Demo.*";
+class.monitor.unload [package.]className
+说明：监控某一个或是某一批类的卸载
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
+      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      以上参数必须组成字符串类型；
+样例：import.class "com.runbox.demo.Demo"; class.monitor.unload "Demo";
+      class.monitor.unload "com.runbox.demo.Demo.*";
 class.monitor.enable
 说明：
 格式：

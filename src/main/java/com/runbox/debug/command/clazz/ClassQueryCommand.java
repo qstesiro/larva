@@ -34,7 +34,7 @@ public class ClassQueryCommand extends ClassCommand {
 	
     @Override
     public boolean execute() throws Exception {
-        if (null != clazz) {
+        if (null != clazz) {			
             int index = 0;
             List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
@@ -69,7 +69,7 @@ public class ClassQueryCommand extends ClassCommand {
 		if (null != values && REGEX < values.size()) {
 			String clazz = values.getString(REGEX);
 			if (!clazz.equals("")) {
-				return clazz;
+				return clazz(clazz);
 			}
 		}
 		return null;

@@ -21,12 +21,11 @@ public class ClassMonitorPrepareCommand extends ClassMonitorCommand {
 
     @Override
     public boolean execute() throws Exception {
-		String clazz = clazz();
-		System.out.println(clazz);
+		String clazz = clazz();		
 		if (null != clazz) {
 			print(classes(clazz));
 			ClassManager.instance().append(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine()));
-            return super.execute();    
+            return super.execute();
 		} 
 		throw new Exception("invalid arguement");				    
     }
