@@ -26,6 +26,9 @@ public class Lexer extends com.runbox.script.statement.Lexer {
             if (null == peek) {
                 skip();
                 Token token = (operator(lookup()) ? operator() : operand());
+				// if (token instanceof Operand) {
+					System.out.println(token.name());
+					// }
                 front = correct(token);
                 return front;
             } else {
@@ -86,7 +89,9 @@ public class Lexer extends com.runbox.script.statement.Lexer {
             return true;
         } else if ('.' == letter) {
             if ((front instanceof Operand) ||
-				(front instanceof Operator && front.name().equals(")"))) {
+				(front instanceof Operator &&
+				 (front.name().equals(")") ||
+				  front.name().equals("]")))) {
                 return true;
             }
         } else if ('!' == letter) {
@@ -343,7 +348,7 @@ public class Lexer extends com.runbox.script.statement.Lexer {
 
     private char escape() throws Exception {
         next();
-        switch (lookup()) {        
+        switch (lookup()) {
         case 'b':
             next(); return '\b';
         case 'f':
@@ -459,7 +464,8 @@ public class Lexer extends com.runbox.script.statement.Lexer {
             } else if ('d' == lookup() || 'D' == lookup()) {
                 next(); return new ConstOperand(Double.valueOf(buffer.toString()));
             } else {
-                next(); return new ConstOperand(Float.valueOf(buffer.toString()));
+                // next(); 
+				return new ConstOperand(Float.valueOf(buffer.toString()));
             }
         }
     }
