@@ -25,10 +25,7 @@ public class Lexer extends com.runbox.script.statement.Lexer {
         if (null != express) {
             if (null == peek) {
                 skip();
-                Token token = (operator(lookup()) ? operator() : operand());
-				// if (token instanceof Operand) {
-					System.out.println(token.name());
-					// }
+                Token token = (operator(lookup()) ? operator() : operand());				
                 front = correct(token);
                 return front;
             } else {

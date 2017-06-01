@@ -59,5 +59,5 @@ public class ArrayOperand extends Operand {
             }
         }
         throw new Exception("invalid array");
-    }    
+    }	
 }

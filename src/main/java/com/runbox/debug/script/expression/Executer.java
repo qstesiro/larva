@@ -153,7 +153,7 @@ public class Executer {
             operators.pop();
             Operand operand2 = operands.pop();
             Operand operand1 = convert(operands.pop());
-            Operand result = Computer.computeG2(operand1, operand2);
+            Operand result = Computer.computeI2(operand1, operand2);
             operands.push(result);
         }
     }
@@ -526,11 +526,11 @@ public class Executer {
         if (current.level() >= next.level()) {
             operators.pop();
             Operand operand2 = convert(operands.pop());
-            Operand operand1 = convert(operands.pop());
+            Operand operand1 = convert(operands.pop());			
 			if (Token.auto(operand1.name()) && !(operand1 instanceof AutoOperand)) {
 				operand1 = new AutoOperand(operand1.name());
 				Engine.instance().append((AutoOperand)operand1);
-			}
+			}			
             Operand result = Computer.compute21(operand1, operand2);
             operands.push(result);
             execute(operators.peek(), next);
@@ -687,9 +687,8 @@ public class Executer {
 				} else if (Token.local(operand.name())) {
 					return new LocalOperand(operand.name());
 				} else if (Token.auto(operand.name())) {
-					if (null != Engine.instance().findAuto(operand.name())) {
-						return (Operand)Engine.instance().findAuto(operand.name());
-					}
+					AutoOperand auto = (AutoOperand)Engine.instance().findAuto(operand.name());
+					if (null != auto) return auto;
 				}
 			}
 		}

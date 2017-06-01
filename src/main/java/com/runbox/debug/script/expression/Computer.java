@@ -14,10 +14,10 @@ public class Computer {
     public static Operand computeI2(Operand operand1, Operand operand2) throws Exception { // [
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value().type() instanceof ArrayType) {
-                    if (operand2.value() instanceof IntegerValue) {
-                        int index = ((IntegerValue)operand2.value()).value();
-                        return new ArrayOperand((ArrayReference)operand1.value(), index);
+                if (operand1.arrayValueType()) {
+                    if (operand2.isInteger()) {
+                        int index = operand2.intValue();
+                        return new ArrayOperand(operand1.arrayValue(), index);
                     }
                 }
             }
@@ -36,8 +36,8 @@ public class Computer {
     public static Operand computeG1(Operand operand1, Operand operand2) throws Exception { // .
         if (null != operand1 && null != operand2) {
             if (Operand.subClass(operand1)) {
-                if ((operand1.value() instanceof ObjectReference) && !(operand2 instanceof ConstOperand)) {
-                    return new FieldOperand((ObjectReference)operand1.value(), operand2.name());
+                if (operand1.isObject() && !(operand2 instanceof ConstOperand)) {
+                    return new FieldOperand(operand1.objectValue(), operand2.name());
                 }
             }
         }
@@ -57,115 +57,115 @@ public class Computer {
         if (null != operand1 && null != operand2) {
             if (Token.primitive(operand1.name()) && null != operand2.value()) {
                 if (operand1.name().equals("byte")) {
-                    if (operand2.value() instanceof ByteValue) {
+                    if (operand2.isByte()) {
                         return operand2;
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((byte)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((byte)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((byte)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((byte)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((byte)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((byte)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((byte)operand2.charValue());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((byte)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((byte)operand2.intValue());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((byte)operand2.longValue());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((byte)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((byte)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("char")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((char)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((char)operand2.byteValue());
+                    } else if (operand2.isChar()) {
                         return operand2;
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((char)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((char)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((char)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((char)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((char)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((char)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((char)operand2.intValue());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((char)operand2.longValue());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((char)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((char)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("short")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((short)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((short)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((short)operand2.byteValue());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((short)operand2.charValue());
+                    } else if (operand2.isShort()) {
                         return operand2;
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((short)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((short)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((short)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((short)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((short)operand2.intValue());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((short)operand2.longValue());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((short)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((short)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("int")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((int)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((int)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((int)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((int)operand2.byteValue());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((int)operand2.charValue());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((int)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
                         return operand2;
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((int)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((int)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((int)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((int)operand2.longValue());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((int)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((int)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("long")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((long)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((long)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((long)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((long)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((long)operand2.byteValue());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((long)operand2.charValue());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((long)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((long)operand2.intValue());
+                    } else if (operand2.isLong()) {
                         return operand2;
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((long)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((long)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((long)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((long)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("float")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((float)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((float)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((float)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((float)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((float)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((float)operand2.byteValue());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((float)operand2.charValue());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((float)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((float)operand2.intValue());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((float)operand2.longValue());
+                    } else if (operand2.isFloat()) {
                         return operand2;
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        return new ConstOperand((float)((DoubleValue)operand2.value()).value());
+                    } else if (operand2.isDouble()) {
+                        return new ConstOperand((float)operand2.doubleValue());
                     }
                 } else if (operand1.name().equals("double")) {
-                    if (operand2.value() instanceof ByteValue) {
-                        return new ConstOperand((double)((ByteValue)operand2).value());
-                    } else if (operand2.value() instanceof CharValue) {
-                        return new ConstOperand((double)((CharValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof ShortValue) {
-                        return new ConstOperand((double)((ShortValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        return new ConstOperand((double)((IntegerValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof LongValue) {
-                        return new ConstOperand((double)((LongValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof FloatValue) {
-                        return new ConstOperand((double)((FloatValue)operand2.value()).value());
-                    } else if (operand2.value() instanceof DoubleValue) {
+                    if (operand2.isByte()) {
+                        return new ConstOperand((double)operand2.byteValue());
+                    } else if (operand2.isChar()) {
+                        return new ConstOperand((double)operand2.charValue());
+                    } else if (operand2.isShort()) {
+                        return new ConstOperand((double)operand2.shortValue());
+                    } else if (operand2.isInteger()) {
+                        return new ConstOperand((double)operand2.intValue());
+                    } else if (operand2.isLong()) {
+                        return new ConstOperand((double)operand2.longValue());
+                    } else if (operand2.isFloat()) {
+                        return new ConstOperand((double)operand2.floatValue());
+                    } else if (operand2.isDouble()) {
                         return operand2;
                     }
                 } else if (operand1.name().equals("boolean")) {
@@ -179,8 +179,8 @@ public class Computer {
     public static Operand computeE1(Operand operand) throws Exception { // !
         if (null != operand) {
             if (null != operand.value()) {
-                if (operand.value() instanceof BooleanValue) {
-                    return new ConstOperand(!((BooleanValue)operand.value()).value());
+                if (operand.isBoolean()) {
+                    return new ConstOperand(!operand.boolValue());
                 }
             }
         }
@@ -190,16 +190,16 @@ public class Computer {
     public static Operand computeE2(Operand operand) throws Exception { // ~
         if (null != operand) {
             if (null != operand.value()) {
-                if (operand.value() instanceof ByteValue) {
-                    return new ConstOperand(~((ByteValue)operand.value()).value());
-                } else if (operand.value() instanceof CharValue) {
-                    return new ConstOperand(~((CharValue)operand.value()).value());
-                } else if (operand.value() instanceof ShortValue) {
-                    return new ConstOperand(~((ShortValue)operand.value()).value());
-                } else if (operand.value() instanceof IntegerValue) {
-                    return new ConstOperand(~((IntegerValue)operand.value()).value());
-                } else if (operand.value() instanceof LongValue) {
-                    return new ConstOperand(~((LongValue)operand.value()).value());
+                if (operand.isByte()) {
+                    return new ConstOperand(~operand.byteValue());
+                } else if (operand.isChar()) {
+                    return new ConstOperand(~operand.charValue());
+                } else if (operand.isShort()) {
+                    return new ConstOperand(~operand.shortValue());
+                } else if (operand.isInteger()) {
+                    return new ConstOperand(~operand.intValue());
+                } else if (operand.isLong()) {
+                    return new ConstOperand(~operand.longValue());
                 }
             }
         }
@@ -210,32 +210,32 @@ public class Computer {
         if (null != operand) {
             if (null != operand.value()) {
 				VirtualMachine machine = MachineManager.instance().get();
-                if (operand.value() instanceof ByteValue) {
-                    byte value = ((ByteValue)operand.value()).value();
+                if (operand.isByte()) {
+                    byte value = operand.byteValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof CharValue) {
-                    char value = ((CharValue)operand.value()).value();
+                } else if (operand.isChar()) {
+                    char value = operand.charValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof ShortValue) {
-                    short value = ((ShortValue)operand.value()).value();
+                } else if (operand.isShort()) {
+                    short value = operand.shortValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof IntegerValue) {
-                    int value = ((IntegerValue)operand.value()).value();
+                } else if (operand.isInteger()) {
+                    int value = operand.intValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof LongValue) {
-                    long value = ((LongValue)operand.value()).value();
+                } else if (operand.isLong()) {
+                    long value = operand.longValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof FloatValue) {
-                    float value = ((FloatValue)operand.value()).value();
+                } else if (operand.isFloat()) {
+                    float value = operand.floatValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof DoubleValue) {
-                    double value = ((DoubleValue)operand.value()).value();
+                } else if (operand.isDouble()) {
+                    double value = operand.doubleValue();
                     operand.value(machine.mirrorOf(++value));
                     return new ConstOperand(value);
                 }
@@ -248,38 +248,38 @@ public class Computer {
         if (null != operand) {
             if (null != operand.value()) {
 				VirtualMachine machine = MachineManager.instance().get();
-                if (operand.value() instanceof ByteValue) {
-                    byte value = ((ByteValue)operand.value()).value();
+                if (operand.isByte()) {
+                    byte value = operand.byteValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof CharValue) {
-                    char value = ((CharValue)operand.value()).value();
+                } else if (operand.isChar()) {
+                    char value = operand.charValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof ShortValue) {
-                    short value = ((ShortValue)operand.value()).value();
+                } else if (operand.isShort()) {
+                    short value = operand.shortValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof IntegerValue) {
-                    int value = ((IntegerValue)operand.value()).value();
+                } else if (operand.isInteger()) {
+                    int value = operand.intValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof LongValue) {
-                    long value = ((LongValue)operand.value()).value();
+                } else if (operand.isLong()) {
+                    long value = operand.longValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof FloatValue) {
-                    float value = ((FloatValue)operand.value()).value();
+                } else if (operand.isFloat()) {
+                    float value = operand.floatValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof DoubleValue) {
-                    double value = ((DoubleValue)operand.value()).value();
+                } else if (operand.isDouble()) {
+                    double value = operand.doubleValue();
                     ConstOperand constant = new ConstOperand(value++);
                     operand.value(machine.mirrorOf(value));
                     return constant;
@@ -293,32 +293,32 @@ public class Computer {
         if (null != operand) {
             if (null != operand.value()) {
 				VirtualMachine machine = MachineManager.instance().get();
-                if (operand.value() instanceof ByteValue) {
-                    byte value = ((ByteValue)operand.value()).value();
+                if (operand.isByte()) {
+                    byte value = operand.byteValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof CharValue) {
-                    char value = ((CharValue)operand.value()).value();
+                } else if (operand.isChar()) {
+                    char value = operand.charValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof ShortValue) {
-                    short value = ((ShortValue)operand.value()).value();
+                } else if (operand.isShort()) {
+                    short value = operand.shortValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof IntegerValue) {
-                    int value = ((IntegerValue)operand.value()).value();
+                } else if (operand.isInteger()) {
+                    int value = operand.intValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof LongValue) {
-                    long value = ((LongValue)operand.value()).value();
+                } else if (operand.isLong()) {
+                    long value = operand.longValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof FloatValue) {
-                    float value = ((FloatValue)operand.value()).value();
+                } else if (operand.isFloat()) {
+                    float value = operand.floatValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
-                } else if (operand.value() instanceof DoubleValue) {
-                    double value = ((DoubleValue)operand.value()).value();
+                } else if (operand.isDouble()) {
+                    double value = operand.doubleValue();
                     operand.value(machine.mirrorOf(--value));
                     return new ConstOperand(value);
                 }
@@ -331,38 +331,38 @@ public class Computer {
         if (null != operand) {
             if (null != operand.value()) {
 				VirtualMachine machine = MachineManager.instance().get();
-                if (operand.value() instanceof ByteValue) {
-                    byte value = ((ByteValue)operand.value()).value();
+                if (operand.isByte()) {
+                    byte value = operand.byteValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof CharValue) {
-                    char value = ((CharValue)operand.value()).value();
+                } else if (operand.isChar()) {
+                    char value = operand.charValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof ShortValue) {
-                    short value = ((ShortValue)operand.value()).value();
+                } else if (operand.isShort()) {
+                    short value = operand.shortValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof IntegerValue) {
-                    int value = ((IntegerValue)operand.value()).value();
+                } else if (operand.isInteger()) {
+                    int value = operand.intValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof LongValue) {
-                    long value = ((LongValue)operand.value()).value();
+                } else if (operand.isLong()) {
+                    long value = operand.longValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof FloatValue) {
-                    float value = ((FloatValue)operand.value()).value();
+                } else if (operand.isFloat()) {
+                    float value = operand.floatValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
-                } else if (operand.value() instanceof DoubleValue) {
-                    double value = ((DoubleValue)operand.value()).value();
+                } else if (operand.isDouble()) {
+                    double value = operand.doubleValue();
                     ConstOperand constant = new ConstOperand(value--);
                     operand.value(machine.mirrorOf(value));
                     return constant;
@@ -375,26 +375,26 @@ public class Computer {
     public static Operand computeE8(Operand operand) throws Exception { // 0-
         if (null != operand) {
             if (null != operand.value()) {
-                if (operand.value() instanceof ByteValue) {
-                    byte value = ((ByteValue)operand.value()).value();
+                if (operand.isByte()) {
+                    byte value = operand.byteValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof CharValue) {
-                    char value = ((CharValue)operand.value()).value();
+                } else if (operand.isChar()) {
+                    char value = operand.charValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof ShortValue) {
-                    short value = ((ShortValue)operand.value()).value();
+                } else if (operand.isShort()) {
+                    short value = operand.shortValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof IntegerValue) {
-                    int value = ((IntegerValue)operand.value()).value();
+                } else if (operand.isInteger()) {
+                    int value = operand.intValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof LongValue) {
-                    long value = ((LongValue)operand.value()).value();
+                } else if (operand.isLong()) {
+                    long value = operand.longValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof FloatValue) {
-                    float value = ((FloatValue)operand.value()).value();
+                } else if (operand.isFloat()) {
+                    float value = operand.floatValue();
                     return new ConstOperand(0 - value);
-                } else if (operand.value() instanceof DoubleValue) {
-                    double value = ((DoubleValue)operand.value()).value();
+                } else if (operand.isDouble()) {
+                    double value = operand.doubleValue();
                     return new ConstOperand(0 - value);
                 }
             }
@@ -406,171 +406,171 @@ public class Computer {
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
                 if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 * value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 * value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 * value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 * value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 * value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 * value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 * value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 * value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 * value2);
                     }
                 }
@@ -582,172 +582,172 @@ public class Computer {
     public static Operand computeD2(Operand operand1, Operand operand2) throws Exception { // /
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 / value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 / value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 / value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 / value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 / value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 / value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 / value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 / value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 / value2);
                     }
                 }
@@ -759,172 +759,172 @@ public class Computer {
     public static Operand computeD3(Operand operand1, Operand operand2) throws Exception { // %
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 % value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 % value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 % value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 % value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 % value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 % value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 % value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 % value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 % value2);
                     }
                 }
@@ -936,172 +936,172 @@ public class Computer {
     public static Operand computeC1(Operand operand1, Operand operand2) throws Exception { // +
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 + value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 + value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 + value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 + value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 + value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 + value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 + value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 + value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 + value2);
                     }
                 } else if (operand1.isString()) {
@@ -1143,172 +1143,172 @@ public class Computer {
     public static Operand computeC2(Operand operand1, Operand operand2) throws Exception { // -
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 - value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 - value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 - value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 - value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 - value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 - value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 - value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 - value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 - value2);
                     }
                 }
@@ -1320,94 +1320,94 @@ public class Computer {
     public static Operand computeB1(Operand operand1, Operand operand2) throws Exception { // <<
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 << value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 << value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 << value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 << value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 << value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 << value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 << value2);
                     }
                 }
@@ -1419,94 +1419,94 @@ public class Computer {
     public static Operand computeB2(Operand operand1, Operand operand2) throws Exception { // >>
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >> value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >> value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >> value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >> value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >> value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >> value2);
                     }
                 }
@@ -1518,94 +1518,94 @@ public class Computer {
     public static Operand computeB3(Operand operand1, Operand operand2) throws Exception { // >>>
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >>> value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >>> value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >>> value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >>> value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >>> value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >>> value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >>> value2);
                     }
                 }
@@ -1617,172 +1617,172 @@ public class Computer {
     public static Operand computeA1(Operand operand1, Operand operand2) throws Exception { // <
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 < value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 < value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 < value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 < value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 < value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 < value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 < value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 < value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 < value2);
                     }
                 }
@@ -1794,172 +1794,172 @@ public class Computer {
     public static Operand computeA2(Operand operand1, Operand operand2) throws Exception { // <=
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 <= value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 <= value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 <= value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 <= value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 <= value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 <= value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 <= value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 <= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 <= value2);
                     }
                 }
@@ -1971,172 +1971,172 @@ public class Computer {
     public static Operand computeA3(Operand operand1, Operand operand2) throws Exception { // >
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 > value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 > value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 > value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 > value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 > value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 > value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 > value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 > value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 > value2);
                     }
                 }
@@ -2148,172 +2148,172 @@ public class Computer {
     public static Operand computeA4(Operand operand1, Operand operand2) throws Exception { // >=
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 >= value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 >= value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 >= value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 >= value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 >= value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 >= value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 >= value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 >= value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 >= value2);
                     }
                 }
@@ -2326,8 +2326,8 @@ public class Computer {
         if (null != operand1 && null != operand2) {
             if (!(operand1 instanceof ConstOperand) && !Operand.subClass(operand2)) {
                 if (null != operand1.value() && null != operand2.name()) {
-                    if (operand1.value().type() instanceof ClassType) {
-                        ClassType type = (ClassType)operand1.value().type();
+                    if (operand1.classValueType()) {
+                        ClassType type = (ClassType)operand1.valueType();
                         if (type.name().equals(operand2.name())) {
                             return new ConstOperand(true);
                         }
@@ -2355,220 +2355,186 @@ public class Computer {
     public static Operand compute91(Operand operand1, Operand operand2) throws Exception { // ==
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 == value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 == value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 == value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 == value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
-                } else if (operand1.type() instanceof ReferenceType && operand2.type() instanceof ReferenceType) {
-                    // if ((operand1.type() instanceof ClassType) && (operand2.type() instanceof ClassType)) {
-                    //     ClassType type1 = (ClassType)operand1.type();
-                    //     ClassType type2 = (ClassType)operand2.type();
-                    //     if (type1.name().equals(type2.name())) {
-                    //         return new ConstOperand(operand1.value() == operand2.value());
-                    //     }
-                    //     ClassType entry1 = type1.superclass();
-                    //     while (null != entry1) {
-                    //         ClassType entry2 = type2.superclass();
-                    //         while (null != entry2) {
-                    //             if (entry2.name().equals(entry1.name()) && !entry2.name().equals("java.lang.Object")) {
-                    //                 return new ConstOperand(operand1.value() == operand2.value());
-                    //             }
-                    //             entry2 = entry2.superclass();
-                    //         }
-                    //         entry1 = entry1.superclass();
-                    //     }
-                    // } else {
-                    //     ClassType type1 = (ClassType)operand1.value().type();
-                    //     ClassType type2 = (ClassType)operand2.value().type();
-                    //     List<InterfaceType> interfaces1 = type1.allInterfaces();
-                    //     List<InterfaceType> interfaces2 = type2.allInterfaces();
-                    //     for (InterfaceType entry1 : interfaces1) {
-                    //         for (InterfaceType entry2 : interfaces2) {
-                    //             if (entry2.name().equals(entry1.name())) {
-                    //                 return new ConstOperand(operand1.value() == operand2.value());
-                    //             }
-                    //         }
-                    //     }
-                    // }
-					if ((operand1.type() instanceof ClassType || operand1.type() instanceof InterfaceType) &&
-						(operand2.type() instanceof ClassType || operand2.type() instanceof InterfaceType)) {
+                } else if (operand1.referenceType() && operand2.referenceType()) {
+					if ((operand1.classValueType() || operand1.interfaceValueType()) &&
+						(operand2.classValueType() || operand2.interfaceValueType())) {
 						return new ConstOperand(operand1.value() == operand2.value());
-					} else if (operand1.type() instanceof ArrayType && operand2.type() instanceof ArrayType) {
+					} else if (operand1.arrayValueType() && operand2.arrayValueType()) {
 						return new ConstOperand(operand1.value() == operand2.value());
 					}
                 }
             } else if (null == operand1.value() && null != operand2.value()) {
-				if (operand2.value().type() instanceof ReferenceType) {					
-					return new ConstOperand(false);
-				}
+				if (operand2.referenceValueType()) return new ConstOperand(false);
             } else if (null != operand1.value() && null == operand2.value()) {
-				if (operand1.value().type() instanceof ReferenceType) {
-					return new ConstOperand(false);
-				}
+				if (operand1.referenceValueType()) return new ConstOperand(false);
             } else if (null == operand1.value() && null == operand2.value()) {
                 return new ConstOperand(true);
             }
@@ -2579,220 +2545,186 @@ public class Computer {
     public static Operand compute92(Operand operand1, Operand operand2) throws Exception { // !=
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
-                        return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 != value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
+                        return new ConstOperand(value1 != value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
+                        return new ConstOperand(value1 != value2);
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
                 } else if (operand1.value() instanceof FloatValue) {
-                    float value1 = ((FloatValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    float value1 = operand1.floatValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
                 } else if (operand1.value() instanceof DoubleValue) {
-                    double value1 = ((DoubleValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                    double value1 = operand1.doubleValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof FloatValue) {
-                        float value2 = ((FloatValue)operand2.value()).value();
+                    } else if (operand2.isFloat()) {
+                        float value2 = operand2.floatValue();
                         return new ConstOperand(value1 != value2);
-                    } else if (operand2.value() instanceof DoubleValue) {
-                        double value2 = ((DoubleValue)operand2.value()).value();
+                    } else if (operand2.isDouble()) {
+                        double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
-                } else if (operand1.type() instanceof ReferenceType && operand2.type() instanceof ReferenceType) {
-                    // if ((operand1.type() instanceof ClassType) && (operand2.type() instanceof ClassType)) {
-                    //     ClassType type1 = (ClassType)operand1.type();
-                    //     ClassType type2 = (ClassType)operand2.type();
-                    //     if (type1.name().equals(type2.name())) {
-                    //         return new ConstOperand(operand1.value() != operand2.value());
-                    //     }
-                    //     ClassType entry1 = type1.superclass();
-                    //     while (null != entry1) {
-                    //         ClassType entry2 = type2.superclass();
-                    //         while (null != entry2) {
-                    //             if (entry2.name().equals(entry1.name()) && !entry2.name().equals("java.lang.Object")) {
-                    //                 return new ConstOperand(operand1.value() != operand2.value());
-                    //             }
-                    //             entry2 = entry2.superclass();
-                    //         }
-                    //         entry1 = entry1.superclass();
-                    //     }
-                    // } else {
-                    //     ClassType type1 = (ClassType)operand1.value().type();
-                    //     ClassType type2 = (ClassType)operand2.value().type();
-                    //     List<InterfaceType> interfaces1 = type1.allInterfaces();
-                    //     List<InterfaceType> interfaces2 = type2.allInterfaces();
-                    //     for (InterfaceType entry1 : interfaces1) {
-                    //         for (InterfaceType entry2 : interfaces2) {
-                    //             if (entry2.name().equals(entry1.name())) {
-                    //                 return new ConstOperand(operand1.value() != operand2.value());
-                    //             }
-                    //         }
-                    //     }
-                    // }
-					if ((operand1.type() instanceof ClassType || operand1.type() instanceof InterfaceType) &&
-						(operand2.type() instanceof ClassType || operand2.type() instanceof InterfaceType)) {
+                } else if (operand1.referenceType() && operand2.referenceType()) {                    
+					if ((operand1.classValueType() || operand1.interfaceValueType()) &&
+						(operand2.classValueType() || operand2.interfaceValueType())) {
 						return new ConstOperand(operand1.value() != operand2.value());
-					} else if (operand1.type() instanceof ArrayType && operand2.type() instanceof ArrayType) {
+					} else if (operand1.arrayValueType() && operand2.arrayValueType()) {
 						return new ConstOperand(operand1.value() != operand2.value());
 					}
                 }
             } else if (null == operand1.value() && null != operand2.value()) {
-				if (operand2.value().type() instanceof ReferenceType) {
-					return new ConstOperand(true);
-				}
+				if (operand2.referenceValueType()) return new ConstOperand(true);				
             } else if (null != operand1.value() && null == operand2.value()) {
-				if (operand1.value().type() instanceof ReferenceType) {
-					return new ConstOperand(true);
-				}
+				if (operand1.referenceValueType()) return new ConstOperand(true);				
             } else if (null == operand1.value() && null == operand2.value()) {
                 return new ConstOperand(false);
             }
@@ -2803,94 +2735,94 @@ public class Computer {
     public static Operand compute8(Operand operand1, Operand operand2) throws Exception { // &
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 & value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 & value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 & value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 & value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 & value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 & value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 & value2);
                     }
                 }
@@ -2902,94 +2834,94 @@ public class Computer {
     public static Operand compute7(Operand operand1, Operand operand2) throws Exception { // ^
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 ^ value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 ^ value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 ^ value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 ^ value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 ^ value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 ^ value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 ^ value2);
                     }
                 }
@@ -3001,94 +2933,94 @@ public class Computer {
     public static Operand compute6(Operand operand1, Operand operand2) throws Exception { // |
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof ByteValue) {
-                    byte value1 = ((ByteValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                if (operand1.isByte()) {
+                    byte value1 = operand1.byteValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    }
-                } else if (operand1.value() instanceof CharValue) {
-                    char value1 = ((CharValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 | value2);
                     }
-                } else if (operand1.value() instanceof ShortValue) {
-                    short value1 = ((ShortValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isChar()) {
+                    char value1 = operand1.charValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    }
-                } else if (operand1.value() instanceof IntegerValue) {
-                    int value1 = ((IntegerValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
-                        return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 | value2);
                     }
-                } else if (operand1.value() instanceof LongValue) {
-                    long value1 = ((LongValue)operand1.value()).value();
-                    if (operand2.value() instanceof ByteValue) {
-                        byte value2 = ((ByteValue)operand2.value()).value();
+                } else if (operand1.isShort()) {
+                    short value1 = operand1.shortValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof CharValue) {
-                        char value2 = ((CharValue)operand2.value()).value();
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof ShortValue) {
-                        short value2 = ((ShortValue)operand2.value()).value();
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof IntegerValue) {
-                        int value2 = ((IntegerValue)operand2.value()).value();
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
                         return new ConstOperand(value1 | value2);
-                    } else if (operand2.value() instanceof LongValue) {
-                        long value2 = ((LongValue)operand2.value()).value();
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 | value2);
+                    }
+                } else if (operand1.isInteger()) {
+                    int value1 = operand1.intValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
+                        return new ConstOperand(value1 | value2);
+                    }
+                } else if (operand1.isLong()) {
+                    long value1 = operand1.longValue();
+                    if (operand2.isByte()) {
+                        byte value2 = operand2.byteValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isChar()) {
+                        char value2 = operand2.charValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isShort()) {
+                        short value2 = operand2.shortValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isInteger()) {
+                        int value2 = operand2.intValue();
+                        return new ConstOperand(value1 | value2);
+                    } else if (operand2.isLong()) {
+                        long value2 = operand2.longValue();
                         return new ConstOperand(value1 | value2);
                     }
                 }
@@ -3100,9 +3032,9 @@ public class Computer {
     public static Operand compute5(Operand operand1, Operand operand2) throws Exception { // &&
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof BooleanValue && operand2.value() instanceof BooleanValue) {
-                    boolean value1 = ((BooleanValue)operand1).value();
-                    boolean value2 = ((BooleanValue)operand2).value();
+                if (operand1.isBoolean() && operand2.isBoolean()) {
+					boolean value1 = operand1.boolValue();
+					boolean value2 = operand2.boolValue();
                     return new ConstOperand(value1 && value2);
                 }
             }
@@ -3113,9 +3045,9 @@ public class Computer {
     public static Operand compute4(Operand operand1, Operand operand2) throws Exception { // ||
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.value() instanceof BooleanValue && operand2.value() instanceof BooleanValue) {
-                    boolean value1 = ((BooleanValue)operand1).value();
-                    boolean value2 = ((BooleanValue)operand2).value();
+                if (operand1.isBoolean() && operand2.isBoolean()) {
+					boolean value1 = operand1.boolValue();
+					boolean value2 = operand2.boolValue();
                     return new ConstOperand(value1 || value2);
                 }
             }
@@ -3126,7 +3058,7 @@ public class Computer {
     public static void compute31(Operand operand) throws Exception { // ?
         if (null != operand) {
             if (null != operand.value()) {
-                if (operand.value() instanceof BooleanValue) {
+                if (operand.isBoolean()) {
                     return;
                 }
             }
@@ -3136,9 +3068,11 @@ public class Computer {
 
     public static Operand compute32(Operand operand1, Operand operand2, Operand operand3) throws Exception { // :
         if (null != operand1 && null != operand2 && null != operand3) {
-            if (null != operand1.value() && null != operand2.value() && null != operand3.value()) {
-                if (operand1.value() instanceof BooleanValue) {
-                    return (((BooleanValue)operand1).value() ? operand2 : operand3);
+            if (null != operand1.value() &&
+				null != operand2.value() &&
+				null != operand3.value()) {
+                if (operand1.isBoolean()) {
+                    return (operand1.boolValue() ? operand2 : operand3);
                 }
             }
         }

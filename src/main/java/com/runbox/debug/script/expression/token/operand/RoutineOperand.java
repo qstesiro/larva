@@ -8,8 +8,12 @@ import com.runbox.script.statement.node.RoutineNode;
 
 public class RoutineOperand extends Operand {
 
-    public RoutineOperand(String name) {
-        super(name); routine = Engine.instance().findRoutine(name());
+    public RoutineOperand(String name) throws Exception {
+        super(name);
+		routine = Engine.instance().findRoutine(name());
+		if (null == routine) {
+			throw new Exception("invalid routine name");
+		}
     }    		
 	
 	public void arguments(List<Operand> autos) throws Exception {
