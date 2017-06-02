@@ -32,16 +32,15 @@ public class ClassMonitorQueryCommand extends ClassCommand {
         return super.execute();
     }
 
-    private void print(Map<Integer, EventRequest> map) throws Exception {
+    private void print(Map<Integer, ClassManager.Entry> map) throws Exception {
         if (0 < map.size()) {			
             System.out.printf("%-5s%-5s%-10s%-8s%s\n", "#", "id", "type", "status", "clazz");
             int i = 0; for (int id : map.keySet()) {
-                EventRequest request = map.get(id);
+                ClassManager.Entry entry = map.get(id);
 				System.out.printf("%-5s%-5d%-10s%-8b%s\n",
 								  i++, id,
-								  ((request instanceof ClassPrepareRequest) ? "prepare" : "unload"),
-								  request.isEnabled(),
-								  request.getProperty(ClassCommand.CLASS));
+								  ((entry instanceof ClassManager.PrepareEntry) ? "prepare" : "unload"),
+								  entry.status(), entry.clazz());
             }            
         }
     }

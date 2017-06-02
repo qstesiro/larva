@@ -17,14 +17,14 @@ public class MethodArgumentCommand extends MethodCommand {
 
     @Override 
     public boolean execute() throws Exception {
-        int index = 0; String clazz = clazz(); String method = method();    
-        List<ReferenceType> types = MachineManager.instance().allClasses();		        
-        for (ReferenceType type : types) {
+        String clazz = clazz(); String method = method();    
+        List<ReferenceType> types = MachineManager.instance().allClasses();
+        int i = 0; for (ReferenceType type : types) {
             if (type.name().equals(clazz)) {
                 List<Method> methods = type.allMethods();
                 for (Method item : methods) {
                     if (item.name().equals(method)) {
-                        print(index++, item);
+                        print(i++, item);
 					}
                 }
             }
@@ -33,7 +33,7 @@ public class MethodArgumentCommand extends MethodCommand {
     }
 
     private void print(int index, Method method) {
-		System.out.printf("#%-4d%s\n", index, method.name());		
+		System.out.printf("#%-4d%s", index, method.name());		
         try {
             printLocals(method.arguments());				            
         } catch (AbsentInformationException e) {
@@ -42,22 +42,24 @@ public class MethodArgumentCommand extends MethodCommand {
 	}
 	
 	private void printLocals(List<LocalVariable> variables) {
+		System.out.printf("(");
 		if (0 < variables.size()) {
-			int index = 0; for (LocalVariable variable : variables) {
-				System.out.printf("%-5s%-16s%s\n", "", variable.name(), variable.typeName());
+			int i = 0; for (LocalVariable variable : variables) {
+				if (0 < i) System.out.printf("%s", ", ");
+				System.out.printf("%s %s", variable.typeName(), variable.name());				
 			}
-		} else {
-			System.out.printf("%-5s%s\n", "", "none");
 		}
+		System.out.printf(")\n");
 	}
 
 	private void printTypes(List<String> arguments) {
+		System.out.printf("(");
 		if (0 < arguments.size()) {
-			int index = 0; for (String type : arguments) {
-				System.out.printf("%-5s%-16s%s\n", "", "#" + index++, type);
+			int i = 0; for (String type : arguments) {
+				if (0 < i) System.out.printf("%s", ", ");
+				System.out.printf("%s", type);
 			}
-		} else {
-			System.out.printf("%-5s%s\n", "", "none");
 		}
+		System.out.printf(")\n");
 	}
 }

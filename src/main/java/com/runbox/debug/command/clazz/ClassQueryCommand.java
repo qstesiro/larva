@@ -20,7 +20,7 @@ import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
 import com.runbox.debug.script.expression.token.operand.ArrayOperand;
 
-public class ClassQueryCommand extends ClassCommand {	   	
+public class ClassQueryCommand extends ClassCommand {
 	
     public ClassQueryCommand(String command) throws Exception {
         super(command);
@@ -35,23 +35,21 @@ public class ClassQueryCommand extends ClassCommand {
     @Override
     public boolean execute() throws Exception {
         if (null != clazz) {			
-            int index = 0;
             List<ReferenceType> classes = MachineManager.instance().allClasses();
 			System.out.printf(format(), arguments());
-            for (ReferenceType type : classes) {
+            int i = 0; for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
 					if (Pattern.compile(clazz).matcher(type.name()).matches()) {
-						System.out.printf(format(), arguments(index++, type));
+						System.out.printf(format(), arguments(i++, type));
 					}
 				}
             }
         } else {
-			int index = 0;
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
-			System.out.printf(format(), arguments());
+			int i = 0; System.out.printf(format(), arguments());
             for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
-					System.out.printf(format(), arguments(index++, type));
+					System.out.printf(format(), arguments(i++, type));
 				}
             }
         }        

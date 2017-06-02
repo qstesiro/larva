@@ -39,16 +39,15 @@ public class ClassMethodCommand extends ClassCommand {
 	
     @Override
     public boolean execute() throws Exception {
-		int index = 0;
         List<ReferenceType> types = MachineManager.instance().allClasses();
 		System.out.printf(format(), arguments());
-        for (ReferenceType type : types) {
+        int i = 0; for (ReferenceType type : types) {
 			if (!(type instanceof ArrayType)) {
-				if (Pattern.compile(clazz).matcher(type.name()).matches()) {
+				if (type.name().equals(clazz)) {
 					List<Method> methods = type.allMethods();
 					for (Method item : methods) {
 						if (Pattern.compile(method).matcher(item.name()).matches()) {
-							System.out.printf(format(), arguments(index++, item));
+							System.out.printf(format(), arguments(i++, item));
 						}
 					}
 				}

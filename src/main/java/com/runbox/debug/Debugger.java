@@ -137,7 +137,10 @@ public class Debugger implements SignalHandler {
 
 	private void handle(com.sun.jdi.event.Event event) throws Exception {
 		boolean flag = false;
-        if (BreakpointManager.instance().need(event)) {			
+		if (ClassManager.instance().need(event)) {
+			ClassManager.instance().handle(event); flag = true;
+		}
+		if (BreakpointManager.instance().need(event)) {			
 			BreakpointManager.instance().handle(event); flag = true;
 		}
         if (ExecuteManager.instance().need(event)) {
@@ -194,10 +197,12 @@ public class Debugger implements SignalHandler {
     private void monitor(boolean flag) throws Exception {
         if (DISCONNECT != this.flag) {
             if (!flag) {
+				ClassManager.instance().clean();
                 BreakpointManager.instance().clean();
                 ExecuteManager.instance().clean();
                 ExceptionManager.instance().clean();
             }
+			ClassManager.instance().monitor(flag);
             ExecuteManager.instance().monitor(flag);
             ExceptionManager.instance().monitor(flag);
         }

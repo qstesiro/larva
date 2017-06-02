@@ -29,13 +29,8 @@ public class ClassCommand extends Command {
 	private Expression.Values<Operand> values = null;
 	
     protected String clazz() throws Exception {
-		if (this instanceof ClassMonitorQueryCommand) {
-			if (null != values) {
-				return clazz(values.getString(0));
-			}
-			return null;
-		} else if (this instanceof ClassMonitorPrepareCommand ||
-				   this instanceof ClassMonitorUnloadCommand) {
+	    if (this instanceof ClassMonitorPrepareCommand ||
+			this instanceof ClassMonitorUnloadCommand) {
 			if (null != values) {
 				return clazz(values.getString(0));
 			}
@@ -55,7 +50,7 @@ public class ClassCommand extends Command {
 		return null;
 	}
 	
-    protected List<Integer> ids() throws Exception {		
+    protected List<Integer> ids() throws Exception {
         if (null != values) {
             List<Integer> ids = new LinkedList<Integer>();
 			for (int i = 0; i < values.size(); ++i) {

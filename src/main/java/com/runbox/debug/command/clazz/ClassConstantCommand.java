@@ -1,7 +1,6 @@
 package com.runbox.debug.command.clazz;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.ArrayType;
@@ -21,7 +20,7 @@ public class ClassConstantCommand extends ClassCommand {
 	public ClassConstantCommand(String command) throws Exception {
 		super(command);
 		if (null != argument()) {
-			clazz = new Expression(argument()).execute().getString(0);			
+			clazz = new Expression(argument()).execute().getString(0);
 			return;
 		}
 		throw new Exception("invalid operand");
@@ -32,12 +31,11 @@ public class ClassConstantCommand extends ClassCommand {
 	@Override
     public boolean execute() throws Exception {
         if (null != clazz) {
-            int index = 0;
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
             for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
-					if (Pattern.compile(clazz).matcher(type.name()).matches()) {
-						print(index, type);
+					if (type.name().equals(type)) {
+						print(type); break;
 					}
 				}
             }
@@ -45,19 +43,18 @@ public class ClassConstantCommand extends ClassCommand {
         return super.execute();
     }
 
-	private void print(int index, ReferenceType type) throws Exception {
+	private void print(ReferenceType type) throws Exception {
 		System.out.println(type.name());
 		ConstantReader reader = ReaderFactory.create(type.constantPool(), type.constantPoolCount());
 		Constant[] constants = reader.get();
 		for (int i = 1; i < constants.length; ++i) {
-			print(i, constants[i]);
+			print(constants[i]);
 			if (constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant) ++i;
 		}
 	}	   
 
-	private void print(int index, Constant constant) throws Exception {
-		final String FORMAT = "#%04x\t%-20s";
-		System.out.printf(FORMAT, index, constant.name());
+	private void print(Constant constant) throws Exception {
+		System.out.printf("%-20s", constant.name());
 		switch (constant.type()) {
         case Constant.TYPE_CLASS: System.out.printf("#%04x\n", ((ClassConstant)constant).index()); return;
         case Constant.TYPE_FIELD_REF: {

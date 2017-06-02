@@ -22,7 +22,7 @@ public class ClassMonitorUnloadCommand extends ClassMonitorCommand {
     public boolean execute() throws Exception {
 		String clazz = clazz();
 		if (null != clazz) {		
-			ClassManager.instance().append(RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine()));
+			ClassManager.instance().append(new ClassManager.UnloadEntry(clazz, true, routine()));
 		} else {
 			throw new Exception("invalid argument");
 		}

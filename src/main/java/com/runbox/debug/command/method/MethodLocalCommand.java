@@ -43,21 +43,17 @@ public class MethodLocalCommand extends MethodCommand {
 	
 	private void printLocals(List<LocalVariable> variables) {
 		if (0 < variables.size()) {
-			int index = 0; for (LocalVariable variable : variables) {			   				
-				System.out.printf("%-5s%-16s%s\n", "", variable.name(), variable.typeName());
+			for (LocalVariable variable : variables) {
+				System.out.printf("%-5s%s :%s\n", "", variable.name(), variable.typeName());
 			}
-		} else {
-			System.out.printf("%-5s%s\n", "", "none");
 		}
 	}
 
 	private void printTypes(List<String> arguments) {
 		if (0 < arguments.size()) {
-			int index = 0; for (String type : arguments) {
-				System.out.printf("%-5s%-16s%s\n", "", "#" + index++, type);
+			for (String type : arguments) {
+				System.out.printf("%-5s%s\n", "", type);
 			}
-		} else {
-			System.out.printf("%-5s%s\n", "", "none");
 		}
 	}
 }

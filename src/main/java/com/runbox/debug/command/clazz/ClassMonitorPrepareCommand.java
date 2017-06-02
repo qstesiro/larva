@@ -24,7 +24,7 @@ public class ClassMonitorPrepareCommand extends ClassMonitorCommand {
 		String clazz = clazz();		
 		if (null != clazz) {
 			print(classes(clazz));
-			ClassManager.instance().append(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine()));
+			ClassManager.instance().append(new ClassManager.PrepareEntry(clazz, true, routine()));
             return super.execute();
 		} 
 		throw new Exception("invalid arguement");				    

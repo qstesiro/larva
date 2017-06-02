@@ -27,33 +27,27 @@ public class RequestManager extends Manager {
         return instance.manager;
     }
 
-    public ClassPrepareRequest createClassPrepareRequest(String clazz, int suspend, RoutineNode routine) {
+    public ClassPrepareRequest createClassPrepareRequest(String clazz, int suspend) {
         if (null != manager) {
             ClassPrepareRequest request = manager.createClassPrepareRequest();
 			request.setSuspendPolicy(suspend);
             if (null != clazz)  {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);
-            }
-			if (null != routine) {
-                request.putProperty(Command.ROUTINE, routine);
-            }
+            }			
 			request.enable(); return request;
         }
         return null;
     }
 
-    public ClassUnloadRequest createClassUnloadRequest(String clazz, int suspend, RoutineNode routine) {
+    public ClassUnloadRequest createClassUnloadRequest(String clazz, int suspend) {
         if (null != manager) {
             ClassUnloadRequest request = manager.createClassUnloadRequest();
             request.setSuspendPolicy(suspend);
             if (null != clazz)  {
                 request.addClassFilter(clazz);
                 request.putProperty(ClassCommand.CLASS, clazz);
-            }
-			if (null != routine) {
-                request.putProperty(Command.ROUTINE, routine);
-            }
+            }			
 			request.enable(); return request;
         }
         return null;

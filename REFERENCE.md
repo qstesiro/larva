@@ -137,7 +137,7 @@ class.query [package.]className[, flags]
 class.field [package.]className.fieldName[, flags]
 说明：获取一个类的字段信息
 参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
-      className 类名称，必须的部分
+      className 类名称，必须的部分且不能使用通配符；
       fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
       以上三部分必须是字符串类型
       flags 标志位
@@ -159,7 +159,7 @@ class.field [package.]className.fieldName[, flags]
 class.method [package.]className.methodName[, flags]
 说明：获取一个类的方法信息
 参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
-      className 类名称，必须的部分
+      className 类名称，必须的部分且不能使用通配符；
       fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
       以上三部分必须是字符串类型
       flags 标志位

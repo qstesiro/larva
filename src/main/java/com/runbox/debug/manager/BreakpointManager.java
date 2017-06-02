@@ -285,12 +285,12 @@ public class BreakpointManager extends Manager {
         return map;
     }    
 
-    private Map<String, Entry> requests = new HashMap<String, Entry>();           
+    private Map<String, Entry> requests = new HashMap<String, Entry>();
 
     private void append(String clazz) {
         if (!requests.containsKey(clazz)) {
-            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null),
-                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null)));
+            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD),
+                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD)));
         }
         requests.get(clazz).increase();
     }
@@ -334,9 +334,7 @@ public class BreakpointManager extends Manager {
         public ClassUnloadRequest unload() {
             return unload;
         }
-    }
-
-	private int index = 0;
+    }	
 	
     @Override
     public boolean need(Event event) {        
@@ -347,17 +345,17 @@ public class BreakpointManager extends Manager {
             clazz = ((ClassUnloadEvent)event).className();
         }
         if (null != clazz) {
-            for (String key : requests.keySet()) {                
+            for (String key : requests.keySet()) {
                 if (key.equals(clazz)) {
-                    return true;
+                    return !super.need(event);
                 }
             }
         }
-        return false;
+        return super.need(event);
     }
 
     @Override
-    public boolean handle(Event event) throws Exception {	   
+    public boolean handle(Event event) throws Exception {		
         for (Integer id : map.keySet()) {
 			Breakpoint breakpoint = map.get(id);
             if (!breakpoint.solve()) {
