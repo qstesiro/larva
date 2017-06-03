@@ -51,7 +51,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ClassMonitorDisableCommand(command.command());
 		} else if (command.key().equals(CLASS_MONITOR_DELETE)) {
 			return new ClassMonitorDeleteCommand(command.command());
-		} else if (command.key().equals(CLASS_CONSTANT)) {
+		} else if (command.key().equals(CLASS_CONSTANT)) {			
 			return new ClassConstantCommand(command.command());
 		} else if (command.key().equals(METHOD_ARGUMENT)) {
 			return new MethodArgumentCommand(command.command());

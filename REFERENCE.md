@@ -113,9 +113,10 @@ machine.status
 类信息
 class.query [package.]className[, flags]
 说明：获取已装载的类信息
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
-      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
-      以上两部分必须是字符串类型，如果使用空串则显示所有当前已经被装载的类
+参数：package 包路径，是可选的；
+      className 类名称
+      以上两部分组成类全路径必须是字符串类型，如果使用空串则显示所有当前已经被装载的类，支持正则表达式；
+      如果不使用正则表达式则且之前通过import.class命令导入过的类可以只给出类名称；
       flags 标志位
       0x000 默认值显示类全路径
       0x001 是否包私有
@@ -136,9 +137,9 @@ class.query [package.]className[, flags]
       class.query "", 0xfff;
 class.field [package.]className.fieldName[, flags]
 说明：获取一个类的字段信息
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
-      className 类名称，必须的部分且不能使用通配符；
-      fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+参数：package 包路径，是可选的，必须是精确匹配不支持正则表达式；
+      className 类名称，必须是精确匹配不支持正则表达式；
+      fieldName 字段名，可以精确匹配也可以使用正则表达式的通配符，但是只能使用.*(点加星号)列出所有字段；
       以上三部分必须是字符串类型
       flags 标志位
       0x000 默认值显示类全路径
@@ -158,9 +159,9 @@ class.field [package.]className.fieldName[, flags]
       class.field "Demo..*", 0x1ff;
 class.method [package.]className.methodName[, flags]
 说明：获取一个类的方法信息
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径
+参数：package 包路径，是可选的，必须是精确匹配不支持正则表达式；
       className 类名称，必须的部分且不能使用通配符；
-      fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
+      fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)列出所有方法；
       以上三部分必须是字符串类型
       flags 标志位
       0x0000 默认值显示类全路径
@@ -192,63 +193,73 @@ class.monitor.query "prepare" | "unload"
       class.monitor.query;
 class.monitor.prepare [package.]className
 说明：监控某一个或是某一批类的预装载
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
-      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
-      以上参数必须组成字符串类型；
+参数：package 包路径，是可选的；
+      className 类名称，必须的参数，
+      以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；
 样例：import.class "com.runbox.demo.Demo"; class.monitor.prepare "Demo";
-      class.monitor.prepare "com.runbox.demo.Demo.*";
+      class.monitor.prepare "com.runbox.demo.Demo";
 class.monitor.unload [package.]className
 说明：监控某一个或是某一批类的卸载
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径，但是如果className部分使用了通配符则必须明确包路径；
-      className 类名称，可以使用正则表达式的通配符，但是只能使用.*(点加星号)且在类名称的结尾出现；
-      以上参数必须组成字符串类型；
-样例：import.class "com.runbox.demo.Demo"; class.monitor.unload "Demo";
-      class.monitor.unload "com.runbox.demo.Demo.*";
-class.monitor.enable
-说明：
-格式：
-参数：
-样例：
-class.monitor.disable
-说明：
-格式：
-参数：
-样例：
-class.monitor.delete
-说明：
-格式：
-参数：
-样例：
-class.constant
-说明：
-格式：
-参数：
-样例：
+参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径；
+      className 类名称，如果之前通过import.class命令已经导入类可以只使用类路径；
+      以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；
+样例：import.class "com.runbox.demo.Demo"; class.monitor.unload "Demo"; sdf
+      class.monitor.unload "com.runbox.demo.Demo";
+class.monitor.enable [id[, id]]
+说明：启动已经被禁用某个或某些被监控预装载类或卸载类项
+参数：id 某项的ID，如果没有ID则启动所有监控项
+样例：class.monitor.enable 2, 3, 4;
+      class.monitor.enable;
+class.monitor.disable [id[, id]]
+说明：禁用已经被禁用某个或某些被监控预装载类或卸载类项
+参数：id 某项的ID，如果没有ID则禁用所有监控项
+样例：class.monitor.disable 2, 3, 4;
+      class.monitor.disable;
+class.monitor.delete  [id[, id]]
+说明：删除已经被禁用某个或某些被监控预装载类或卸载类项
+参数：id 某项的ID，如果没有ID则删除所有监控项
+样例：class.monitor.delete 2, 3, 4;
+      class.monitor.delete;
+class.constant package.className
+说明：表出某类型的常量池信息；
+参数：package 包路径
+      className 类名称
+      以上两部分组成类的全路径；
+样例：class.constant "com.runbox.demo.Demo";
+      class.constant "java.lang.String";
 
 方法
-method.argument
+method.argument [package.]class.method
+说明：查询方法的参数列表，如果参数名称可获取则显示名称与类型，反之则只显示类型
+参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+      class 类名称 
+      method 方法名称
+样例：method.bytecode "com.runbox.demo.Demo.method";
+      method.bytecode "java.lang.String.<init>";
+      method.bytecode "java.lang.String.indexOf";
+method.local [package.]class.method
+说明：查询方法的局部变量，如果变量名称可获取则显示名称与类型，反之则只显示类型
+参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+      class 类名称 
+      method 方法名称
+样例：method.bytecode "com.runbox.demo.Demo.method";
+      method.bytecode "java.lang.String.<init>";
+      method.bytecode "java.lang.String.indexOf";
+method.bytecode [package.]class.method
+说明：显示某方法的字节码
+参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+      class 类名称 
+      method 方法名称，当前不支持通过参数列表区分方法，所有一次会表出多个同名的方法（如果有重载）；
+      以上三部分必须是字符串类型
+样例：method.bytecode "com.runbox.demo.Demo.method";
+      method.bytecode "java.lang.String.<init>";
+      method.bytecode "java.lang.String.indexOf";
+method.monitor.entry (功能暂未实现)
 说明：
-格式：
 参数：
 样例：
-method.local
+method.monitor.return (功能暂未实现)
 说明：
-格式：
-参数：
-样例：
-method.bytecode
-说明：
-格式：
-参数：
-样例：
-method.monitor.entry
-说明：
-格式：
-参数：
-样例：
-method.monitor.return
-说明：
-格式：
 参数：
 样例：
 
@@ -261,44 +272,38 @@ thread.switch id
 说明：切换线程
 参数：id 线程ID，必须是整形
 样例：thread.switch 10;
-thread.suspend
+thread.suspend [id[, id]]
+说明：挂起一个或多个线程
+参数：id 线程ID，如果不给出参数则挂起所有线程
+样例：thread.suspend 1, 2, 3;
+      thread.suspend;
+thread.resume [id[, id]]
+说明：恢复一个或多个线程
+参数：id 线程ID，如果不给出参数则恢复所有线程
+样例：thread.resume 1, 2, 3;
+      thread.resume;
+thread.interrupt (此功能暂未实现)
 说明：
-格式：
 参数：
 样例：
-thread.resume
+thread.stack 
 说明：
-格式：
-参数：
-样例：
-thread.interrupt
-说明：
-格式：
-参数：
-样例：
-thread.stack
-说明：
-格式：
 参数：
 样例：
 thread.hold
 说明：
-格式：
 参数：
 样例：
 thread.wait
 说明：
-格式：
 参数：
 样例：
 thread.monitor.start
 说明：
-格式：
 参数：
 样例：
 thread.monitor.death
 说明：
-格式：
 参数：
 样例：
 
@@ -396,7 +401,7 @@ execute.step.into [count]
 样例：execute.step.into；
       execute.step.into 2；
       @count = 0x3; execute.step.into @count;
-execute.file file --- 此功能当前未完成
+execute.file file (此功暂未完成)
 说明：运行一个外部的文件，文件内容是larva脚本；
 参数：文件全路径，必须是字符串类型；
 样例：execute.file ".\debug.jdb";
@@ -502,11 +507,11 @@ source.append path
 说明：添加源码路径
 参数：path为源代码的路径，不包含包路径部分，例如："d:\\program\\demo\\com\\runbox\\demo\\Demo.java", 只需要添加"d:\\program\\demo\\"就可以了；
 样例：source.append "d:\\program\\demo"
-source.delete
-说明：
-格式：
-参数：
-样例：
+source.delete [id[, id]]
+说明：删除已经增加的源码路径
+参数：id 源码路径ID，如果不给出参数则删除所有路径；
+样例：source.delete 1, 2, 3;
+      source.detele;
 source.query 
 说明：查询所有已经被添加的源路径；
 参数：无
@@ -515,17 +520,14 @@ source.query
 异常捕获
 exception.monitor
 说明：
-格式：
 参数：
 样例：
 exception.delete
 说明：
-格式：
 参数：
 样例：
 exception.query
 说明：
-格式：
 参数：
 样例：
 

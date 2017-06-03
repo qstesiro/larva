@@ -19,7 +19,7 @@ public class SourceDeleteCommand extends SourceCommand {
 		if (null != ids) {
 			for (Integer id : ids) {
 				SourceManager.instance().delete(id);
-			}        
+			}
 		} else {
 			SourceManager.instance().delete();
 		}

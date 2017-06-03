@@ -18,23 +18,17 @@ import com.runbox.debug.script.expression.token.operand.Operand;
 public class ClassConstantCommand extends ClassCommand {
 
 	public ClassConstantCommand(String command) throws Exception {
-		super(command);
-		if (null != argument()) {
-			clazz = new Expression(argument()).execute().getString(0);
-			return;
-		}
-		throw new Exception("invalid operand");
-	}
-
-	private String clazz = null;;
+		super(command);				
+	}	
 	
 	@Override
     public boolean execute() throws Exception {
+		String clazz = clazz();
         if (null != clazz) {
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
             for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
-					if (type.name().equals(type)) {
+					if (type.name().equals(clazz)) {
 						print(type); break;
 					}
 				}
@@ -49,9 +43,10 @@ public class ClassConstantCommand extends ClassCommand {
 		Constant[] constants = reader.get();
 		for (int i = 1; i < constants.length; ++i) {
 			print(constants[i]);
-			if (constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant) ++i;
+			if (constants[i] instanceof LongConstant ||
+				constants[i] instanceof DoubleConstant) ++i;
 		}
-	}	   
+	}
 
 	private void print(Constant constant) throws Exception {
 		System.out.printf("%-20s", constant.name());

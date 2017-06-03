@@ -22,7 +22,7 @@ public class ThreadSuspendCommand extends ThreadCommand {
 						thread.suspend();
 					}
 				}
-			}			
+			}
 		} else {
 			for (ThreadReference thread : MachineManager.instance().allThreads()) {
 				thread.suspend();
