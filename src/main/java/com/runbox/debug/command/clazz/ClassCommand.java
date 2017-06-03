@@ -22,9 +22,7 @@ public class ClassCommand extends Command {
 		if (null != argument()) {
 			values = new Expression(argument()).execute();
 		}		
-    }
-
-	public static String CLASS = "class";
+    }	
 	
 	private Expression.Values<Operand> values = null;
 	

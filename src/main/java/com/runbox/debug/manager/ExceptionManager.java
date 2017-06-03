@@ -78,12 +78,10 @@ public class ExceptionManager extends Manager {
 
     @Override
     public boolean need(Event event) {
-        if (event instanceof ExceptionEvent) {
-            if (request == event.request()) {
-                return true;
-            }
+        if (event instanceof ExceptionEvent && event.request() == request) {
+			return super.need(event);
         }
-        return false;
+        return !super.need(event);
     }
 
     @Override
@@ -92,7 +90,7 @@ public class ExceptionManager extends Manager {
         String line = SourceManager.instance().line(exception.catchLocation());
 		if (null != line) System.out.println(line);
         print(exception.exception());
-        return !super.handle(event);
+        return super.handle(event);
     }
 
     private void print(ObjectReference object) throws Exception {

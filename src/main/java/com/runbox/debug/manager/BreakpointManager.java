@@ -128,51 +128,35 @@ public class BreakpointManager extends Manager {
 		map.clear();
 	}
 
-    public boolean enable(int id) {
+    public void enable(int id) {
         for (Integer key : map.keySet()) {			
 			if (key == id) {
 				Breakpoint breakpoint = map.get(key);
-				breakpoint.status(true);
-				if (breakpoint.solve()) {
-					breakpoint.request().enable();
-					return true;
-				}
+				breakpoint.status(true); break;				
 			}
         }
-        return false;
     }
 
     public void enable() {
         for (Integer key : map.keySet()) {
 			Breakpoint breakpoint = map.get(key);
-			breakpoint.status(true);
-			if (breakpoint.solve()) {
-				breakpoint.request().enable();
-			}
+			breakpoint.status(true);			
         }
     }
 
-    public boolean disable(int id) {
+    public void disable(int id) {
         for (Integer key : map.keySet()) {
 			if (key == id) {
 				Breakpoint breakpoint = map.get(key);
-				breakpoint.status(false);
-				if (breakpoint.solve()) {				
-					breakpoint.request().disable();
-					return true;
-				}
+				breakpoint.status(false); break;				
 			}
         }
-        return false;
     }
 
     public void disable() {
         for (Integer key : map.keySet()) {		
 			Breakpoint breakpoint = map.get(key);
-			breakpoint.status(false);
-			if (breakpoint.solve()) {
-				breakpoint.request().disable();
-			}
+			breakpoint.status(false);			
         }
     }
 
@@ -289,8 +273,8 @@ public class BreakpointManager extends Manager {
 
     private void append(String clazz) {
         if (!requests.containsKey(clazz)) {
-            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD),
-                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD)));
+            requests.put(clazz, new Entry(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null),
+                                          RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, null)));
         }
         requests.get(clazz).increase();
     }
@@ -338,24 +322,28 @@ public class BreakpointManager extends Manager {
 	
     @Override
     public boolean need(Event event) {        
-        String clazz = null;
         if (event instanceof ClassPrepareEvent) {
-            clazz = ((ClassPrepareEvent)event).referenceType().name();
+			String clazz = ((ClassPrepareEvent)event).referenceType().name();
+			for (String key : requests.keySet()) {
+				Entry entry = requests.get(key);
+				if (event.request() == entry.prepare() && key.equals(clazz)) {
+                    return super.need(event);
+				}
+            }            
         } else if (event instanceof ClassUnloadEvent) {
-            clazz = ((ClassUnloadEvent)event).className();
-        }
-        if (null != clazz) {
-            for (String key : requests.keySet()) {
-                if (key.equals(clazz)) {
-                    return !super.need(event);
-                }
+            String clazz = ((ClassUnloadEvent)event).className();
+			for (String key : requests.keySet()) {
+				Entry entry = requests.get(key);
+				if (event.request() == entry.unload() && key.equals(clazz)) {
+                    return super.need(event);
+				}                
             }
-        }
-        return super.need(event);
+        }        
+        return !super.need(event);
     }
 
     @Override
-    public boolean handle(Event event) throws Exception {		
+    public boolean handle(Event event) throws Exception {
         for (Integer id : map.keySet()) {
 			Breakpoint breakpoint = map.get(id);
             if (!breakpoint.solve()) {
@@ -442,12 +430,15 @@ public class BreakpointManager extends Manager {
 
 		private boolean status = true;
 
-		public void status(boolean status) {
+		public void status(boolean status) {			
 			this.status = status;
+			if (solve && null != request) {
+				request.setEnabled(status);
+			}
 		}
 
 		public boolean status() {
-			return status;
+			return status;			
 		}		
 		
         private String clazz = null;

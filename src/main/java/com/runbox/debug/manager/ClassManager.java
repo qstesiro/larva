@@ -35,7 +35,7 @@ public class ClassManager extends Manager {
 
 	private Map<Integer, Entry> map = new HashMap<Integer, Entry>();   	
     
-    public void append(Entry entry) {
+    public void append(Entry entry) {		
         map.put(id(), entry);
     }
 
@@ -78,12 +78,18 @@ public class ClassManager extends Manager {
     public void delete(int id) throws Exception {       
         for (int key : map.keySet()) {
             if (key == id) {                
-                map.remove(key); break;
+                Entry entry = map.remove(key);
+				RequestManager.instance().deleteEventRequest(entry.request());
+				return;
             }
-        }        
+        }
     }
 
 	public void delete() {		
+		for (int key : map.keySet()) {
+			Entry entry = map.get(key);
+			RequestManager.instance().deleteEventRequest(entry.request());
+        }
 		map.clear();
 	}
 
@@ -91,7 +97,7 @@ public class ClassManager extends Manager {
         return map;
     }
 
-    public Map<Integer, Entry> prepares() {        
+    public Map<Integer, Entry> prepares() {
         Map<Integer, Entry> map = new HashMap<Integer, Entry>();
         for (int key : this.map.keySet()) {
 			Entry entry = this.map.get(key);
@@ -107,19 +113,69 @@ public class ClassManager extends Manager {
         for (int key : this.map.keySet()) {
 			Entry entry = this.map.get(key);
             if (entry instanceof UnloadEntry) {
-                map.put(key, (Entry)entry);
+                map.put(key, entry);
             }
         }        
         return map;        
-    }	
+    }
 	
-	public static class Entry {
+	@Override
+    public boolean need(Event event) {
+        if (event instanceof ClassPrepareEvent) {
+			for (int key : map.keySet()) {
+				Entry entry = map.get(key);
+				if (entry instanceof PrepareEntry) {
+					if (event.request() == entry.request()) {
+						return super.need(event);
+					}
+				}
+			}
+		} else if (event instanceof ClassUnloadEvent) {
+			for (int key : map.keySet()) {
+				Entry entry = map.get(key);
+				if (entry instanceof UnloadEntry) {
+					if (event.request() == entry.request()) {
+						return super.need(event);
+					}
+				}
+			}			
+		}
+		return !super.need(event);
+    }
 
-		public Entry(String clazz, boolean status, RoutineNode routine) {			
-			this.clazz = clazz;			
+	@Override
+	public boolean handle(Event event) throws Exception {
+		if (event instanceof ClassPrepareEvent) {
+			String name = ((ClassPrepareEvent)event).referenceType().name();
+			for (Integer key : map.keySet()) {
+				Entry entry = map.get(key);
+				if (entry instanceof PrepareEntry && entry.status()) {
+					if (entry.clazz().equals(name)) {
+						return !super.need(event);
+					}
+				}
+			}
+		} else if (event instanceof ClassUnloadEvent) {
+			String name = ((ClassUnloadEvent)event).className();
+			for (Integer key : map.keySet()) {
+				Entry entry = map.get(key);
+				if (entry instanceof UnloadEntry && entry.status()) {
+					if (Pattern.compile(entry.clazz()).matcher(name).matches()) {
+						return !super.need(event);
+					}
+				}
+			}
+		}
+		return super.need(event);
+	}
+
+	public static class Entry {
+		
+		public Entry(String clazz, boolean status, RoutineNode routine) {
+			this.clazz = clazz;
 			this.status = status;
-			this.routine = routine;
-		}		
+			this.routine = routine;			
+		}
 		
 		private String clazz = null;
 
@@ -145,72 +201,39 @@ public class ClassManager extends Manager {
 
 		public void status(boolean status) {
 			this.status = status;
+			if (null != request) {
+				request.setEnabled(status);
+			}
 		}
 
 		public boolean status() {
 			return status;
 		}
+
+		private EventRequest request = null;
+
+		public void request(EventRequest request) {
+			this.request = request;
+		}
+
+		public EventRequest request() {
+			return request;
+		}
 	}
 
 	public static class PrepareEntry extends Entry {
-
+		
 		public PrepareEntry(String clazz, boolean status, RoutineNode routine) {
 			super(clazz, status, routine);
-		}
+			request(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine));
+		}		
 	}
 
 	public static class UnloadEntry extends Entry {
 
 		public UnloadEntry(String clazz, boolean status, RoutineNode routine) {
 			super(clazz, status, routine);
+			request(RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine));
 		}
 	}
-	
-	private ClassPrepareRequest prepare = null;
-	private ClassUnloadRequest unload = null;
-
-	@Override
-	public void monitor(boolean flag) {
-		if (flag && (null == prepare && null == unload)) {
-			prepare = RequestManager.instance().createClassPrepareRequest(null, EventRequest.SUSPEND_EVENT_THREAD);
-			unload = RequestManager.instance().createClassUnloadRequest(null, EventRequest.SUSPEND_EVENT_THREAD);
-		} else if (!flag && (null != prepare && null != unload)) {
-			RequestManager.instance().deleteEventRequest(prepare); prepare = null;
-			RequestManager.instance().deleteEventRequest(unload); unload = null;
-		}
-    }
-	
-	@Override
-    public boolean need(Event event) {
-        if (prepare == event.request()) {
-			String name = ((ClassPrepareEvent)event).referenceType().name();
-			for (Integer key : map.keySet()) {
-				Entry entry = map.get(key);
-				if (entry instanceof PrepareEntry) {
-					if (Pattern.compile(entry.clazz()).matcher(name).matches()) {						
-						if (null != entry.routine()) {
-							event.request().putProperty(Command.ROUTINE, entry.routine());
-						}
-						return super.need(event);
-					}
-				}
-			}
-			return !super.need(event);
-		} else if (unload == event.request()) {
-			String name = ((ClassUnloadEvent)event).className();
-			for (Integer key : map.keySet()) {
-				Entry entry = map.get(key);
-				if (entry instanceof UnloadEntry) {
-					if (Pattern.compile(entry.clazz()).matcher(name).matches()) {
-						if (null != entry.routine()) {
-							event.request().putProperty(Command.ROUTINE, entry.routine());
-						}
-						return super.need(event);
-					}
-				}
-			}
-			return !super.need(event);
-		}
-		return super.need(event);
-    }	
 }

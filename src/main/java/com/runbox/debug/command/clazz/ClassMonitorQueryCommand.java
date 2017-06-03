@@ -37,11 +37,10 @@ public class ClassMonitorQueryCommand extends ClassCommand {
             System.out.printf("%-5s%-5s%-10s%-8s%s\n", "#", "id", "type", "status", "clazz");
             int i = 0; for (int id : map.keySet()) {
                 ClassManager.Entry entry = map.get(id);
-				System.out.printf("%-5s%-5d%-10s%-8b%s\n",
-								  i++, id,
-								  ((entry instanceof ClassManager.PrepareEntry) ? "prepare" : "unload"),
+				System.out.printf("%-5s%-5d%-10s%-8b%s\n", i++, id,
+								  (entry instanceof ClassManager.PrepareEntry ? "prepare" : "unload"),
 								  entry.status(), entry.clazz());
             }            
         }
-    }
+    }	
 }

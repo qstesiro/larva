@@ -136,20 +136,16 @@ public class Debugger implements SignalHandler {
     }
 
 	private void handle(com.sun.jdi.event.Event event) throws Exception {
-		boolean flag = false;
 		if (ClassManager.instance().need(event)) {
-			ClassManager.instance().handle(event); flag = true;
-		}
-		if (BreakpointManager.instance().need(event)) {			
-			BreakpointManager.instance().handle(event); flag = true;
-		}
-        if (ExecuteManager.instance().need(event)) {
-			ExecuteManager.instance().handle(event); flag = true;
-		}
-        if (ExceptionManager.instance().need(event)) {
-			ExceptionManager.instance().handle(event); flag = true;
-        } 		
-        if (!flag) if (execute(event)) execute();
+			if (ClassManager.instance().handle(event)) return;
+		} else if (BreakpointManager.instance().need(event)) {			
+			if (BreakpointManager.instance().handle(event)) return;
+		} else if (ExecuteManager.instance().need(event)) {
+			if (ExecuteManager.instance().handle(event)) return;
+		} else if (ExceptionManager.instance().need(event)) {
+			if (ExceptionManager.instance().handle(event)) return;
+        }
+        if (execute(event)) execute();
 	}	
 		   
     private boolean execute(String file) {

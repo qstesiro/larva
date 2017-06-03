@@ -9,7 +9,7 @@ public class Manager extends com.runbox.manager.Manager {
     }
 
     public boolean need(Event event) {
-        return false;
+        return true;
     }
 
     public boolean handle(Event event) throws Exception {

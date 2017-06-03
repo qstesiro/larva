@@ -14,19 +14,19 @@ import com.runbox.debug.script.expression.token.operand.ConstOperand;
 public class ClassUnloadEvent extends Event<com.sun.jdi.event.ClassUnloadEvent> {
 
     public ClassUnloadEvent(com.sun.jdi.event.ClassUnloadEvent event) {
-        super(event);
+        super(event); arguments();
     }
 
     @Override
     public boolean handle() throws Exception {
-        EventRequest request = ((com.sun.jdi.event.ClassUnloadEvent)event()).request();
-        System.out.println("unload -> " + (String)request.getProperty(ClassCommand.CLASS));
+        com.sun.jdi.event.ClassUnloadEvent event = (com.sun.jdi.event.ClassUnloadEvent)event();
+        System.out.println("unload -> " + event.className());
         return super.handle();
     }
 
 	private void arguments() {
 		if (null != routine()) {
-			List<Operand> autos = new LinkedList<Operand>();			
+			List<Operand> autos = new LinkedList<Operand>();
 			autos.add(new ConstOperand(event().className()));
 			arguments(autos);
 		}

@@ -76,12 +76,10 @@ public class ExecuteManager extends Manager {
 
     @Override
     public boolean need(Event event) {
-        if (event instanceof ThreadDeathEvent) {
-            if (request == event.request()) {
-                return true;
-            }
+        if (event instanceof ThreadDeathEvent && event.request() == request) {
+			return super.need(event);
         }
-        return false;
+        return !super.need(event);
     }
 
     @Override
