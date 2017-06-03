@@ -3,6 +3,7 @@ package com.runbox.debug.script.expression.token;
 import com.sun.jdi.Field;
 import com.sun.jdi.LocalVariable;
 import com.sun.jdi.StackFrame;
+import com.sun.jdi.AbsentInformationException;
 
 import com.runbox.debug.manager.ContextManager;
 
@@ -68,14 +69,13 @@ public class Token extends com.runbox.script.expression.token.Token {
         return false;
 	}
 	
-    public static boolean local(String name) throws Exception {
+    public static boolean local(String name) {
         if (null != name) {
             StackFrame frame = ContextManager.instance().frame();
             if (null != frame) {
-                LocalVariable local = frame.visibleVariableByName(name);
-                if (null != local) {
-                    return true;
-                }
+				try {
+					if (null != frame.visibleVariableByName(name)) return true;
+				} catch (AbsentInformationException e) {}
             }
         }
         return false;

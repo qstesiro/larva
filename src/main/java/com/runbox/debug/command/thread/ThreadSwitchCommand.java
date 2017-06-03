@@ -14,9 +14,8 @@ public class ThreadSwitchCommand extends ThreadCommand {
     @Override
     public boolean execute() throws Exception {
         for (ThreadReference thread : MachineManager.instance().allThreads()) {
-            if (thread.uniqueID() == id()) {
-                ContextManager.instance().thread(thread);
-                break;
+            if (thread.uniqueID() == id() && thread.isSuspended()) {				
+				ContextManager.instance().current(thread); break;
             }
         }
         return super.execute();

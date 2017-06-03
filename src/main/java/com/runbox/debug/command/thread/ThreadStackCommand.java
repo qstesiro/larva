@@ -12,8 +12,8 @@ public class ThreadStackCommand extends ThreadCommand {
 
     @Override
     public boolean execute() throws Exception {
-        ThreadReference thread = ContextManager.instance().thread();
-        if (null != thread) {            
+        ThreadReference thread = ContextManager.instance().current();
+        if (null != thread && thread.isSuspended()) {
             System.out.printf("%-5s%s\n", "#", "location");
 			if (0 < thread.frameCount()) {
 				int i = 0; for (StackFrame frame : thread.frames()) {

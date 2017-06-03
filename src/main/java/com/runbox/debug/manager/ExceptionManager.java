@@ -96,7 +96,7 @@ public class ExceptionManager extends Manager {
     private void print(ObjectReference object) throws Exception {
         ClassType type = (ClassType)object.referenceType();
         System.out.println("catch exception -> " + type.name());
-		ThreadReference thread = ContextManager.instance().thread();
+		ThreadReference thread = ContextManager.instance().current();
         if (null != thread) {
 			if (0 < thread.frameCount()) {
 			    for (StackFrame frame : thread.frames()) {

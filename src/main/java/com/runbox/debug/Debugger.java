@@ -12,6 +12,10 @@ import com.sun.jdi.event.EventQueue;
 import com.sun.jdi.event.EventSet;
 import com.sun.jdi.event.EventIterator;
 import com.sun.jdi.event.LocatableEvent;
+import com.sun.jdi.event.VMStartEvent;
+import com.sun.jdi.event.ThreadStartEvent;
+import com.sun.jdi.event.ThreadDeathEvent;
+import com.sun.jdi.event.ClassPrepareEvent;
 import com.sun.jdi.request.EventRequest;
 
 import com.sun.tools.javac.util.Pair;
@@ -121,20 +125,17 @@ public class Debugger implements SignalHandler {
         }
     }
     
-    private synchronized void handle(EventIterator iterator) throws Exception {                
+    private void handle(EventIterator iterator) throws Exception {                
         com.sun.jdi.event.Event event = iterator.nextEvent();
 		if (null != event.request()) {
-			MachineManager.instance().status(event.request(), true);
+			MachineManager.instance().count(event.request(), true);
 		}
-		if (event instanceof LocatableEvent) {
-			ContextManager.instance().thread(((LocatableEvent)event).thread());
-		}
-		handle(event);
+		ContextManager.instance().event(event); handle(event);
 		if (null != event.request()) {
-			MachineManager.instance().status(event.request(), false);
+			MachineManager.instance().count(event.request(), false);
 		}
-    }
-
+    }	
+	
 	private void handle(com.sun.jdi.event.Event event) throws Exception {
 		if (ClassManager.instance().need(event)) {
 			if (ClassManager.instance().handle(event)) return;
@@ -183,10 +184,10 @@ public class Debugger implements SignalHandler {
     }
 
     private void prompt() {
-        if (null == ContextManager.instance().thread()) {
+        if (null == ContextManager.instance().current()) {
             System.out.print("0> ");
         } else {
-            System.out.print(ContextManager.instance().thread().uniqueID() + "> ");
+            System.out.print(ContextManager.instance().current().uniqueID() + "> ");
         }
     }
 
@@ -216,7 +217,7 @@ public class Debugger implements SignalHandler {
     public void handle(Signal signal) {
         MachineManager.instance().suspend();
         ContextManager.instance().store();
-        ContextManager.instance().thread(null); execute();
+        ContextManager.instance().event(null); execute();
         ContextManager.instance().restore();
         MachineManager.instance().resume();		
     }

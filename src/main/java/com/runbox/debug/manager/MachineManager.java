@@ -68,12 +68,12 @@ public class MachineManager extends Manager {
 	}
 
 	public void resume() {
-		if (null != machine) {
+		if (null != machine && 0 < count) {
 			machine.resume(); --count;
 		}
 	}
 
-	public void status(EventRequest request, boolean flag) {
+	public void count(EventRequest request, boolean flag) {
 		if (null != request) {
 			if (EventRequest.SUSPEND_ALL == request.suspendPolicy()) {
 				count = (flag ? ++count : --count);
@@ -81,7 +81,7 @@ public class MachineManager extends Manager {
 		}
 	}
 
-	public int status() {
+	public int count() {
 		return count;
 	}
 

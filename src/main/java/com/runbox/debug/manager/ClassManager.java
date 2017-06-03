@@ -225,7 +225,7 @@ public class ClassManager extends Manager {
 		
 		public PrepareEntry(String clazz, boolean status, RoutineNode routine) {
 			super(clazz, status, routine);
-			request(RequestManager.instance().createClassPrepareRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine));
+			request(RequestManager.instance().createClassPrepareRequest(clazz, routine));
 		}		
 	}
 
@@ -233,7 +233,7 @@ public class ClassManager extends Manager {
 
 		public UnloadEntry(String clazz, boolean status, RoutineNode routine) {
 			super(clazz, status, routine);
-			request(RequestManager.instance().createClassUnloadRequest(clazz, EventRequest.SUSPEND_EVENT_THREAD, routine));
+			request(RequestManager.instance().createClassUnloadRequest(clazz, routine));
 		}
 	}
 }

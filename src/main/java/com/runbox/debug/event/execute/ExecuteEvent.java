@@ -17,8 +17,7 @@ import com.runbox.debug.script.expression.token.operand.ConstOperand;
 public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 
 	public ExecuteEvent(T event) {
-		super(event); arguments();
-		ContextManager.instance().thread(event.thread()); 
+		super(event); arguments();		
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 	private void print() {
 		StepRequest request = (StepRequest)event().request();
 		String string = (StepRequest.STEP_LINE == request.size() ? "next" : "step");
-		string += " " + (StepRequest.STEP_OVER == request.depth() ? "over" : "into");		
+		string += " " + (StepRequest.STEP_OVER == request.depth() ? "over" : "into");
 		System.out.println(string);
 	}	
 }

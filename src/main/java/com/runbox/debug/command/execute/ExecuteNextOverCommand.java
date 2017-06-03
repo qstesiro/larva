@@ -13,11 +13,11 @@ public class ExecuteNextOverCommand extends ExecuteNextCommand {
 
     @Override
     public boolean execute() throws Exception {
-        if (null != ContextManager.instance().thread()) {
-            StepRequest request = ExecuteManager.instance().get(ContextManager.instance().thread());
+        if (null != ContextManager.instance().current()) {
+            StepRequest request = ExecuteManager.instance().get(ContextManager.instance().current());
             if (null != request) {										
                 if (StepRequest.STEP_LINE != request.size() || StepRequest.STEP_OVER != request.depth()) {
-                    ExecuteManager.instance().delete(ContextManager.instance().thread());
+                    ExecuteManager.instance().delete(ContextManager.instance().current());
                     request = create();
                 }				
             } 			

@@ -17,7 +17,7 @@ public class ThreadSuspendCommand extends ThreadCommand {
 		List<Long> ids = ids();
 		if (null != ids) {
 			for (ThreadReference thread : MachineManager.instance().allThreads()) {
-				for (long id : ids()) {
+				for (long id : ids) {
 					if (thread.uniqueID() == id) {
 						thread.suspend();
 					}

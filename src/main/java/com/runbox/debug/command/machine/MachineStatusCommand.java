@@ -10,7 +10,7 @@ public class MachineStatusCommand extends MachineCommand {
 
     @Override
     public boolean execute() throws Exception {
-        int count = MachineManager.instance().status();
+        int count = MachineManager.instance().count();
 		System.out.printf("status: %s\n", 0 == count ? "running" : "suspended");
 		System.out.printf("count:  %d\n", count);
         return super.execute();

@@ -26,15 +26,15 @@ public class ExecuteCommand extends Command {
 	private int count = 1;
 
 	protected StepRequest create() throws Exception {
-		if (null != ContextManager.instance().thread()) {
+		if (null != ContextManager.instance().current()) {
 			if (this instanceof ExecuteNextOverCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_OVER, routine());
+				return ExecuteManager.instance().create(ContextManager.instance().current(), StepRequest.STEP_LINE, StepRequest.STEP_OVER, routine());
 			} else if (this instanceof ExecuteNextIntoCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_LINE, StepRequest.STEP_INTO, routine());
+				return ExecuteManager.instance().create(ContextManager.instance().current(), StepRequest.STEP_LINE, StepRequest.STEP_INTO, routine());
 			} else if (this instanceof ExecuteStepOverCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_OVER, routine());
+				return ExecuteManager.instance().create(ContextManager.instance().current(), StepRequest.STEP_MIN, StepRequest.STEP_OVER, routine());
 			} else if (this instanceof ExecuteStepIntoCommand) {
-				return ExecuteManager.instance().create(ContextManager.instance().thread(), StepRequest.STEP_MIN, StepRequest.STEP_INTO, routine());
+				return ExecuteManager.instance().create(ContextManager.instance().current(), StepRequest.STEP_MIN, StepRequest.STEP_INTO, routine());
 			}			
 		}
 		throw new Exception("thread context is null, don`t execute.");	   

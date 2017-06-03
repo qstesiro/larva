@@ -18,7 +18,7 @@ public class ClassPrepareEvent extends Event<com.sun.jdi.event.ClassPrepareEvent
     }
 
     @Override
-    public boolean handle() throws Exception {       
+    public boolean handle() throws Exception {		
         com.sun.jdi.event.ClassPrepareEvent event = ((com.sun.jdi.event.ClassPrepareEvent)event());
         System.out.println("prepare -> " + event.referenceType().name());
         return super.handle();

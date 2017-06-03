@@ -8,8 +8,7 @@ import com.runbox.debug.event.Event;
 public class MachineStartEvent extends Event<VMStartEvent> {
 
     public MachineStartEvent(VMStartEvent event) {
-        super(event);
-        ContextManager.instance().thread(event.thread());
+        super(event);        
     }
 
     @Override
