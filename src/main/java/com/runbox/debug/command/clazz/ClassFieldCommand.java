@@ -218,7 +218,7 @@ public class ClassFieldCommand extends ClassCommand {
 			} else if (field.isPublic()) {
 				objects.add("public");
 			} else {
-				objects.add("none");
+				objects.add("n/a");
 			}
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {

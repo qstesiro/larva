@@ -15,7 +15,7 @@ public class ImportQueryCommand extends ImportCommand {
 		System.out.printf("%-5s%-24s%s\n", "#", "class", "package");
 		Map<String, String> classes = ImportManager.instance().get();		
 		int i = 0; for (String clazz : classes.keySet()) {
-			String path = classes.get(clazz).equals("") ? "none" : classes.get(clazz);
+			String path = classes.get(clazz).equals("") ? "n/a" : classes.get(clazz);
 			System.out.printf("%-5d%-24s%s\n", i++, clazz, path);
 		}
 		return super.execute();

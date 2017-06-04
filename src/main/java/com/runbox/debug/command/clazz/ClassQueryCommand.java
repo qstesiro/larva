@@ -186,7 +186,7 @@ public class ClassQueryCommand extends ClassCommand {
 			} else if (type.isPublic()) {
 				objects.add("public");
 			} else {
-				objects.add("none");
+				objects.add("n/a");
 			}
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
@@ -217,7 +217,7 @@ public class ClassQueryCommand extends ClassCommand {
 			try { 
 				objects.add(type.sourceName());
 			} catch (AbsentInformationException e) {
-				objects.add("none");
+				objects.add("n/a");
 			}
 		}
 		objects.add(type.name());

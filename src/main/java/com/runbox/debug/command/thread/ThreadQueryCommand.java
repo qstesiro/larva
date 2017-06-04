@@ -100,7 +100,7 @@ public class ThreadQueryCommand extends ThreadCommand {
 			try {
 				objects.add(String.valueOf(thread.frameCount()));
 			} catch (IncompatibleThreadStateException e) {
-				objects.add(String.valueOf("none"));
+				objects.add(String.valueOf("n/a"));
 			}
 		}
 		if (FLAG_SUSPEND == (FLAG_SUSPEND & flags)) {
@@ -120,7 +120,7 @@ public class ThreadQueryCommand extends ThreadCommand {
 
     private String status(int status) {
         switch (status) {
-		case ThreadReference.THREAD_STATUS_UNKNOWN:     return "none";            
+		case ThreadReference.THREAD_STATUS_UNKNOWN:     return "n/a";            
 		case ThreadReference.THREAD_STATUS_ZOMBIE:      return "zombie";            
 		case ThreadReference.THREAD_STATUS_RUNNING:     return "running";            
 		case ThreadReference.THREAD_STATUS_SLEEPING:    return "sleeping";            

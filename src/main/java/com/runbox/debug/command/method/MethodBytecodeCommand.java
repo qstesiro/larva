@@ -58,7 +58,7 @@ public class MethodBytecodeCommand extends MethodCommand {
 		if (method.isPublic()) return "public";
 		else if (method.isProtected()) return "protected";
 		else if (method.isPrivate()) return "private";
-		return "none";
+		return "n/a";
 	}
 
 	public String arguments(Method method) {

@@ -46,7 +46,7 @@ public class ThreadHoldCommand extends ThreadCommand {
 				System.out.println(object.waitingThreads());
 			}
 		} else {
-			System.out.printf("%5s%-10s%-8s\n", "", "objects", "none");
+			System.out.printf("%5s%-10s%-8s\n", "", "objects", "n/a");
 			System.out.printf("%5s%-10s%-8s\n", "", "waiting", "[]");
 		}
 	}	

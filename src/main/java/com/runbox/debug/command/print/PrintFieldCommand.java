@@ -87,7 +87,7 @@ public class PrintFieldCommand extends PrintCommand {
 			System.out.printf("%s", operand.name());
 			if (FLAG_TYPE == (FLAG_TYPE & flags)) {
 				Type type = operand.type();
-				System.out.print(" :" + (null != type ? type.name() : "none"));			
+				System.out.print(" :" + (null != type ? type.name() : "n/a"));			
 			}		
 			System.out.printf(" = ");
 			if (null != operand.value()) {				

@@ -255,7 +255,7 @@ public class ClassMethodCommand extends ClassCommand {
 			} else if (method.isPublic()) {
 				objects.add("public");
 			} else {
-				objects.add("none");
+				objects.add("n/a");
 			}
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
@@ -293,10 +293,10 @@ public class ClassMethodCommand extends ClassCommand {
 		}
 		if (FLAG_LINE == (FLAG_LINE & flags)) {
 			if (method.isAbstract()) {
-				objects.add("none");
+				objects.add("n/a");
 			} else {
 				int line = method.location().lineNumber();
-				objects.add(String.valueOf((-1 == line) ? "none" : line));
+				objects.add(String.valueOf((-1 == line) ? "n/a" : line));
 			}			
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
