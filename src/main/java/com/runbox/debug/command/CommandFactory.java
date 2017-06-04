@@ -127,10 +127,10 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new TemplateListCommand(command.command());
 		} else if (command.key().equals(TEMPLATE_MAP)) {
 			return new TemplateMapCommand(command.command());
-		} else if (command.key().equals(TEMPLATE_VECTOR)) {
-			return new TemplateVectorCommand(command.command());
 		} else if (command.key().equals(TEMPLATE_QUEUE)) {
 			return new TemplateQueueCommand(command.command());
+		} else if (command.key().equals(TEMPLATE_SET)) {
+			return new TemplateSetCommand(command.command());
 		} else if (command.key().equals(TEMPLATE_STACK)) {
 			return new TemplateStackCommand(command.command());
 		} else if (command.key().equals(SOURCE_APPEND)) {
@@ -145,11 +145,11 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExceptionDeleteCommand(command.command());
 		} else if (command.key().equals(EXCEPTION_QUERY)) {
 			return new ExceptionQueryCommand(command.command());
-		} else if (command.key().equals(DETACH)) {			
+		} else if (command.key().equals(DETACH)) {
 			return new DetachCommand(command.command());
 		} else if (command.key().equals(QUIT)) {
 			return new QuitCommand(command.command());
-		}        
+		}
         return null;
     }
 
@@ -230,9 +230,9 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 
     public final static int COMMAND_TEMPLATE = COMMAND_PRINT + 1;
     public final static String TEMPLATE_LIST = "template.list";
-    public final static String TEMPLATE_MAP = "template.map";
-    public final static String TEMPLATE_VECTOR = "template.vector";
+    public final static String TEMPLATE_MAP = "template.map";    
     public final static String TEMPLATE_QUEUE = "template.queue";
+	public final static String TEMPLATE_SET = "template.set";
     public final static String TEMPLATE_STACK = "template.stack";
 
     public final static int COMMAND_SOURCE = COMMAND_TEMPLATE + 1;
@@ -313,9 +313,9 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(PRINT_STRING);		
         // template command
         add(TEMPLATE_LIST);
-        add(TEMPLATE_MAP);
-        add(TEMPLATE_VECTOR);
+        add(TEMPLATE_MAP);        
         add(TEMPLATE_QUEUE);
+		add(TEMPLATE_SET);
         add(TEMPLATE_STACK);
         // source command
         add(SOURCE_APPEND);

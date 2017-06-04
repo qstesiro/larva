@@ -32,71 +32,7 @@ public class Operand extends Token {
 			return value.type();
 		}
 		return null;		
-	}
-
-	public boolean referenceType() throws Exception {
-		Type type = type(); if (null != type) {
-			if (type instanceof ReferenceType) {
-				return true;
-			}
-		} return false;
 	}	
-
-	public boolean referenceValueType() throws Exception {
-		Type type = valueType(); if (null != type) {
-			if (type instanceof ReferenceType) {
-				return true;
-			}			
-		} return false;
-	}
-	
-	public boolean classType() throws Exception {
-		Type type = type(); if (null != type) {
-			if (type instanceof ClassType) {
-				return true;
-			}
-		} return false;
-	}
-
-	public boolean classValueType() throws Exception {
-		 Type type = valueType(); if (null != type) {
-			if (type instanceof ClassType) {
-				return true;
-			}			
-		} return false;
-	}
-
-	public boolean interfaceType() throws Exception {
-		Type type = type(); if (null != type) {
-			if (type instanceof InterfaceType) {
-				return true;
-			}
-		} return false;
-	}
-
-	public boolean interfaceValueType() throws Exception {
-		Type type = valueType(); if (null != type) {
-			if (type instanceof InterfaceType) {
-				return true;
-			}			
-		} return false;
-	}
-
-	public boolean arrayType() throws Exception {
-		Type type = type(); if (null != type) {
-			if (type instanceof ArrayType) {
-				return true;
-			}
-		} return false;
-	}
-
-	public boolean arrayValueType() throws Exception {
-		Type type = valueType(); if (null != type) {
-			if (type instanceof ArrayType) {
-				return true;
-			}
-		} return false;
-	}
 	
 	public boolean isByte() throws Exception {
 		Value value = value(); if (null != value) {

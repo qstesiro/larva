@@ -15,25 +15,32 @@ public class TemplateMapCommand extends TemplateCommand {
         super(command);
     }
 
-    @Override
-    public boolean execute() throws Exception {
-        if (map()) {            
-			return super.execute();
-        }
-        throw new Exception("invalid operand");
-    }
+	private static final String MAP = "java.util.Map";
+	private static final String HASH_MAP = "java.util.HashMap";
+	private static final String HASHTABLE = "java.util.Hashtable";
+	private static final String IDENTITY_HASH_MAP = "java.util.IdentityHashMap";
+	private static final String LINKED_HASH_MAP = "java.util.LinkedHashMap";
+	private static final String TREE_MAP = "java.util.TreeMap";
+	private static final String WEAK_HASH_MAP = "java.util.WeakHashMap";
+	private static final String CONCURRENT_HASH_MAP = "java.util.concurrent.ConcurrentHashMap";
+	private static final String CONCURRENT_SKIP_LIST_MAP = "java.util.concurrent.ConcurrentSkipListMap";
+	
+	@Override
+    protected boolean type() throws Exception {
+        return superInterface(MAP);
+    }	
 
 	private static final int FLAG_KEY_TYPE = FLAG_ELEMENT_TYPE;
 	private static final int FLAG_VALUE_TYPE = FLAG_KEY_TYPE << 2;
 	
 	@Override
-	protected void printDefault() throws Exception {		
+	protected void printDefault() throws Exception {
 		if (null != operand()) {			
 			System.out.printf("%-8s%s\n", "type:", operand().type().name());
 			if (null != operand().value()) {
 				System.out.printf("%-8s%s\n", "vtype:", operand().value().type().name());
 				System.out.printf("%-8s%s\n", "object:", operand().value());
-				System.out.printf("%-8s%d\n", "size:", pairs().size());
+				System.out.printf("%-8s%d\n", "size:", entries().size());
 			} else {
 				System.out.printf("%-8s%s\n", "value:", "null");
 			}
@@ -43,7 +50,7 @@ public class TemplateMapCommand extends TemplateCommand {
 	@Override
     protected void printElements() throws Exception {
 		if (null != operand()) {
-			int i = 0; for (Pair pair : pairs()) {
+			int i = 0; for (Entry pair : entries()) {
 				System.out.printf("#%-7d", i++);
 				print(pair.key(), FLAG_KEY_TYPE == (FLAG_KEY_TYPE & flags()));
 				System.out.print(" -> ");
@@ -70,26 +77,30 @@ public class TemplateMapCommand extends TemplateCommand {
 			}
 		}
 	}	
-
-    protected List<Pair> pairs() throws Exception {
-        if (hash()) {
-            return hashPairs();
-        } else if (table()) {
-            return tablePairs();
-        } else if (identity()) {
-            return identityPairs();
-        } else if (linked()) {
-            return linkedPairs();
-        } else if (tree()) {
-            return treePairs();
-        } else if (weak()) {
-            return weakPairs();
-        }
+   
+    private List<Entry> entries() throws Exception {
+        if (superClass(HASH_MAP)) {
+            return hashEntries();
+        } else if (superClass(HASHTABLE)) {
+            return tableEntries();
+        } else if (superClass(IDENTITY_HASH_MAP)) {
+            return identityEntries();
+        } else if (superClass(LINKED_HASH_MAP)) {
+            return linkedEntries();
+        } else if (superClass(TREE_MAP)) {
+            return treeEntries();
+        } else if (superClass(WEAK_HASH_MAP)) {
+            return weakEntries();
+        } else if (superClass(CONCURRENT_HASH_MAP)) {
+			return concurrentHashEntries();
+		} else if (superClass(CONCURRENT_SKIP_LIST_MAP)) {
+			return concurrentSkipListEntries();
+		}
         throw new Exception("can not recognize template");
-    }    
-
-    private List<Pair> hashPairs() throws Exception {
-        List<Pair> pairs = new LinkedList<Pair>();
+    }    	
+	
+    private List<Entry> hashEntries() throws Exception {
+        List<Entry> entries = new LinkedList<Entry>();
         Operand table = field("table");
 		if (null != table) {
 			for (int i = 0; i < ((ArrayReference)table.value()).length(); ++i) {
@@ -97,15 +108,15 @@ public class TemplateMapCommand extends TemplateCommand {
 				if (null != operand.value()) {
 					Operand key = new FieldOperand((ObjectReference)operand.value(), "key");
 					Operand value = new FieldOperand((ObjectReference)operand.value(), "value");
-					pairs.add(new Pair(key, value));
+					entries.add(new Entry(key, value));
 				}
 			}
 		}
-        return pairs;
+        return entries;
     }
 
-    private List<Pair> tablePairs() throws Exception {
-        List<Pair> pairs = new LinkedList<Pair>();
+    private List<Entry> tableEntries() throws Exception {
+        List<Entry> entries = new LinkedList<Entry>();
         Operand table = field("table");
 		if (null != table) {
 			for (int i = 0; i < ((ArrayReference)table.value()).length(); ++i) {
@@ -113,137 +124,67 @@ public class TemplateMapCommand extends TemplateCommand {
 				if (null != operand.value()) {					
 					Operand key = new FieldOperand((ObjectReference)operand.value(), "key");
 					Operand value = new FieldOperand((ObjectReference)operand.value(), "value");
-					pairs.add(new Pair(key, value));
+					entries.add(new Entry(key, value));
 				}
 			}
 		}
-        return pairs;
+        return entries;
     }
 
-    private List<Pair> identityPairs() throws Exception {
-        List<Pair> pairs = new LinkedList<Pair>();
+    private List<Entry> identityEntries() throws Exception {
+        List<Entry> entries = new LinkedList<Entry>();
         Operand table = field("table");
 		if (null != table) {
 			for (int i = 0; i < ((ArrayReference)table.value()).length(); i += 2) {
 				Operand key = new ArrayOperand((ArrayReference)table.value(), i);
 				Operand value = new ArrayOperand((ArrayReference)table.value(), i + 1);				
-				pairs.add(new Pair(key, value));				
+				entries.add(new Entry(key, value));				
 			}
 		}
-        return pairs;
+        return entries;
     }
 
-    private List<Pair> linkedPairs() throws Exception {        
-		List<Pair> pairs = new LinkedList<Pair>();
+    private List<Entry> linkedEntries() throws Exception {        
+		List<Entry> entries = new LinkedList<Entry>();
         Operand element = field("head");
 		if (null != element) {
 			while (null != element.value()) {
 				Operand key = new FieldOperand((ObjectReference)element.value(), "key");
 				Operand value = new FieldOperand((ObjectReference)element.value(), "value");
-				pairs.add(new Pair(key, value));
+				entries.add(new Entry(key, value));
 				element = new FieldOperand((ObjectReference)element.value(), "next");
 			}
 		}
-        return pairs;
+        return entries;
+    }
+	
+    private List<Entry> treeEntries() {
+        List<Entry> entries = new LinkedList<Entry>();
+        return entries;
     }
 
-    private List<Pair> treePairs() {
-        List<Pair> pairs = new LinkedList<Pair>();
-        return pairs;
-    }
+    private List<Entry> weakEntries() {
+        List<Entry> entries = new LinkedList<Entry>();
+        return entries;
+    }    
 
-    private List<Pair> weakPairs() {
-        List<Pair> pairs = new LinkedList<Pair>();
-        return pairs;
-    }
+	private List<Entry> concurrentHashEntries() throws Exception {
+		List<Entry> entries = new LinkedList<Entry>();
+		return entries;
+	}
 
-    private boolean map() throws Exception {
-        boolean condition = superClass("java.util.HashMap");
-        condition = condition || superClass("java.util.Hashtable");
-        condition = condition || superClass("java.util.IdentityHashMap");
-        condition = condition || superClass("java.util.LinkedHashMap");
-        condition = condition || superClass("java.util.TreeMap");
-        condition = condition || superClass("java.util.WeakHashMap");
-        return condition;
-    }
+	private List<Entry> concurrentSkipListEntries() throws Exception {
+		List<Entry> entries = new LinkedList<Entry>();
+		return entries;
+	}
+	
+    private static class Entry {
 
-    private boolean hash() throws Exception {
-        if (superClass("java.util.HashMap")) {
-            boolean condition = exist("table");
-            condition = condition && exist("entrySet");
-            condition = condition && exist("size");
-            condition = condition && exist("modCount");
-            condition = condition && exist("threshold");
-            condition = condition && exist("loadFactor");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean table() throws Exception {
-        if (superClass("java.util.Hashtable")) {
-            boolean condition = exist("table");
-            condition = condition && exist("count");
-            condition = condition && exist("threshold");
-            condition = condition && exist("loadFactor");
-            condition = condition && exist("modCount");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean identity() throws Exception {
-        if (superClass("java.util.IdentityHashMap")) {
-            boolean condition = exist("table");
-            condition = condition && exist("size");
-            condition = condition && exist("modCount");
-            condition = condition && exist("NULL_KEY");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean linked() throws Exception {
-        if (superClass("java.util.LinkedHashMap")) {
-            boolean condition = exist("head");
-            condition = condition && exist("tail");
-            condition = condition && exist("accessOrder");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean tree() throws Exception {
-        if (superClass("java.util.TreeMap")) {
-            boolean condition = exist("comparator");
-            condition = condition && exist("root");
-            condition = condition && exist("size");
-            condition = condition && exist("modCount");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean weak() throws Exception {
-        if (superClass("java.util.WeakHashMap")) {
-            boolean condition = exist("table");
-            condition = condition && exist("size");
-            condition = condition && exist("threshold");
-            condition = condition && exist("loadFactor");
-            condition = condition && exist("queue");
-            condition = condition && exist("modCount");
-            return condition;
-        }
-        return false;
-    }
-
-    private static class Pair {
-
-		public Pair() {
+		public Entry() {
 			
 		}
 		
-		public Pair(Operand key, Operand value) {
+		public Entry(Operand key, Operand value) {
 			this.key = key;
 			this.value = value;
 		}

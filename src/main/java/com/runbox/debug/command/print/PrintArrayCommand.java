@@ -96,9 +96,9 @@ public class PrintArrayCommand extends PrintCommand {
 	private void printDefault() throws Exception {		
 		System.out.printf("%-8s%s\n", "type:", ((ArrayType)operand.type()).componentType().name());
 		if (null != operand.value()) {
-			System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());
+			System.out.printf("%-8s%s\n", "vtype:", operand.valueType().name());
 			System.out.printf("%-8s%s\n", "object:", operand.value());
-			System.out.printf("%-8s%d\n", "length:", ((ArrayReference)operand.value()).length());
+			System.out.printf("%-8s%d\n", "length:", operand.arrayValue().length());
 		} else {
 			System.out.printf("%-8s%s\n", "value:", "null");
 		}
@@ -107,7 +107,7 @@ public class PrintArrayCommand extends PrintCommand {
     private void printValues() throws Exception {
 		if (null != operand && null != operand.value()) {		   
 			if (0 <= index && 0 <= count) {
-				ArrayReference array = (ArrayReference)operand.value();
+				ArrayReference array = operand.arrayValue();
 				if (0 == count) count = array.length() - index;
 				if (index + count <= array.length()) {
 					for (int i = index; i < (index + count); ++i) {

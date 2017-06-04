@@ -11,14 +11,13 @@ import com.runbox.debug.script.expression.token.operand.ConstOperand;
 import com.runbox.debug.script.expression.token.operand.FieldOperand;
 import com.runbox.debug.script.expression.token.operand.Operand;
 
-public class TemplateCommand extends Command {
+public abstract class TemplateCommand extends Command {
 
     public TemplateCommand(String command) throws Exception {
         super(command);
 		if (null != argument()) {
 			values = new Expression(argument()).execute();
-			operand = operand();
-			flags = flags();
+			operand = operand(); flags = flags();
 			return;
 		}
 		throw new Exception("invalid operand");
@@ -27,18 +26,19 @@ public class TemplateCommand extends Command {
 	private Expression.Values<Operand> values = null;
 
 	@Override
-    public boolean execute() throws Exception {       
-		if (FLAG_DEFAULT == (FLAG_DEFAULT & flags())) {
-			printDefault();
+    public boolean execute() throws Exception {
+		if (type()) {
+			if (FLAG_DEFAULT == (FLAG_DEFAULT & flags())) printDefault();		
+			if (FLAG_ELEMENT == (FLAG_ELEMENT & flags())) printElements();
+			return super.execute();
 		}
-		if (FLAG_ELEMENT == (FLAG_ELEMENT & flags())) {
-			printElements();
-		}
-        return super.execute();
-    }    
+		throw new Exception("type is not recognized");
+    }
 
+	protected abstract boolean type() throws Exception;
+	
 	protected void printDefault() throws Exception {		
-		if (null != operand) {			
+		if (null != operand) {
 			System.out.printf("%-8s%s\n", "type:", operand.type().name());
 			if (null != operand.value()) {
 				System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());
@@ -112,33 +112,39 @@ public class TemplateCommand extends Command {
 		}
 		return flags;
 	}
+
+	protected boolean superInterface(String name) throws Exception {
+		if (null != operand) {
+			List<InterfaceType> interfaces = null;
+			if (operand.type() instanceof ClassType) {
+				interfaces = ((ClassType)operand.type()).allInterfaces();
+			} else if (operand.type() instanceof InterfaceType) {
+				if (operand.type().name().equals(name)) return true;
+				interfaces = ((InterfaceType)operand.type()).superinterfaces();
+			}
+			if (null != interfaces) {
+				for (InterfaceType type : interfaces) {
+					if (type.name().equals(name)) return true;
+				}
+			}
+		}
+		return false;
+	}
 	
     protected boolean superClass(String name) throws Exception {
 		if (null != operand) {
-			if (null != operand.value()) {
-				if (operand.value().type() instanceof ClassType) {
-					if (((ClassType)operand.value().type()).superclass().name().equals(name)) {
-						return true;
-					}
-				}
-			} else if (null != operand.type()) {
-				if (operand.type() instanceof ClassType) {
-					if (((ClassType)operand.type()).superclass().name().equals(name)) {
-						return true;
-					}
-				}
-			}
+			if (null != operand.value() && operand.valueType() instanceof ClassType) {				
+				if (((ClassType)operand.valueType()).superclass().name().equals(name)) {
+					return true;
+				}				
+			} 
 		}
         return false;
     }
 
 	protected List<Operand> elements() throws Exception {
-		return null;
+		throw new Exception("invalid operate");
 	}
-	
-    protected boolean exist(String name) throws Exception {
-        return (null != field(name));
-    }
 
     protected Operand field(String name) throws Exception {
         if (null != operand && null != operand.value()) {
@@ -155,8 +161,8 @@ public class TemplateCommand extends Command {
         String print = "";
         if (null != operand.value()) {
             print += operand.value();
-            if (operand.value() instanceof ObjectReference) {
-                print += " :" + operand.value().type().name();
+            if (operand.isObject()) {
+                print += " :" + operand.valueType().name();
             }
         } else {
             print += "null";

@@ -53,7 +53,7 @@ public class PrintStringCommand extends PrintCommand {
 	private Operand operand() throws Exception {
 		if (null != values) {
 			if (OPERAND < values.size() && MAX >= values.size()) {				
-				if (string(values.get(OPERAND))) {
+				if (type(values.get(OPERAND))) {
 					return values.get(OPERAND);
 				}
 			}
@@ -113,10 +113,10 @@ public class PrintStringCommand extends PrintCommand {
 			System.out.printf("%-8s%s\n", "type:", operand.type().name());
 			if (null != operand.value()) {
 				System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());
-				if (standard(operand)) {
+				if (clazz(operand, DEFAULT_STRING)) {
 					String string = "instance of ";
 					string += operand.type().name();
-					string += "(" + "id=" + ((ObjectReference)operand.value()).uniqueID() + ")";
+					string += "(" + "id=" + operand.objectValue().uniqueID() + ")";
 					System.out.printf("%-8s%s\n", "object:", string);
 				} else {
 					System.out.printf("%-8s%s\n", "object:", operand.value().toString());
@@ -161,74 +161,59 @@ public class PrintStringCommand extends PrintCommand {
 		} else {
 			System.out.println();
 		}			
-	}
+	}	
 
+	private static final String DEFAULT_STRING = "java.lang.String";
+	private static final String BUILDER_STRING = "java.lang.StringBuilder";
+	private static final String BUFFER_STRING = "java.lang.StringBuffer";
+	
     private ArrayReference array(Operand operand) throws Exception {
-        if (standard(operand)) {
-            return (ArrayReference)field(operand, "value").value();
-        } else if (builder(operand)) {
-            return (ArrayReference)field(operand, "value").value();
-        } else if (buffer(operand)) {
-            return (ArrayReference)field(operand, "value").value();
+        if (clazz(operand, DEFAULT_STRING)) {
+            return field(operand, "value").arrayValue();
+        } else if (clazz(operand, BUILDER_STRING)) {
+            return field(operand, "value").arrayValue();
+        } else if (clazz(operand, BUFFER_STRING)) {
+            return field(operand, "value").arrayValue();
         }
         throw new Exception("invalid argument");
     }
 
 	private int length(Operand operand) throws Exception {
-		if (standard(operand)) {
+		if (clazz(operand, DEFAULT_STRING)) {
             return array(operand).length();
-        } else if (builder(operand)) {
+        } else if (clazz(operand, BUILDER_STRING)) {
             return array(operand).length();
-        } else if (buffer(operand)) {
+        } else if (clazz(operand, BUFFER_STRING)) {
             return array(operand).length();
         }
         throw new Exception("invalid argument");
 	}
 	
 	private int size(Operand operand) throws Exception {
-		if (standard(operand)) {
-			return ((ArrayReference)field(operand, "value").value()).length();
-        } else if (builder(operand)) {
-			return ((IntegerValue)field(operand, "count").value()).value();
-        } else if (buffer(operand)) {
-			return ((IntegerValue)field(operand, "count").value()).value();
+		if (clazz(operand, DEFAULT_STRING)) {
+			return field(operand, "value").arrayValue().length();
+        } else if (clazz(operand, BUILDER_STRING)) {
+			return field(operand, "count").intValue();
+        } else if (clazz(operand, BUFFER_STRING)) {
+			return field(operand, "count").intValue();
 		}
 		throw new Exception("invalid operand");
 	}   	
 
-    private boolean string(Operand operand) throws Exception {
-        boolean flag = clazz(operand, "java.lang.String");
-        flag = flag || clazz(operand, "java.lang.StringBuilder");
-        flag = flag || clazz(operand, "java.lang.StringBuffer");
-        return flag;
-    }
-
-    private boolean standard(Operand operand) throws Exception {
-        if (clazz(operand, "java.lang.String") && null != field(operand, "value")) {
+    private boolean type(Operand operand) throws Exception {
+        if (clazz(operand, DEFAULT_STRING) ||
+			clazz(operand, BUILDER_STRING) ||
+			clazz(operand, BUFFER_STRING)) {
 			return true;
-        }
+		}
         return false;
-    }
-
-    private boolean builder(Operand operand) throws Exception {
-        if (clazz(operand, "java.lang.StringBuilder") && null != field(operand, "value")) {
-			return true;
-        }
-        return false;
-    }
-
-    private boolean buffer(Operand operand) throws Exception {
-        if (clazz(operand, "java.lang.StringBuffer") && null != field(operand, "value")) {            
-			return true;
-        }
-        return false;
-    }
+    }    
 
     private boolean clazz(Operand operand, String name) throws Exception {
 		if (null != operand) {
 			if (null != operand.value()) {
-				if (operand.value().type() instanceof ClassType) {
-					if (operand.value().type().name().equals(name)) {
+				if (operand.valueType() instanceof ClassType) {
+					if (operand.valueType().name().equals(name)) {
 						return true;
 					}
 				}

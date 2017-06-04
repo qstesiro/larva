@@ -14,25 +14,35 @@ public class TemplateListCommand extends TemplateCommand {
 
     public TemplateListCommand(String command) throws Exception {
         super(command);
-    }    
-
-	@Override
-    public boolean execute() throws Exception {       
-		if (list()) {
-			return super.execute();
-		}
-        throw new Exception("invalid operand");
     }
+
+	private static final String LIST = "java.util.List";
+	private static final String ARRAY_LIST = "java.util.ArrayList";	
+	private static final String LINKED_LIST = "java.util.LinkedList";
+	private static final String STACK = "java.util.Stack";
+	private static final String VECTOR = "java.util.Vector";
+	private static final String COPY_ON_WRITE_ARRAY_LIST = "java.util.concurrent.CopyOnWriteArrayList";
+	
+	@Override
+	protected boolean type() throws Exception {
+        return superInterface(LIST);
+    }       
 	
 	@Override
     protected List<Operand> elements() throws Exception {
-        if (array()) {
+        if (superClass(ARRAY_LIST)) {
             return arrayElements();
-        } else if (linked()) {
+        } else if (superClass(LINKED_LIST)) {
             return linkedElements();
-        }
+        } else if (superClass(STACK)) {
+			return stackElements();
+		} else if (superClass(VECTOR)) {
+			return vectorElements();
+		} else if (superClass(COPY_ON_WRITE_ARRAY_LIST)) {
+			return copyOnWriteArrayElements();
+		}
         throw new Exception("can not recognize template");
-    }
+    }	
 
     private List<Operand> arrayElements() throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
@@ -44,8 +54,8 @@ public class TemplateListCommand extends TemplateCommand {
 			}
 		}
         return operands;
-    }
-
+    } 	
+	
     private List<Operand> linkedElements() throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
         Operand element = field("first");
@@ -58,28 +68,32 @@ public class TemplateListCommand extends TemplateCommand {
         return operands;
     }
 
-    private boolean list() throws Exception {
-        boolean condition = superClass("java.util.ArrayList");
-        condition = condition || superClass("java.util.LinkedList");
-        return condition;
+	private List<Operand> stackElements() throws Exception {
+        List<Operand> operands = new LinkedList<Operand>();
+        Operand array = field("elementData");
+		if (null != array) {
+			for (int i = 0; i < ((ArrayReference)array.value()).length(); ++i) {
+				ArrayOperand operand = new ArrayOperand((ArrayReference)array.value(), i);
+				if (null != operand.value()) operands.add(0, operand);				
+			}
+		}
+        return operands;
+    }
+	
+	private List<Operand> vectorElements() throws Exception {
+        List<Operand> operands = new LinkedList<Operand>();
+        Operand array = field("elementData");
+		if (null != array) {
+			for (int i = 0; i < ((ArrayReference)array.value()).length(); ++i) {
+				ArrayOperand operand = new ArrayOperand((ArrayReference)array.value(), i);
+				if (null != operand.value()) operands.add(operand);				
+			}
+		}
+        return operands;
     }
 
-    private boolean array() throws Exception {
-        if (superClass("java.util.ArrayList")) {
-            boolean condition = exist("elementData");
-            condition = condition && exist("size");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean linked() throws Exception {
-        if (superClass("java.util.LinkedList")) {
-            boolean condition = exist("first");
-            condition = condition && exist("last");
-            condition = condition && exist("size");
-            return condition;
-        }
-        return false;
-    }
+	private List<Operand> copyOnWriteArrayElements() throws Exception {
+		List<Operand> operands = new LinkedList<Operand>();
+		return operands;
+	}
 }

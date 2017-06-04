@@ -14,7 +14,7 @@ public class Computer {
     public static Operand computeI2(Operand operand1, Operand operand2) throws Exception { // [
         if (null != operand1 && null != operand2) {
             if (null != operand1.value() && null != operand2.value()) {
-                if (operand1.arrayValueType()) {
+                if (operand1.valueType() instanceof ArrayType) {
                     if (operand2.isInteger()) {
                         int index = operand2.intValue();
                         return new ArrayOperand(operand1.arrayValue(), index);
@@ -2326,7 +2326,7 @@ public class Computer {
         if (null != operand1 && null != operand2) {
             if (!(operand1 instanceof ConstOperand) && !Operand.subClass(operand2)) {
                 if (null != operand1.value() && null != operand2.name()) {
-                    if (operand1.classValueType()) {
+                    if (operand1.valueType() instanceof ClassType) {
                         ClassType type = (ClassType)operand1.valueType();
                         if (type.name().equals(operand2.name())) {
                             return new ConstOperand(true);
@@ -2523,18 +2523,18 @@ public class Computer {
                         double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 == value2);
                     }
-                } else if (operand1.referenceType() && operand2.referenceType()) {
-					if ((operand1.classValueType() || operand1.interfaceValueType()) &&
-						(operand2.classValueType() || operand2.interfaceValueType())) {
+                } else if (operand1.type() instanceof ReferenceType && operand2.type() instanceof ReferenceType) {
+					if ((operand1.valueType() instanceof ClassType || operand1.valueType() instanceof InterfaceType) &&
+						(operand2.valueType() instanceof ClassType || operand2.valueType() instanceof InterfaceType)) {
 						return new ConstOperand(operand1.value() == operand2.value());
-					} else if (operand1.arrayValueType() && operand2.arrayValueType()) {
+					} else if (operand1.valueType() instanceof ArrayType && operand2.valueType() instanceof ArrayType) {
 						return new ConstOperand(operand1.value() == operand2.value());
 					}
                 }
             } else if (null == operand1.value() && null != operand2.value()) {
-				if (operand2.referenceValueType()) return new ConstOperand(false);
+				if (operand2.valueType() instanceof ReferenceType) return new ConstOperand(false);
             } else if (null != operand1.value() && null == operand2.value()) {
-				if (operand1.referenceValueType()) return new ConstOperand(false);
+				if (operand1.valueType() instanceof ReferenceType) return new ConstOperand(false);
             } else if (null == operand1.value() && null == operand2.value()) {
                 return new ConstOperand(true);
             }
@@ -2713,18 +2713,18 @@ public class Computer {
                         double value2 = operand2.doubleValue();
                         return new ConstOperand(value1 != value2);
                     }
-                } else if (operand1.referenceType() && operand2.referenceType()) {                    
-					if ((operand1.classValueType() || operand1.interfaceValueType()) &&
-						(operand2.classValueType() || operand2.interfaceValueType())) {
+                } else if (operand1.type() instanceof ReferenceType && operand2.type() instanceof ReferenceType) {                    
+					if ((operand1.valueType() instanceof ClassType || operand1.valueType() instanceof InterfaceType) &&
+						(operand2.valueType() instanceof ClassType || operand2.valueType() instanceof InterfaceType)) {
 						return new ConstOperand(operand1.value() != operand2.value());
-					} else if (operand1.arrayValueType() && operand2.arrayValueType()) {
+					} else if (operand1.valueType() instanceof ArrayType && operand2.valueType() instanceof ArrayType) {
 						return new ConstOperand(operand1.value() != operand2.value());
 					}
                 }
             } else if (null == operand1.value() && null != operand2.value()) {
-				if (operand2.referenceValueType()) return new ConstOperand(true);				
+				if (operand2.valueType() instanceof ReferenceType) return new ConstOperand(true);				
             } else if (null != operand1.value() && null == operand2.value()) {
-				if (operand1.referenceValueType()) return new ConstOperand(true);				
+				if (operand1.valueType() instanceof ReferenceType) return new ConstOperand(true);				
             } else if (null == operand1.value() && null == operand2.value()) {
                 return new ConstOperand(false);
             }

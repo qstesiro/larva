@@ -15,13 +15,13 @@ public class TemplateStackCommand extends TemplateCommand {
     }
 
 	@Override
-    public boolean execute() throws Exception {       
-		if (stack()) {
-			return super.execute();
-		}
-        throw new Exception("invalid operand");
+    protected boolean type() throws Exception {
+        if (superClass("java.util.Stack")) {
+			return true;
+        }
+        return false;
     }
-
+	
 	@Override
 	protected void printElements() throws Exception {
 		if (null != operand()) {
@@ -62,15 +62,5 @@ public class TemplateStackCommand extends TemplateCommand {
 			}
 		}
         return operands;
-    }
-
-    private boolean stack() throws Exception {
-        if (superClass("java.util.Stack")) {
-            boolean condition = exist("elementData");
-            condition = condition && exist("elementCount");
-            condition = condition && exist("capacityIncrement");
-            return condition;
-        }
-        return false;
     }
 }

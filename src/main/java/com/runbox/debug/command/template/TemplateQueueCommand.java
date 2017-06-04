@@ -12,41 +12,52 @@ public class TemplateQueueCommand extends TemplateCommand {
 
     public TemplateQueueCommand(String command) throws Exception {
         super(command);
-    }    
+    }        
 
+	private static final String QUEUE = "java.util.Queue";
+	private static final String ARRAY_DEQUE = "java.util.ArrayDeque";
+	private static final String LINKED_LIST = "java.util.LinkedList";
+	private static final String PRIORITY_QUEUE = "java.util.PriorityQueue";
+	private static final String DELAY_QUEUE = "java.util.concurrent.DelayQueue";
+	private static final String ARRAY_BLOCK_QUEUE = "java.util.concurrent.ArrayBlockingQueue";	
+	private static final String CONCURRENT_LINKED_DEQUE = "java.util.concurrent.ConcurrentLinkedDeque";
+	private static final String CONCURRENT_LINKED_QUEUE = "java.util.concurrent.ConcurrentLinkedQueue";	
+	private static final String LINKED_BLOCKING_DEQUE = "java.util.concurrent.LinkedBlockingDeque";
+	private static final String LINKED_BLOCKING_QUEUE = "java.util.concurrent.LinkedBlockingQueue";
+	private static final String PRIORITY_BLOCKING_QUEUE = "java.util.concurrent.PriorityBlockingQueue";
+	
 	@Override
-    public boolean execute() throws Exception {       
-		if (queue()) {
-			return super.execute();
-		}
-        throw new Exception("invalid operand");
-    }
+	protected boolean type() throws Exception {
+		return superInterface(QUEUE);
+    }	
 	
 	@Override
     protected List<Operand> elements() throws Exception {
-        if (priority()) {
-            return priorityEntries();
-        } else if (array()) {
-            return arrayEntries();
-        }
+		if (superClass(ARRAY_DEQUE)) {
+			return arrayElements();
+		} else if (superClass(LINKED_LIST)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(PRIORITY_QUEUE)) {
+			return priorityElements();
+		} else if (superClass(DELAY_QUEUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(ARRAY_BLOCK_QUEUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(CONCURRENT_LINKED_DEQUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(CONCURRENT_LINKED_QUEUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(LINKED_BLOCKING_DEQUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(LINKED_BLOCKING_QUEUE)) {
+			return new LinkedList<Operand>();
+		} else if (superClass(PRIORITY_BLOCKING_QUEUE)) {
+			return new LinkedList<Operand>();
+		}		
         throw new Exception("can not recognize template");
     }
-
-    private List<Operand> priorityEntries() throws Exception {
-        List<Operand> operands = new LinkedList<Operand>();
-        Operand queue = field("queue");
-		if (null != queue) {
-			for (int i = 0; i < ((ArrayReference)queue.value()).length(); ++i) {
-				ArrayOperand operand = new ArrayOperand((ArrayReference)queue.value(), i);
-				if (null != operand.value()) {
-					operands.add(operand);
-				}
-			}
-		}
-        return operands;
-    }
-
-    private List<Operand> arrayEntries() throws Exception {
+		
+	private List<Operand> arrayElements() throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
         Operand elements = field("elements");
 		if (null != elements) {
@@ -59,32 +70,18 @@ public class TemplateQueueCommand extends TemplateCommand {
 		}
         return operands;
     }
-
-    private boolean queue() throws Exception {
-        boolean condition = superClass("java.util.ArrayQueue");
-        condition = condition || superClass("java.util.PriorityQueue");
-        condition = condition || superClass("java.util.ArrayDeque");
-        return condition;
-    }
-
-    private boolean priority() throws Exception {
-        if (superClass("java.util.PriorityQueue")) {
-            boolean condition = exist("queue");
-            condition = condition && exist("size");
-            condition = condition && exist("comparator");
-            condition = condition && exist("modCount");
-            return condition;
-        }
-        return false;
-    }
-
-    private boolean array() throws Exception {
-        if (superClass("java.util.ArrayDeque")) {
-            boolean condition = exist("elements");
-            condition = condition && exist("head");
-            condition = condition && exist("tail");
-            return condition;
-        }
-        return false;
-    }
+	
+    private List<Operand> priorityElements() throws Exception {
+        List<Operand> operands = new LinkedList<Operand>();
+        Operand queue = field("queue");
+		if (null != queue) {
+			for (int i = 0; i < ((ArrayReference)queue.value()).length(); ++i) {
+				ArrayOperand operand = new ArrayOperand((ArrayReference)queue.value(), i);
+				if (null != operand.value()) {
+					operands.add(operand);
+				}
+			}
+		}
+        return operands;
+    }        
 }
