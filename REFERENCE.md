@@ -48,37 +48,50 @@ com.runbox.debug.script
 命令列表
 
 别名
-alias.define command, alias
+alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;
-参数：command某个已经定义的命令不能是某个别名，必须是字符串类型;
-      alias自定义的别名，必须是字符串类型;
+参数：expr 表达式，由以下几部分组成：
+      command, alias
+      command 子表达式，运算结果必须为字符串，某个已经定义的命令不能是某个别名;
+      alias 自定义的别名，子表达式运算结果必须是字符串类型;
 样例：alias.define "breakpoint.line", "b.l";
       alias.define "execute.next.over", "e.n.o";
-alias.delete alias[, alias]
+
+alias.delete expr
 说明：删除一个或多个已经定义的别名;
-参数：alias[, alias] 一个或多个别名以逗号间隔, 每一个别名必须是字符串类型，如果没有参数则删除所有已定义的别名；
+参数：expr 表达式，由以下几部分组成：
+      alias[, alias]
+      每一个别名是一个子表达式，运算结果必须是字符串类型，如果没有参数则删除所有已定义的别名；
 样例：alias.delete "b.l", "e.n.o";
+
 alias.query
 说明：查询当前已经定义的所有命令别名;
 参数：无
 样例：alias.query
 
 导入类
-import.class classPath
+import.class expr
 说明：为了避免在过长的类路径, 可以将某个类以全路径的方式导入后续直接使用类名称就可以了, 这个命令可以导入内部类具体参见样例
-参数：类的全路径
+参数：expr 表达式，运算结果必须为字符串，由以下几部分组成：
+      package.className
+      package 类的包名称
+      className  类名称
 样例：import.class "java.lang.String";
       import.class "java.lang.Integer";
       import.class "java.util.Map";
       import.class "java.util.LinkedList";
       @clazz = "com.runbox.demo.Demo"; import.class @clazz;
       import.class "com.runbox.demo.Demo$Inner";
-import.delete [className[, className]]
+
+import.delete expr
 说明：删除已经被导入的类
-参数：[className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称必须是字符串类型，如果没有参数则删除所有被导入的类；
+参数：expr 表达式，由以下几部分组成：
+      [className[, className]]
+      [className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称是一个表达式，运算结果必须是字符串类型，如果没有参数则删除所有被导入的类；
 样例：import.delete "String";
       import.delete "Demo";
       @clazz = "Demo$Inner"; import.delete @clazz, "Map", "LinkedList";
+
 import.query
 说明：列出所有已经被导入的类
 参数：无
@@ -111,13 +124,15 @@ machine.status
 样例：machine.status
 
 类信息
-class.query [package.]className[, flags]
+class.query expr
 说明：获取已装载的类信息
-参数：package 包路径，是可选的；
+参数: expr 标准larva表达式，由以下几部分结成
+      [package.]className[, flags]
+      package 包路径，是可选的；
       className 类名称
-      以上两部分组成类全路径必须是字符串类型，如果使用空串则显示所有当前已经被装载的类，支持正则表达式；
+      如果使用空串则显示所有当前已经被装载的类，支持正则表达式；
       如果不使用正则表达式则且之前通过import.class命令导入过的类可以只给出类名称；
-      flags 标志位
+      flags 标准表达式，代表一个组合标志位，运算结果必须是整形
       0x000 默认值显示类全路径
       0x001 是否包私有
       0x002 访问标志 
@@ -135,13 +150,16 @@ class.query [package.]className[, flags]
       class.query "java.lang..*";
       import.class "java.lang.String"; class.query "String";
       class.query "", 0xfff;
-class.field [package.]className.fieldName[, flags]
+
+class.field expr
 说明：获取一个类的字段信息
-参数：package 包路径，是可选的，必须是精确匹配不支持正则表达式；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]className.fieldName[, flags]
+      package 包路径，是可选的，必须是精确匹配不支持正则表达式；
       className 类名称，必须是精确匹配不支持正则表达式；
       fieldName 字段名，可以精确匹配也可以使用正则表达式的通配符，但是只能使用.*(点加星号)列出所有字段；
       以上三部分必须是字符串类型
-      flags 标志位
+      flags 标准表达式，代表一个组合标志位，运算结果必须是整形
       0x000 默认值显示类全路径
       0x001 是否包私有
       0x002 访问标志 
@@ -157,13 +175,16 @@ class.field [package.]className.fieldName[, flags]
 样例：class.field "com.runbox.debug.Demo..*";
       import "java.lang.String"; class.field "String..*";
       class.field "Demo..*", 0x1ff;
-class.method [package.]className.methodName[, flags]
+
+class.method expr
 说明：获取一个类的方法信息
-参数：package 包路径，是可选的，必须是精确匹配不支持正则表达式；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]className.methodName[, flags]
+      package 包路径，是可选的，必须是精确匹配不支持正则表达式；
       className 类名称，必须的部分且不能使用通配符；
       fieldName 字段名，可以使用正则表达式的通配符，但是只能使用.*(点加星号)列出所有方法；
       以上三部分必须是字符串类型
-      flags 标志位
+      flags 标准表达式，代表一个组合标志位，运算结果必须是整形
       0x0000 默认值显示类全路径
       0x0001 是否包私有
       0x0002 访问标志 
@@ -183,139 +204,182 @@ class.method [package.]className.methodName[, flags]
       0x8000 方法返回类型（与0x4000互斥）
 样例：class.method "com.runbox.debug.Demo..*";
       import "java.lang.String"; class.method "String.noti.*", 0x7fff;      
-class.monitor.query "prepare" | "unload"
+
+class.monitor.query expr
 说明：查询当前被监控的所有类
-参数：prepare 被监控预装载的类
+参数：expr 标准larva表达式，由以下几部分结成:
+      "prepare" | "unload"
+      prepare 被监控预装载的类
       unload 被监控卸载的类
       如果没有参数则显示两类监控都被显示
 样例：class.monitor.query "prepare";
       class.monitor.query "unload";
       class.monitor.query;
-class.monitor.prepare [package.]className
+
+class.monitor.prepare expr
 说明：监控某一个或是某一批类的预装载
-参数：package 包路径，是可选的；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]className
+      package 包路径，是可选的；
       className 类名称，必须的参数，
       以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；
 样例：import.class "com.runbox.demo.Demo"; class.monitor.prepare "Demo";
       class.monitor.prepare "com.runbox.demo.Demo";
-class.monitor.unload [package.]className
+
+class.monitor.unload expr
 说明：监控某一个或是某一批类的卸载
-参数：package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]className
+      package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径；
       className 类名称，如果之前通过import.class命令已经导入类可以只使用类路径；
       以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；
 样例：import.class "com.runbox.demo.Demo"; class.monitor.unload "Demo"; sdf
       class.monitor.unload "com.runbox.demo.Demo";
-class.monitor.enable [id[, id]]
+
+class.monitor.enable expr
 说明：启动已经被禁用某个或某些被监控预装载类或卸载类项
-参数：id 某项的ID，如果没有ID则启动所有监控项
+参数：expr 标准larva表达式，由以下几部分结成:
+      [id[, id]]
+      id 某项的ID，如果没有ID则启动所有监控项
 样例：class.monitor.enable 2, 3, 4;
       class.monitor.enable;
-class.monitor.disable [id[, id]]
+
+class.monitor.disable expr
 说明：禁用已经被禁用某个或某些被监控预装载类或卸载类项
-参数：id 某项的ID，如果没有ID则禁用所有监控项
+参数：expr 标准larva表达式，由以下几部分结成:
+      [id[, id]]
+      id 某项的ID，如果没有ID则禁用所有监控项
 样例：class.monitor.disable 2, 3, 4;
       class.monitor.disable;
-class.monitor.delete  [id[, id]]
+
+class.monitor.delete expr
 说明：删除已经被禁用某个或某些被监控预装载类或卸载类项
-参数：id 某项的ID，如果没有ID则删除所有监控项
+参数：expr 标准larva表达式，由以下几部分结成:
+      [id[, id]]
+      id 某项的ID，如果没有ID则删除所有监控项
 样例：class.monitor.delete 2, 3, 4;
       class.monitor.delete;
-class.constant package.className
+
+class.constant expr
 说明：表出某类型的常量池信息；
-参数：package 包路径
+参数：expr 标准larva表达式，由以下几部分结成:
+      package.className
+      package 包路径
       className 类名称
       以上两部分组成类的全路径；
 样例：class.constant "com.runbox.demo.Demo";
       class.constant "java.lang.String";
 
 方法
-method.argument [package.]class.method
+method.argument expr
 说明：查询方法的参数列表，如果参数名称可获取则显示名称与类型，反之则只显示类型
-参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]class.method
+      package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
       class 类名称 
       method 方法名称
 样例：method.bytecode "com.runbox.demo.Demo.method";
       method.bytecode "java.lang.String.<init>";
       method.bytecode "java.lang.String.indexOf";
-method.local [package.]class.method
+
+method.local expr
 说明：查询方法的局部变量，如果变量名称可获取则显示名称与类型，反之则只显示类型
-参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]class.method
+      package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
       class 类名称 
       method 方法名称
 样例：method.bytecode "com.runbox.demo.Demo.method";
       method.bytecode "java.lang.String.<init>";
       method.bytecode "java.lang.String.indexOf";
-method.bytecode [package.]class.method
+
+method.bytecode expr
 说明：显示某方法的字节码
-参数：package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
+参数：expr 标准larva表达式，由以下几部分结成:
+      [package.]class.method
+      package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；
       class 类名称 
       method 方法名称，当前不支持通过参数列表区分方法，所有一次会表出多个同名的方法（如果有重载）；
       以上三部分必须是字符串类型
 样例：method.bytecode "com.runbox.demo.Demo.method";
       method.bytecode "java.lang.String.<init>";
       method.bytecode "java.lang.String.indexOf";
+
 method.monitor.entry (功能暂未实现)
 说明：
 参数：
 样例：
+
 method.monitor.return (功能暂未实现)
 说明：
 参数：
 样例：
 
 线程
-thread.query [flags]
+thread.query [expr]
 说明：列出当前所有线程
-参数：flags 一个组合标志位，必须是一整形
+参数：expr 标准表达式，代表一个组合标志位，运算结果必须是整形
 样例：
-thread.switch id
+
+thread.switch expr
 说明：切换线程
-参数：id 线程ID，必须是整形
+参数：expr 线程ID，运算结果必须是整形      
 样例：thread.switch 10;
-thread.suspend [id[, id]]
+
+thread.suspend expr
 说明：挂起一个或多个线程
-参数：id 线程ID，如果不给出参数则挂起所有线程
+参数：expr 表达式，由以下几部分组成：
+      [id[, id]] 每个id都是一个子表达式，运算结果必须为整形，如果不给出参数则挂起所有线程
 样例：thread.suspend 1, 2, 3;
       thread.suspend;
-thread.resume [id[, id]]
+
+thread.resume expr
 说明：恢复一个或多个线程
-参数：id 线程ID，如果不给出参数则恢复所有线程
+参数：expr 表达式，由以下几部分组成：
+      [id[, id]] 每个id都是一个子表达式，运算结果必须为整形，如果不给出参数则挂起所有线程            
 样例：thread.resume 1, 2, 3;
       thread.resume;
+
 thread.interrupt (此功能暂未实现)
 说明：
 参数：
 样例：
+
 thread.stack 
-说明：
-参数：
-样例：
+说明：显示当前线程的所有栈帧
+参数：无
+样例：thread.stack
+
 thread.hold
 说明：
 参数：
 样例：
+
 thread.wait
 说明：
 参数：
 样例：
+
 thread.monitor.start
 说明：
 参数：
 样例：
+
 thread.monitor.death
 说明：
 参数：
 样例：
 
 断点
-breakpoint.method [package.]className.method([argument[, argument]]) {block}
+breakpoint.method expr {block}
 说明：通过方法设置断点
-参数：package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
+参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下几部分组成：
+      [package.]className.method([argument[, argument]])
+      package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
       className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；
       method 方法名称
       argument 是方法的参数类型，参数个数根据method来确定，参数类型如果之前已经通过import.class命令导入了类，也可以只使用
-               类名称，例如：method(Map, List);
-      以上四部分必须是一个字符串类型
+               类名称，例如：method(Map, List);      
       block 是命令尾块，这个块中的脚本会在断点被命中后执行；
 样例：import.class "com.runbox.demo.Demo";
       import.class "com.runbox.demo.Demo$Inner";
@@ -327,49 +391,62 @@ breakpoint.method [package.]className.method([argument[, argument]]) {block}
       };
       breakpoint.method "Demo$Inner.method()" {execute.run;};
       @method = "Demo.method()"; breakpoint.method @method {print.value "hello debugger."};
-breakpoint.line [package.]className:lineNumber {block}
+
+breakpoint.line expr {block}
 说明：通过行号设置断点
-参数：package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
+参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：
+      [package.]className:lineNumber
+      package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
       className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；
-      lineNumber 是在源代码中行号
-      以上三部分必须是一个字符串类型，也可以是一个自定义的auto变量（具体参数）；
+      lineNumber 是在源代码中行号      
       block 是命令尾块，这个块中的脚本会在断点被命中后执行；
 样例：import.class "com.runbox.demo.Demo";
       breakpoint.line "Demo.line:61";
       @line = "Demo.line:61"; breakpoint.line @line;
-breakpoint.access [package.]className.fieldName {block}
+
+breakpoint.access expr {block}
 说明：设置一个字段的访问断点，当字段值被读取进触发
-参数：package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
+参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：
+      [package.]className.fieldName
+      package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
       className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；
-      fieldName 字段名称
-      以上三部分必须是一个字符串类型，也可以是一个自定义的auto变量（具体参数）；
+      fieldName 字段名称      
       block 是命令尾块，这个块中的脚本会在断点被命中后执行；
 样例：import.class "com.runbox.demo.Demo";
       breakpoint.access "Demo.count";
-breakpoint.modify [package.]className.fieldName {block}
+
+breakpoint.modify expr {block}
 说明：设置一个字段的访问断点，当字段值被修改时触发
-参数：package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
+参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：
+      [package.]className.fieldName
+      package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，就可能只使用类名称；
       className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；
-      fieldName 字段名称
-      以上三部分必须是一个字符串类型，也可以是一个自定义的auto变量（具体参数）；
+      fieldName 字段名称      
       block 是命令尾块，这个块中的脚本会在断点被命中后执行；
 样例：import.class "com.runbox.demo.Demo";
       breakpoint.modify "Demo$Inner.count" {execute.run;};
+
 breakpoint.query 
 说明：列出当前所有断点
 参数：无
 样例：breakpoint.query;
-breakpoint.delete [id[, id]]
+
+breakpoint.delete expr
 说明：删除某个或某些断点
-参数：[id[, id]] 一个或多个断点的ID，多个ID用逗号分隔，如果无参数则删除所有断点，所有ID必须为整形类型；
+参数：expr 表达式，由以下几部分组成：      
+      [id[, id]]  每个id都是一个子表达式，其运算结果必须是整形，如果无参数则删除所有断点
 样例：@id = 4; breakpoint.delete 2，0x3, @id;
-breakpoint.enable [id[, id]]
+
+breakpoint.enable expr
 说明：启动某个或某些断点
-参数：[id[, id]] 一个或多个断点的ID，多个ID用逗号分隔，如果无参数则启用所有处于禁用状态断点，所有ID必须为整形类型；
+参数：expr 表达式，由以下几部分组成：
+      [id[, id]] 每个id都是一个子表达式，其运算结果必须是整形数,如果无参数则启用所有处于禁用状态断点
 样例：@id = 4; breakpoint.enable 2，0x3, @id;
-breakpoint.disable [id[, id]]
+
+breakpoint.disable expr
 说明：禁用某个或某些断点
-参数：[id[, id]] 一个或多个断点的ID，多个ID用逗号分隔，如果无参数则启用所有处于启用状态断点，所有ID必须为整形类型；
+参数：expr 表达式，由以下几部分组成：
+      [id[, id]] 每个id都是一个子表达式，其运算结果必须是整形数，如果无参数则启用所有处于启用状态断点
 样例：@id = 4; breakpoint.enable 2，0x3, @id;
 
 执行
@@ -377,30 +454,35 @@ execute.run
 说明：继续运行当前被调试的目标
 参数：无
 样例：execute.run;
-execute.next.over [count]
+
+execute.next.over [expr]
 说明：以源码为单位运行，遇到方法调用不进入
-参数：count 代码运行几行，默认为一行，必须是整形数
+参数：expr 表达式，代表运行几行源码，其运算结果必须是整形数，默认为一行；
 样例：execute.next.over;
       execute.next.over 2;
       @count = 0x3; execute.next.over @count;
-execute.next.into [count]
+
+execute.next.into [expr]
 说明：以源码为单位运行，遇到方法调用则进入
-参数：count 代码运行几行，默认为一行，必须是整形数
+参数：expr 表达式，代表运行几行源码，其运算结果必须是整形数，默认为一行；
 样例：execute.next.into；
-      execute.next.into 2；
+      execute.next.into 2;
       @count = 0x3; execute.next.into @count;
+
 execute.step.over [count]
 说明：以虚拟指令为单位运行，遇到方法调用不进入
 参数：count 运行几条虚拟指令，默认为一条，必须是整形数
 样例：execute.step.over；
       execute.step.over 2；
       @count = 0x3; execute.step.over @count;
-execute.step.into [count]
+
+execute.step.into [expr]
 说明：以虚拟指令为单位运行，遇到方法调用则进入
-参数：count 运行几条虚拟指令，默认为一条，必须是整形数
+参数：expr larva表达式，代表运行几条虚拟指令，其运算结果必须是整形数，默认为一条
 样例：execute.step.into；
       execute.step.into 2；
       @count = 0x3; execute.step.into @count;
+
 execute.file file (此功暂未完成)
 说明：运行一个外部的文件，文件内容是larva脚本；
 参数：文件全路径，必须是字符串类型；
@@ -408,9 +490,11 @@ execute.file file (此功暂未完成)
       @file = ".\debug.jdb"; execute.file @file;
 
 显示变量
-print.value expression[, flags]
+print.value expr 
 说明：计算一个表达式并显示其结果
-参数：expression 标准的Larva脚本表达式（具体参见脚本说明部分）
+参数：expr 脚本表达式（具体参见脚本说明部分）
+      expr [, flags]
+      expr 子表达式，运算结果可以为任何类型；
       flags 是一个标志组合
       0x00 不显示任何类型（默认值）；
       0x01 显示变量类型；
@@ -422,20 +506,26 @@ print.value expression[, flags]
       @var = 10; print.value @var, 0x2;
       @var = 10; @flags = 0x1 | 0x3; print.value @var, @flags;
       print.value this.inner.count;
-print.field expression[, flags]
+
+print.field expr
 说明：列出一具对象的所有字段
-参数：expression 标准larva脚本表达式，其运算结果必须为一个对象引用；
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flags]
+      expr 子表达式，其运算结果必须为一个对象引用；
       flags 是一个标志组合
       0x00 不显示任何类型（默认值）；
       0x01 显示变量类型；
       0x02 显示变量值类型；
-      对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，但是某值可能为Object任何子类；
+      对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，但是某值可能为Object任何子类；      
 样例：print.field this;
       print.field this.map, 0x3;
       @var = this.list; @flags = 0x1 | 0x3; print.field @var, @flags;
-print.local [flags]
+
+print.local expr
 说明：列出当前栈帧中所有局部变量
-参数：flags 是一个标志组合
+参数：expr 标准表达式，由以下几部分组成：
+      [flags]
+      flags 是一个标志组合
       0x00 不显示任何类型（默认值）；
       0x01 显示变量类型；
       0x02 显示变量值类型；
@@ -443,9 +533,12 @@ print.local [flags]
 样例：print.local;
       print.local 0x2;
       @flags = 0x1 | 0x3; print.field @flags;
-print.array expression[, flags[, index[, count]]]
+
+print.array expr
 说明：格式化显示数组
-参数：expression 标准larva脚本表达式，其运算结果必须为一个数组引用；
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flags[, index[, count]]]
+      expr 标准larva脚本表达式，其运算结果必须为一个数组引用；
       flags 是一个标志组合      
       0x01 显示基本统计信息；
       0x02 显示元素具体值；
@@ -458,9 +551,12 @@ print.array expression[, flags[, index[, count]]]
       print.array array2, 2; (index, count 可以被省略)
       print.array array3; (flags, index, count 都可以被省略)
       print.array array4, 3, 0, 10; (当前命令主要想显示10个元素，但是第两个flags, index 参数不能省略)
-print.string expression[, flags[, index[, count[, line]]]]
+
+print.string expr
 说明：格式化显示字符串
-参数：expression 标准larva脚本表达式，其运算结果必须为一个字符串类型；
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flags[, index[, count[, line]]]]
+      expr 标准larva脚本表达式，其运算结果必须为一个字符串类型；
       flags 是一个标志组合      
       0x01 显示基本统计信息；
       0x02 显示元素具体值；
@@ -476,9 +572,11 @@ print.string expression[, flags[, index[, count[, line]]]]
       print.string string4, 3, 0, 100, 20; (当前命令主要想每行显示20个元素，但是第两个flags, index，count参数不能省略)
 
 显示模板
-template.list expression[, flag]
+template.list expr
 说明：显示某种列表类型的数据
-参数：expression 标准的larva表达式其运算结果必须为java.util.List的某个实现类的引用
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flag]
+      expr 标准的larva表达式其运算结果必须为java.util.List的某个实现类的引用
       当前支持的子类型为：
       java.util.List
       java.util.ArrayList
@@ -490,9 +588,13 @@ template.list expression[, flag]
       0x2 显示容器中的元素
       0x4 显示元素的类型
 样例：alias.define "template.list", "t.l"; t.l arrayList;
-template.map expression[, flag]
+      @var = arrayList; t.l @var;
+
+template.map expr 
 说明：显示某种值对类型的数据
-参数：expression 标准的larva表达式其运算结果必须为java.util.Map的某个实现类的引用
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flag]
+      expr 标准的larva表达式其运算结果必须为java.util.Map的某个实现类的引用
       当前支持的子类型为：
       java.util.HashMap
       java.util.Hashtable
@@ -503,9 +605,12 @@ template.map expression[, flag]
       0x2 显示容器中的元素
       0x4 显示元素的类型
 样例：alias.define "template.map", "t.m"; t.m hashMap;
-template.queue expression[, flag]
+
+template.queue expr
 说明：显示某种队列类型的数据
-参数：expression 标准的larva表达式其运算结果必须为java.util.Queue的某个实现类的引用
+参数：expr 标准表达式，由以下几部分组成：
+      expr[, flag]
+      expr 标准的larva表达式其运算结果必须为java.util.Queue的某个实现类的引用
       当前支持的子类型为：
       java.util.ArrayDeque
       java.util.PriorityQueue            
@@ -515,9 +620,10 @@ template.queue expression[, flag]
       0x4 显示元素的类型
 样例：template.queue arrayQueue;
       template.queue priorityQueue;
+
 template.set（此功能暂未实现）
 说明：显示某种集合类型的数据
-参数：expression 标准的larva表达式其运算结果必须为java.util.Set的某个实现类的引用
+参数：expr 标准的larva表达式其运算结果必须为java.util.Set的某个实现类的引用
       当前支持的子类型为：无
       flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
       0x1 显示基本的统计信息
@@ -525,9 +631,12 @@ template.set（此功能暂未实现）
       0x4 显示元素的类型
 样例：template.set hashSet;
       template.set treeSet;
-template.stack expression[, flag]
+
+template.stack expr
 说明：显示栈容器的数据
-参数：expression 标准的larva表达式其运算结果必须为java.util.Stack类型或是某子类
+参数：expr 标准的larva表达式，由以下几部分组成：
+      expr[, flag]
+      expr 标准的larva表达式其运算结果必须为java.util.Stack类型或是某子类
       栈虽然也可以通过template.list来显示数据但是通过template.stack可以以更好的形式
       显示（以栈的形式）；
       flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
@@ -537,15 +646,20 @@ template.stack expression[, flag]
 样例：template.stack stack;
 
 源代码
-source.append path
+source.append expr
 说明：添加源码路径
-参数：path为源代码的路径，不包含包路径部分，例如："d:\\program\\demo\\com\\runbox\\demo\\Demo.java", 只需要添加"d:\\program\\demo\\"就可以了；
-样例：source.append "d:\\program\\demo"
-source.delete [id[, id]]
+参数：expr 标准表达式，运算结果必须是字符串，路径只需要给出包名称之前的路径即可
+      例如："d:\\program\\demo\\com\\runbox\\demo\\Demo.java", 只需要添加"d:\\program\\demo\\"就可以了；
+样例：source.append "d:\\program\\demo";
+      @var = "d:\\program\\demo"; source.append @var;
+
+source.delete expr
 说明：删除已经增加的源码路径
-参数：id 源码路径ID，如果不给出参数则删除所有路径；
+参数：expr 标准表达式，如果不给出参数则删除所有路径；
+      [id[, id]] 每一个ID为一个子表达式，运算结果必须为整形数
 样例：source.delete 1, 2, 3;
       source.detele;
+
 source.query 
 说明：查询所有已经被添加的源路径；
 参数：无
