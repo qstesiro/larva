@@ -476,31 +476,65 @@ print.string expression[, flags[, index[, count[, line]]]]
       print.string string4, 3, 0, 100, 20; (当前命令主要想每行显示20个元素，但是第两个flags, index，count参数不能省略)
 
 显示模板
-template.list
-说明：
-格式：
-参数：
-样例：
-template.map
-说明：
-格式：
-参数：
-样例：
-template.vector
-说明：
-格式：
-参数：
-样例：
-template.queue
-说明：
-格式：
-参数：
-样例：
-template.stack
-说明：
-格式：
-参数：
-样例：
+template.list expression[, flag]
+说明：显示某种列表类型的数据
+参数：expression 标准的larva表达式其运算结果必须为java.util.List的某个实现类的引用
+      当前支持的子类型为：
+      java.util.List
+      java.util.ArrayList
+      java.util.LinkedList
+      java.util.Stack
+      java.util.Vector      
+      flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
+      0x1 显示基本的统计信息
+      0x2 显示容器中的元素
+      0x4 显示元素的类型
+样例：alias.define "template.list", "t.l"; t.l arrayList;
+template.map expression[, flag]
+说明：显示某种值对类型的数据
+参数：expression 标准的larva表达式其运算结果必须为java.util.Map的某个实现类的引用
+      当前支持的子类型为：
+      java.util.HashMap
+      java.util.Hashtable
+      java.util.IdentityHashMap
+      java.util.LinkedHashMap
+      flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
+      0x1 显示基本的统计信息
+      0x2 显示容器中的元素
+      0x4 显示元素的类型
+样例：alias.define "template.map", "t.m"; t.m hashMap;
+template.queue expression[, flag]
+说明：显示某种队列类型的数据
+参数：expression 标准的larva表达式其运算结果必须为java.util.Queue的某个实现类的引用
+      当前支持的子类型为：
+      java.util.ArrayDeque
+      java.util.PriorityQueue            
+      flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
+      0x1 显示基本的统计信息
+      0x2 显示容器中的元素
+      0x4 显示元素的类型
+样例：template.queue arrayQueue;
+      template.queue priorityQueue;
+template.set（此功能暂未实现）
+说明：显示某种集合类型的数据
+参数：expression 标准的larva表达式其运算结果必须为java.util.Set的某个实现类的引用
+      当前支持的子类型为：无
+      flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
+      0x1 显示基本的统计信息
+      0x2 显示容器中的元素
+      0x4 显示元素的类型
+样例：template.set hashSet;
+      template.set treeSet;
+template.stack expression[, flag]
+说明：显示栈容器的数据
+参数：expression 标准的larva表达式其运算结果必须为java.util.Stack类型或是某子类
+      栈虽然也可以通过template.list来显示数据但是通过template.stack可以以更好的形式
+      显示（以栈的形式）；
+      flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)
+      0x1 显示基本的统计信息
+      0x2 显示容器中的元素
+      0x1 显示元素的类型
+样例：template.stack stack;
 
 源代码
 source.append path

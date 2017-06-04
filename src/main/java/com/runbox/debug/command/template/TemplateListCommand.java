@@ -42,7 +42,7 @@ public class TemplateListCommand extends TemplateCommand {
 			return copyOnWriteArrayElements();
 		}
         throw new Exception("can not recognize template");
-    }	
+    }
 
     private List<Operand> arrayElements() throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
@@ -74,7 +74,7 @@ public class TemplateListCommand extends TemplateCommand {
 		if (null != array) {
 			for (int i = 0; i < ((ArrayReference)array.value()).length(); ++i) {
 				ArrayOperand operand = new ArrayOperand((ArrayReference)array.value(), i);
-				if (null != operand.value()) operands.add(0, operand);				
+				if (null != operand.value()) operands.add(0, operand);
 			}
 		}
         return operands;

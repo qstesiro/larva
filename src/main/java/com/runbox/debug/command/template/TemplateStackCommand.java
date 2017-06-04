@@ -30,7 +30,7 @@ public class TemplateStackCommand extends TemplateCommand {
 				Operand operand = operands.get(i);
 				System.out.printf("#%-7d", i);
 				if (null != operand.value()) {
-					if (operand.value() instanceof StringReference) {
+					if (operand.isString()) {
 						String string = "instance of ";
 						string += operand.type().name();
 						string += "(" + "id=" + ((ObjectReference)operand.value()).uniqueID() + ")";
