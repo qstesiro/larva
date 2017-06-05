@@ -37,8 +37,7 @@
 参数：expr 表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;[className[, className]]<br>
 &emsp;&emsp;&emsp;[className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称是一个表达式，<br>
-&emsp;&emsp;&emsp;运算结果必须是字符<br>
-&emsp;&emsp;&emsp;串类型，如果没有参数则删除所有被导入的类；<br>
+&emsp;&emsp;&emsp;运算结果必须是字符串类型，如果没有参数则删除所有被导入的类；<br>
 样例：import.delete "String";<br>
 &emsp;&emsp;&emsp;import.delete "Demo";<br>
 &emsp;&emsp;&emsp;@clazz = "Demo$Inner"; import.delete @clazz, "Map", "LinkedList";<br>
@@ -170,8 +169,7 @@
 ### class.monitor.delete expr
 说明：删除已经被禁用某个或某些被监控预装载类或卸载类项<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
-&emsp;&emsp;&emsp;[id[, id]]<br>
-&emsp;&emsp;&emsp;id 某项的ID，如果没有ID则删除所有监控项<br>
+&emsp;&emsp;&emsp;[id[, id]] 每个id是一个子表达式如果没有ID则删除所有监控项<br>
 样例：class.monitor.delete 2, 3, 4;<br>
 &emsp;&emsp;&emsp;class.monitor.delete;<br>
 ### class.constant expr
@@ -229,7 +227,7 @@
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下几部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.method([argument[, argument]])<br>
 &emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
+&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;method 方法名称<br>
 &emsp;&emsp;&emsp;argument 是方法的参数类型，参数个数根据method来确定，参数类型如果之前已经通过import.class<br>
