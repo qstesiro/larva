@@ -37,7 +37,7 @@
 参数：expr 表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;[className[, className]]<br>
 &emsp;&emsp;&emsp;[className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称是一个表达式，<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;运算结果必须是字符<br>
+&emsp;&emsp;&emsp;运算结果必须是字符<br>
 &emsp;&emsp;&emsp;串类型，如果没有参数则删除所有被导入的类；<br>
 样例：import.delete "String";<br>
 &emsp;&emsp;&emsp;import.delete "Demo";<br>
@@ -79,7 +79,7 @@
 &emsp;&emsp;&emsp;package 包路径，是可选的，必须是精确匹配不支持正则表达式；<br>
 &emsp;&emsp;&emsp;className 类名称，必须是精确匹配不支持正则表达式；<br>
 &emsp;&emsp;&emsp;fieldName 字段名，可以精确匹配也可以使用正则表达式的通配符，但是只能使用.***(点加星号)<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;列出所有字段；<br>
+&emsp;&emsp;&emsp;列出所有字段；<br>
 &emsp;&emsp;&emsp;以上三部分必须是字符串类型<br>
 &emsp;&emsp;&emsp;flags 标准表达式，代表一个组合标志位，运算结果必须是整形<br>
 &emsp;&emsp;&emsp;0x000 默认值显示类全路径<br>
@@ -233,8 +233,7 @@
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;method 方法名称<br>
 &emsp;&emsp;&emsp;argument 是方法的参数类型，参数个数根据method来确定，参数类型如果之前已经通过import.class<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;命令导入了类，也可以只使用<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;类名称，例如：method(Map, List);<br>
+&emsp;&emsp;&emsp;命令导入了类，也可以只使用类名称，例如：method(Map, List);<br>
 &emsp;&emsp;&emsp;block 是命令尾块，这个块中的脚本会在断点被命中后执行；<br>
 样例：import.class "com.runbox.demo.Demo";<br>
 &emsp;&emsp;&emsp;import.class "com.runbox.demo.Demo$Inner";<br>
@@ -251,7 +250,7 @@
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className:lineNumber<br>
 &emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
+&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;lineNumber 是在源代码中行号<br>
 &emsp;&emsp;&emsp;block 是命令尾块，这个块中的脚本会在断点被命中后执行；<br>
@@ -263,7 +262,7 @@
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.fieldName<br>
 &emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
+&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;fieldName 字段名称<br>
 &emsp;&emsp;&emsp;block 是命令尾块，这个块中的脚本会在断点被命中后执行；<br>
@@ -274,7 +273,7 @@
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.fieldName<br>
 &emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;导入了类，就可能只使用类名称；<br>
+&emsp;&emsp;&emsp;导入了类，就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;fieldName 字段名称&emsp;&emsp;&emsp;<br>
 &emsp;&emsp;&emsp;block 是命令尾块，这个块中的脚本会在断点被命中后执行；<br>
