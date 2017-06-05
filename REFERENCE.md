@@ -1,4 +1,4 @@
-# 软件介绍
+# 功能介绍
 Larva是一个基于命令行调试器，使用Java语言编写，它可以调试所有基于JavaVM运行的程序，理论上支持所有符合Java虚拟机规范的所有虚拟机与具体的语言无关，
 例如：Java、Scala、JPython、JRuby等，当前作者只针对HotSpot与Dalvik两种虚拟机实现做过基本的测试，它的基本运行方式类似于Linux上的GDB与Windows中的CDB、WinDBG，除了最基本的命令功能外还内嵌了一个自定义的脚本语言，是专门为调试程序定制的可以用于编写自动化脚本，当前程序支持以以下一些基本的功能：<br>
 断点操作：方法断点、行断点、访问断点、修改断点;<br>
@@ -38,7 +38,7 @@ mvn clean compile package <br>
 样例：%JAVA_HOME%\java.exe -jar larva.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
 &emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva.jar -address 192.168.1.123:1025<br>
 参数：-address 被调试目标的监听地址包括IP与Port（必须）<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
+&emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
 
 ## 脚本语言（请参见SCRIPT.md）
 
