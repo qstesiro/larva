@@ -67,7 +67,7 @@ public class ClassQueryCommand extends ClassCommand {
 		if (null != values && REGEX < values.size()) {
 			String clazz = values.getString(REGEX);
 			if (!clazz.equals("")) {
-				return clazz(clazz);
+				return clazz;
 			}
 		}
 		return null;
