@@ -9,8 +9,7 @@ Larva是一个基于命令行调试器，使用Java语言编写，它可以调�
 * 线程操作：列出所有线程、线程组，查看线程栈，挂起、恢复等;
 * 模板变量显示：查看常见一些模板，例如：List、Map、Queue等;
 * 类信息查询：查看类的基本信息，例如：访问权限、所有字段、所有方法、常量池等;
-* 方法查询：查看方法的基本信息，例如：访问权限、参数、局部变量、虚拟指令等;
-<br>
+* 方法查询：查看方法的基本信息，例如：访问权限、参数、局部变量、虚拟指令等;<br>
 编写这个调试的完全是出于个人爱好，程序中难免会存在一些Bug，只限于交流学习使用，如果在使用的过程中发现有任何的问题或有任何的意见、想法都可以联系：runbox@163.com
 
 I used to debug C or C++ program by console, like cdb, kd when I worked in windows system. About one year ago, I began to learn Java. But I did not find a suitable debug tool in console (JDB is a good chose for someone else but I did not used to it.) I began trying to find a debugger working in console like cdb or kd, but I did not find a suitable tool, so I decided to make a debug tool of my own, called Larva (I like this name which from an interesting cartoon)
@@ -25,8 +24,7 @@ I used to debug C or C++ program by console, like cdb, kd when I worked in windo
 * template (support list, map, vector, queue, etc.)
 * monitor (wait chain, wait object, etc.)
 * virtual machine information
-* script called Larva script (support standard java expression excepting new object and invoking method)
-<br>
+* script called Larva script (support standard java expression excepting new object and invoking method)<br>
 Of course, there are a lot of debug in Larva and it do need to be perfected. 
 There is a reference about Larva, you can read it if you are interested in it.
 I`ll thank for your advices or debug report (runbox@163.com)  
