@@ -36,7 +36,7 @@
 说明：删除已经被导入的类<br>
 参数：expr 表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;[className[, className]]<br>
-&emsp;&emsp;&emsp;[className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称是一个表达式，
+&emsp;&emsp;&emsp;[className[, className]] 一个或多个已经导入的类以逗号间隔，每一个类名称是一个表达式，<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;运算结果必须是字符<br>
 &emsp;&emsp;&emsp;串类型，如果没有参数则删除所有被导入的类；<br>
 样例：import.delete "String";<br>
@@ -78,7 +78,7 @@
 &emsp;&emsp;&emsp;[package.]className.fieldName[, flags]<br>
 &emsp;&emsp;&emsp;package 包路径，是可选的，必须是精确匹配不支持正则表达式；<br>
 &emsp;&emsp;&emsp;className 类名称，必须是精确匹配不支持正则表达式；<br>
-&emsp;&emsp;&emsp;fieldName 字段名，可以精确匹配也可以使用正则表达式的通配符，但是只能使用.***(点加星号)
+&emsp;&emsp;&emsp;fieldName 字段名，可以精确匹配也可以使用正则表达式的通配符，但是只能使用.***(点加星号)<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;列出所有字段；<br>
 &emsp;&emsp;&emsp;以上三部分必须是字符串类型<br>
 &emsp;&emsp;&emsp;flags 标准表达式，代表一个组合标志位，运算结果必须是整形<br>
@@ -124,7 +124,7 @@
 &emsp;&emsp;&emsp;0x4000 声明这个方法的类（与0x8000互斥）<br>
 &emsp;&emsp;&emsp;0x8000 方法返回类型（与0x4000互斥）<br>
 样例：class.method "com.runbox.debug.Demo..*";<br>
-&emsp;&emsp;&emsp;import "java.lang.String"; class.method "String.noti.*", 0x7fff;&emsp;&emsp;&emsp;<br>
+&emsp;&emsp;&emsp;import "java.lang.String"; class.method "String.noti.*", 0x7fff;<br>
 ### class.monitor.query expr
 说明：查询当前被监控的所有类<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
@@ -228,11 +228,11 @@
 说明：通过方法设置断点<br>
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下几部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.method([argument[, argument]])<br>
-&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，
+&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;method 方法名称<br>
-&emsp;&emsp;&emsp;argument 是方法的参数类型，参数个数根据method来确定，参数类型如果之前已经通过import.class
+&emsp;&emsp;&emsp;argument 是方法的参数类型，参数个数根据method来确定，参数类型如果之前已经通过import.class<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;命令导入了类，也可以只使用<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;类名称，例如：method(Map, List);<br>
 &emsp;&emsp;&emsp;block 是命令尾块，这个块中的脚本会在断点被命中后执行；<br>
@@ -250,7 +250,7 @@
 说明：通过行号设置断点<br>
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className:lineNumber<br>
-&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，
+&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;lineNumber 是在源代码中行号<br>
@@ -262,7 +262,7 @@
 说明：设置一个字段的访问断点，当字段值被读取进触发<br>
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.fieldName<br>
-&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，
+&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令导入了类，<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;fieldName 字段名称<br>
@@ -273,7 +273,7 @@
 说明：设置一个字段的访问断点，当字段值被修改时触发<br>
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下三部分组成：<br>
 &emsp;&emsp;&emsp;[package.]className.fieldName<br>
-&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令
+&emsp;&emsp;&emsp;package 包路径，这是一个可选的部分，如果在执行此条命令之前已经通过import.class命令<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;导入了类，就可能只使用类名称；<br>
 &emsp;&emsp;&emsp;className 类名称，这是必须给出，如果是内嵌类需要使用外部分类加内嵌类，例如：Demo$Inner形式；<br>
 &emsp;&emsp;&emsp;fieldName 字段名称&emsp;&emsp;&emsp;<br>
@@ -292,7 +292,7 @@
 ### breakpoint.enable expr
 说明：启动某个或某些断点<br>
 参数：expr 表达式，由以下几部分组成：<br>
-&emsp;&emsp;&emsp;[id[, id]] 每个id都是一个子表达式，其运算结果必须是整形数,如果无参数则启用所有处于禁用
+&emsp;&emsp;&emsp;[id[, id]] 每个id都是一个子表达式，其运算结果必须是整形数,如果无参数则启用所有处于禁用<br>
 &emsp;&emsp;&emsp;状态断点<br>
 样例：@id = 4; breakpoint.enable 2，0x3, @id;<br>
 ### breakpoint.disable expr
@@ -344,7 +344,7 @@
 &emsp;&emsp;&emsp;0x00 不显示任何类型（默认值）；<br>
 &emsp;&emsp;&emsp;0x01 显示变量类型；<br>
 &emsp;&emsp;&emsp;0x02 显示变量值类型；<br>
-&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，
+&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，<br>
 &emsp;&emsp;&emsp;但是某值可能为Object任何子类；<br>
 样例： @var = "hello"; print.value @var;<br>
 &emsp;&emsp;&emsp;print.value "dog, come on";<br>
@@ -361,7 +361,7 @@
 &emsp;&emsp;&emsp;0x00 不显示任何类型（默认值）；<br>
 &emsp;&emsp;&emsp;0x01 显示变量类型；<br>
 &emsp;&emsp;&emsp;0x02 显示变量值类型；<br>
-&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，
+&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，<br>
 &emsp;&emsp;&emsp;但是某值可能为Object任何子类；<br>
 样例：print.field this;<br>
 &emsp;&emsp;&emsp;print.field this.map, 0x3;<br>
@@ -374,7 +374,7 @@
 &emsp;&emsp;&emsp;0x00 不显示任何类型（默认值）；<br>
 &emsp;&emsp;&emsp;0x01 显示变量类型；<br>
 &emsp;&emsp;&emsp;0x02 显示变量值类型；<br>
-&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，
+&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，<br>
 &emsp;&emsp;&emsp;但是某值可能为Object任何子类；<br>
 样例：print.local;<br>
 &emsp;&emsp;&emsp;print.local 0x2;<br>
@@ -390,8 +390,8 @@
 &emsp;&emsp;&emsp;0x03 显示基本统计信息与元素具体值（默认）<br>
 &emsp;&emsp;&emsp;index 从第几个索引开始显示（默认0）<br>
 &emsp;&emsp;&emsp;count 显示几个元素（默认所有元素）<br>
-&emsp;&emsp;&emsp;注意以上flags, index, count虽然是可选的但是如果后面的参数出现则前面的参数也必须
-&emsp;&emsp;&emsp;出现不能省略，只有后续不需要的参数是可省略（语法规则与C++中的函数默认实参类似，具
+&emsp;&emsp;&emsp;注意以上flags, index, count虽然是可选的但是如果后面的参数出现则前面的参数也必须<br>
+&emsp;&emsp;&emsp;出现不能省略，只有后续不需要的参数是可省略（语法规则与C++中的函数默认实参类似，具<br>
 &emsp;&emsp;&emsp;体参见样例）；<br>
 样例：print.array array1, 1, 0; (count可以被省略)<br>
 &emsp;&emsp;&emsp;print.array array2, 2; (index, count 可以被省略)<br>
