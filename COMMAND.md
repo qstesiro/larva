@@ -134,22 +134,24 @@
 样例：class.monitor.query "prepare";<br>
 &emsp;&emsp;&emsp;class.monitor.query "unload";<br>
 &emsp;&emsp;&emsp;class.monitor.query;<br>
-### class.monitor.prepare expr
+### class.monitor.prepare expr {block}
 说明：监控某一个或是某一批类的预装载<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
 &emsp;&emsp;&emsp;[package.]className<br>
 &emsp;&emsp;&emsp;package 包路径，是可选的；<br>
 &emsp;&emsp;&emsp;className 类名称，必须的参数，<br>
 &emsp;&emsp;&emsp;以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在监控事件被触发后执行；
 样例：import.class "com.runbox.demo.Demo"; class.monitor.prepare "Demo";<br>
 &emsp;&emsp;&emsp;class.monitor.prepare "com.runbox.demo.Demo";<br>
-### class.monitor.unload expr
+### class.monitor.unload expr {block}
 说明：监控某一个或是某一批类的卸载<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
 &emsp;&emsp;&emsp;[package.]className<br>
 &emsp;&emsp;&emsp;package 包路径，是可选的，如果之前通过import.class命令已经导入类可以只使用类路径；<br>
 &emsp;&emsp;&emsp;className 类名称，如果之前通过import.class命令已经导入类可以只使用类路径；<br>
 &emsp;&emsp;&emsp;以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在监控事件被触发后执行；
 样例：import.class "com.runbox.demo.Demo"; class.monitor.unload "Demo"; <br>
 &emsp;&emsp;&emsp;class.monitor.unload "com.runbox.demo.Demo";<br>
 ### class.monitor.enable expr
@@ -302,27 +304,31 @@
 说明：继续运行当前被调试的目标<br>
 参数：无<br>
 样例：execute.run;<br>
-### execute.next.over [expr]
+### execute.next.over [expr] {block}
 说明：以源码为单位运行，遇到方法调用不进入<br>
 参数：expr 表达式，代表运行几行源码，其运算结果必须是整形数，默认为一行；<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在命令执行被执行；
 样例：execute.next.over;<br>
 &emsp;&emsp;&emsp;execute.next.over 2;<br>
 &emsp;&emsp;&emsp;@count = 0x3; execute.next.over @count;<br>
-### execute.next.into [expr]
+### execute.next.into [expr] {block}
 说明：以源码为单位运行，遇到方法调用则进入<br>
 参数：expr 表达式，代表运行几行源码，其运算结果必须是整形数，默认为一行；<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在命令执行被执行；
 样例：execute.next.into；<br>
 &emsp;&emsp;&emsp;execute.next.into 2;<br>
 &emsp;&emsp;&emsp;@count = 0x3; execute.next.into @count;<br>
-### execute.step.over [count]
+### execute.step.over [count] {block}
 说明：以虚拟指令为单位运行，遇到方法调用不进入<br>
 参数：count 运行几条虚拟指令，默认为一条，必须是整形数<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在命令执行被执行；
 样例：execute.step.over；<br>
 &emsp;&emsp;&emsp;execute.step.over 2；<br>
 &emsp;&emsp;&emsp;@count = 0x3; execute.step.over @count;<br>
-### execute.step.into [expr]
+### execute.step.into [expr] {block}
 说明：以虚拟指令为单位运行，遇到方法调用则进入<br>
 参数：expr larva表达式，代表运行几条虚拟指令，其运算结果必须是整形数，默认为一条<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在命令执行被执行；
 样例：execute.step.into；<br>
 &emsp;&emsp;&emsp;execute.step.into 2；<br>
 &emsp;&emsp;&emsp;@count = 0x3; execute.step.into @count;<br>
@@ -519,13 +525,13 @@
 说明：<br>
 参数：<br>
 样例：<br>
-### thread.monitor.start
+### thread.monitor.start {block}
 说明：<br>
-参数：<br>
+参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；
 样例：<br>
-### thread.monitor.death
+### thread.monitor.death {block}
 说明：<br>
-参数：<br>
+参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；
 样例：<br>
 ## 源代码
 ### source.append expr
