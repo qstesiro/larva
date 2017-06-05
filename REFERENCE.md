@@ -29,17 +29,14 @@ mvn clean compile package <br>
 当前调试器只支持通过网络附着目标程序，首先启动被调试的程序，再启动调试器<br>
 启动目标程序（参数详细意义可以参见Java官方文档）<br>
 %JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=地址:端口,server=y,suspend=y "程序正常运行的需其它参数"<br>
-样例：<br>
-%JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y -classpath ".\target\classes\" com.runbox.demo.Demo<br>
-%JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=192.168.1.123:1025,server=y,suspend=y -classpath ".\target\classes\" com.runbox.demo.Demo<br>
+样例：%JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y -classpath ".\target\classes\" com.runbox.demo.Demo<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=192.168.1.123:1025,server=y,suspend=y -classpath ".\target\classes\" com.runbox.demo.Demo<br>
 启动调试器 <br>
 %JAVA_HOME%\java.exe -jar larva.jar -address 地址:端口 -script "Larva脚本文件"<br>
-样例：<br>
-%JAVA_HOME%\java.exe -jar larva.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-%JAVA_HOME%\java.exe -jar larva.jar -address 192.168.1.123:1025<br>
-参数说明：<br>
--address 被调试目标的监听地址包括IP与Port（必须）<br>
--script 自定义的调试脚本（可选）
+样例：%JAVA_HOME%\java.exe -jar larva.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva.jar -address 192.168.1.123:1025<br>
+参数说明：-address 被调试目标的监听地址包括IP与Port（必须）<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
 
 ## 脚本语言（请参见SCRIPT.md）
 
