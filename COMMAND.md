@@ -3,7 +3,7 @@
 ### alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;<br>
 参数：expr 表达式，由以下几部分组成：<br>
-&emsp;&emsp;command, alias<br>
+<a>   command, alias</a><br>
 &emsp;&emsp;command 子表达式，运算结果必须为字符串，某个已经定义的命令不能是某个别名;<br>
 &emsp;&emsp;alias 自定义的别名，子表达式运算结果必须是字符串类型;<br>
 样例：alias.define "breakpoint.line", "b.l";<br>
