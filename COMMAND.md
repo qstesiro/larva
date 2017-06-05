@@ -1,5 +1,5 @@
 # 命令列表
-## 别名
+## 别名定义
 ### alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;<br>
 参数：expr 表达式，由以下几部分组成：<br>
@@ -45,7 +45,7 @@
 说明：列出所有已经被导入的类<br>
 参数：无<br>
 样例：import.query<br>
-## 类信息
+## 类查询
 ### class.query expr
 说明：获取已装载的类信息<br>
 参数: expr 标准larva表达式，由以下几部分结成<br>
@@ -181,7 +181,7 @@
 &emsp;&emsp;&emsp;以上两部分组成类的全路径；<br>
 样例：class.constant "com.runbox.demo.Demo";<br>
 &emsp;&emsp;&emsp;class.constant "java.lang.String";<br>
-## 方法
+## 方法查询
 ### method.argument expr
 说明：查询方法的参数列表，如果参数名称可获取则显示名称与类型，反之则只显示类型<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
@@ -221,7 +221,7 @@
 说明：<br>
 参数：<br>
 样例：<br>
-## 断点
+## 设置断点
 ### breakpoint.method expr {block}
 说明：通过方法设置断点<br>
 参数：expr 标准larva表达式，运算结果必须是字符串，字符串由以下几部分组成：<br>
@@ -481,7 +481,7 @@
 &emsp;&emsp;&emsp;0x2 显示容器中的元素<br>
 &emsp;&emsp;&emsp;0x1 显示元素的类型<br>
 样例：template.stack stack;<br>
-## 线程
+## 线程查询
 ### thread.query [expr]
 说明：列出当前所有线程<br>
 参数：expr 标准表达式，代表一个组合标志位，运算结果必须是整形<br>
@@ -557,7 +557,7 @@
 说明：<br>
 参数：<br>
 样例：<br>
-## 虚拟机信息
+## 虚拟机
 ### machine.name
 说明：获取当前被调试的目标虚拟机名称<br>
 参数：无<br>
