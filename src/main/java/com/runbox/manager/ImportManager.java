@@ -21,7 +21,22 @@ public class ImportManager extends Manager {
         classes.clear();
     }
 
-    private Map<String, String> classes = new HashMap<String, String>();
+    private Map<String, String> classes = new HashMap<String, String>() {{
+			put("java.lang", "Byte");
+			put("java.lang", "Char");
+			put("java.lang", "Short");
+			put("java.lang", "Integer");
+			put("java.lang", "Long");
+			put("java.lang", "Float");
+			put("java.lang", "Double");
+			put("java.lang", "Boolean");			
+			put("java.lang", "Number");			
+			put("java.lang", "String");
+			put("java.lang", "StringBuffer");
+			put("java.lang", "StringBuilder");
+			put("java.lang", "Object");			
+			put("java.lang", "Thread");			
+		}};
 
 	public void append(String clazz, String path) {
 		if (!classes.containsKey(clazz)) {
