@@ -29,8 +29,7 @@ public class BreakpointAccessCommand extends BreakpointSetCommand {
         List<ReferenceType> types = MachineManager.instance().allClasses();
         for (ReferenceType type : types) {
             Field field = BreakpointManager.instance().find(breakpoint, type);
-            if (null != field) {
-				System.out.println("aaaaaaaaaaaaaaaa");
+            if (null != field) {				
 				RequestManager.instance().createBreakpointRequest(field, breakpoint);
 			}
         }

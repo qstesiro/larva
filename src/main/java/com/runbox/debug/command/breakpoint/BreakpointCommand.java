@@ -88,16 +88,8 @@ public class BreakpointCommand extends Command {
 			if (-1 != left && -1 != right) {
 				List<String> arguments = new LinkedList<String>();            
 				if (left + 1 < right) {
-					for (String argument : value.substring(left + 1, right).split(",", -1)) {
-						argument = argument.trim();
-						if (argument.equals("")) {
-							throw new Exception("invalid method argument -> " + argument());
-						}
-						String path = ImportManager.instance().find(argument);
-					    if (null != path) {
-							argument = path + "." + argument;
-						}
-						arguments.add(argument);
+					for (String argument : value.substring(left + 1, right).split(",", -1)) {						
+						arguments.add(convert(argument));
 					}
 				}
 				return arguments;
@@ -105,6 +97,25 @@ public class BreakpointCommand extends Command {
 		}        
         throw new Exception("invalid argument -> " + argument());
     }
+
+	private String convert(String argument) throws Exception {
+		argument = argument.trim();
+		if (argument.equals("")) {
+			throw new Exception("invalid method argument -> " + argument());
+		}
+		int index = argument.indexOf("[]");
+		if (-1 != index) {
+			argument = argument.substring(0, index);
+		}
+		String path = ImportManager.instance().find(argument);
+		if (null != path) {
+			argument = path + "." + argument;
+		}
+		if (-1 != index) {
+			argument += "[]";
+		}
+		return argument;
+	}
     
     protected String field() throws Exception {		
 		if (null != values) {
