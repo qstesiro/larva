@@ -22,20 +22,20 @@ public class ImportManager extends Manager {
     }
 
     private Map<String, String> classes = new HashMap<String, String>() {{
-			put("java.lang", "Byte");
-			put("java.lang", "Char");
-			put("java.lang", "Short");
-			put("java.lang", "Integer");
-			put("java.lang", "Long");
-			put("java.lang", "Float");
-			put("java.lang", "Double");
-			put("java.lang", "Boolean");			
-			put("java.lang", "Number");			
-			put("java.lang", "String");
-			put("java.lang", "StringBuffer");
-			put("java.lang", "StringBuilder");
-			put("java.lang", "Object");			
-			put("java.lang", "Thread");			
+			put("Byte", "java.lang");
+			put("Char", "java.lang");
+			put("Short", "java.lang");
+			put("Integer", "java.lang");
+			put("Long", "java.lang");
+			put("Float", "java.lang");
+			put("Double", "java.lang");
+			put("Boolean", "java.lang");			
+			put("Number", "java.lang");			
+			put("String", "java.lang");
+			put("StringBuffer", "java.lang");
+			put("StringBuilder", "java.lang");
+			put("Object", "java.lang");			
+			put("Thread", "java.lang");			
 		}};
 
 	public void append(String clazz, String path) {

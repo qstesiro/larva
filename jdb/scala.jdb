@@ -39,8 +39,11 @@ c.q;
 
 // b.m "SparkPi.main(String[])";
 // b.m "SparkPi$.main(String[])";
-b.l "SparkPi$:32";
+b.l "SparkPi$:32" {print.field this.MODULE$; method.bytecode "SparkPi$.main(String[])";};
 
-// e.r;
+e.r;
+
+// breakpoint.line "org.apache.spark.examples.SparkPi$:32" {print.field this.MODULE$;};
+
 
 

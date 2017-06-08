@@ -27,10 +27,11 @@ public class Lexer extends com.runbox.script.statement.Lexer {
             if (null == peek) {
                 skip();
                 Token token = (operator(lookup()) ? operator() : operand());				
-                front = correct(token);
+                front = correct(token);				
                 return front;
             } else {
-                Token token = peek; peek = null; return token;
+                Token token = peek; peek = null;				
+				return token;
             }
         }
         throw new Exception("invalid token");
@@ -265,7 +266,7 @@ public class Lexer extends com.runbox.script.statement.Lexer {
             StringBuffer buffer = new StringBuffer();
             buffer.append(next());
             while (true) {
-                if (alphabet(lookup()) || number(lookup(), 10) || '_' == lookup()) {
+                if (alphabet(lookup()) || number(lookup(), 10) || '_' == lookup() || '$' == lookup()) {
                     buffer.append(next());
                 } else {
 					String string = buffer.toString();
@@ -277,7 +278,7 @@ public class Lexer extends com.runbox.script.statement.Lexer {
 						return new ConstOperand(string, ContextManager.instance().frame().thisObject());
 					} else if (Token.isInstanceof(string)) {
                         return new Operator(string);
-                    } else if (Token.routine(string)) {
+                    } else if (Token.routine(string) && '(' == lookup()) {
                         return new RoutineOperand(string);
                     } else {
                         return new Operand(string);

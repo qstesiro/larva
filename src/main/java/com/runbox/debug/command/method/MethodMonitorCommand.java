@@ -15,7 +15,7 @@ public class MethodMonitorCommand extends MethodCommand {
 	@Override
 	public RoutineNode routine(RoutineNode routine) throws Exception {
         RoutineNode prev = this.routine;
-        this.routine = routine; arguments();
+        this.routine = routine; setArguments();
         return prev;
     }
 
@@ -24,7 +24,7 @@ public class MethodMonitorCommand extends MethodCommand {
 		return routine; 
     }
 
-	private void arguments() {
+	private void setArguments() {
 		if (null != routine) {
 			List<String> list = routine.arguments(); list.clear();
 			list.add("@id");

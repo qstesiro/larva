@@ -45,7 +45,7 @@ public class MethodArgumentCommand extends MethodCommand {
 		System.out.printf("(");
 		if (0 < variables.size()) {
 			int i = 0; for (LocalVariable variable : variables) {
-				if (0 < i) System.out.printf("%s", ", ");
+				if (0 < i++) System.out.printf("%s", ", ");
 				System.out.printf("%s %s", variable.typeName(), variable.name());				
 			}
 		}
@@ -56,7 +56,7 @@ public class MethodArgumentCommand extends MethodCommand {
 		System.out.printf("(");
 		if (0 < arguments.size()) {
 			int i = 0; for (String type : arguments) {
-				if (0 < i) System.out.printf("%s", ", ");
+				if (0 < i++) System.out.printf("%s", ", ");
 				System.out.printf("%s", type);
 			}
 		}

@@ -1,7 +1,7 @@
 package com.runbox.debug.command.method;
 
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.Method;
@@ -21,22 +21,34 @@ public class MethodBytecodeCommand extends MethodCommand {
 
 	@Override 
     public boolean execute() throws Exception {
-        String clazz = clazz(); String method = method();    
-        List<ReferenceType> types = MachineManager.instance().allClasses();		        
-        for (ReferenceType type : types) {
+        String clazz = clazz(); String method = method();
+		List<String> arguments = arguments();
+        for (ReferenceType type : MachineManager.instance().allClasses()) {
             if (type.name().equals(clazz)) {
-                List<Method> methods = type.allMethods();
-                for (Method item : methods) {
-                    if (item.name().equals(method)) {
-                        print(item);
+                for (Method element : type.allMethods()) {
+                    if (element.name().equals(method)) {
+						if (null == arguments ||
+							arguments(arguments, element)) print(element);						
 					}
                 }
             }
         }
         return super.execute();
     }
+	
+	private boolean arguments(List<String> arguments, Method method) {
+		if (null != arguments) {			
+			if (arguments.size() == method.argumentTypeNames().size()) {
+				int i = 0; for (String argument : method.argumentTypeNames()) {						
+					if (!arguments.get(i).equals(argument)) return false;				
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 
-	public void print(Method method) throws Exception {
+	private void print(Method method) throws Exception {
 		System.out.printf("%s", access(method));		
 		if (method.isNative()) System.out.printf(" native");
 		else if (method.isAbstract()) System.out.printf(" abstract");
@@ -54,14 +66,14 @@ public class MethodBytecodeCommand extends MethodCommand {
 		System.out.println("}");
 	}
 
-	public String access(Method method) {
+	private String access(Method method) {
 		if (method.isPublic()) return "public";
 		else if (method.isProtected()) return "protected";
 		else if (method.isPrivate()) return "private";
 		return "n/a";
 	}
 
-	public String arguments(Method method) {
+	private String arguments(Method method) {
 		String arguments = "(";
 		int i = 0; for (String argument : method.argumentTypeNames()) {
 			if (0 < i++) arguments += ", ";
