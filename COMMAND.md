@@ -1,4 +1,22 @@
 # 命令列表（持续完善中...）
+## 配置选项
+### config.query 查询配置选项
+说明：查询配置选项<br>
+参数：无<br>
+样例：config.query;<br>
+### config.set expr
+说明：修改配置选项<br>
+参数：expr 表达式，由以下几部分组成：<br>
+&emsp;&emsp;&emsp;name, value<br>
+&emsp;&emsp;&emsp;name 选项名称，一个子表达式，运算结果必须是字符串，可用的选项如下：<br>
+&emsp;&emsp;&emsp;ip 被调试目标的地址，启动调试时通过-address参数传递 （只读属性）<br>
+&emsp;&emsp;&emsp;port 被调试目标的端口，启动调试时通过-address参数传递（只读属性）<br>
+&emsp;&emsp;&emsp;mode 被调试目标的地址，启动调试时通过-mode参数传递，当前只支持debug，默认为debug（只读属性）<br>
+&emsp;&emsp;&emsp;script 启动后先运行的脚本，启动调试时通过-script参数传递（只读属性）<br>
+&emsp;&emsp;&emsp;当前所有的属性都是只读的，后续会增加可修改的属性；<br>
+&emsp;&emsp;&emsp;value 选项值，一个子表达式，运算结果必须是字符串<br>
+样例：config.set "ip", "192.168.10.123";<br>
+&emsp;&emsp;&emsp;@var = "port"; @port = 1025; config.set @var, @port;<br>
 ## 别名定义
 ### alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;<br>
@@ -21,6 +39,8 @@
 ## 导入类
 ### import.class expr
 说明：为了避免在过长的类路径, 可以将某个类以全路径的方式导入后续直接使用类名称就可以了, 这个命令可以导入内<br>
+&emsp;&emsp;&emsp;调试器内部已经预导入了一些常用的类型（主要是java.lang包中的一些类），可以通过import.query<br>
+&emsp;&emsp;&emsp;查看具体导入了哪些类，这样就后续就可以直接使用这类名称了；<br>
 &emsp;&emsp;&emsp;部类具体参见样例<br>
 参数：expr 表达式，运算结果必须为字符串，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;package.className<br>
@@ -187,10 +207,11 @@
 ### method.argument expr
 说明：查询方法的参数列表，如果参数名称可获取则显示名称与类型，反之则只显示类型<br>
 参数：expr 标准larva表达式，由以下几部分结成:<br>
-&emsp;&emsp;&emsp;[package.]class.method<br>
+&emsp;&emsp;&emsp;[package.]class.method[(arg1, arg2, ...)]<br>
 &emsp;&emsp;&emsp;package 包名称，可选参数，如果之前已经运行了import.class命令则可以只省略包路径，只给出类名称；<br>
 &emsp;&emsp;&emsp;class 类名称 <br>
 &emsp;&emsp;&emsp;method 方法名称<br>
+&emsp;&emsp;&emsp;(arg1, arg2, ...) 参数列表，可选部分，如果给出就进行精确匹配，如果不给出参数列表则会显示所有的重载版本；<br>
 样例：method.bytecode "com.runbox.demo.Demo.method";<br>
 &emsp;&emsp;&emsp;method.bytecode "java.lang.String.<init>";<br>
 &emsp;&emsp;&emsp;method.bytecode "java.lang.String.indexOf";<br>
@@ -369,16 +390,9 @@
 样例：print.field this;<br>
 &emsp;&emsp;&emsp;print.field this.map, 0x3;<br>
 &emsp;&emsp;&emsp;@var = this.list; @flags = 0x1 | 0x3; print.field @var, @flags;<br>
-### print.local expr
+### print.local
 说明：列出当前栈帧中所有局部变量<br>
-参数：expr 标准表达式，由以下几部分组成：<br>
-&emsp;&emsp;&emsp;[flags]<br>
-&emsp;&emsp;&emsp;flags 是一个标志组合<br>
-&emsp;&emsp;&emsp;0x00 不显示任何类型（默认值）；<br>
-&emsp;&emsp;&emsp;0x01 显示变量类型；<br>
-&emsp;&emsp;&emsp;0x02 显示变量值类型；<br>
-&emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，<br>
-&emsp;&emsp;&emsp;但是某值可能为Object任何子类；<br>
+参数：无<br>
 样例：print.local;<br>
 &emsp;&emsp;&emsp;print.local 0x2;<br>
 &emsp;&emsp;&emsp;@flags = 0x1 | 0x3; print.field @flags;<br>
@@ -513,10 +527,15 @@
 说明：<br>
 参数：<br>
 样例：<br>
-### thread.stack 
-说明：显示当前线程的所有栈帧<br>
-参数：无<br>
-样例：thread.stack<br>
+### thread.stack expr
+说明：显示当前线程的所有栈帧（当前线程必须处于挂起状态，如果未挂起可以使用thread.suspend）<br>
+参数：expr 一个表达式，运算结果必须是整形，代表标志位：<br>
+&emsp;&emsp;&emsp;0x1 显示包路径<br>
+&emsp;&emsp;&emsp;0x2 显示行号<br>
+&emsp;&emsp;&emsp;默认 0x1 | 0x2<br>
+样例：thread.stack;<br>
+&emsp;&emsp;&emsp;thread.stack 0x1; <br>
+&emsp;&emsp;&emsp;@var = 0x2; thread.stack @var;<br>
 ### thread.hold
 说明：<br>
 参数：<br>
