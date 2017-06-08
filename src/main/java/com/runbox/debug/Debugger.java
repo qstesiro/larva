@@ -18,7 +18,6 @@ import com.sun.jdi.event.ThreadDeathEvent;
 import com.sun.jdi.event.ClassPrepareEvent;
 import com.sun.jdi.request.EventRequest;
 
-import com.sun.tools.javac.util.Pair;
 import com.sun.tools.jdi.SocketAttachingConnector;
 
 import sun.misc.Signal;
@@ -86,11 +85,10 @@ public class Debugger implements SignalHandler {
         List<AttachingConnector> list = Bootstrap.virtualMachineManager().attachingConnectors();
         for (AttachingConnector connector : list) {
             if (connector instanceof SocketAttachingConnector) {
-                try {
-                    Pair<String, String> pair = ConfigManager.instance().getAddress();
+                try {                    
                     Map<String, com.sun.jdi.connect.Connector.Argument> map = connector.defaultArguments();
-                    map.get("hostname").setValue(pair.fst);
-                    map.get("port").setValue(pair.snd);
+                    map.get("hostname").setValue(ConfigManager.instance().get(ConfigManager.IP));
+                    map.get("port").setValue(ConfigManager.instance().get(ConfigManager.PORT));
                     MachineManager.set(connector.attach(map));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -102,7 +100,7 @@ public class Debugger implements SignalHandler {
                 break;
             }
         }
-    }    
+    }
 
     private void loop() throws Exception {
         EventQueue queue = MachineManager.instance().eventQueue();

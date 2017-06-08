@@ -1,0 +1,122 @@
+def $count(@arg) {		
+	def $count1() {
+		print.value "I`m $count1";
+	}
+	if (0 == @arg) {
+	   $count1();
+	   return map;
+	}
+	print.value @arg;
+	return $count(@arg - 1);
+}
+
+def $list() {
+    @list = this.list;
+    print.value @list;
+}
+
+def $map() {
+    @map = this.map;
+	print.value this.list;
+    print.value @map;	
+}
+
+// print.value $count(10);
+
+source.append "D:\\program\\maven\\debug-demo\\src\\main\\java";
+
+import.class "java.lang.String";
+import.class "java.lang.Integer";
+import.class "java.util.Map";
+import.class "java.util.LinkedList";
+import.class "com.runbox.demo.Demo";
+import.class "com.runbox.demo.Demo$Inner";
+import.class "java.lang.NullPointerException";
+
+// class.monitor.prepare "java.lang.String";
+// class.monitor.unload "java.lang.String";
+// class.monitor.prepare "Demo";
+// class.monitor.prepare "com.runbox.demo.Demo*";
+// class.monitor.prepare "*.Demo";
+// class.monitor.prepare "Inner";
+// class.monitor.unload "Demo";
+// class.monitor.disable;
+
+// alias.define "breakpoint.query", "b.q";
+// alias.define "breakpoint.enable", "b.e";
+// alias.define "breakpoint.disable", "b.d";
+// alias.define "alias.query", "a.q";
+
+breakpoint.method "Demo.method()" {
+				  print.value @id;
+				  print.value @thread;
+				  print.value "string equals -> " + $equals("abc", "abc");
+				  template.list list;
+				  template.map map;
+				  /*execute.run;*/
+			};			
+breakpoint.method "Demo.method(String, Integer, Map)" {print.value "this is a method breakpoint";}; 
+// breakpoint.access "Demo.count";
+// breakpoint.modify "Demo.name";
+// breakpoint.method "Demo$Inner.method()";
+// breakpoint.modify "Demo$Inner.count";
+// breakpoint.modify "Demo$Inner.name";
+// breakpoint.method "LinkedList.add(java.lang.Object)";
+// breakpoint.method "String.<init>()";
+// breakpoint.method "String.<init>(java.lang.String)";
+// breakpoint.method "String.<init>(byte[])";
+
+// tomcat
+// import.class "java.lang.String";
+// import.class "org.springframework.ui.ModelMap";
+// import.class "com.baidu.xbu.polaris.web.controller.ClusterInfoController";
+// import.class "com.baidu.xbu.polaris.web.controller.FeatureFilesController";
+// import.class "com.baidu.xbu.polaris.web.controller.FeatureItemController";
+// import.class "com.baidu.xbu.polaris.web.controller.FeaturesController";
+
+// breakpoint.method "ClusterInfoController.printSystemStatue(org.springframework.ui.ModelMap)";
+// breakpoint.method "FeatureFilesController.printHello(org.springframework.ui.ModelMap)";
+// breakpoint.method "FeatureItemController.response(java.lang.String, org.springframework.ui.ModelMap)";
+// breakpoint.method "FeaturesController.printHello(org.springframework.ui.ModelMap)";
+
+// exception.monitor "NullPointerException", true, true;
+
+def $map() {
+	return map;
+}
+
+def $array1() {
+	return array1;
+}
+
+def $array2() {
+	return array2;
+}
+
+def $array3() {
+	return array3;
+}
+
+print.value "current time -> " + $time();
+// print.value "enter sleep ...";
+// $sleep(2 * 1000);
+// print.value "leave sleep ...";
+print.value "string equals -> " + $equals("abc", "abc");
+print.value "find substring -> " + $find("hello, debug", "debug");
+print.value "string length -> " + $length("hello debug");
+
+execute.run;
+
+/*
+import.class "java.lang.String";
+import.class "android.os.Bundle";
+import.class "com.example.huangmengmeng01.myapplication.MainActivity";
+
+// breakpoint.access "MainActivity.count";
+// breakpoint.modify "MainActivity.count";
+// breakpoint.method "MainActivity.onCreate(Bundle)";
+// breakpoint.line "MainActivity:15";
+// breakpoint.line "MainActivity:22";
+
+execute.run;
+*/

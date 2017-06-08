@@ -11,8 +11,8 @@ import com.runbox.script.Engine;
 import com.runbox.script.statement.Script;
 import com.runbox.script.statement.node.BlockNode;
 import com.runbox.debug.script.expression.token.operand.*;
-import com.runbox.debug.script.expression.token.operator.Operator;
 import com.runbox.debug.script.expression.token.Token;
+import com.runbox.debug.script.expression.token.operator.Operator;
 
 public class Executer {
 

@@ -7,7 +7,28 @@ import com.runbox.debug.script.expression.token.Token;
 
 public class Operator extends Token {
 
-	public final static int LEVEL_I = 0x12;
+    public Operator(String name) throws Exception {
+        super(name);
+        if (null != name) {
+            if (operators.containsKey(name)) {
+                this.level = operators.get(name);
+            } else {
+                throw new Exception("invalid operator");
+            }
+        }
+    }
+
+    private int level = 0;
+
+    public void level(int level) {
+        this.level = level;
+    }
+
+    public int level() {
+        return level;
+    }
+
+    public final static int LEVEL_I = 0x12;
     public final static int LEVEL_H = 0x11;
 	public final static int LEVEL_G = 0x10;
     public final static int LEVEL_F = 0xf;
@@ -54,25 +75,4 @@ public class Operator extends Token {
         put(")", LEVEL_1); put("]", LEVEL_1); put(",", LEVEL_1);
         put("#", LEVEL_0);
     }};
-
-    public Operator(String name) throws Exception {
-        super(name);
-        if (null != name) {
-            if (operators.containsKey(name)) {
-                this.level = operators.get(name);
-            } else {
-                throw new Exception("invalid operator");
-            }
-        }
-    }
-
-    private int level = 0;
-
-    public void level(int level) {
-        this.level = level;
-    }
-
-    public int level() {
-        return level;
-    }
 }

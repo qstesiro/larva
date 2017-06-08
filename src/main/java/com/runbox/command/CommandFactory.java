@@ -8,6 +8,7 @@ import java.util.Map;
 import com.runbox.manager.AliasManager;
 import com.runbox.command.alias.*;
 import com.runbox.command.imports.*;
+import com.runbox.command.config.*;
 
 public class CommandFactory {        
 
@@ -25,6 +26,10 @@ public class CommandFactory {
 			return new ImportDeleteCommand(command.command());
 		} else if (command.key().equals(IMPORT_QUERY)) {
 			return new ImportQueryCommand(command.command());
+		} else if (command.key().equals(CONFIG_QUERY)) {
+			return new ConfigQueryCommand(command.command());
+		} else if (command.key().equals(CONFIG_SET)) {
+			return new ConfigSetCommand(command.command());
 		} else if (com.runbox.debug.command.CommandFactory.command(command.command())) {
 			return com.runbox.debug.command.CommandFactory.build(command.command());
 		}		
@@ -62,7 +67,11 @@ public class CommandFactory {
 	public final static String IMPORT_CLASS = "import.class";
 	public final static String IMPORT_DELETE = "import.delete";
 	public final static String IMPORT_QUERY = "import.query";  
-    
+
+	public final static int COMMAND_CONFIG = COMMAND_IMPORT + 1;
+	public final static String CONFIG_QUERY = "config.query";
+	public final static String CONFIG_SET = "config.set";
+	
     private static List<String> commands = new LinkedList<String>() {{     
         // alias command 
         add(ALIAS_DEFINE);
@@ -72,5 +81,8 @@ public class CommandFactory {
 		add(IMPORT_CLASS);
 		add(IMPORT_DELETE);
 		add(IMPORT_QUERY);
+		// config command
+		add(CONFIG_QUERY);
+		add(CONFIG_SET);
     }};
 }

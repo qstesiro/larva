@@ -4,7 +4,7 @@ import java.util.Stack;
 
 import com.runbox.script.expression.token.Token;
 
-public interface Expression {    
+public interface Expression {
 
     Values<? extends Token> execute() throws Exception;
     

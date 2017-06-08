@@ -12,8 +12,8 @@ import com.sun.jdi.DoubleValue;
 import com.sun.jdi.BooleanValue;
 import com.sun.jdi.StringReference;
 
-import com.runbox.debug.script.expression.token.Lexer;
 import com.runbox.debug.script.expression.token.Token;
+import com.runbox.debug.script.expression.token.Lexer;
 import com.runbox.debug.script.expression.token.operand.Operand;
 import com.runbox.debug.script.expression.token.operator.Operator;
 

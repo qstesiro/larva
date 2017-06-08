@@ -1,0 +1,46 @@
+// /home/qstesiro/jdk1.8.0_112/bin/java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=localhost:1025 -cp
+// /home/qstesiro/spark-2.1.0-bin-hadoop2.7/conf/:/home/qstesiro/spark-2.1.0-bin-hadoop2.7/jars/* -Xmx1g org.apache.spark.deploy.SparkSubmit --jars
+// /home/qstesiro/spark-2.1.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.1.0.jar,/home/qstesiro/spark-2.1.0-bin-hadoop2.7/examples/jars/scopt_2.11-3.3.0.jar --class
+// org.apache.spark.examples.SparkPi spark-internal 1000
+
+// /home/qstesiro/jdk1.8.0_112/bin/java -agentlib:jdwp=transport=dt_socket,address=192.168.59.131:1025,server=y,suspend=y -cp
+// /home/qstesiro/spark-2.1.0-bin-hadoop2.7/conf/:/home/qstesiro/spark-2.1.0-bin-hadoop2.7/jars/* -Xmx1g org.apache.spark.deploy.SparkSubmit --master local --class
+// org.apache.spark.examples.SparkPi ./examples/jars/spark-examples_2.11-2.1.0.jar 100
+
+alias.define "alias.define", "a.d";
+
+a.d "alias.query", "a.q";
+a.d "source.append", "s.a";
+a.d "import.class", "i.c";
+a.d "class.monitor.prepare", "c.m.p";
+a.d "breakpoint.method", "b.m";
+a.d "breakpoint.line", "b.l";
+a.d "breakpoint.query", "b.q";
+a.d "breakpoint.enable", "b.e";
+a.d "breakpoint.disable", "b.d";
+a.d "execute.run", "e.r";
+a.d "execute.next.over", "e.n.o";
+a.d "execute.next.into", "e.n.i";
+a.d "execute.step.over", "e.s.o";
+a.d "execute.step.into", "e.s.i";
+a.d "thread.query", "t.q";
+a.d "thread.stack", "t.s";
+a.d "config.query", "c.q";
+
+s.a "D:\\program\\examples\\src\\main\\scala";
+
+i.c "java.lang.String";
+i.c "org.apache.spark.examples.SparkPi";
+i.c "org.apache.spark.examples.SparkPi$";
+
+c.q;
+
+// c.m.p "org.apache.spark.examples.SparkPi";
+
+// b.m "SparkPi.main(String[])";
+// b.m "SparkPi$.main(String[])";
+b.l "SparkPi$:32";
+
+// e.r;
+
+

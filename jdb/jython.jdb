@@ -1,0 +1,16 @@
+// method.argument "org.python.util.jython.run"
+// method.local "org.python.util.jython.run"
+
+alias.define "execute.run", "e.r";
+alias.define "breakpoint.method", "b.m";
+alias.define "class.monitor.prepare", "c.m.p";
+
+c.m.p "org.python.util.jython";
+c.m.p "org.python.proxies.__main__$ObjectNode$1";
+
+b.m "org.python.proxies.__main__$ObjectNode$1.getChildAt(int)";
+b.m "org.python.proxies.__main__$ObjectNode$1.getParent()";
+b.m "org.python.proxies.__main__$ObjectNode$1.getIndex(javax.swing.tree.TreeNode)";
+b.m "org.python.proxies.__main__$ObjectNode$1.getChildCount()";
+
+e.r;

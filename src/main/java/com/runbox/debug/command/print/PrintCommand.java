@@ -21,19 +21,19 @@ public class PrintCommand extends Command {
         super(command);
     }
 
-    protected List<Operand> fields() throws Exception {
-        List<Operand> operands = new LinkedList<Operand>();
-        StackFrame frame = ContextManager.instance().frame();
-        if (null != frame) {
-            if (null != frame.thisObject()) {
-                List<Field> fields = frame.thisObject().referenceType().allFields();
-                for (Field field : fields) {
-                    operands.add(new FieldOperand(frame.thisObject(), field.name()));
-                }
-            }
-        }
-        return operands;
-    }
+    // protected List<Operand> fields() throws Exception {
+    //     List<Operand> operands = new LinkedList<Operand>();
+    //     StackFrame frame = ContextManager.instance().frame();
+    //     if (null != frame) {
+    //         if (null != frame.thisObject()) {
+    //             List<Field> fields = frame.thisObject().referenceType().allFields();
+    //             for (Field field : fields) {
+    //                 operands.add(new FieldOperand(frame.thisObject(), field.name()));
+    //             }
+    //         }
+    //     }
+    //     return operands;
+    // }
 
     protected List<Operand> fields(Operand operand) throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
