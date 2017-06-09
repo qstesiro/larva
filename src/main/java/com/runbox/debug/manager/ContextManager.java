@@ -25,6 +25,14 @@ public class ContextManager extends Manager {
         return instance;
     }    	
 
+	@Override
+	public void clean() throws Exception {
+		event = null;
+		request = null;
+		thread = null;
+		frame = null;
+	}
+	
 	private Event event = null;
 
 	public void event(Event event) {		
@@ -32,15 +40,7 @@ public class ContextManager extends Manager {
 		request = request(event);
 		thread = current = thread(event);
 		frame = frame(current);					
-	}
-
-	@Override
-	public void clean() throws Exception {
-		this.event = null;
-		request = null;
-		thread = null;
-		frame = null;
-	}
+	}	
 	
 	public Event event() {
 		return event;

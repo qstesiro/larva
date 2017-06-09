@@ -100,7 +100,7 @@ public class MachineManager extends Manager {
 	}
 
 	public void exit(int code) {
-		if (null != machine) {
+		if (null != machine) {			
 			machine.exit(code);
 		}
 	}

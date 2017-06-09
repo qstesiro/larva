@@ -2,6 +2,7 @@ package com.runbox.debug.command.quit;
 
 import com.runbox.debug.Debugger;
 import com.runbox.debug.command.Command;
+import com.runbox.debug.manager.MachineManager;
 
 public class QuitCommand extends Command {
 
@@ -11,7 +12,7 @@ public class QuitCommand extends Command {
 
     @Override
     public boolean execute() throws Exception {
-        Debugger.instance().flag(Debugger.QUIT);
+        Debugger.instance().flag(Debugger.QUIT);		
         return !super.execute();
     }
 }

@@ -124,10 +124,10 @@ public class Debugger implements SignalHandler {
     }
     
     private void handle(EventIterator iterator) throws Exception {                
-        com.sun.jdi.event.Event event = iterator.nextEvent();
+        com.sun.jdi.event.Event event = iterator.nextEvent();		
 		if (null != event.request()) {
 			MachineManager.instance().count(event.request(), true);
-		}
+		}		
 		ContextManager.instance().event(event); handle(event);
 		if (null != event.request()) {
 			MachineManager.instance().count(event.request(), false);
@@ -143,8 +143,8 @@ public class Debugger implements SignalHandler {
 			if (ExecuteManager.instance().handle(event)) return;
 		} else if (ExceptionManager.instance().need(event)) {
 			if (ExceptionManager.instance().handle(event)) return;
-        }
-        if (execute(event)) execute();
+        }		
+		if (execute(event)) execute();
 	}	
 		   
     private boolean execute(String file) {
@@ -196,6 +196,7 @@ public class Debugger implements SignalHandler {
                 BreakpointManager.instance().clean();
                 ExecuteManager.instance().clean();
                 ExceptionManager.instance().clean();
+				ContextManager.instance().clean();
             }
 			ClassManager.instance().monitor(flag);
             ExecuteManager.instance().monitor(flag);
@@ -205,6 +206,9 @@ public class Debugger implements SignalHandler {
 
     private void exit() {
         if (QUIT == flag) {
+			// app will not exit in davlik when VM is stopped by certain event
+			// but app will exit successfuly when pressing Ctrl+C and execute quit
+			// I wonder why, perhaps there is a bug in davlik
             MachineManager.instance().exit(0);			
         } else if (DETACH == flag) {
 			MachineManager.instance().dispose();

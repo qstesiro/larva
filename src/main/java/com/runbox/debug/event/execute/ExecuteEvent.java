@@ -22,10 +22,10 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 
 	@Override
 	public boolean handle() throws Exception {		
-		if (0 != count()) {
-			// print();
+		if (0 != count()) {			
 			return !super.handle();
 		}
+		// print();
         return super.handle();
 	}
 
