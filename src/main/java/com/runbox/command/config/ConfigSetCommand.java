@@ -22,9 +22,7 @@ public class ConfigSetCommand extends ConfigCommand {
 	
 	@Override
 	public boolean execute() throws Exception {
-		if (null != name && null != value) {
-			System.out.println(name);
-			System.out.println(value);
+		if (null != name && null != value) {			
 			ConfigManager.instance().set(name, value);
 		}
 		return super.execute();
