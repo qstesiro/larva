@@ -12,8 +12,9 @@ public class ConfigSetCommand extends ConfigCommand {
 		super(command);
 		if (null != argument()) {
 			values = ExpressionFactory.build(argument()).execute();
-			name = name(); value = value();
-			return;
+			if (MAX == values.size()) {
+				name = name(); return;
+			}
 		}
 		throw new Exception("invalid argument");
 	}
@@ -22,8 +23,14 @@ public class ConfigSetCommand extends ConfigCommand {
 	
 	@Override
 	public boolean execute() throws Exception {
-		if (null != name && null != value) {			
-			ConfigManager.instance().set(name, value);
+		if (null != name && MAX == values.size()) {
+			if (name.equals(ConfigManager.LINE) && values.isInteger(VALUE)) {
+				ConfigManager.instance().line(values.getInteger(VALUE));
+			} else if (name.equals(ConfigManager.BYTECODE) && values.isBoolean(VALUE)) {
+				ConfigManager.instance().bytecode(values.getBoolean(VALUE));
+			} else {
+				throw new Exception("invalid config name");
+			}
 		}
 		return super.execute();
 	}
@@ -38,21 +45,9 @@ public class ConfigSetCommand extends ConfigCommand {
 		if (null != values && NAME < values.size()) {
 			String name = values.getString(NAME);
 			if (!name.equals("")) {
-				return name;
+				return name.trim().toLowerCase();
 			}
 		}
 		return null;
-	}
-
-	private String value = null;
-
-	private String value() throws Exception {
-		if (null != values && VALUE < values.size()) {
-			String value = values.getString(VALUE);
-			if (!value.equals("")) {
-				return value;
-			}
-		}
-		return null;
-	}
+	}	
 }

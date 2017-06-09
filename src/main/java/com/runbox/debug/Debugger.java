@@ -49,7 +49,7 @@ public class Debugger implements SignalHandler {
         // launch();
         attach();
         monitor(true);
-        if (execute(ConfigManager.instance().get(ConfigManager.SCRIPT))) {
+        if (execute(ConfigManager.instance().script())) {
 			execute();
 		} loop();
         monitor(false);
@@ -87,8 +87,8 @@ public class Debugger implements SignalHandler {
             if (connector instanceof SocketAttachingConnector) {
                 try {                    
                     Map<String, com.sun.jdi.connect.Connector.Argument> map = connector.defaultArguments();
-                    map.get("hostname").setValue(ConfigManager.instance().get(ConfigManager.IP));
-                    map.get("port").setValue(ConfigManager.instance().get(ConfigManager.PORT));
+                    map.get("hostname").setValue(ConfigManager.instance().ip());
+                    map.get("port").setValue(String.valueOf(ConfigManager.instance().port()));
                     MachineManager.set(connector.attach(map));
                 } catch (IOException e) {
                     e.printStackTrace();

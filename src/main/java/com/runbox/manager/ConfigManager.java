@@ -16,89 +16,24 @@ public class ConfigManager extends Manager {
 
     public static ConfigManager instance() {
         return instance;
-    }
-
-    public void clean() throws Exception {
-        map.clear();
-    }
+    }    
 
     private final static int MIN = 2;
-    private final static int MAX = 8;
-
-	private Map<String, String> map = new HashMap<String, String>() {{
-			put(IP, "localhost");
-			put(PORT, null);	
-			put(SCRIPT, null);
-			put(MODE, MODE_DEBUG);
-			put(LINE, "1");
-			put(BYTECODE, "1");
-		}};
+    private final static int MAX = 8;	
 	
     public void set(String[] arguments) throws Exception {
         if (MIN <= arguments.length && MAX >= arguments.length) {
             String address = find(arguments, PREFIX + ADDRESS);
             if (null != address) {
-                map.put(IP, address.split(":")[0]);
-				map.put(PORT, address.split(":")[1]);
-                map.put(SCRIPT, find(arguments, PREFIX + SCRIPT));
-				String mode = find(arguments, PREFIX + MODE);
-				if (null != mode && verifyMode(mode)) map.put(MODE, mode);
+                ip(address.split(":")[0]);
+				port(Integer.valueOf(address.split(":")[1]));
+                script(find(arguments, PREFIX + SCRIPT));
+				mode(find(arguments, PREFIX + MODE));				
                 this.arguments = arguments;
                 return;
             }			
         }
         throw new Exception("invalid arguments -> " + arguments);
-    }
-
-	public void set(String name, String value) throws Exception {
-		if (null != name) {
-			name = name.trim().toLowerCase();
-			if (map.containsKey(name)) {
-				if (!readOnly(name)) {
-					map.put(name, value); return;
-				}
-				throw new Exception("read only config name");
-			}
-		}
-		throw new Exception("invalid config name");
-	}
-
-	private List<String> names = new LinkedList<String>() {{
-			add(IP);
-			add(PORT);
-			add(SCRIPT);
-			add(MODE);
-		}};
-	
-	private boolean readOnly(String name) {
-		if (null != name) {
-			for (String element : names) {
-				if (element.equals(name)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public Map<String, String> get() {
-		return map;
-	}
-
-    public String get(String name) {
-		if (null != name) {
-			name.trim().toLowerCase();
-			if (map.containsKey(name)) {
-				return map.get(name);
-			}
-		}
-		return null;
-    }
-
-	private String arguments[] = null;
-	
-    public String[] arguments() {
-        return arguments;
     }
 
 	public final static String PREFIX = "-";
@@ -117,10 +52,66 @@ public class ConfigManager extends Manager {
             }
         }
         return null;
-    }
+    }	
 
-	public final static String MODE_DEBUG = "debug";
-	public final static String MODE_TRACE = "trace";
+	private String ip = "localhost";
+
+	private void ip(String value) {
+		if (null != value) {
+			ip = value;
+		}
+	}	
+	
+	public String ip() {
+		return ip;
+	}
+
+	private int port = 0;
+
+	private static final int MIN_PORT = 0;
+	private static final int MAX_PORT = 65535;
+	
+	private void port(int value) throws Exception {
+		if (MIN_PORT <= value && MAX_PORT >= value) {
+			port = value; return;
+		}
+		throw new Exception("invalid port range");
+	}
+
+	public int port() {
+		return port;
+	}
+
+	private String script = null;
+	
+	private void script(String value) throws Exception {
+		if (null != value) {
+			script = value; return;
+		}
+		throw new Exception("invalid value");
+	}
+
+	public String script() {
+		return script;
+	}
+
+	private String mode = "debug";
+	
+	private void mode(String value) throws Exception {
+		if (null != value) {
+			if (verifyMode(value)) {
+				mode = value;
+			}
+			throw new Exception("invalid value");
+		}		
+	}
+
+	public String mode() {
+		return mode;
+	}
+
+	private final static String MODE_DEBUG = "debug";
+	private final static String MODE_TRACE = "trace";
 	
 	private boolean verifyMode(String mode) throws Exception {
 		if (null != mode) {
@@ -131,4 +122,30 @@ public class ConfigManager extends Manager {
 		}
 		return false;
 	}
+	
+	private int line = 1;
+
+	public void line(int value) {
+		line = value;
+	}
+
+	public int line() {
+		return line;
+	}
+
+	private boolean bytecode = true;
+
+	public void bytecode(boolean value) {
+		bytecode = value;
+	}
+
+	public boolean bytecode() {
+		return bytecode;
+	}   
+
+	private String arguments[] = null;
+	
+    public String[] arguments() {
+        return arguments;
+    }	
 }

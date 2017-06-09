@@ -31,6 +31,11 @@ import.class "com.runbox.demo.Demo";
 import.class "com.runbox.demo.Demo$Inner";
 import.class "java.lang.NullPointerException";
 
+config.set "line", 9;
+config.set "bytecode", false;
+config.query;
+config.query "line";
+
 // class.monitor.prepare "java.lang.String";
 // class.monitor.unload "java.lang.String";
 // class.monitor.prepare "Demo";
@@ -95,12 +100,12 @@ def $array3() {
 	return array3;
 }
 
-print.value "current time -> " + $time();
+// print.value "current time -> " + $time();
 // print.value "enter sleep ...";
 // $sleep(2 * 1000);
 // print.value "leave sleep ...";
-print.value "string equals -> " + $equals("abc", "abc");
-print.value "find substring -> " + $find("hello, debug", "debug");
-print.value "string length -> " + $length("hello debug");
+// print.value "string equals -> " + $equals("abc", "abc");
+// print.value "find substring -> " + $find("hello, debug", "debug");
+// print.value "string length -> " + $length("hello debug");
 
 execute.run;

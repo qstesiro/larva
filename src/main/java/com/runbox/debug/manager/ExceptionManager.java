@@ -95,7 +95,7 @@ public class ExceptionManager extends Manager {
     }
 
 	public void print(Location location) throws Exception {
-		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.LINE));
+		int count = ConfigManager.instance().line();
 		if (0 < count) {
 			Map<Integer, String> lines = SourceManager.instance().lines(location);
 			if (null != lines && 0 < location.lineNumber()) {

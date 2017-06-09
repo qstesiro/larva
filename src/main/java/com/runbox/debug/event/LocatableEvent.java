@@ -33,7 +33,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
     }		
 	
 	private void printLine(Location location) throws Exception {
-		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.LINE));
+		int count = ConfigManager.instance().line();
 		if (0 < count) {
 			Map<Integer, String> lines = SourceManager.instance().lines(location);
 			if (null != lines && 0 < location.lineNumber()) {
@@ -52,8 +52,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 	}
 
 	private void printCode(Location location) throws Exception {
-		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.BYTECODE));
-		if (0 < count) {
+		if (ConfigManager.instance().bytecode()) {
 			// MachineManager.instance().get().canGetBytecodes()
 			// this is a bug in davlik
 			// method.bytecode() will throw UnsupportedOperationException
