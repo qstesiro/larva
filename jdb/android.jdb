@@ -1,0 +1,37 @@
+alias.define "alias.define", "a.d";
+
+a.d "alias.query", "a.q";
+a.d "source.append", "s.a";
+a.d "source.query", "s.q";
+a.d "import.class", "i.c";
+a.d "class.monitor.prepare", "c.m.p";
+a.d "breakpoint.method", "b.m";
+a.d "breakpoint.line", "b.l";
+a.d "breakpoint.access", "b.a";
+a.d "breakpoint.modify", "b.y";
+a.d "breakpoint.query", "b.q";
+a.d "breakpoint.enable", "b.e";
+a.d "breakpoint.disable", "b.d";
+a.d "execute.run", "e.r";
+a.d "execute.next.over", "e.n.o";
+a.d "execute.next.into", "e.n.i";
+a.d "execute.step.over", "e.s.o";
+a.d "execute.step.into", "e.s.i";
+a.d "thread.query", "t.q";
+a.d "thread.switch", "t.w";
+a.d "thread.stack", "t.s";
+a.d "config.query", "c.q";
+
+s.a "D:\\AndroidStudioProjects\\Encryption\\app\\src\\main\\java";
+
+i.c "android.os.Bundle";
+i.c "android.view.View";
+i.c "android.view.Menu";
+i.c "android.view.MenuItem";
+i.c "android.content.Intent";
+i.c "com.example.huangmengmeng01.encryption.MainActivity";
+
+b.m "MainActivity.onCreate(Bundle)";
+b.m "MainActivity.onClick(View)";
+
+e.r;
