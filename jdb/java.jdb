@@ -25,8 +25,6 @@ def $map() {
 
 source.append "D:\\program\\maven\\debug-demo\\src\\main\\java";
 
-import.class "java.lang.String";
-import.class "java.lang.Integer";
 import.class "java.util.Map";
 import.class "java.util.LinkedList";
 import.class "com.runbox.demo.Demo";
@@ -106,17 +104,3 @@ print.value "find substring -> " + $find("hello, debug", "debug");
 print.value "string length -> " + $length("hello debug");
 
 execute.run;
-
-/*
-import.class "java.lang.String";
-import.class "android.os.Bundle";
-import.class "com.example.huangmengmeng01.myapplication.MainActivity";
-
-// breakpoint.access "MainActivity.count";
-// breakpoint.modify "MainActivity.count";
-// breakpoint.method "MainActivity.onCreate(Bundle)";
-// breakpoint.line "MainActivity:15";
-// breakpoint.line "MainActivity:22";
-
-execute.run;
-*/
