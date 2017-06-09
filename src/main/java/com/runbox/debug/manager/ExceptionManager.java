@@ -16,6 +16,8 @@ import com.sun.jdi.event.ExceptionEvent;
 import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.ExceptionRequest;
 
+import com.runbox.manager.ConfigManager;
+
 import com.runbox.script.statement.node.RoutineNode;
 import com.runbox.debug.script.expression.token.operand.FieldOperand;
 import com.runbox.debug.script.expression.token.operand.Operand;
@@ -86,12 +88,30 @@ public class ExceptionManager extends Manager {
 
     @Override
     public boolean handle(Event event) throws Exception {
-		ExceptionEvent exception = (ExceptionEvent)event;        		
-        String line = SourceManager.instance().line(exception.catchLocation());
-		if (null != line) System.out.println(line);
+		ExceptionEvent exception = (ExceptionEvent)event;
+		print(exception.location());
         print(exception.exception());
         return super.handle(event);
     }
+
+	public void print(Location location) throws Exception {
+		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.LINE));
+		if (0 < count) {
+			Map<Integer, String> lines = SourceManager.instance().lines(location);
+			if (null != lines && 0 < location.lineNumber()) {
+				int start = location.lineNumber() - count / 2;
+				for (int i = 0; i < count; ++i) {
+					int number = start + i;
+					if (null != lines.get(number)) {
+						if (location.lineNumber() == number)
+							System.out.printf("> %-4d%s\n", number, lines.get(number));
+						else
+							System.out.printf("  %-4d%s\n", number, lines.get(number));
+					}
+				}
+			}
+		}
+	}
 
     private void print(ObjectReference object) throws Exception {
         ClassType type = (ClassType)object.referenceType();

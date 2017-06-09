@@ -7,6 +7,8 @@ import com.sun.jdi.Location;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.Method;
 
+import com.runbox.manager.ConfigManager;
+
 import com.runbox.debug.event.Event;
 import com.runbox.debug.manager.ContextManager;
 import com.runbox.debug.manager.SourceManager;
@@ -28,20 +30,41 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 		printCode(event().location());
 		printLine(event().location());		
         return super.handle();
-    }	
+    }		
 	
 	private void printLine(Location location) throws Exception {
-		String line = SourceManager.instance().line(location);
-		if (null != line) {
-			System.out.printf("%-4d%s\n", location.lineNumber(), line);
+		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.LINE));
+		if (0 < count) {
+			Map<Integer, String> lines = SourceManager.instance().lines(location);
+			if (null != lines && 0 < location.lineNumber()) {
+				int start = location.lineNumber() - count / 2;
+				for (int i = 0; i < count; ++i) {
+					int number = start + i;
+					if (null != lines.get(number)) {
+						if (location.lineNumber() == number)
+							System.out.printf("> %-4d%s\n", number, lines.get(number));
+						else
+							System.out.printf("  %-4d%s\n", number, lines.get(number));
+					}
+				}
+			}
 		}
 	}
 
 	private void printCode(Location location) throws Exception {
-		Method method = location.method();
-		BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
-													 ReaderFactory.create(location.declaringType().constantPool(),
-																		  location.declaringType().constantPoolCount()));
-		reader.printer().print(reader.get(location.codeIndex()));
-	}	
+		int count = Integer.valueOf(ConfigManager.instance().get(ConfigManager.BYTECODE));
+		if (0 < count) {
+			// MachineManager.instance().get().canGetBytecodes()
+			// this is a bug in davlik
+			// method.bytecode() will throw UnsupportedOperationException
+			// though canGetBytecode() return true		
+			Method method = location.method();
+			try {
+				BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
+															 ReaderFactory.create(location.declaringType().constantPool(),
+																				  location.declaringType().constantPoolCount()));
+				reader.printer().print(reader.get(location.codeIndex()));
+			} catch (UnsupportedOperationException e) {}
+		}
+	}
 }
