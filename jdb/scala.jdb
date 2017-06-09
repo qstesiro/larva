@@ -29,7 +29,6 @@ a.d "config.query", "c.q";
 
 s.a "D:\\program\\examples\\src\\main\\scala";
 
-i.c "java.lang.String";
 i.c "org.apache.spark.examples.SparkPi";
 i.c "org.apache.spark.examples.SparkPi$";
 
