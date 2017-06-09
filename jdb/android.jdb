@@ -73,8 +73,11 @@ a.d "thread.query", "t.q";
 a.d "thread.switch", "t.w";
 a.d "thread.stack", "t.s";
 a.d "config.query", "c.q";
+a.d "config.set", "c.s";
 
 s.a "D:\\AndroidStudioProjects\\Encryption\\app\\src\\main\\java";
+
+c.s "line", "8";
 
 i.c "android.os.Bundle";
 i.c "android.view.View";
