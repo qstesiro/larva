@@ -1,3 +1,55 @@
+// 以下是一小批处理段脚本可以方便调试android程序，将以下被注释的代码复制到批处理文件中，修改package环境变量为自己的包，
+// 如果需要也可以修改component，action，category环境变量，在larva-1.0.1.jar所在目录下运行就可以了，当然需要提前配制
+// 好android的开发环境，PATH路径等，并在被调试的目标机器上开启动调试选项，如果有问题可以联系：runbox@163.com
+/*
+set package=com.example.qstesiro.encryption
+rem force stop 
+adb shell am force-stop %package%
+rem uninstall
+rem adb shell pm uninstall %package%
+rem copy package
+rem adb push .\app\build\outputs\apk\app-debug-unaligned.apk /data/local/tmp/%package%
+rem install
+rem adb shell pm install -r "/data/local/tmp/%package%"
+rem start apk
+set component=%package%/.MainActivity
+set action=android.intent.action.MAIN
+set category=android.intent.category.LAUNCHER
+adb shell am start -D -n %component% -a %action% -c %category%
+
+adb shell ps ^| grep %package% > pid.txt
+for /f "delims=" %%t in (pid.txt) do set str=%%t
+del pid.txt
+:next_char
+set "char=%str:~0,1%"
+if "%char%" equ " " goto next_space
+set "str=%str:~1%"
+goto next_char
+
+:next_space
+set "char=%str:~0,1%"
+if "%char%" neq " " goto port
+set "str=%str:~1%"
+goto next_space
+
+:port
+set temp=%str%
+set pid=
+:next_port
+set "char=%temp:~0,1%"
+if "%char%" equ " " goto connect
+set pid=%pid%%char%
+set "temp=%temp:~1%"
+goto next_port
+
+:connect
+set port=1025
+adb forward tcp:%port% jdwp:%pid%
+rem connect debugger
+java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\program\maven\Larva\jdb\android.jdb
+*/
+// --------------------------------------------------------------------------------－－－－－－ 分割线
+
 alias.define "alias.define", "a.d";
 
 a.d "alias.query", "a.q";
