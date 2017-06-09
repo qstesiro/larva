@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 import com.sun.jdi.ThreadReference;
+import com.sun.jdi.ThreadGroupReference;
 import com.sun.jdi.IncompatibleThreadStateException;
 
 import com.runbox.debug.command.Command;
@@ -89,28 +90,25 @@ public class ThreadQueryCommand extends ThreadCommand {
 		return objects.toArray();
 	}
 	
-	private Object[] arguments(int index, ThreadReference thread) {
+	private Object[] arguments(int index, ThreadReference thread) throws Exception {
 		List<Object> objects = new LinkedList<Object>();
 		objects.add(String.valueOf(index));
 		objects.add(String.valueOf(thread.uniqueID()));
 		if (FLAG_GROUP == (FLAG_GROUP & flags)) {
-			objects.add(String.valueOf(thread.threadGroup().uniqueID()));
+			ThreadGroupReference group = thread.threadGroup();
+			objects.add(null != group ? String.valueOf(group.uniqueID()) : "n/a");
 		}
-		if (FLAG_FRAME == (FLAG_FRAME & flags)) {
-			try {
-				objects.add(String.valueOf(thread.frameCount()));
-			} catch (IncompatibleThreadStateException e) {
-				objects.add(String.valueOf("n/a"));
-			}
+		if (FLAG_FRAME == (FLAG_FRAME & flags)) {			
+			objects.add(thread.isSuspended() ? String.valueOf(thread.frameCount()) : "n/a");
 		}
 		if (FLAG_SUSPEND == (FLAG_SUSPEND & flags)) {
-			objects.add(String.valueOf(thread.suspendCount()));
+			objects.add(thread.isSuspended() ? String.valueOf(thread.suspendCount()) : String.valueOf(0));
 		}
 		if (FLAG_STATUS == (FLAG_STATUS & flags)) {
 			objects.add(status(thread.status()));
 		}
 		if (FLAG_BREAKPOINT == (FLAG_BREAKPOINT & flags)) {
-			objects.add(String.valueOf(thread.isAtBreakpoint()));
+			objects.add(thread.isSuspended() ? String.valueOf(thread.isAtBreakpoint()) : "false");
 		}
 		if (FLAG_NAME == (FLAG_NAME & flags)) {
 			objects.add(thread.name());
