@@ -9,10 +9,12 @@
 参数：expr 表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;name, value<br>
 &emsp;&emsp;&emsp;name 选项名称，一个子表达式，运算结果必须是字符串，可用的选项如下：<br>
-&emsp;&emsp;&emsp;ip 被调试目标的地址，启动调试时通过-address参数传递 （只读属性）<br>
-&emsp;&emsp;&emsp;port 被调试目标的端口，启动调试时通过-address参数传递（只读属性）<br>
-&emsp;&emsp;&emsp;mode 被调试目标的地址，启动调试时通过-mode参数传递，当前只支持debug，默认为debug（只读属性）<br>
-&emsp;&emsp;&emsp;script 启动后先运行的脚本，启动调试时通过-script参数传递（只读属性）<br>
+&emsp;&emsp;&emsp;ip 被调试目标的地址，启动调试时通过-address参数传递 （只读）<br>
+&emsp;&emsp;&emsp;port 被调试目标的端口，启动调试时通过-address参数传递（只读）<br>
+&emsp;&emsp;&emsp;mode 被调试目标的地址，启动调试时通过-mode参数传递，当前只支持debug，默认为debug（只读）<br>
+&emsp;&emsp;&emsp;script 启动后先运行的脚本，启动调试时通过-script参数传递（只读）<br>
+&emsp;&emsp;&emsp;line 当断点事件、单步执行事件、异常事件被触发，如果有源码可以显示的情况，显示多少行源码（读写）<br>
+&emsp;&emsp;&emsp;bytecode 当断点事件、单步执行事件、异常事件被触发，如果有字节码可以显示的情况，是否显示（读写）<br>
 &emsp;&emsp;&emsp;当前所有的属性都是只读的，后续会增加可修改的属性；<br>
 &emsp;&emsp;&emsp;value 选项值，一个子表达式，运算结果必须是字符串<br>
 样例：config.set "ip", "192.168.10.123";<br>
