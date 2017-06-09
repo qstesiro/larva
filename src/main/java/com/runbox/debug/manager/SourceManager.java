@@ -74,22 +74,37 @@ public class SourceManager extends Manager {
 		paths.clear(); files.clear();
 	}
 
-	public String line(Location location) throws Exception {
+	public Map<Integer, String> lines(Location location) throws Exception {
 		if (null != location) {
 			try {
 				String path = location.sourcePath();				
-				Map<Integer, String> lines = find(path); if (null != lines) {
-					return lines.get(location.lineNumber());
-				}
-				lines = load(path); if (null != lines) {
-					return lines.get(location.lineNumber());
-				}
+				Map<Integer, String> lines = find(path);
+				if (null != lines) return lines;				
+				lines = load(path);
+				if (null != lines) return lines;				
 			} catch (AbsentInformationException e) {
 				return null;
 			}
 		}
 		return null;
 	}
+	
+	// public String line(Location location) throws Exception {
+	// 	if (null != location) {
+	// 		try {
+	// 			String path = location.sourcePath();				
+	// 			Map<Integer, String> lines = find(path); if (null != lines) {
+	// 				return lines.get(location.lineNumber());
+	// 			}
+	// 			lines = load(path); if (null != lines) {
+	// 				return lines.get(location.lineNumber());
+	// 			}
+	// 		} catch (AbsentInformationException e) {
+	// 			return null;
+	// 		}
+	// 	}
+	// 	return null;
+	// }
 
 	public Map<Integer, String> find(String path) {
 		for (String key : files.keySet()) {
