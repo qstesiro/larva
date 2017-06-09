@@ -27,13 +27,21 @@ public class ContextManager extends Manager {
 
 	private Event event = null;
 
-	public void event(Event event) {
+	public void event(Event event) {		
 		this.event = event;		
 		request = request(event);
 		thread = current = thread(event);
-		frame = frame(current);
+		frame = frame(current);					
 	}
 
+	@Override
+	public void clean() throws Exception {
+		this.event = null;
+		request = null;
+		thread = null;
+		frame = null;
+	}
+	
 	public Event event() {
 		return event;
 	}
@@ -78,14 +86,20 @@ public class ContextManager extends Manager {
 	}
 	
 	private ThreadReference thread(Event event) {
-		if (null != event) {
+		if (null != event) {			
 			if (event instanceof LocatableEvent) {
 				return ((LocatableEvent)event).thread();
 			} else if (event instanceof VMStartEvent) {
 				return ((VMStartEvent)event).thread();
-			} else if (event instanceof ThreadStartEvent) {
+			} else if (event instanceof ThreadStartEvent) {								
 				return ((ThreadStartEvent)event).thread();
 			} else if (event instanceof ThreadDeathEvent) {
+				if (MachineManager.instance().name().toLowerCase().equals("dalvik")) {
+					// we must return null
+					// because it will throw (com.sun.jdi.InternalException: Unexpected JDWP Error: 15)
+					// when you call ThreadReference.frameCount()
+					return null;
+				}
 				return ((ThreadDeathEvent)event).thread();
 			} else if (event instanceof ClassPrepareEvent) { // ClassUnloadEvent to my surprise
 				return ((ClassPrepareEvent)event).thread();
