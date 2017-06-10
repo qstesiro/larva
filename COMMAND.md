@@ -1,24 +1,27 @@
 # 命令列表（持续完善中...）
 ## 配置选项
-### config.query 查询配置选项
+### config.query expr
 说明：查询配置选项<br>
-参数：无<br>
+参数：expr 表达式由以几部分组成
+&emsp;&emsp;&emsp;[name[, name]] name 为配制选项名称，每一个都是一个表达式，运算结果必须为字符串类型，<br>
+&emsp;&emsp;&emsp;如果不给出则显示全部配制选项<br>
 样例：config.query;<br>
+&emsp;&emsp;&emsp;config.query "ip", "port", "line", "bytecode";
 ### config.set expr
 说明：修改配置选项<br>
 参数：expr 表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;name, value<br>
 &emsp;&emsp;&emsp;name 选项名称，一个子表达式，运算结果必须是字符串，可用的选项如下：<br>
-&emsp;&emsp;&emsp;ip 被调试目标的地址，启动调试时通过-address参数传递 （只读）<br>
-&emsp;&emsp;&emsp;port 被调试目标的端口，启动调试时通过-address参数传递（只读）<br>
+&emsp;&emsp;&emsp;ip 被调试目标的地址，启动调试时通过-address参数传递 （只读），value子表达式，运算结果必须为字符串<br>
+&emsp;&emsp;&emsp;port 被调试目标的端口，启动调试时通过-address参数传递（只读），value子表达式，运算结果必须为整形<br>
 &emsp;&emsp;&emsp;mode 被调试目标的地址，启动调试时通过-mode参数传递，当前只支持debug，默认为debug（只读）<br>
 &emsp;&emsp;&emsp;script 启动后先运行的脚本，启动调试时通过-script参数传递（只读）<br>
 &emsp;&emsp;&emsp;line 当断点事件、单步执行事件、异常事件被触发，如果有源码可以显示的情况，显示多少行源码（读写）<br>
-&emsp;&emsp;&emsp;bytecode 当断点事件、单步执行事件、异常事件被触发，如果有字节码可以显示的情况，显示多少行源码（读写）<br>
-&emsp;&emsp;&emsp;当前所有的属性都是只读的，后续会增加可修改的属性；<br>
-&emsp;&emsp;&emsp;value 选项值，一个子表达式，运算结果必须是字符串<br>
-样例：config.set "line", "9";<br>
-&emsp;&emsp;&emsp;@var = "bytecode"; @count = 20; config.set @var, @count;<br>
+&emsp;&emsp;&emsp;value 子表达式，运算结果必须是整形数；<br>
+&emsp;&emsp;&emsp;bytecode 当断点事件、单步执行事件、异常事件被触发，如果有字节码可以显示的情况，是否显示字节码（读写）<br>
+&emsp;&emsp;&emsp;value 子表达式，运算结果必须是布尔类型；<br>
+样例：config.set "line", 9;<br>
+&emsp;&emsp;&emsp;@var = "bytecode"; config.set @var, true;<br>
 ## 别名定义
 ### alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;<br>

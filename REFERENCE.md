@@ -14,7 +14,8 @@ Larva是一个基于命令行调试器，使用Java语言编写，它可以调�
 ## 特别提示：
 如果你喜欢在命令行下工作或是调试程序，但是主要的工作平台是windows系统的话，我个人强烈建议你使用以下软件<br>
 Online documentation: https://conemu.github.io/en/TableOfContents.html<br>
-这个软件我用了有几年了，现在的功能已经比较稳定了，平时我在工作与学习时都使用它，强烈推荐：）<br>
+这个软件我用了有几年了，现在的功能已经比较稳定了，平时我在工作与学习时都使用它，强烈推荐<br>
+如果再结合EMACS的终端模式，不管是windows平台还是linux简直是，我只能说我保证不哭（^V^）<br>
 
 ## 编译程序
 第一步：编译Larva需要提前配制好Java环境（需要1.8版本）与Maven环境（3.0版本）<br>
@@ -34,9 +35,9 @@ mvn clean compile package <br>
 &emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -agentlib:jdwp=transport=dt_socket,address=192.168.1.123:1025,server=y,suspend=y <br>
 &emsp;&emsp;&emsp;-classpath ".\target\classes\" com.runbox.demo.Demo<br>
 启动调试器 <br>
-%JAVA_HOME%\java.exe -jar larva.jar -address 地址:端口 -script "Larva脚本文件"<br>
-样例：%JAVA_HOME%\java.exe -jar larva.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva.jar -address 192.168.1.123:1025<br>
+%JAVA_HOME%\java.exe -jar larva-<version>.jar -address 地址:端口 -script "Larva脚本文件"<br>
+样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025<br>
 参数：-address 被调试目标的监听地址包括IP与Port（必须）<br>
 &emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
 
