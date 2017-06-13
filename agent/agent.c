@@ -9,13 +9,14 @@
 #include "event_manager.h"
 
 struct agent* agent = NULL;
+jvmti_env* jvmti_ptr = NULL;
 
 jvmti_error agent_enable_all_caps(struct agent* agent);
 
 JNIEXPORT
 jint JNICALL Agent_OnLoad(JavaVM *vm, char *options, void *reserved) {
 	printf("[INFO] OnLoad\n");
-	agent = agent_create(vm);
+	agent = agent_create(vm);	
 	if (NULL != agent) {
 		agent_enable_all_caps(agent);
 		event_manager_enable_monitor(agent->event, JVMTI_EVENT_CLASS_PREPARE, NULL);
@@ -47,6 +48,7 @@ struct agent* agent_create(JavaVM* vm) {
 		}
 		memset(agent, 0, sizeof(struct agent));
 		agent->vm = vm;
+		jvmti_ptr = agent_get_jvmti(agent);	
 		agent->network = network_manager_create(agent);
 		if (NULL == agent->network) {
 			break;
@@ -99,8 +101,9 @@ struct event_manager* agent_get_event_manager(struct agent* agent) {
 
 jvmti_env* agent_get_jvmti(struct agent* agent) {
 	if (NULL != agent && NULL != agent->vm) {
-		jvmti_env* jvmti = agent_get_jvmti(agent);
-		if (JNI_OK == (*agent->vm)->GetEnv(agent->vm, (void**)&jvmti, JVMTI_VERSION_1_2)) {
+		jvmti_env* jvmti = NULL;
+		int rev = (*agent->vm)->GetEnv(agent->vm, (void**)&jvmti, JVMTI_VERSION_1_2);
+		if (JNI_OK == rev) {
 			return jvmti;
 		}
 	}
@@ -112,9 +115,11 @@ jvmti_error agent_enable_all_caps(struct agent* agent) {
 		jvmtiError rev = JVMTI_ERROR_NONE;
 		jvmtiCapabilities caps = {0};
 		jvmti_env* jvmti = agent_get_jvmti(agent);
-		rev = (*jvmti)->GetPotentialCapabilities(jvmti, &caps);
+		// rev = (*jvmti)->GetPotentialCapabilities(jvmti, &caps);
+		rev = (*jvmti_ptr)->GetPotentialCapabilities(jvmti_ptr, &caps);
 		if (JVMTI_ERROR_NONE == rev) {
-			return (*jvmti)->AddCapabilities(jvmti, &caps);
+			printf("bbbbbbbbbbbbbbbbbbb");
+			return (*jvmti_ptr)->AddCapabilities(jvmti_ptr, &caps);
 		}
 		return rev;
 	}

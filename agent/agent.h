@@ -13,6 +13,8 @@ typedef jvmtiEventMode jvmti_event_mode;
 typedef jvmtiEvent jvmti_event;
 typedef jvmtiEventCallbacks jvmti_event_handlers;
 
+extern jvmti_env* jvmti_ptr;
+
 struct network_manager;
 struct command_manager;
 struct event_manager;
