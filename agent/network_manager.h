@@ -3,9 +3,7 @@
 
 #include "agent.h"
 
-struct network_manager {
-	struct agent* agent;
-};
+struct network_manager;
 
 struct network_manager* network_manager_create(struct agent* agent);
 void network_manager_destroy(struct network_manager* manager);

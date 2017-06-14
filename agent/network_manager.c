@@ -5,16 +5,28 @@
 #include "agent.h"
 #include "network_manager.h"
 
+struct network_manager {
+	struct agent* agent;
+};
+
 struct network_manager* network_manager_create(struct agent* agent) {
 	struct network_manager* manager = (struct network_manager*)malloc(sizeof(struct network_manager));
-	memset(manager, 0, sizeof(struct network_manager));
-	manager->agent = agent;
-	return manager;
+	if (NULL != manager) {
+		memset(manager, 0, sizeof(struct network_manager));
+		manager->agent = agent;
+		return manager;
+	}
+	if (NULL != manager) {
+		network_manager_destroy(manager);
+		manager = NULL;
+	}
+	return NULL;
 }
 
 void network_manager_destroy(struct network_manager* manager) {
 	if (NULL != manager) {
-		free(manager); manager = NULL;
+		free(manager);
+		manager = NULL;
 	}
 }
 
