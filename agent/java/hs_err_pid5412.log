@@ -1,0 +1,265 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0xb7713c4e, pid=5412, tid=3064228672
+#
+# JRE version:  (8.0_60-b27) (build )
+# Java VM: Java HotSpot(TM) Client VM (25.60-b23 mixed mode, sharing linux-x86 )
+# Problematic frame:
+# C  [libagent.so+0xc4e]  create_event_manager+0x36
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00000000
+[error occurred during error reporting (printing siginfo), id 0xb]
+
+Registers:
+EAX=0x00000000, EBX=0xb70eca74, ECX=0x0000000c, EDX=0x00000000
+ESP=0xb6a46060, EBP=0xb6a46088, ESI=0xb6801690, EDI=0xb6a460f8
+EIP=0xb7713c4e, EFLAGS=0x00010286, CR2=0x00000000
+
+Top of Stack: (sp=0xb6a46060)
+0xb6a46060:   b6a4607c 00000000 00000090 b759c888
+0xb6a46070:   00000311 01000000 b6a460c8 00000000
+0xb6a46080:   00000000 00000000 00000000 00000000
+0xb6a46090:   00000000 00000000 00000000 00000000
+0xb6a460a0:   00000000 00000000 00000000 00000000
+0xb6a460b0:   00000000 00000000 00000000 00000000
+0xb6a460c0:   00000000 00000000 00000000 00000000
+0xb6a460d0:   00000000 00000000 00000000 00000000 
+
+Instructions: (pc=0xb7713c4e)
+0xb7713c2e:   44 24 08 90 00 00 00 c7 44 24 04 00 00 00 00 8d
+0xb7713c3e:   45 f4 89 04 24 e8 48 ec f3 ff 8b 45 f4 8b 55 08
+0xb7713c4e:   89 10 8b 45 f4 c9 c3 55 89 e5 83 ec 18 83 7d 08
+0xb7713c5e:   00 74 12 8b 45 08 89 04 24 e8 74 91 e8 ff c7 45 
+
+Stack: [0xb69f6000,0xb6a47000],  sp=0xb6a46060,  free space=320k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libagent.so+0xc4e]  create_event_manager+0x36
+
+
+---------------  P R O C E S S  ---------------
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+
+Dynamic libraries:
+08048000-08049000 r-xp 00000000 08:01 819931     /home/qstesiro/jdk1.8.0_60/bin/java
+08049000-0804a000 rw-p 00000000 08:01 819931     /home/qstesiro/jdk1.8.0_60/bin/java
+08a6b000-08a8c000 rw-p 00000000 00:00 0          [heap]
+b6800000-b6821000 rw-p 00000000 00:00 0 
+b6821000-b6900000 ---p 00000000 00:00 0 
+b69c8000-b69ec000 r-xp 00000000 08:01 819830     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/libjava.so
+b69ec000-b69ed000 rw-p 00023000 08:01 819830     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/libjava.so
+b69ed000-b69f4000 r-xp 00000000 08:01 939255     /lib/i386-linux-gnu/librt-2.19.so
+b69f4000-b69f5000 r--p 00006000 08:01 939255     /lib/i386-linux-gnu/librt-2.19.so
+b69f5000-b69f6000 rw-p 00007000 08:01 939255     /lib/i386-linux-gnu/librt-2.19.so
+b69f6000-b69f7000 ---p 00000000 00:00 0 
+b69f7000-b6a47000 rw-p 00000000 00:00 0          [stack:5413]
+b6a47000-b6a8b000 r-xp 00000000 08:01 939241     /lib/i386-linux-gnu/libm-2.19.so
+b6a8b000-b6a8c000 r--p 00043000 08:01 939241     /lib/i386-linux-gnu/libm-2.19.so
+b6a8c000-b6a8d000 rw-p 00044000 08:01 939241     /lib/i386-linux-gnu/libm-2.19.so
+b6a8d000-b70dd000 r-xp 00000000 08:01 819879     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/client/libjvm.so
+b70dd000-b7103000 rw-p 00650000 08:01 819879     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/client/libjvm.so
+b7103000-b7526000 rw-p 00000000 00:00 0 
+b7526000-b76ce000 r-xp 00000000 08:01 939256     /lib/i386-linux-gnu/libc-2.19.so
+b76ce000-b76cf000 ---p 001a8000 08:01 939256     /lib/i386-linux-gnu/libc-2.19.so
+b76cf000-b76d1000 r--p 001a8000 08:01 939256     /lib/i386-linux-gnu/libc-2.19.so
+b76d1000-b76d2000 rw-p 001aa000 08:01 939256     /lib/i386-linux-gnu/libc-2.19.so
+b76d2000-b76d5000 rw-p 00000000 00:00 0 
+b76d5000-b76d8000 r-xp 00000000 08:01 939243     /lib/i386-linux-gnu/libdl-2.19.so
+b76d8000-b76d9000 r--p 00002000 08:01 939243     /lib/i386-linux-gnu/libdl-2.19.so
+b76d9000-b76da000 rw-p 00003000 08:01 939243     /lib/i386-linux-gnu/libdl-2.19.so
+b76da000-b76db000 rw-p 00000000 00:00 0 
+b76db000-b76ef000 r-xp 00000000 08:01 419458     /home/qstesiro/jdk1.8.0_60/lib/i386/jli/libjli.so
+b76ef000-b76f0000 rw-p 00014000 08:01 419458     /home/qstesiro/jdk1.8.0_60/lib/i386/jli/libjli.so
+b76f0000-b7708000 r-xp 00000000 08:01 939248     /lib/i386-linux-gnu/libpthread-2.19.so
+b7708000-b7709000 r--p 00018000 08:01 939248     /lib/i386-linux-gnu/libpthread-2.19.so
+b7709000-b770a000 rw-p 00019000 08:01 939248     /lib/i386-linux-gnu/libpthread-2.19.so
+b770a000-b770c000 rw-p 00000000 00:00 0 
+b7713000-b7715000 r-xp 00000000 08:01 689912     /home/qstesiro/program/jvmti-demo/libagent.so
+b7715000-b7716000 r--p 00001000 08:01 689912     /home/qstesiro/program/jvmti-demo/libagent.so
+b7716000-b7717000 rw-p 00002000 08:01 689912     /home/qstesiro/program/jvmti-demo/libagent.so
+b7717000-b7718000 rw-p 00000000 00:00 0 
+b7718000-b7719000 r--p 00000000 00:00 0 
+b7719000-b7724000 r-xp 00000000 08:01 819898     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/libverify.so
+b7724000-b7725000 rw-p 0000b000 08:01 819898     /home/qstesiro/jdk1.8.0_60/jre/lib/i386/libverify.so
+b7725000-b7727000 rw-p 00000000 00:00 0 
+b7727000-b7728000 r-xp 00000000 00:00 0          [vdso]
+b7728000-b772a000 r--p 00000000 00:00 0          [vvar]
+b772a000-b774a000 r-xp 00000000 08:01 939249     /lib/i386-linux-gnu/ld-2.19.so
+b774a000-b774b000 r--p 0001f000 08:01 939249     /lib/i386-linux-gnu/ld-2.19.so
+b774b000-b774c000 rw-p 00020000 08:01 939249     /lib/i386-linux-gnu/ld-2.19.so
+bfad4000-bfad5000 rwxp 00000000 00:00 0 
+bfb07000-bfb28000 rw-p 00000000 00:00 0          [stack]
+
+VM Arguments:
+jvm_args: -agentpath:/home/qstesiro/program/jvmti-demo/libagent.so 
+java_command: com.qstesiro.demo.Demo
+java_class_path (initial): .:/home/qstesiro/jdk1.8.0_60/lib:/home/qstesiro/jdk1.8.0_60/jre/lib:/home/qstesiro/jdk1.8.0_60/lib/dt.jar:/home/qstesiro/jdk1.8.0_60/lib/tools.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/home/qstesiro/jdk1.8.0_60
+JRE_HOME=/home/qstesiro/jdk1.8.0_60/jre
+CLASSPATH=.:/home/qstesiro/jdk1.8.0_60/lib:/home/qstesiro/jdk1.8.0_60/jre/lib:/home/qstesiro/jdk1.8.0_60/lib/dt.jar:/home/qstesiro/jdk1.8.0_60/lib/tools.jar
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/qstesiro/jdk1.8.0_60/bin:/home/qstesiro/jdk1.8.0_60/jre/bin:/home/qstesiro/apache-maven-3.3.9/bin:/home/qstesiro/apache-ant-1.9.7/bin:/home/qstesiro/apache-tomcat-8.5.5/bin:/home/qstesiro/hadoop-2.7.3/bin:/home/qstesiro/hadoop-2.7.3/sbin
+SHELL=/bin/bash
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x5b7b90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0x5b7b90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x498590], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x498590], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x498590], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x498590], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x499c10], sa_mask[0]=00000000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGINT: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGTERM: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGQUIT: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=14.04
+DISTRIB_CODENAME=trusty
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+
+uname:Linux 3.16.0-77-generic #99~14.04.1-Ubuntu SMP Tue Jun 28 19:18:41 UTC 2016 i686
+libc:glibc 2.19 NPTL 2.19 
+rlimit: STACK 8192k, CORE 0k, NPROC 11647, NOFILE 4096, AS infinity
+load average:0.08 0.03 0.05
+
+/proc/meminfo:
+MemTotal:        1510492 kB
+MemFree:          416812 kB
+MemAvailable:     968564 kB
+Buffers:          134920 kB
+Cached:           530076 kB
+SwapCached:            0 kB
+Active:           641792 kB
+Inactive:         347456 kB
+Active(anon):     325208 kB
+Inactive(anon):     9960 kB
+Active(file):     316584 kB
+Inactive(file):   337496 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+HighTotal:        626568 kB
+HighFree:         237180 kB
+LowTotal:         883924 kB
+LowFree:          179632 kB
+SwapTotal:       1046524 kB
+SwapFree:        1046524 kB
+Dirty:               108 kB
+Writeback:             0 kB
+AnonPages:        324264 kB
+Mapped:           169484 kB
+Shmem:             10904 kB
+Slab:              63144 kB
+SReclaimable:      48400 kB
+SUnreclaim:        14744 kB
+KernelStack:        2712 kB
+PageTables:         6456 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     1801768 kB
+Committed_AS:    2444172 kB
+VmallocTotal:     122880 kB
+VmallocUsed:       23808 kB
+VmallocChunk:      88452 kB
+AnonHugePages:    167936 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       28664 kB
+DirectMap2M:      880640 kB
+
+
+CPU:total 2 
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2320 CPU @ 3.00GHz
+stepping	: 7
+microcode	: 0x29
+cpu MHz		: 2993.203
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic popcnt xsave avx hypervisor lahf_lm ida arat epb xsaveopt pln pts dtherm
+bogomips	: 5986.40
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2320 CPU @ 3.00GHz
+stepping	: 7
+microcode	: 0x29
+cpu MHz		: 2993.203
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic popcnt xsave avx hypervisor lahf_lm ida arat epb xsaveopt pln pts dtherm
+bogomips	: 5986.40
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 1510492k(416812k free), swap 1046524k(1046524k free)
+
+vm_info: Java HotSpot(TM) Client VM (25.60-b23) for linux-x86 JRE (1.8.0_60-b27), built on Aug  4 2015 10:49:14 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Mon Jun 12 23:49:22 2017
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

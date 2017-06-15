@@ -9,6 +9,14 @@
 #include "command_manager.h"
 #include "event_manager.h"
 
+struct agent {
+	JavaVM* vm;
+	jvmti_env* jvmti;
+    struct network_manager* network;
+	struct command_manager* command;
+	struct event_manager* event;	
+};
+
 struct agent* agent = NULL;
 
 jvmti_error agent_enable_all_caps(struct agent* agent);
@@ -19,7 +27,7 @@ jint JNICALL Agent_OnLoad(JavaVM *vm, char *options, void *reserved) {
 	agent = agent_create(vm);	
 	if (NULL != agent) {
 		agent_enable_all_caps(agent);
-		event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_VM_INIT, NULL);		
+		network_manager_startup(agent->network);
 	}
 	return 0;
 }
@@ -31,19 +39,12 @@ jint JNICALL Agent_OnAttach(JavaVM* vm, char *options, void *reserved) {
 
 JNIEXPORT
 void JNICALL Agent_OnUnload(JavaVM *vm) {
-	if (NULL != agent) {
-		agent_destroy(agent); agent = NULL;
-	}
 	printf("OnUnload\n");
+	if (NULL != agent) {
+		network_manager_stop(agent->network);
+		agent_destroy(agent); agent = NULL;
+	}	
 }
-
-struct agent {
-	JavaVM* vm;
-	jvmti_env* jvmti;
-    struct network_manager* network;
-	struct command_manager* command;
-	struct event_manager* event;	
-};
 
 struct agent* agent_object() {
 	return agent;

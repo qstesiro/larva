@@ -1,0 +1,8 @@
+package com.qstesiro.demo;
+
+public class Demo {
+
+    public int main(int argc, String argv[]) {
+	System.out.println("hello java.");
+    }
+}

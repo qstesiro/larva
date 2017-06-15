@@ -82,13 +82,12 @@ public class ConfigManager extends Manager {
 		return port;
 	}
 
-	private String script = null;
+	private String script = "";
 	
-	private void script(String value) throws Exception {
+	private void script(String value) {
 		if (null != value) {
 			script = value; return;
-		}
-		throw new Exception("invalid value");
+		}		
 	}
 
 	public String script() {
@@ -98,9 +97,9 @@ public class ConfigManager extends Manager {
 	private String mode = "debug";
 	
 	private void mode(String value) throws Exception {
-		if (null != value) {
+		if (null != value) {			
 			if (verifyMode(value)) {
-				mode = value;
+				mode = value; return;
 			}
 			throw new Exception("invalid value");
 		}		
@@ -110,8 +109,8 @@ public class ConfigManager extends Manager {
 		return mode;
 	}
 
-	private final static String MODE_DEBUG = "debug";
-	private final static String MODE_TRACE = "trace";
+	public final static String MODE_DEBUG = "debug";
+	public final static String MODE_TRACE = "trace";
 	
 	private boolean verifyMode(String mode) throws Exception {
 		if (null != mode) {

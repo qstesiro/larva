@@ -2,9 +2,6 @@
 #include <malloc.h>
 #include <string.h>
 
-#include <pthread.h>
-#include <sys/types.h>
-
 #include <jvmti.h>
 
 #include "agent.h"
@@ -13,11 +10,10 @@
 struct event_manager {
 	struct agent* agent;
 	jvmti_event_handlers handlers;
-	int events[JVMTI_MAX_EVENT_TYPE_VAL - JVMTI_MIN_EVENT_TYPE_VAL];
-	pthread_t thread;
+	int events[JVMTI_MAX_EVENT_TYPE_VAL - JVMTI_MIN_EVENT_TYPE_VAL];	
 };
 
-void* event_manager_thread_routine(void* argv);
+/* void* event_manager_thread_routine(void* argv); */
 
 jvmti_error event_manager_set_handlers(struct event_manager* manager);
 
@@ -95,35 +91,29 @@ jvmti_error event_manager_set_handlers(struct event_manager* manager) {
 	return JVMTI_ERROR_ILLEGAL_ARGUMENT;
 }
 
-void* event_manager_thread_routine(void* argv) {
-	if (NULL != argv) {		
-		struct agent* agent = (struct agent*)argv;
-		if (NULL != agent_get_vm(agent)) {
-			int rev = JVMTI_ERROR_NONE;
-			jni_env* jni = NULL;
-			rev = (*agent_get_vm(agent))->AttachCurrentThread(agent_get_vm(agent), (void**)&jni, NULL);
-			if (JNI_OK == rev) {
-				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_CLASS_PREPARE, NULL);
-				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_METHOD_ENTRY, NULL);
-				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_METHOD_EXIT, NULL);
-				rev = (*agent_get_vm(agent))->DetachCurrentThread(agent_get_vm(agent));
-				if (JNI_OK != rev) printf("DetachCurrentThread #%d", rev);
-			}
-		}
-	}
-	return ((void*)0);
-}
+/* void* event_manager_thread_routine(void* argv) { */
+/* 	if (NULL != argv) {		 */
+/* 		struct agent* agent = (struct agent*)argv; */
+/* 		if (NULL != agent_get_vm(agent)) { */
+/* 			int rev = JVMTI_ERROR_NONE; */
+/* 			jni_env* jni = NULL; */
+/* 			rev = (*agent_get_vm(agent))->AttachCurrentThread(agent_get_vm(agent), (void**)&jni, NULL); */
+/* 			if (JNI_OK == rev) { */
+/* 				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_CLASS_PREPARE, NULL); */
+/* 				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_METHOD_ENTRY, NULL); */
+/* 				event_manager_enable_monitor(agent_get_event_manager(agent), JVMTI_EVENT_METHOD_EXIT, NULL); */
+/* 				rev = (*agent_get_vm(agent))->DetachCurrentThread(agent_get_vm(agent)); */
+/* 				if (JNI_OK != rev) printf("DetachCurrentThread #%d", rev); */
+/* 			} */
+/* 		} */
+/* 	} */
+/* 	return ((void*)0); */
+/* } */
 
-void JNICALL event_manager_vm_init_handler(jvmti_env *jvmti, jni_env* jni, jthread thread) {
-	int rev = JVMTI_ERROR_NONE;	
+void JNICALL event_manager_vm_init_handler(jvmti_env *jvmti, jni_env* jni, jthread thread) {	
 	struct event_manager* manager = agent_get_event_manager(agent_object());	
 	printf("agent->jvmti: %p\n", agent_get_jvmti(agent_object()));
-	printf("argv->jvmti: %p\n", jvmti);	
-	rev = pthread_create(&manager->thread, NULL, event_manager_thread_routine, (void*)agent_object());
-	if (0 == rev && manager->thread) {
-		pthread_join(manager->thread, NULL);
-		manager->thread = 0;
-	}	
+	printf("argv->jvmti: %p\n", jvmti);		
 }
 
 void JNICALL event_manager_prepare_class_handler(jvmti_env* jvmti, jni_env* jni, jthread thread, jclass clazz) {

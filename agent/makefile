@@ -1,5 +1,5 @@
 agent: agent.o network_manager.o command_manager.o event_manager.o
-	gcc -fPIC -shared -o libagent.so agent.o network_manager.o command_manager.o event_manager.o
+	gcc -fPIC -shared -o libagent.so agent.o network_manager.o command_manager.o event_manager.o -levent_core -levent_extra -levent
 
 agent.o: agent.c
 	cc -fPIC -c agent.c

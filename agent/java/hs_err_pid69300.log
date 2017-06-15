@@ -1,0 +1,533 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f13b779df2d, pid=69300, tid=0x00007f13b778b700
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_112-b15) (build 1.8.0_112-b15)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.112-b15 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libevent_core-2.1.so.6+0x11f2d]  bufferevent_setcb+0x1d
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00000000000001d0
+
+Registers:
+RAX=0x0000000000000000, RBX=0x0000000000000000, RCX=0x00007f13b79c41ad, RDX=0x00007f13b8004590
+RSP=0x00007f13b778ac70, RBP=0x00007f13b778ace0, RSI=0x00007f13b79c40de, RDI=0x0000000000000000
+R8 =0x00007f13b8004590, R9 =0x0000000000000001, R10=0x000000000000011b, R11=0x00007f13b779df10
+R12=0x00007f13b79c40de, R13=0x00007f13b8004590, R14=0x00007f13b79c41ad, R15=0x00007f13b8004590
+RIP=0x00007f13b779df2d, EFLAGS=0x0000000000010202, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f13b778ac70)
+0x00007f13b778ac70:   0000000000000001 00007f13b00008c0
+0x00007f13b778ac80:   00007f13b778ace0 00007f13b778ad10
+0x00007f13b778ac90:   0000000000000007 00007f13b778ad0c
+0x00007f13b778aca0:   00007f13b79c3ff0 00007f13b79c4065
+0x00007f13b778acb0:   00007f13b8004590 00007f13b778ad10
+0x00007f13b778acc0:   0000000800000010 00007f13b00008c0
+0x00007f13b778acd0:   00007f13b80047d0 0000000000000000
+0x00007f13b778ace0:   0000000000000008 00007f13b77b0c4f
+0x00007f13b778acf0:   0000000000000000 0000000000000000
+0x00007f13b778ad00:   0000000000000000 0000001000000000
+0x00007f13b778ad10:   0100007fd0a10002 0000000000000000
+0x00007f13b778ad20:   0000000000000000 0000000000000000
+0x00007f13b778ad30:   0000000000000000 0000000000000000
+0x00007f13b778ad40:   0000000000000000 0000000000000000
+0x00007f13b778ad50:   0000000000000000 0000000000000000
+0x00007f13b778ad60:   0000000000000000 0000000000000000
+0x00007f13b778ad70:   0000000000000000 0000000000000000
+0x00007f13b778ad80:   0000000000000000 0000000000000001
+0x00007f13b778ad90:   0000000000000000 29979f7ec34f1600
+0x00007f13b778ada0:   00007f13b80047d0 00007f13b80047d0
+0x00007f13b778adb0:   0000000000000001 00007f13b77b0b90
+0x00007f13b778adc0:   0000000000000000 00007f13b00008c0
+0x00007f13b778add0:   0000000000000000 00007f13b77a8959
+0x00007f13b778ade0:   00007f13b8004c20 00007f13b778ae20
+0x00007f13b778adf0:   00007f13b8004928 00007f13b778ae10
+0x00007f13b778ae00:   000000007fffffff 00000001b77b094a
+0x00007f13b778ae10:   00007f13b80047d0 0000000000000001
+0x00007f13b778ae20:   0000000000000000 00007f13b80047d0
+0x00007f13b778ae30:   00007f13b8004928 000000007fffffff
+0x00007f13b778ae40:   0000000000000000 000000007fffffff
+0x00007f13b778ae50:   0000000000000000 00007f13b80047d0
+0x00007f13b778ae60:   0000000000000000 00007f13b77a920f 
+
+Instructions: (pc=0x00007f13b779df2d)
+0x00007f13b779df0d:   00 00 00 41 57 4d 89 c7 41 56 49 89 ce 41 55 49
+0x00007f13b779df1d:   89 d5 41 54 49 89 f4 55 53 48 89 fb 48 83 ec 08
+0x00007f13b779df2d:   48 8b b7 d0 01 00 00 48 85 f6 74 4f 48 8b 2d 20
+0x00007f13b779df3d:   20 22 00 31 ff ff 55 18 48 8b b3 d0 01 00 00 4c 
+
+Register to memory mapping:
+
+RAX=0x0000000000000000 is an unknown value
+RBX=0x0000000000000000 is an unknown value
+RCX=0x00007f13b79c41ad: <offset 0x21ad> in /home/qstesiro/program/maven/larva/agent/libagent.so at 0x00007f13b79c2000
+RDX=0x00007f13b8004590 is an unknown value
+RSP=0x00007f13b778ac70 is an unknown value
+RBP=0x00007f13b778ace0 is an unknown value
+RSI=0x00007f13b79c40de: <offset 0x20de> in /home/qstesiro/program/maven/larva/agent/libagent.so at 0x00007f13b79c2000
+RDI=0x0000000000000000 is an unknown value
+R8 =0x00007f13b8004590 is an unknown value
+R9 =0x0000000000000001 is an unknown value
+R10=0x000000000000011b is an unknown value
+R11=0x00007f13b779df10: bufferevent_setcb+0 in /home/qstesiro/libevent/lib/libevent_core-2.1.so.6 at 0x00007f13b778c000
+R12=0x00007f13b79c40de: <offset 0x20de> in /home/qstesiro/program/maven/larva/agent/libagent.so at 0x00007f13b79c2000
+R13=0x00007f13b8004590 is an unknown value
+R14=0x00007f13b79c41ad: <offset 0x21ad> in /home/qstesiro/program/maven/larva/agent/libagent.so at 0x00007f13b79c2000
+R15=0x00007f13b8004590 is an unknown value
+
+
+Stack: [0x00007f13b6f3b000,0x00007f13b778c000],  sp=0x00007f13b778ac70,  free space=8511k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libevent_core-2.1.so.6+0x11f2d]  bufferevent_setcb+0x1d
+
+
+---------------  P R O C E S S  ---------------
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 18432K, used 634K [0x00000000eb800000, 0x00000000ecc80000, 0x0000000100000000)
+  eden space 15872K, 4% used [0x00000000eb800000,0x00000000eb89ebc0,0x00000000ec780000)
+  from space 2560K, 0% used [0x00000000eca00000,0x00000000eca00000,0x00000000ecc80000)
+  to   space 2560K, 0% used [0x00000000ec780000,0x00000000ec780000,0x00000000eca00000)
+ ParOldGen       total 42496K, used 0K [0x00000000c2800000, 0x00000000c5180000, 0x00000000eb800000)
+  object space 42496K, 0% used [0x00000000c2800000,0x00000000c2800000,0x00000000c5180000)
+ Metaspace       used 2514K, capacity 4486K, committed 4864K, reserved 1056768K
+  class space    used 267K, capacity 386K, committed 512K, reserved 1048576K
+
+Card table byte_map: [0x00007f13b5f33000,0x00007f13b6120000] byte_map_base: 0x00007f13b591f000
+
+Marking Bits: (ParMarkBitMap*) 0x00007f13bd5e6c80
+ Begin Bits: [0x00007f139a140000, 0x00007f139b0a0000)
+ End Bits:   [0x00007f139b0a0000, 0x00007f139c000000)
+
+Polling page: 0x00007f13be236000
+
+CodeCache: size=245760Kb used=1077Kb max_used=1077Kb free=244682Kb
+ bounds [0x00007f13a1000000, 0x00007f13a1270000, 0x00007f13b0000000]
+ total_blobs=235 nmethods=15 adapters=143
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 0.049 Thread 0x00007f13b80bf000   11       3       java.lang.String::length (6 bytes)
+Event: 0.049 Thread 0x00007f13b80bf000 nmethod 11 0x00007f13a110b4d0 code [0x00007f13a110b640, 0x00007f13a110b790]
+Event: 0.049 Thread 0x00007f13b80bf000   12       3       java.lang.AbstractStringBuilder::append (50 bytes)
+Event: 0.050 Thread 0x00007f13b80bf000 nmethod 12 0x00007f13a110a890 code [0x00007f13a110aa60, 0x00007f13a110b198]
+Event: 0.050 Thread 0x00007f13b80bf000   13       3       java.lang.String::getChars (62 bytes)
+Event: 0.050 Thread 0x00007f13b80bf000 nmethod 13 0x00007f13a1109f50 code [0x00007f13a110a120, 0x00007f13a110a5b8]
+Event: 0.053 Thread 0x00007f13b80bf000   14       3       java.lang.StringBuilder::append (8 bytes)
+Event: 0.053 Thread 0x00007f13b80bf000 nmethod 14 0x00007f13a110d2d0 code [0x00007f13a110d440, 0x00007f13a110d5e8]
+Event: 12.066 Thread 0x00007f13b80bf000   15       1       java.nio.Buffer::position (5 bytes)
+Event: 12.066 Thread 0x00007f13b80bf000 nmethod 15 0x00007f13a110d690 code [0x00007f13a110d7e0, 0x00007f13a110d8f0]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (2 events):
+Event: 0.022 Thread 0x00007f13b800b800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x00000000eb807c78) thrown at [/HUDSON3/workspace/8-2-build-linux-amd64/jdk8u112/7884/hotspot/src/sh
+Event: 0.022 Thread 0x00007f13b800b800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x00000000eb807f60) thrown at [/HUDSON3/workspace/8-2-build-linux-amd64/jdk8u112/7884/hotspot/src/share/vm/prims/jni.c
+
+Events (10 events):
+Event: 0.053 loading class sun/launcher/LauncherHelper$FXHelper
+Event: 0.053 loading class sun/launcher/LauncherHelper$FXHelper done
+Event: 0.053 loading class java/lang/Class$MethodArray
+Event: 0.053 loading class java/lang/Class$MethodArray done
+Event: 0.053 loading class java/lang/Void
+Event: 0.053 loading class java/lang/Void done
+Event: 0.053 loading class com/qstesiro/demo/Method
+Event: 0.053 loading class com/qstesiro/demo/Method done
+Event: 4.090 Executing VM operation: EnableBiasedLocking
+Event: 4.090 Executing VM operation: EnableBiasedLocking done
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:01 3158610                            /home/qstesiro/jdk1.8.0_112/bin/java
+00600000-00601000 rw-p 00000000 08:01 3158610                            /home/qstesiro/jdk1.8.0_112/bin/java
+01a97000-01ab8000 rw-p 00000000 00:00 0                                  [heap]
+c2800000-c5180000 rw-p 00000000 00:00 0 
+c5180000-eb800000 ---p 00000000 00:00 0 
+eb800000-ecc80000 rw-p 00000000 00:00 0 
+ecc80000-100000000 ---p 00000000 00:00 0 
+100000000-100080000 rw-p 00000000 00:00 0 
+100080000-140000000 ---p 00000000 00:00 0 
+7f1364000000-7f1364021000 rw-p 00000000 00:00 0 
+7f1364021000-7f1368000000 ---p 00000000 00:00 0 
+7f1368000000-7f1368021000 rw-p 00000000 00:00 0 
+7f1368021000-7f136c000000 ---p 00000000 00:00 0 
+7f136c000000-7f136c05d000 rw-p 00000000 00:00 0 
+7f136c05d000-7f1370000000 ---p 00000000 00:00 0 
+7f1370000000-7f1370021000 rw-p 00000000 00:00 0 
+7f1370021000-7f1374000000 ---p 00000000 00:00 0 
+7f1374000000-7f1374021000 rw-p 00000000 00:00 0 
+7f1374021000-7f1378000000 ---p 00000000 00:00 0 
+7f1378000000-7f1378021000 rw-p 00000000 00:00 0 
+7f1378021000-7f137c000000 ---p 00000000 00:00 0 
+7f137c000000-7f137c021000 rw-p 00000000 00:00 0 
+7f137c021000-7f1380000000 ---p 00000000 00:00 0 
+7f1380000000-7f1380021000 rw-p 00000000 00:00 0 
+7f1380021000-7f1384000000 ---p 00000000 00:00 0 
+7f1384000000-7f1384021000 rw-p 00000000 00:00 0 
+7f1384021000-7f1388000000 ---p 00000000 00:00 0 
+7f1388000000-7f1388021000 rw-p 00000000 00:00 0 
+7f1388021000-7f138c000000 ---p 00000000 00:00 0 
+7f138c000000-7f138c021000 rw-p 00000000 00:00 0 
+7f138c021000-7f1390000000 ---p 00000000 00:00 0 
+7f1394000000-7f1394021000 rw-p 00000000 00:00 0 
+7f1394021000-7f1398000000 ---p 00000000 00:00 0 
+7f1399c3b000-7f1399c3c000 ---p 00000000 00:00 0 
+7f1399c3c000-7f1399d3c000 rw-p 00000000 00:00 0 
+7f1399d3c000-7f1399d3f000 ---p 00000000 00:00 0 
+7f1399d3f000-7f1399e3d000 rw-p 00000000 00:00 0 
+7f1399e3d000-7f1399e40000 ---p 00000000 00:00 0 
+7f1399e40000-7f1399f3e000 rw-p 00000000 00:00 0 
+7f1399f3e000-7f1399f41000 ---p 00000000 00:00 0 
+7f1399f41000-7f139a03f000 rw-p 00000000 00:00 0 
+7f139a03f000-7f139a042000 ---p 00000000 00:00 0 
+7f139a042000-7f139c000000 rw-p 00000000 00:00 0 
+7f139c000000-7f139c021000 rw-p 00000000 00:00 0 
+7f139c021000-7f13a0000000 ---p 00000000 00:00 0 
+7f13a003b000-7f13a003e000 ---p 00000000 00:00 0 
+7f13a003e000-7f13a013c000 rw-p 00000000 00:00 0 
+7f13a013c000-7f13a0afb000 r--p 00000000 08:01 2760066                    /usr/lib/locale/locale-archive
+7f13a0afb000-7f13a0afe000 ---p 00000000 00:00 0 
+7f13a0afe000-7f13a0bfc000 rw-p 00000000 00:00 0 
+7f13a0bfc000-7f13a0bff000 ---p 00000000 00:00 0 
+7f13a0bff000-7f13a0cfd000 rw-p 00000000 00:00 0 
+7f13a0cfd000-7f13a0cfe000 ---p 00000000 00:00 0 
+7f13a0cfe000-7f13a1000000 rw-p 00000000 00:00 0 
+7f13a1000000-7f13a1270000 rwxp 00000000 00:00 0 
+7f13a1270000-7f13b0000000 ---p 00000000 00:00 0 
+7f13b0000000-7f13b0021000 rw-p 00000000 00:00 0 
+7f13b0021000-7f13b4000000 ---p 00000000 00:00 0 
+7f13b40ee000-7f13b4ead000 rw-p 00000000 00:00 0 
+7f13b4ead000-7f13b5086000 r--s 03d2c000 08:01 3295764                    /home/qstesiro/jdk1.8.0_112/jre/lib/rt.jar
+7f13b5086000-7f13b553c000 rw-p 00000000 00:00 0 
+7f13b553c000-7f13b58fc000 ---p 00000000 00:00 0 
+7f13b58fc000-7f13b5ae8000 rw-p 00000000 00:00 0 
+7f13b5ae8000-7f13b5ae9000 ---p 00000000 00:00 0 
+7f13b5ae9000-7f13b5be9000 rw-p 00000000 00:00 0 
+7f13b5be9000-7f13b5bea000 ---p 00000000 00:00 0 
+7f13b5bea000-7f13b5cea000 rw-p 00000000 00:00 0 
+7f13b5cea000-7f13b5ceb000 ---p 00000000 00:00 0 
+7f13b5ceb000-7f13b5e00000 rw-p 00000000 00:00 0 
+7f13b5e00000-7f13b5f33000 ---p 00000000 00:00 0 
+7f13b5f33000-7f13b5f48000 rw-p 00000000 00:00 0 
+7f13b5f48000-7f13b607b000 ---p 00000000 00:00 0 
+7f13b607b000-7f13b6086000 rw-p 00000000 00:00 0 
+7f13b6086000-7f13b611f000 ---p 00000000 00:00 0 
+7f13b611f000-7f13b612a000 rw-p 00000000 00:00 0 
+7f13b612a000-7f13b64e0000 ---p 00000000 00:00 0 
+7f13b64e0000-7f13b64fa000 r-xp 00000000 08:01 3805623                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libzip.so
+7f13b64fa000-7f13b66fa000 ---p 0001a000 08:01 3805623                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libzip.so
+7f13b66fa000-7f13b66fb000 rw-p 0001a000 08:01 3805623                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libzip.so
+7f13b66fb000-7f13b6706000 r-xp 00000000 08:01 266867                     /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7f13b6706000-7f13b6905000 ---p 0000b000 08:01 266867                     /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7f13b6905000-7f13b6906000 r--p 0000a000 08:01 266867                     /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7f13b6906000-7f13b6907000 rw-p 0000b000 08:01 266867                     /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7f13b6907000-7f13b690d000 rw-p 00000000 00:00 0 
+7f13b690d000-7f13b6918000 r-xp 00000000 08:01 266877                     /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7f13b6918000-7f13b6b17000 ---p 0000b000 08:01 266877                     /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7f13b6b17000-7f13b6b18000 r--p 0000a000 08:01 266877                     /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7f13b6b18000-7f13b6b19000 rw-p 0000b000 08:01 266877                     /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7f13b6b19000-7f13b6b2f000 r-xp 00000000 08:01 266861                     /lib/x86_64-linux-gnu/libnsl-2.23.so
+7f13b6b2f000-7f13b6d2e000 ---p 00016000 08:01 266861                     /lib/x86_64-linux-gnu/libnsl-2.23.so
+7f13b6d2e000-7f13b6d2f000 r--p 00015000 08:01 266861                     /lib/x86_64-linux-gnu/libnsl-2.23.so
+7f13b6d2f000-7f13b6d30000 rw-p 00016000 08:01 266861                     /lib/x86_64-linux-gnu/libnsl-2.23.so
+7f13b6d30000-7f13b6d32000 rw-p 00000000 00:00 0 
+7f13b6d32000-7f13b6d3a000 r-xp 00000000 08:01 266863                     /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7f13b6d3a000-7f13b6f39000 ---p 00008000 08:01 266863                     /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7f13b6f39000-7f13b6f3a000 r--p 00007000 08:01 266863                     /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7f13b6f3a000-7f13b6f3b000 rw-p 00008000 08:01 266863                     /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7f13b6f3b000-7f13b6f3c000 ---p 00000000 00:00 0 
+7f13b6f3c000-7f13b778c000 rw-p 00000000 00:00 0 
+7f13b778c000-7f13b77c0000 r-xp 00000000 08:01 4205949                    /home/qstesiro/libevent/lib/libevent_core-2.1.so.6.0.2
+7f13b77c0000-7f13b79bf000 ---p 00034000 08:01 4205949                    /home/qstesiro/libevent/lib/libevent_core-2.1.so.6.0.2
+7f13b79bf000-7f13b79c0000 r--p 00033000 08:01 4205949                    /home/qstesiro/libevent/lib/libevent_core-2.1.so.6.0.2
+7f13b79c0000-7f13b79c1000 rw-p 00034000 08:01 4205949                    /home/qstesiro/libevent/lib/libevent_core-2.1.so.6.0.2
+7f13b79c1000-7f13b79c2000 rw-p 00000000 00:00 0 
+7f13b79c2000-7f13b79c5000 r-xp 00000000 08:01 3548791                    /home/qstesiro/program/maven/larva/agent/libagent.so
+7f13b79c5000-7f13b7bc4000 ---p 00003000 08:01 3548791                    /home/qstesiro/program/maven/larva/agent/libagent.so
+7f13b7bc4000-7f13b7bc5000 r--p 00002000 08:01 3548791                    /home/qstesiro/program/maven/larva/agent/libagent.so
+7f13b7bc5000-7f13b7bc6000 rw-p 00003000 08:01 3548791                    /home/qstesiro/program/maven/larva/agent/libagent.so
+7f13b7bc6000-7f13b7bf1000 r-xp 00000000 08:01 3805650                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libjava.so
+7f13b7bf1000-7f13b7df0000 ---p 0002b000 08:01 3805650                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libjava.so
+7f13b7df0000-7f13b7df2000 rw-p 0002a000 08:01 3805650                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libjava.so
+7f13b7df2000-7f13b7dff000 r-xp 00000000 08:01 3805530                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libverify.so
+7f13b7dff000-7f13b7ffe000 ---p 0000d000 08:01 3805530                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libverify.so
+7f13b7ffe000-7f13b8000000 rw-p 0000c000 08:01 3805530                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/libverify.so
+7f13b8000000-7f13b80e8000 rw-p 00000000 00:00 0 
+7f13b80e8000-7f13bc000000 ---p 00000000 00:00 0 
+7f13bc010000-7f13bc011000 ---p 00000000 00:00 0 
+7f13bc011000-7f13bc111000 rw-p 00000000 00:00 0 
+7f13bc111000-7f13bc118000 r-xp 00000000 08:01 266922                     /lib/x86_64-linux-gnu/librt-2.23.so
+7f13bc118000-7f13bc317000 ---p 00007000 08:01 266922                     /lib/x86_64-linux-gnu/librt-2.23.so
+7f13bc317000-7f13bc318000 r--p 00006000 08:01 266922                     /lib/x86_64-linux-gnu/librt-2.23.so
+7f13bc318000-7f13bc319000 rw-p 00007000 08:01 266922                     /lib/x86_64-linux-gnu/librt-2.23.so
+7f13bc319000-7f13bc421000 r-xp 00000000 08:01 266838                     /lib/x86_64-linux-gnu/libm-2.23.so
+7f13bc421000-7f13bc620000 ---p 00108000 08:01 266838                     /lib/x86_64-linux-gnu/libm-2.23.so
+7f13bc620000-7f13bc621000 r--p 00107000 08:01 266838                     /lib/x86_64-linux-gnu/libm-2.23.so
+7f13bc621000-7f13bc622000 rw-p 00108000 08:01 266838                     /lib/x86_64-linux-gnu/libm-2.23.so
+7f13bc622000-7f13bd2f0000 r-xp 00000000 08:01 3805654                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/server/libjvm.so
+7f13bd2f0000-7f13bd4f0000 ---p 00cce000 08:01 3805654                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/server/libjvm.so
+7f13bd4f0000-7f13bd5c9000 rw-p 00cce000 08:01 3805654                    /home/qstesiro/jdk1.8.0_112/jre/lib/amd64/server/libjvm.so
+7f13bd5c9000-7f13bd614000 rw-p 00000000 00:00 0 
+7f13bd614000-7f13bd7d4000 r-xp 00000000 08:01 266768                     /lib/x86_64-linux-gnu/libc-2.23.so
+7f13bd7d4000-7f13bd9d3000 ---p 001c0000 08:01 266768                     /lib/x86_64-linux-gnu/libc-2.23.so
+7f13bd9d3000-7f13bd9d7000 r--p 001bf000 08:01 266768                     /lib/x86_64-linux-gnu/libc-2.23.so
+7f13bd9d7000-7f13bd9d9000 rw-p 001c3000 08:01 266768                     /lib/x86_64-linux-gnu/libc-2.23.so
+7f13bd9d9000-7f13bd9dd000 rw-p 00000000 00:00 0 
+7f13bd9dd000-7f13bd9e0000 r-xp 00000000 08:01 266792                     /lib/x86_64-linux-gnu/libdl-2.23.so
+7f13bd9e0000-7f13bdbdf000 ---p 00003000 08:01 266792                     /lib/x86_64-linux-gnu/libdl-2.23.so
+7f13bdbdf000-7f13bdbe0000 r--p 00002000 08:01 266792                     /lib/x86_64-linux-gnu/libdl-2.23.so
+7f13bdbe0000-7f13bdbe1000 rw-p 00003000 08:01 266792                     /lib/x86_64-linux-gnu/libdl-2.23.so
+7f13bdbe1000-7f13bdbf6000 r-xp 00000000 08:01 3676369                    /home/qstesiro/jdk1.8.0_112/lib/amd64/jli/libjli.so
+7f13bdbf6000-7f13bddf6000 ---p 00015000 08:01 3676369                    /home/qstesiro/jdk1.8.0_112/lib/amd64/jli/libjli.so
+7f13bddf6000-7f13bddf7000 rw-p 00015000 08:01 3676369                    /home/qstesiro/jdk1.8.0_112/lib/amd64/jli/libjli.so
+7f13bddf7000-7f13bde0f000 r-xp 00000000 08:01 266914                     /lib/x86_64-linux-gnu/libpthread-2.23.so
+7f13bde0f000-7f13be00e000 ---p 00018000 08:01 266914                     /lib/x86_64-linux-gnu/libpthread-2.23.so
+7f13be00e000-7f13be00f000 r--p 00017000 08:01 266914                     /lib/x86_64-linux-gnu/libpthread-2.23.so
+7f13be00f000-7f13be010000 rw-p 00018000 08:01 266914                     /lib/x86_64-linux-gnu/libpthread-2.23.so
+7f13be010000-7f13be014000 rw-p 00000000 00:00 0 
+7f13be014000-7f13be03a000 r-xp 00000000 08:01 266740                     /lib/x86_64-linux-gnu/ld-2.23.so
+7f13be042000-7f13be11b000 rw-p 00000000 00:00 0 
+7f13be11b000-7f13be11e000 ---p 00000000 00:00 0 
+7f13be11e000-7f13be220000 rw-p 00000000 00:00 0 
+7f13be22d000-7f13be235000 rw-s 00000000 08:01 2366535                    /tmp/hsperfdata_qstesiro/69300
+7f13be235000-7f13be236000 rw-p 00000000 00:00 0 
+7f13be236000-7f13be237000 r--p 00000000 00:00 0 
+7f13be237000-7f13be239000 rw-p 00000000 00:00 0 
+7f13be239000-7f13be23a000 r--p 00025000 08:01 266740                     /lib/x86_64-linux-gnu/ld-2.23.so
+7f13be23a000-7f13be23b000 rw-p 00026000 08:01 266740                     /lib/x86_64-linux-gnu/ld-2.23.so
+7f13be23b000-7f13be23c000 rw-p 00000000 00:00 0 
+7ffd7db51000-7ffd7db72000 rw-p 00000000 00:00 0                          [stack]
+7ffd7dbbb000-7ffd7dbbd000 r--p 00000000 00:00 0                          [vvar]
+7ffd7dbbd000-7ffd7dbbf000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -agentpath:/home/qstesiro/program/maven/larva/agent/libagent.so 
+java_command: com.qstesiro.demo.Demo
+java_class_path (initial): .:.::/home/qstesiro/jdk1.8.0_112/lib:/home/qstesiro/jdk1.8.0_112/jre/lib:/home/qstesiro/jdk1.8.0_112/lib:/home/qstesiro/jdk1.8.0_112/jre/lib
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/home/qstesiro/jdk1.8.0_112
+JRE_HOME=/home/qstesiro/jdk1.8.0_112/jre
+CLASSPATH=.:.::/home/qstesiro/jdk1.8.0_112/lib:/home/qstesiro/jdk1.8.0_112/jre/lib:/home/qstesiro/jdk1.8.0_112/lib:/home/qstesiro/jdk1.8.0_112/jre/lib
+PATH=/home/qstesiro/scala-2.11.8/bin:/home/qstesiro/apache-tomcat-9.0.0.M17/bin:/home/qstesiro/paddle-exec/bin:/home/qstesiro/scala-2.11.8/bin:/home/qstesiro/apache-tomcat-9.0.0.M17/bin:/home/qstesiro/paddle-exec/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/qstesiro/jdk1.8.0_112/bin:/home/qstesiro/jdk1.8.0_112/jre/bin:/home/qstesiro/apache-maven-3.3.9/bin:/home/qstesiro/apache-ant-1.9.7/bin:/home/qstesiro/spark-2.1.0-bin-hadoop2.7/bin:/home/qstesiro/jdk1.8.0_112/bin:/home/qstesiro/jdk1.8.0_112/jre/bin:/home/qstesiro/apache-maven-3.3.9/bin:/home/qstesiro/apache-ant-1.9.7/bin:/home/qstesiro/spark-2.1.0-bin-hadoop2.7/bin
+LD_LIBRARY_PATH=:/home/qstesiro/libevent/lib:/home/qstesiro/libevent/lib
+SHELL=/bin/bash
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xac7800], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xac7800], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x920990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x920990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x920990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x920990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x9221d0], sa_mask[0]=00000000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x9235d0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x9235d0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x9235d0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x9235d0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04.1 LTS"
+
+uname:Linux 4.4.0-53-generic #74-Ubuntu SMP Fri Dec 2 15:59:10 UTC 2016 x86_64
+libc:glibc 2.23 NPTL 2.23 
+rlimit: STACK 8515k, CORE 0k, NPROC 15580, NOFILE 65536, AS infinity
+load average:0.00 0.02 0.00
+
+/proc/meminfo:
+MemTotal:        4028832 kB
+MemFree:         1381464 kB
+MemAvailable:    2778660 kB
+Buffers:          208364 kB
+Cached:          1360320 kB
+SwapCached:            0 kB
+Active:          1234840 kB
+Inactive:         946756 kB
+Active(anon):     614208 kB
+Inactive(anon):    27572 kB
+Active(file):     620632 kB
+Inactive(file):   919184 kB
+Unevictable:          32 kB
+Mlocked:              32 kB
+SwapTotal:       4191228 kB
+SwapFree:        4191228 kB
+Dirty:                80 kB
+Writeback:             0 kB
+AnonPages:        613124 kB
+Mapped:           264484 kB
+Shmem:             28872 kB
+Slab:             174388 kB
+SReclaimable:     124956 kB
+SUnreclaim:        49432 kB
+KernelStack:        9968 kB
+PageTables:        26524 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     6205644 kB
+Committed_AS:    3570524 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    329728 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       91968 kB
+DirectMap2M:     3053568 kB
+DirectMap1G:     3145728 kB
+
+
+CPU:total 4 (2 cores per cpu, 1 threads per core) family 6 model 60 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, lzcnt, tsc, tscinvbit, bmi1, bmi2
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3591.769
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm epb fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 7183.53
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3591.769
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm epb fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 7183.53
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3591.769
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm epb fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 7183.53
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3591.769
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm epb fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 7183.53
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 4028832k(1381464k free), swap 4191228k(4191228k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.112-b15) for linux-amd64 JRE (1.8.0_112-b15), built on Sep 22 2016 21:10:53 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Thu Jun 15 16:23:38 2017
+elapsed time: 17 seconds (0d 0h 0m 17s)
+
