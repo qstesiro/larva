@@ -45,42 +45,12 @@ public class Debugger implements SignalHandler {
     }
 
     public void debug() throws Exception {
-        Signal.handle(new Signal("INT"), this);
-        // launch();
-        attach();
-        monitor(true);
-        if (execute(ConfigManager.instance().script())) {
-			execute();
-		} loop();
-        monitor(false);
-        exit();
-    }    
-
-    // adb shell am start -D -n "com.example.administrator.datareport/com.example.administrator.datareport.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
-    /*java -classpath ".\out\production\Debugger;D:\Program Files\Java\jdk1.8.0_45\lib\tools.jar" com.runbox.debug.Debugger*/
-    /*"D:\Program Files\Java\jdk1.8.0_45\bin\java"
-            -agentlib:jdwp=transport=dt_socket,address=localhost:5005,server=y,suspend=y
-           -classpath ".\out\production\Debugger;D:\Program Files\Java\jdk1.8.0_45\lib\tools.jar" com.runbox.debug.Debugger*/
-    private void launch() {
-        LaunchingConnector connector = Bootstrap.virtualMachineManager().defaultConnector();
-        Map<String, com.sun.jdi.connect.Connector.Argument> map = connector.defaultArguments();
-        map.get("main").setValue("Demo");
-        map.get("options").setValue("-classpath D:\\JetBrains\\IdeaProjects\\Demo\\out\\production\\Demo");
-        try {
-            MachineManager.set(connector.launch(map));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalConnectorArgumentsException e) {
-            e.printStackTrace();
-        } catch (VMStartException e) {
-            e.printStackTrace();
-        }
+        Signal.handle(new Signal("INT"), this);        
+        attach(); monitor(true);
+        if (execute(ConfigManager.instance().script())) execute(); 
+        loop(); monitor(false); exit();
     }
-
-    /*"D:\Program Files\Java\jdk1.8.0_45\bin\java" -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y -classpath ".\out\production\Demo" Demo*/
-    /*"D:\Program Files\Java\jdk1.8.0_45\bin\java" -agentlib:jdwp=transport=dt_socket,address=localhost:5005,server=y,suspend=y -classpath ".\target\classes\;D:\Program Files\Java\jdk1.8.0_45\lib\tools.jar" com.runbox.debug.Debugger -address localhost:1025 -script D:\program\maven\debug\debug.jdb*/
-    // C:\Program Files\Java\jdk1.8.0_45\bin\java.exe\java.exe -agentlib:jdwp=transport=dt_socket,address=localhost:1025,server=y,suspend=y -classpath .\out\production\Demo Demo
-    // java -classpath ".\target\classes\;D:\Program Files\Java\jdk1.8.0_45\lib\tools.jar" com.runbox.debug.Debugger -address localhost:1025 -script D:\program\maven\debug\debug.jdb
+	
     private void attach() {
         List<AttachingConnector> list = Bootstrap.virtualMachineManager().attachingConnectors();
         for (AttachingConnector connector : list) {
@@ -168,18 +138,19 @@ public class Debugger implements SignalHandler {
 		}
 		return false;
 	}    
+
+	
 	
     private synchronized void execute() {
         while (true) {
-            prompt();
-			String command = new Scanner(System.in).nextLine();
-            try {                
-                if (!Engine.instance().execute(command + ";")) return;
+            prompt();			
+            try {
+                if (!Engine.instance().execute(command() + ";")) return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
+    }	
 
     private void prompt() {
         if (null == ContextManager.instance().current()) {
@@ -188,6 +159,18 @@ public class Debugger implements SignalHandler {
             System.out.print(ContextManager.instance().current().uniqueID() + "> ");
         }
     }
+
+	private String command = new String("");
+	
+	private String command() throws Exception {
+		String command = new Scanner(System.in).nextLine();
+		if (!command.equals("")) {
+			this.command = command; return command;
+		} else if (!this.command.equals("")) {
+			return this.command;
+		}
+		throw new Exception("invalid command");
+	}
 
     private void monitor(boolean flag) throws Exception {
         if (DISCONNECT != this.flag) {
