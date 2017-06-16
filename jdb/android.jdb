@@ -74,19 +74,47 @@ a.d "thread.switch", "t.w";
 a.d "thread.stack", "t.s";
 a.d "config.query", "c.q";
 a.d "config.set", "c.s";
+a.d "template.list", "t.l";
+a.d "template.map", "t.m";
 
 s.a "D:\\AndroidStudioProjects\\Encryption\\app\\src\\main\\java";
 
 c.s "line", 9;
 
+i.c "java.util.LinkedList";
 i.c "android.os.Bundle";
 i.c "android.view.View";
 i.c "android.view.Menu";
 i.c "android.view.MenuItem";
 i.c "android.content.Intent";
 i.c "com.example.huangmengmeng01.encryption.MainActivity";
+i.c "com.example.huangmengmeng01.encryption.DigestActivity";
+i.c "com.example.huangmengmeng01.encryption.SymmetryActivity";
 
-b.m "MainActivity.onCreate(Bundle)";
+// only support LinkedList
+// if you want to enum other list type
+// need recode by list struct and fields
+def $print(@list) {
+	if (null != @list) {
+	   if (@list instanceof LinkedList) {
+	   	  @first = @list.first;
+		  @last = @list.last;
+		  @next = @first;
+		  while (@next != @last) {
+		  		print.value @next.item, 0x3;
+				// print.field @next.item, 0x3;
+				@next = @next.next;
+		  }
+	   }
+	}
+}
+
+// b.m "MainActivity.onCreate(Bundle)";
+b.l "MainActivity:36" /*{$print(this.views);}*/;
 b.m "MainActivity.onClick(View)";
+b.m "DigestActivity.onCreate(Bundle)";
+b.m "DigestActivity.onClick(View)";
+b.m "SymmetryActivity.onCreate(Bundle)";
+b.m "SymmetryActivity.onClick(View)";
 
 e.r;

@@ -31,7 +31,7 @@ public class RequestManager extends Manager {
         if (null != manager) {
             ClassPrepareRequest request = manager.createClassPrepareRequest();
 			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
-            if (null != clazz)  {
+            if (null != clazz) {
                 request.addClassFilter(clazz);
             }
 			if (null != routine) {
