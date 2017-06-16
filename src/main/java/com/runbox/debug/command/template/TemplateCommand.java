@@ -133,8 +133,10 @@ public abstract class TemplateCommand extends Command {
 	
     protected boolean superClass(String name) throws Exception {
 		if (null != operand) {
-			if (null != operand.value() && operand.valueType() instanceof ClassType) {				
-				if (((ClassType)operand.valueType()).superclass().name().equals(name)) {
+			if (null != operand.value() && operand.valueType() instanceof ClassType) {
+				ClassType type = (ClassType)operand.valueType();
+				if (type.name().equals(name) || // support davlik
+					type.superclass().name().equals(name)) {
 					return true;
 				}				
 			} 
