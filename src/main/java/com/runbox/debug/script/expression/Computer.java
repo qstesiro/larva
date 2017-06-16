@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sun.jdi.*;
 
+import com.runbox.manager.ImportManager;
 import com.runbox.debug.manager.MachineManager;
 
 import com.runbox.debug.script.expression.token.Token;
@@ -2326,23 +2327,24 @@ public class Computer {
         if (null != operand1 && null != operand2) {
             if (!(operand1 instanceof ConstOperand) && !Operand.subClass(operand2)) {
                 if (null != operand1.value() && null != operand2.name()) {
+					String clazz = clazz(operand2.name());
                     if (operand1.valueType() instanceof ClassType) {
-                        ClassType type = (ClassType)operand1.valueType();
-                        if (type.name().equals(operand2.name())) {
+                        ClassType type = (ClassType)operand1.valueType();						
+                        if (type.name().equals(clazz)) {
                             return new ConstOperand(true);
                         }
                         List<InterfaceType> interfaces = type.allInterfaces();
-                        for (InterfaceType entry : interfaces) {
-                            if (entry.name().equals(operand2.name())) {
+                        for (InterfaceType element : interfaces) {							
+                            if (element.name().equals(clazz)) {
                                 return new ConstOperand(true);
                             }
                         }
-                        ClassType entry = type.superclass();
-                        while (null != entry) {
-                            if (entry.name().equals(operand2.name())) {
+                        type = type.superclass();
+                        while (null != type) {
+                            if (type.name().equals(clazz)) {
                                 return new ConstOperand(true);
                             }
-                            entry = entry.superclass();
+                            type = type.superclass();
                         }
                     }
                     return new ConstOperand(false);
@@ -3223,4 +3225,9 @@ public class Computer {
         }
         throw new Exception("invalid >>>=");
     }
+
+	private static String clazz(String clazz) {
+		String path = ImportManager.instance().find(clazz);
+		return (null != path ? path + "." + clazz : clazz);
+	}
 }
