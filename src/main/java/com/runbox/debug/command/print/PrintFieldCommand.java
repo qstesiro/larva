@@ -24,9 +24,13 @@ public class PrintFieldCommand extends PrintCommand {
 	private Expression.Values<Operand> values = null;
 	
     @Override
-    public boolean execute() throws Exception {		
-        print();
-		print(fields(operand));
+    public boolean execute() throws Exception {
+		if (FLAG_DEFAULT == (FLAG_DEFAULT & flags)) {
+			print();
+		}
+		if (FLAG_FIELD == (FLAG_FIELD & flags)) {
+			print(fields(operand));
+		}
         return super.execute();
     }
 
@@ -44,9 +48,11 @@ public class PrintFieldCommand extends PrintCommand {
 		}
 		throw new Exception("invalid operand");
 	}
-	
-	private static final int FLAG_TYPE = 0x01;
-	private static final int FLAG_VALUE_TYPE = 0x02;
+
+	private static final int FLAG_DEFAULT = 0x01;
+	private static final int FLAG_FIELD = 0x02;
+	private static final int FLAG_TYPE = 0x04;
+	private static final int FLAG_VALUE_TYPE = 0x08;
 
 	private int flags = 0;
 
@@ -56,7 +62,7 @@ public class PrintFieldCommand extends PrintCommand {
 				return values.getInteger(FLAGS);
 			}
 		}
-		return 0;
+		return FLAG_DEFAULT | FLAG_FIELD;
 	}
 
 	private void print() throws Exception {
