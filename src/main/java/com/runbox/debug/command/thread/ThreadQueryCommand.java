@@ -32,16 +32,15 @@ public class ThreadQueryCommand extends ThreadCommand {
 		}      
         return super.execute();
     }		
-
-	private static final int FLAG_ID         = 0x01;
-	private static final int FLAG_GROUP      = 0x02;
-	private static final int FLAG_FRAME      = 0x04;	
-	private static final int FLAG_SUSPEND    = 0x08;
-	private static final int FLAG_STATUS     = 0x10;   
-	private static final int FLAG_BREAKPOINT = 0x20;
-	private static final int FLAG_NAME       = 0x40;
 	
-	private int flags = 0;   	
+	private static final int FLAG_GROUP      = 0x01;
+	private static final int FLAG_FRAME      = 0x02;	
+	private static final int FLAG_SUSPEND    = 0x04;
+	private static final int FLAG_STATUS     = 0x08;   
+	private static final int FLAG_BREAKPOINT = 0x10;
+	private static final int FLAG_NAME       = 0x20;
+	
+	private int flags = FLAG_STATUS | FLAG_NAME;
 
 	private String format() {
 		String format = "%-5s" + "%-8s";
