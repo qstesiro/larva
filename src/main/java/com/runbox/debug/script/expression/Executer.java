@@ -164,7 +164,7 @@ public class Executer {
 			List<Operand> arguments = new LinkedList<Operand>();
 			Operand operand = operands.peek();
 			while (!Token.routine(operand.name())) {				
-				arguments.add(0, operands.pop());
+				arguments.add(0, convert(operands.pop()));
 				operand = operands.peek();
 			} 
 			RoutineOperand routine = (RoutineOperand)operands.pop();
