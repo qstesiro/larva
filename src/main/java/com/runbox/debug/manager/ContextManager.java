@@ -94,7 +94,7 @@ public class ContextManager extends Manager {
 			} else if (event instanceof ThreadStartEvent) {								
 				return ((ThreadStartEvent)event).thread();
 			} else if (event instanceof ThreadDeathEvent) {
-				if (MachineManager.instance().name().toLowerCase().equals("dalvik")) {
+				if (MachineManager.instance().dalvik()) {
 					// we must return null
 					// because it will throw (com.sun.jdi.InternalException: Unexpected JDWP Error: 15)
 					// when you call ThreadReference.frameCount()

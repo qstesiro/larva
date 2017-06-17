@@ -28,7 +28,7 @@ public abstract class TemplateCommand extends Command {
 	@Override
     public boolean execute() throws Exception {
 		if (type()) {
-			if (FLAG_DEFAULT == (FLAG_DEFAULT & flags())) printDefault();		
+			if (FLAG_DEFAULT == (FLAG_DEFAULT & flags())) printDefault();
 			if (FLAG_ELEMENT == (FLAG_ELEMENT & flags())) printElements();
 			return super.execute();
 		}
