@@ -54,7 +54,7 @@ public class PrintStringCommand extends PrintCommand {
 
 	private Operand operand() throws Exception {
 		if (null != values) {
-			if (OPERAND < values.size() && MAX >= values.size()) {				
+			if (OPERAND < values.size() && MAX >= values.size()) {
 				if (type(values.get(OPERAND))) {
 					return values.get(OPERAND);
 				}

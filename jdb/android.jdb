@@ -110,7 +110,7 @@ def $print(@list) {
 }
 
 // b.m "MainActivity.onCreate(Bundle)";
-b.l "MainActivity:36" /*{$print(this.views);}*/;
+b.l "MainActivity:45" /*{$print(this.views);}*/;
 b.m "MainActivity.onClick(View)";
 b.m "DigestActivity.onCreate(Bundle)";
 b.m "DigestActivity.onClick(View)";

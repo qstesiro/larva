@@ -2,7 +2,7 @@
 ## 配置选项
 ### config.query expr
 说明：查询配置选项<br>
-参数：expr 表达式由以几部分组成
+参数：expr 表达式由以几部分组成<br>
 &emsp;&emsp;&emsp;[name[, name]] name 为配制选项名称，每一个都是一个表达式，运算结果必须为字符串类型，<br>
 &emsp;&emsp;&emsp;如果不给出则显示全部配制选项<br>
 样例：config.query;<br>
@@ -501,7 +501,7 @@
 &emsp;&emsp;&emsp;expr 标准的larva表达式其运算结果必须为java.util.Stack类型或是某子类<br>
 &emsp;&emsp;&emsp;栈虽然也可以通过template.list来显示数据但是通过template.stack可以以更好的形式<br>
 &emsp;&emsp;&emsp;显示（以栈的形式）；<br>
-&emsp;&emsp;&emsp;flags 是一个可以组合的标志位，整数类型，默认为(0x1|0x2)<br>
+&emsp;&emsp;&emsp;flags 是一个可以组合的标志位，整数类型，默认为 0x1 | 0x2<br>
 &emsp;&emsp;&emsp;0x1 显示基本的统计信息<br>
 &emsp;&emsp;&emsp;0x2 显示容器中的元素<br>
 &emsp;&emsp;&emsp;0x1 显示元素的类型<br>
@@ -510,6 +510,13 @@
 ### thread.query [expr]
 说明：列出当前所有线程<br>
 参数：expr 标准表达式，代表一个组合标志位，运算结果必须是整形<br>
+&emsp;&emsp;&emsp;0x01 线程组<br>
+&emsp;&emsp;&emsp;0x02 栈帧数，未被挂起的线程不能获取此项，显示为n/a<br>
+&emsp;&emsp;&emsp;0x04 挂起次数<br>
+&emsp;&emsp;&emsp;0x08 状态（详细状态信息请参见JVM规范）<br>
+&emsp;&emsp;&emsp;0x10 线程是否因断点而被挂起<br>
+&emsp;&emsp;&emsp;0x20 线程名称<br>
+默认为 0x08 | 0x20<br>
 样例：thread.query 0x1; <br>
 &emsp;&emsp;&emsp;thread.query 0xf;<br>
 ### thread.switch expr
@@ -535,9 +542,9 @@
 ### thread.stack expr
 说明：显示当前线程的所有栈帧（当前线程必须处于挂起状态，如果未挂起可以使用thread.suspend）<br>
 参数：expr 一个表达式，运算结果必须是整形，代表标志位：<br>
-&emsp;&emsp;&emsp;0x1 显示包路径<br>
-&emsp;&emsp;&emsp;0x2 显示行号<br>
-&emsp;&emsp;&emsp;默认 0x1 | 0x2<br>
+&emsp;&emsp;&emsp;0x01 显示包路径<br>
+&emsp;&emsp;&emsp;0x02 显示行号，如果行号不能获取则显示n/a<br>
+&emsp;&emsp;&emsp;默认为 0x01 | 0x02<br>
 样例：thread.stack;<br>
 &emsp;&emsp;&emsp;thread.stack 0x1; <br>
 &emsp;&emsp;&emsp;@var = 0x2; thread.stack @var;<br>
