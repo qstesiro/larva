@@ -19,22 +19,19 @@ public class PrintCommand extends Command {
 
     public PrintCommand(String command) throws Exception {
         super(command);
+    }    
+
+	protected FieldOperand field(Operand operand, String name) throws Exception {
+        if (null != operand) {
+			if (null != operand.value()) {
+				ObjectReference object = (ObjectReference)operand.value();
+				Field field = object.referenceType().fieldByName(name);
+				return new FieldOperand(object, field.name());
+			}
+        }
+        return null;
     }
-
-    // protected List<Operand> fields() throws Exception {
-    //     List<Operand> operands = new LinkedList<Operand>();
-    //     StackFrame frame = ContextManager.instance().frame();
-    //     if (null != frame) {
-    //         if (null != frame.thisObject()) {
-    //             List<Field> fields = frame.thisObject().referenceType().allFields();
-    //             for (Field field : fields) {
-    //                 operands.add(new FieldOperand(frame.thisObject(), field.name()));
-    //             }
-    //         }
-    //     }
-    //     return operands;
-    // }
-
+	
     protected List<Operand> fields(Operand operand) throws Exception {
         List<Operand> operands = new LinkedList<Operand>();
         if (null != operand && null != operand.value()) {
@@ -68,4 +65,34 @@ public class PrintCommand extends Command {
 		}
 		return autos;
 	}
+
+	protected String object(Operand operand) throws Exception {
+		final String STRING = "java.lang.String";
+		if (clazz(operand, STRING)) {
+			String string = "instance of ";
+			string += operand.type().name();
+			string += "(" + "id=" + operand.objectValue().uniqueID() + ")";
+			return string;
+		}
+		return operand.value().toString();		
+	}
+
+	protected boolean clazz(Operand operand, String name) throws Exception {
+		if (null != operand) {
+			if (null != operand.value()) {
+				if (operand.valueType() instanceof ClassType) {
+					if (operand.valueType().name().equals(name)) {
+						return true;
+					}
+				}
+			} else if (null != operand.type()) {				
+				if (operand.type() instanceof ClassType) {
+					if (operand.type().name().equals(name)) {
+						return true;
+					}
+				}				
+			}
+		}        
+        return false;
+    }
 }
