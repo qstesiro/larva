@@ -63,8 +63,8 @@ public class PrintFieldCommand extends PrintCommand {
 		if (null != operand) {
 			System.out.printf("%-8s%s\n", "type:", (null != operand.type() ? operand.type() : "n/a"));
 			if (null != operand().value()) {
-				System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());
-				System.out.printf("%-8s%s\n", "object:", operand.value());
+				System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());				
+				System.out.printf("%-8s%s\n", "object:", object(operand));
 				System.out.printf("%-8s%s\n", "fields:", fields(operand).size());
 			} else {
 				System.out.printf("%-8s%s\n", "value:", "null");
