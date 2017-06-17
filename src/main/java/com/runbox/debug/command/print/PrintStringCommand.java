@@ -220,9 +220,9 @@ public class PrintStringCommand extends PrintCommand {
 	private int size(Operand operand) throws Exception {
 		if (clazz(operand, DEFAULT_STRING)) {
 			if (MachineManager.instance().dalvik()) {
-				return field(operand, "count").intValue();
+				return stringValue(operand).length();
 			}
-			return field(operand, "value").arrayValue().length();
+			return arrayValue(operand).length();
         } else if (clazz(operand, BUILDER_STRING)) {
 			return field(operand, "count").intValue();
         } else if (clazz(operand, BUFFER_STRING)) {
