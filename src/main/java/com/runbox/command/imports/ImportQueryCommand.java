@@ -12,11 +12,11 @@ public class ImportQueryCommand extends ImportCommand {
 
 	@Override
 	public boolean execute() throws Exception {
-		System.out.printf("%-5s%-24s%s\n", "#", "class", "package");
+		System.out.printf("%-5s%-32s%s\n", "#", "class", "package");
 		Map<String, String> classes = ImportManager.instance().get();		
 		int i = 0; for (String clazz : classes.keySet()) {
 			String path = classes.get(clazz).equals("") ? "n/a" : classes.get(clazz);
-			System.out.printf("%-5d%-24s%s\n", i++, clazz, path);
+			System.out.printf("%-5d%-32s%s\n", i++, clazz, path);
 		}
 		return super.execute();
 	}	
