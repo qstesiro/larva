@@ -30,6 +30,17 @@ public class MachineManager extends Manager {
 	public static VirtualMachine get() {
 		return instance.machine;
 	}
+
+	private final static String HOTSPOT = "hotspot";
+	private final static String DALVIK = "dalvik";
+	
+	public boolean hotspot() {
+		return name().toLowerCase().equals(HOTSPOT);
+	}
+
+	public boolean dalvik() {
+		return name().toLowerCase().equals(DALVIK);
+	}
 	
 	public EventRequestManager eventRequestManager() {
 		if (null != machine) {
@@ -92,9 +103,15 @@ public class MachineManager extends Manager {
 		return null;
 	}
 
+	private String name = null;
+	
 	public String name() {
 		if (null != machine) {
-			return machine.name();
+			if (null == name) {
+				name = machine.name();
+				return name;				
+			}
+			return name;
 		}
 		return null;
 	}
