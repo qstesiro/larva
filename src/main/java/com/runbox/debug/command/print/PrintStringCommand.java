@@ -6,6 +6,8 @@ import com.sun.jdi.IntegerValue;
 import com.sun.jdi.ArrayReference;
 import com.sun.jdi.ObjectReference;
 
+import com.runbox.debug.manager.MachineManager;
+
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.FieldOperand;
 import com.runbox.debug.script.expression.token.operand.Operand;
@@ -35,7 +37,7 @@ public class PrintStringCommand extends PrintCommand {
 				printDefault();				
 			}
 			if (FLAG_VALUE == (FLAG_VALUE & flags)) {
-				printValues();
+				printValue();
 			}			
 		}        
         return super.execute();
@@ -113,14 +115,7 @@ public class PrintStringCommand extends PrintCommand {
 			System.out.printf("%-8s%s\n", "type:", operand.type().name());
 			if (null != operand.value()) {
 				System.out.printf("%-8s%s\n", "vtype:", operand.value().type().name());
-				if (clazz(operand, DEFAULT_STRING)) {
-					String string = "instance of ";
-					string += operand.type().name();
-					string += "(" + "id=" + operand.objectValue().uniqueID() + ")";
-					System.out.printf("%-8s%s\n", "object:", string);
-				} else {
-					System.out.printf("%-8s%s\n", "object:", operand.value().toString());
-				}	   
+				System.out.printf("%-8s%s\n", "object:", object(operand));
 				System.out.printf("%-8s%d\n", "length:", length(operand));
 				System.out.printf("%-8s%d\n", "size:", size(operand));
 			} else {
@@ -128,22 +123,41 @@ public class PrintStringCommand extends PrintCommand {
 			}
 		}
 	}
-	
-    private void printValues() throws Exception {
+			
+    private void printValue() throws Exception {
 		if (null != operand && null != operand.value()) {
 			if (0 <= index && 0 <= count) {
 				if (0 == count) count = size(operand) - index;
-				if (index + count <= size(operand)) {
-					ArrayReference array = array(operand); 			
-					for (int i = index; i < (index + count); ++i) {
-						System.out.print(array.getValue(i));
-						printLine(i);
+				if (index + count <= size(operand)) {					
+					if (MachineManager.instance().dalvik() &&
+						clazz(operand, DEFAULT_STRING)) {
+						printValue(stringValue(operand)); return;
 					}
-					printLine();
+					printValue(arrayValue(operand));
 				}
 			}
 		}
-    }	
+    }
+
+	private void printValue(String string) throws Exception {
+		if (null != string) {
+			for (int i = 0; i < count; ++i) {
+				System.out.print(string.charAt(i + index));
+				printLine(i);
+			}
+			printLine();
+		}
+	}
+
+	private void printValue(ArrayReference array) throws Exception {
+		if (null != array) {
+			for (int i = 0; i < count; ++i) {
+				System.out.print(array.getValue(i + index));
+				printLine(i);
+			}
+			printLine();
+		}
+	}
 
 	private void printLine(int i) {
 		if (0 != line) {
@@ -166,31 +180,48 @@ public class PrintStringCommand extends PrintCommand {
 	private static final String DEFAULT_STRING = "java.lang.String";
 	private static final String BUILDER_STRING = "java.lang.StringBuilder";
 	private static final String BUFFER_STRING = "java.lang.StringBuffer";
-	
-    private ArrayReference array(Operand operand) throws Exception {
-        if (clazz(operand, DEFAULT_STRING)) {
-            return field(operand, "value").arrayValue();
-        } else if (clazz(operand, BUILDER_STRING)) {
+
+	private String stringValue(Operand operand) throws Exception {
+		if (clazz(operand, DEFAULT_STRING)) {
+			if (MachineManager.instance().dalvik()) {
+				return operand.value().toString();
+			}
+		}
+		throw new Exception("invalid type");
+	}
+
+	private ArrayReference arrayValue(Operand operand) throws Exception {
+		if (clazz(operand, DEFAULT_STRING)) {
+			if (!MachineManager.instance().dalvik()) {
+				return field(operand, "value").arrayValue();
+			}
+		} else if (clazz(operand, BUILDER_STRING)) {
             return field(operand, "value").arrayValue();
         } else if (clazz(operand, BUFFER_STRING)) {
             return field(operand, "value").arrayValue();
         }
-        throw new Exception("invalid argument");
-    }
+		throw new Exception("invalid argument");
+	}       
 
 	private int length(Operand operand) throws Exception {
-		if (clazz(operand, DEFAULT_STRING)) {
-            return array(operand).length();
-        } else if (clazz(operand, BUILDER_STRING)) {
-            return array(operand).length();
+		if (clazz(operand, DEFAULT_STRING)) {		
+			if (MachineManager.instance().dalvik()) {
+				return stringValue(operand).length();
+			}
+			return arrayValue(operand).length();
+		} else if (clazz(operand, BUILDER_STRING)) {
+			return arrayValue(operand).length();
         } else if (clazz(operand, BUFFER_STRING)) {
-            return array(operand).length();
+            return arrayValue(operand).length();
         }
         throw new Exception("invalid argument");
 	}
 	
 	private int size(Operand operand) throws Exception {
 		if (clazz(operand, DEFAULT_STRING)) {
+			if (MachineManager.instance().dalvik()) {
+				return field(operand, "count").intValue();
+			}
 			return field(operand, "value").arrayValue().length();
         } else if (clazz(operand, BUILDER_STRING)) {
 			return field(operand, "count").intValue();
@@ -207,35 +238,5 @@ public class PrintStringCommand extends PrintCommand {
 			return true;
 		}
         return false;
-    }    
-
-    private boolean clazz(Operand operand, String name) throws Exception {
-		if (null != operand) {
-			if (null != operand.value()) {
-				if (operand.valueType() instanceof ClassType) {
-					if (operand.valueType().name().equals(name)) {
-						return true;
-					}
-				}
-			} else if (null != operand.type()) {				
-				if (operand.type() instanceof ClassType) {
-					if (operand.type().name().equals(name)) {
-						return true;
-					}
-				}				
-			}
-		}        
-        return false;
-    }
-
-    private FieldOperand field(Operand operand, String name) throws Exception {
-        if (null != operand) {
-			if (null != operand.value()) {
-				ObjectReference object = (ObjectReference)operand.value();
-				Field field = object.referenceType().fieldByName(name);
-				return new FieldOperand(object, field.name());
-			}
-        }
-        return null;
-    }
+    }            
 }
