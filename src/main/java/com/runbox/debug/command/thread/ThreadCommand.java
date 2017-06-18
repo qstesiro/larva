@@ -10,6 +10,7 @@ import com.sun.jdi.ShortValue;
 import com.sun.jdi.IntegerValue;
 import com.sun.jdi.LongValue;
 import com.sun.jdi.StringReference;
+import com.sun.jdi.ThreadReference;
 
 import com.runbox.debug.command.Command;
 
@@ -60,5 +61,18 @@ public class ThreadCommand extends Command {
 			return values.getLong(0);
 		}
 		throw new Exception("invalid operand");
-	}   	   	
+	}
+
+	protected String status(int status) {
+		switch (status) {
+		case ThreadReference.THREAD_STATUS_UNKNOWN:     return "n/a";            
+		case ThreadReference.THREAD_STATUS_ZOMBIE:      return "zombie";            
+		case ThreadReference.THREAD_STATUS_RUNNING:     return "running";            
+		case ThreadReference.THREAD_STATUS_SLEEPING:    return "sleeping";            
+		case ThreadReference.THREAD_STATUS_MONITOR:     return "monitor";           
+		case ThreadReference.THREAD_STATUS_WAIT:        return "wait";            
+		case ThreadReference.THREAD_STATUS_NOT_STARTED: return "started";            
+		}
+		return null;
+    }
 }

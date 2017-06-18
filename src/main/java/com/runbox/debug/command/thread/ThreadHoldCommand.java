@@ -33,21 +33,52 @@ public class ThreadHoldCommand extends ThreadCommand {
 	}
 
 	private void print(int index, ThreadReference thread) throws Exception {
-		System.out.printf("#%-4d%-8d\n", index, thread.uniqueID());				
-		print(thread.ownedMonitors());	
+		System.out.printf("#%-4d%-10d%s\n", index, thread.uniqueID(), status(thread.status()));
+		if (ThreadReference.THREAD_STATUS_UNKNOWN != thread.status() &&
+			ThreadReference.THREAD_STATUS_ZOMBIE != thread.status() &&
+			thread.isSuspended()) {
+			print(thread);
+		} else {
+			print();
+		}
 	}
 
-	private void print(List<ObjectReference> objects) throws Exception {
-		if (0 < objects.size()) {
-			int index = 0; for (ObjectReference object : objects) {				
-				System.out.printf("%5s%-10s", "", "object");
-				System.out.printf("%-8d%s\n", object.uniqueID(), object.referenceType().name());
-				System.out.printf("%5s%-10s", "", "waiting");
-				System.out.println(object.waitingThreads());
+	private void print(ThreadReference thread) throws Exception {
+		if (null != thread) {
+			if (0 < thread.ownedMonitors().size()) {
+				boolean flag = false; for (ObjectReference object : thread.ownedMonitors()) {
+					// perhaps this is a bug in davlik, I`m not sure
+					// because a thread has invoked wait it should release monitor
+					// in this case this thread doesn`t own this monitor
+					// but owningThread method will return a thread that has invoke wait				   
+					if (object.owningThread() == thread) { 
+						System.out.printf("%5s%-10s", "", "holding");
+						System.out.printf("%s\n", object.toString());
+						System.out.printf("%5s%-10s", "", "waiting");
+						print(object.waitingThreads());
+						flag = true;
+					}
+				}
+				if (!flag) print();
+			} else {
+				print();
+			}
+		}
+	}
+
+	private void print(List<ThreadReference> threads) throws Exception {
+		if (null != threads) {
+			int i = 0; for (ThreadReference thread : threads) {
+				if (0 < i++) System.out.printf("%5s%-10s", "", "");
+				System.out.printf("%s\n", thread.toString());
 			}
 		} else {
-			System.out.printf("%5s%-10s%-8s\n", "", "objects", "n/a");
-			System.out.printf("%5s%-10s%-8s\n", "", "waiting", "[]");
-		}
-	}	
+			System.out.printf("%s\n", "n/a");
+		}		
+	}
+
+	private void print() {
+		System.out.printf("%5s%-10s%-8s\n", "", "holding", "n/a");
+		System.out.printf("%5s%-10s%-8s\n", "", "waiting", "n/a");
+	}
 }

@@ -97,7 +97,7 @@ public class ThreadQueryCommand extends ThreadCommand {
 			ThreadGroupReference group = thread.threadGroup();
 			objects.add(null != group ? String.valueOf(group.uniqueID()) : "n/a");
 		}
-		if (FLAG_FRAME == (FLAG_FRAME & flags)) {			
+		if (FLAG_FRAME == (FLAG_FRAME & flags)) {
 			objects.add(thread.isSuspended() ? String.valueOf(thread.frameCount()) : "n/a");
 		}
 		if (FLAG_SUSPEND == (FLAG_SUSPEND & flags)) {
@@ -111,20 +111,7 @@ public class ThreadQueryCommand extends ThreadCommand {
 		}
 		if (FLAG_NAME == (FLAG_NAME & flags)) {
 			objects.add(thread.name());
-		}		
+		}
 		return objects.toArray();
-	}              
-
-    private String status(int status) {
-        switch (status) {
-		case ThreadReference.THREAD_STATUS_UNKNOWN:     return "n/a";            
-		case ThreadReference.THREAD_STATUS_ZOMBIE:      return "zombie";            
-		case ThreadReference.THREAD_STATUS_RUNNING:     return "running";            
-		case ThreadReference.THREAD_STATUS_SLEEPING:    return "sleeping";            
-		case ThreadReference.THREAD_STATUS_MONITOR:     return "monitor";           
-		case ThreadReference.THREAD_STATUS_WAIT:        return "wait";            
-		case ThreadReference.THREAD_STATUS_NOT_STARTED: return "started";            
-        }
-		return null;
-    }
+	}
 }
