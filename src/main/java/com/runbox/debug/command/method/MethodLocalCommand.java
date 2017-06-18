@@ -52,7 +52,7 @@ public class MethodLocalCommand extends MethodCommand {
 	private void printTypes(List<String> arguments) {
 		if (0 < arguments.size()) {
 			for (String type : arguments) {
-				System.out.printf("%-5s :%s\n", "n/a", type);
+				System.out.printf("%-5s%s :%s\n", "", "n/a", type);
 			}
 		}
 	}
