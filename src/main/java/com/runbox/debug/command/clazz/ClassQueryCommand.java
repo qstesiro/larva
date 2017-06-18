@@ -36,20 +36,20 @@ public class ClassQueryCommand extends ClassCommand {
     public boolean execute() throws Exception {
         if (null != clazz) {			
             List<ReferenceType> classes = MachineManager.instance().allClasses();
-			System.out.printf(format(), arguments());
+			System.out.printf("%-8s%s\n", "#", "class");
             int i = 0; for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
-					if (Pattern.compile(clazz).matcher(type.name()).matches()) {
-						System.out.printf(format(), arguments(i++, type));
+					if (Pattern.compile(clazz).matcher(type.name()).matches()) {						
+						print(i++, type);
 					}
 				}
             }
         } else {
 			List<ReferenceType> classes = MachineManager.instance().allClasses();
-			int i = 0; System.out.printf(format(), arguments());
-            for (ReferenceType type : classes) {
-				if (!(type instanceof ArrayType)) {
-					System.out.printf(format(), arguments(i++, type));
+			System.out.printf("%-8s%s\n", "#", "class");
+            int i = 0; for (ReferenceType type : classes) {
+				if (!(type instanceof ArrayType)) {					
+					print(i++, type);
 				}
             }
         }        
@@ -73,17 +73,20 @@ public class ClassQueryCommand extends ClassCommand {
 		return null;
 	}
 
-	private static final int FLAG_PACKAGE     = 0x001;
-	private static final int FLAG_ACCESS      = 0x002;
-	private static final int FLAG_MODIFIER    = 0x004;
-	private static final int FLAG_ABSTRACT    = 0x008;
-	private static final int FLAG_FINAL       = 0x010;
-	private static final int FLAG_INITIALIZED = 0x020;
-	private static final int FLAG_PREPARED    = 0x040;
-	private static final int FLAG_STATIC      = 0x080;
-	private static final int FLAG_VERIFIED    = 0x100;
-	private static final int FLAG_VERSION     = 0x200;
-	private static final int FLAG_SOURCE      = 0x400;
+	private static final int FLAG_PACKAGE     = 0x0001;
+	private static final int FLAG_ACCESS      = 0x0002;
+	private static final int FLAG_MODIFIER    = 0x0004;
+	private static final int FLAG_ABSTRACT    = 0x0008;
+	private static final int FLAG_FINAL       = 0x0010;
+	private static final int FLAG_INITIALIZED = 0x0020;
+	private static final int FLAG_PREPARED    = 0x0040;
+	private static final int FLAG_STATIC      = 0x0080;
+	private static final int FLAG_VERIFIED    = 0x0100;
+	private static final int FLAG_VERSION     = 0x0200;
+	private static final int FLAG_SOURCE      = 0x0400;
+	private static final int FLAG_INSTANCE    = 0x0800;
+	private static final int FLAG_LOADER      = 0x1000;
+	private static final int FLAG_CLASS       = 0x2000;
 	
 	private int flags = 0;
 	
@@ -94,133 +97,60 @@ public class ClassQueryCommand extends ClassCommand {
 		return flags;
 	}
 
-	private String format() {
-		String format = "%-8s";
+	private void print(int index, ReferenceType type) throws Exception {
+		System.out.printf("%-8s%s\n", String.valueOf(index), type.name());		
+		final String FORMAT = "%-8s%-16s%s\n";
 		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			format += "%-10s";
+			System.out.printf(FORMAT, "", "package", String.valueOf(type.isPackagePrivate()));
 		}
 		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			format += "%-12s";
+			System.out.printf(FORMAT, "", "access", access(type));
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			format += "%-10s";
+			System.out.printf(FORMAT, "", "modifier", String.valueOf(type.modifiers()));
 		}
 		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			format += "%-10s";
+			System.out.printf(FORMAT, "", "abstract", String.valueOf(type.isAbstract()));
 		}
 		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			format += "%-8s";
+			System.out.printf(FORMAT, "", "final", String.valueOf(type.isFinal()));
 		}
 		if (FLAG_INITIALIZED == (FLAG_INITIALIZED & flags)) {
-			format += "%-12s";
+		    System.out.printf(FORMAT, "", "initialized", String.valueOf(type.isInitialized()));
 		}
 		if (FLAG_PREPARED == (FLAG_PREPARED & flags)) {
-			format += "%-10s";
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			format += "%-8s";
-		}
-		if (FLAG_VERIFIED == (FLAG_VERIFIED & flags)) {
-			format += "%-10s";
-		}
-		if (FLAG_VERSION == (FLAG_VERSION & flags)) {
-			format += "%-10s";
-		}
-		if (FLAG_SOURCE == (FLAG_SOURCE & flags)) {
-			format += "%-16s";
-		}
-		return format + "%s\n";
-	}
-
-	private Object[] arguments() {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add("#");
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add("package");
-		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			objects.add("access");
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add("modifier");
-		}
-		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			objects.add("abstract");
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add("final");
-		}
-		if (FLAG_INITIALIZED == (FLAG_INITIALIZED & flags)) {
-			objects.add("initialized");
-		}
-		if (FLAG_PREPARED == (FLAG_PREPARED & flags)) {
-			objects.add("prepare");
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			objects.add("static");
-		}
-		if (FLAG_VERIFIED == (FLAG_VERIFIED & flags)) {
-			objects.add("verified");
-		}
-		if (FLAG_VERSION == (FLAG_VERSION & flags)) {
-			objects.add("version");
-		}
-		if (FLAG_SOURCE == (FLAG_SOURCE & flags)) {
-			objects.add("source");
-		}
-		objects.add("class");
-		return objects.toArray();
-	}
-	
-	private Object[] arguments(int index, ReferenceType type) {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add(String.valueOf(index));
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add(String.valueOf(type.isPackagePrivate()));
-		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			if (type.isPrivate()) {
-				objects.add("private");
-			} else if (type.isProtected()) {
-				objects.add("protected");
-			} else if (type.isPublic()) {
-				objects.add("public");
-			} else {
-				objects.add("n/a");
-			}
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add(String.valueOf(type.modifiers()));
-		}		
-		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			objects.add(String.valueOf(type.isAbstract()));
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add(String.valueOf(type.isFinal()));
-		}
-		if (FLAG_INITIALIZED == (FLAG_INITIALIZED & flags)) {
-			objects.add(String.valueOf(type.isInitialized()));
-		}
-		if (FLAG_PREPARED == (FLAG_PREPARED & flags)) {
-			objects.add(String.valueOf(type.isPrepared()));
+		    System.out.printf(FORMAT, "", "prepared", String.valueOf(type.isPrepared()));
 		}
 		if (FLAG_STATIC == (FLAG_STATIC & flags)) {			
-			objects.add(String.valueOf(type.isStatic())); // ClassNotLoadedException
+		    System.out.printf(FORMAT, "", "static", String.valueOf(type.isStatic())); // ClassNotLoadedException
 		}
 		if (FLAG_VERIFIED == (FLAG_VERIFIED & flags)) {
-			objects.add(String.valueOf(type.isVerified()));
+		    System.out.printf(FORMAT, "", "verified", String.valueOf(type.isVerified()));
 		}
 		if (FLAG_VERSION == (FLAG_VERSION & flags)) {
-			objects.add(type.majorVersion() + "." + type.minorVersion());
+		    System.out.printf(FORMAT, "", "version", type.majorVersion() + "." + type.minorVersion());
 		}
 		if (FLAG_SOURCE == (FLAG_SOURCE & flags)) {
-			try { 
-				objects.add(type.sourceName());
-			} catch (AbsentInformationException e) {
-				objects.add("n/a");
-			}
+			System.out.printf(FORMAT, "", "source", source(type));
 		}
-		objects.add(type.name());
-		return objects.toArray();
+	}
+
+	private String access(ReferenceType type) {
+		if (type.isPrivate()) {
+			return "private";
+		} else if (type.isProtected()) {
+			return "protected";
+		} else if (type.isPublic()) {
+			return "public";
+		}
+		return "n/a";
+	}
+
+	private String source(ReferenceType type) {
+		try {
+			return type.sourceName();
+		} catch (AbsentInformationException e) {
+			return "n/a";
+		}
 	}
 }
