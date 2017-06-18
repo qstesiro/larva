@@ -22,9 +22,9 @@ public class MethodArgumentCommand extends MethodCommand {
         int i = 0; for (ReferenceType type : types) {
             if (type.name().equals(clazz)) {
                 List<Method> methods = type.allMethods();
-                for (Method item : methods) {
-                    if (item.name().equals(method)) {
-                        print(i++, item);
+                for (Method element : methods) {
+                    if (element.name().equals(method)) {
+                        print(i++, element);
 					}
                 }
             }
@@ -57,7 +57,7 @@ public class MethodArgumentCommand extends MethodCommand {
 		if (0 < arguments.size()) {
 			int i = 0; for (String type : arguments) {
 				if (0 < i++) System.out.printf("%s", ", ");
-				System.out.printf("%s", type);
+				System.out.printf("%s %s", type, "n/a");
 			}
 		}
 		System.out.printf(")\n");

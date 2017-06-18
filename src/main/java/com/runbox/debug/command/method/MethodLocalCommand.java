@@ -22,9 +22,9 @@ public class MethodLocalCommand extends MethodCommand {
         for (ReferenceType type : types) {
             if (type.name().equals(clazz)) {
                 List<Method> methods = type.allMethods();
-                for (Method item : methods) {
-                    if (item.name().equals(method)) {
-                        print(index++, item);
+                for (Method element : methods) {
+                    if (element.name().equals(method)) {
+                        print(index++, element);
 					}
                 }
             }
@@ -52,7 +52,7 @@ public class MethodLocalCommand extends MethodCommand {
 	private void printTypes(List<String> arguments) {
 		if (0 < arguments.size()) {
 			for (String type : arguments) {
-				System.out.printf("%-5s%s\n", "", type);
+				System.out.printf("%-5s :%s\n", "n/a", type);
 			}
 		}
 	}
