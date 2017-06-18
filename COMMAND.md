@@ -78,19 +78,21 @@
 &emsp;&emsp;&emsp;package 包路径，是可选的；<br>
 &emsp;&emsp;&emsp;className 类名称<br>
 &emsp;&emsp;&emsp;如果使用空串则显示所有当前已经被装载的类，支持正则表达式；&emsp;&emsp;&emsp;<br>
-&emsp;&emsp;&emsp;flags 标准表达式，代表一个组合标志位，运算结果必须是整形<br>
-&emsp;&emsp;&emsp;0x000 默认值显示类全路径<br>
-&emsp;&emsp;&emsp;0x001 是否包私有<br>
-&emsp;&emsp;&emsp;0x002 访问标志 <br>
-&emsp;&emsp;&emsp;0x004 修改器（直译不太明白，需要查询JVM规范）<br>
-&emsp;&emsp;&emsp;0x008 是否抽象<br>
-&emsp;&emsp;&emsp;0x010 是否不可被继承<br>
-&emsp;&emsp;&emsp;0x020 是否已被初始化<br>
-&emsp;&emsp;&emsp;0x040 是否已预装载<br>
-&emsp;&emsp;&emsp;0x080 是否静态<br>
-&emsp;&emsp;&emsp;0x100 是否已被验证<br>
-&emsp;&emsp;&emsp;0x200 编译版本<br>
-&emsp;&emsp;&emsp;0x400 源文件<br> 
+&emsp;&emsp;&emsp;flags 标准表达式，代表一个组合标志位，运算结果必须是整形，默认值显示类全路径<br>
+&emsp;&emsp;&emsp;0x0001 是否包私有<br>
+&emsp;&emsp;&emsp;0x0002 访问标志 <br>
+&emsp;&emsp;&emsp;0x0004 修改器（直译不太明白，需要查询JVM规范）<br>
+&emsp;&emsp;&emsp;0x0008 是否抽象<br>
+&emsp;&emsp;&emsp;0x0010 是否不可被继承<br>
+&emsp;&emsp;&emsp;0x0020 是否已被初始化<br>
+&emsp;&emsp;&emsp;0x0040 是否已预装载<br>
+&emsp;&emsp;&emsp;0x0080 是否静态<br>
+&emsp;&emsp;&emsp;0x0100 是否已被验证<br>
+&emsp;&emsp;&emsp;0x0200 编译版本<br>
+&emsp;&emsp;&emsp;0x0400 源文件<br> 
+&emsp;&emsp;&emsp;0x0800 实例数量<br> 
+&emsp;&emsp;&emsp;0x1000 装载器<br> 
+&emsp;&emsp;&emsp;0x2000 Class类型<br> 
 样例：class.query "java.lang.String", 0xff;<br>
 &emsp;&emsp;&emsp;class.query "com.runbox.demo.Demo.*", 0x8;<br>
 &emsp;&emsp;&emsp;class.query "java.lang..*";<br>
@@ -116,8 +118,8 @@
 &emsp;&emsp;&emsp;0x040 是否枚举<br>
 &emsp;&emsp;&emsp;0x080 是否transient<br>
 &emsp;&emsp;&emsp;0x100 是否volatile<br>
-&emsp;&emsp;&emsp;0x200 声明这个字段的类（与0x400互斥）<br>
-&emsp;&emsp;&emsp;0x400 字段定义类型（与0x200互斥）<br>
+&emsp;&emsp;&emsp;0x200 声明这个字段的类<br>
+&emsp;&emsp;&emsp;0x400 字段定义类型<br>
 样例：class.field "com.runbox.debug.Demo..*";<br>
 &emsp;&emsp;&emsp;import "java.lang.String"; class.field "String..*";<br>
 &emsp;&emsp;&emsp;class.field "Demo..*", 0x1ff;<br>
@@ -145,8 +147,8 @@
 &emsp;&emsp;&emsp;0x0800 是为静态初始化块&emsp;&emsp;&emsp;<br>
 &emsp;&emsp;&emsp;0x1000 是否接受变长参数<br>
 &emsp;&emsp;&emsp;0x2000 方法的起始行号<br>
-&emsp;&emsp;&emsp;0x4000 声明这个方法的类（与0x8000互斥）<br>
-&emsp;&emsp;&emsp;0x8000 方法返回类型（与0x4000互斥）<br>
+&emsp;&emsp;&emsp;0x4000 声明这个方法的类<br>
+&emsp;&emsp;&emsp;0x8000 方法返回类型<br>
 样例：class.method "com.runbox.debug.Demo..*";<br>
 &emsp;&emsp;&emsp;import "java.lang.String"; class.method "String.noti.*", 0x7fff;<br>
 ### class.monitor.query expr
@@ -327,7 +329,8 @@
 样例：@id = 4; breakpoint.enable 2，0x3, @id;<br>
 ## 执行
 ### execute.run
-说明：继续运行当前被调试的目标<br>
+说明：继续运行当前被调试的目标直到另一个可中断事件在目标程序中发生<br>
+&emsp;&emsp;&emsp;例如一个断点或是某一监控事件等<br>
 参数：无<br>
 样例：execute.run;<br>
 ### execute.next.over [expr] {block}
@@ -386,10 +389,11 @@
 参数：expr 标准表达式，由以下几部分组成：<br>
 &emsp;&emsp;&emsp;expr[, flags]<br>
 &emsp;&emsp;&emsp;expr 子表达式，其运算结果必须为一个对象引用；<br>
-&emsp;&emsp;&emsp;flags 是一个标志组合<br>
-&emsp;&emsp;&emsp;0x00 不显示任何类型（默认值）；<br>
-&emsp;&emsp;&emsp;0x01 显示变量类型；<br>
-&emsp;&emsp;&emsp;0x02 显示变量值类型；<br>
+&emsp;&emsp;&emsp;flags 是一个标志组合，默认值 0x01 | 0x02<br>
+&emsp;&emsp;&emsp;0x01 显示基本的信息；<br>
+&emsp;&emsp;&emsp;0x02 显示字段名称与值，但不显示任何类型（默认值）；<br>
+&emsp;&emsp;&emsp;0x04 显示变量类型，必须设置0x02，此标志才生效；<br>
+&emsp;&emsp;&emsp;0x08 显示变量值类型，必须设置0x02，此标志才生效；<br>
 &emsp;&emsp;&emsp;对于原始类型来说变量类型与值类型一致，但是对于引用变量则不同，例如：引用类型为Object，<br>
 &emsp;&emsp;&emsp;但是某值可能为Object任何子类；<br>
 样例：print.field this;<br>
@@ -548,22 +552,34 @@
 样例：thread.stack;<br>
 &emsp;&emsp;&emsp;thread.stack 0x1; <br>
 &emsp;&emsp;&emsp;@var = 0x2; thread.stack @var;<br>
-### thread.hold
-说明：<br>
-参数：<br>
-样例：<br>
-### thread.wait
-说明：<br>
-参数：<br>
-样例：<br>
+### thread.hold expr<br>
+说明：显示指定线程当前持有的对象监控器<br>
+参数：expr 标准表达式，[id[,id]] id 代表线程ID，如果不指定id则显示所有线程<br>
+&emsp;&emsp;&emsp;注意此命令对以下两种情况不生效<br>
+&emsp;&emsp;&emsp;一、只能处理被挂起的线程，如果线程没有被挂起（可通过thread.suspend挂起），此命令不生效；<br>
+&emsp;&emsp;&emsp;二、线程状态如果是unknow或zombie，则此命令不生效；<br>
+&emsp;&emsp;&emsp;holding 代表线程正持有哪些监控器对象，如果没有持有的线程显示n/a<br>
+&emsp;&emsp;&emsp;waiting 代表当前正在等待监控器对象的线程列表，如果没有持有的线程显示n/a<br>
+样例：thread.hold 4826, 4827<br>
+&emsp;&emsp;&emsp;thread.hold<br>
+### thread.wait expr <br>
+说明：显示指定线程正在等待的对象监控器<br>
+参数：expr 标准表达式，[id[,id]] id 代表线程ID，如果不指定id则显示所有线程<br>
+&emsp;&emsp;&emsp;注意此命令对以下两种情况不生效<br>
+&emsp;&emsp;&emsp;一、只能处理被挂起的线程，如果线程没有被挂起（可通过thread.suspend挂起），此命令不生效；<br>
+&emsp;&emsp;&emsp;二、线程状态如果是unknow或zombie，则此命令不生效；<br>
+&emsp;&emsp;&emsp;waiting 代表线程正在等待哪个对象关联的监控器，如果没有正在等待的对象显示n/a<br>
+&emsp;&emsp;&emsp;holding 代表监控器正被哪个线程持有，如果没有持有的线程显示n/a<br>
+样例：thread.wait<br>
+&emsp;&emsp;&emsp;thread.wait 4826, 4827<br>
 ### thread.monitor.start {block}
-说明：<br>
-参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；
-样例：<br>
+说明：监控线程的启动，当目标程序中创建新的线程时调试器会收到相应的事件<br>
+参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；<br>
+样例：thread.monitor.start<br>
 ### thread.monitor.death {block}
-说明：<br>
-参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；
-样例：<br>
+说明：监控线程的启动，当目标程序中有线程结束时调试器会收到相应的事件<br>
+参数：{block} 命令尾块，这个块中的脚本会在监控的事件被触发后执行；<br>
+样例：thread.monitor.death<br>
 ## 源代码
 ### source.append expr
 说明：添加源码路径<br>
