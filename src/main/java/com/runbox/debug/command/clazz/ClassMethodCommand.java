@@ -40,14 +40,14 @@ public class ClassMethodCommand extends ClassCommand {
     @Override
     public boolean execute() throws Exception {
         List<ReferenceType> types = MachineManager.instance().allClasses();
-		System.out.printf(format(), arguments());
+		System.out.printf("%-8s%s\n", "#", "method");
         int i = 0; for (ReferenceType type : types) {
 			if (!(type instanceof ArrayType)) {
 				if (type.name().equals(clazz)) {
 					List<Method> methods = type.allMethods();
-					for (Method item : methods) {
-						if (Pattern.compile(method).matcher(item.name()).matches()) {
-							System.out.printf(format(), arguments(i++, item));
+					for (Method element : methods) {
+						if (Pattern.compile(method).matcher(element.name()).matches()) {
+							print(i++, element);
 						}
 					}
 				}
@@ -124,187 +124,255 @@ public class ClassMethodCommand extends ClassCommand {
 	
 	private int flags() throws Exception {
 		if (null != values && FLAGS < values.size()) {
-			flags = values.getInteger(FLAGS);
-			if (FLAG_DECLARE == (FLAG_DECLARE & flags) &&
-				FLAG_RETURN == (FLAG_RETURN & flags)) {
-				throw new Exception("invalid flags combine");
-			}					
+			flags = values.getInteger(FLAGS);			
 		}
 		return flags;
 	}
 
-	private String format() {
-		String format = "%-5s" + "%-24s";
+	private void print(int index, Method method) {
+		System.out.printf("%-8s%s\n", String.valueOf(index), method.name());
+		final String FORMAT = "%-8s%-16s%s\n";
 		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			format += "%-10s";
+			System.out.printf(FORMAT, "", "package", String.valueOf(method.isPackagePrivate()));
 		}
 		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			format += "%-12s";
+			System.out.printf(FORMAT, "", "access", access(method));
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			format += "%-12s";
+			System.out.printf(FORMAT, "", "modifier", String.valueOf(method.modifiers()));
 		}
 		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			format += "%-10s";
+		    System.out.printf(FORMAT, "", "abstract", String.valueOf(method.isAbstract()));
 		}
 		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "final", String.valueOf(method.isFinal()));
 		}
 		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "static", String.valueOf(method.isStatic()));
 		}
 		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			format += "%-12s";
+		    System.out.printf(FORMAT, "", "synthetic", String.valueOf(method.isSynthetic()));
 		}
 		if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "bridge", String.valueOf(method.isBridge()));
 		}
 		if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "native", String.valueOf(method.isNative()));
 		}
 		if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
-			format += "%-16s";
+		    System.out.printf(FORMAT, "", "synchronized", String.valueOf(method.isSynchronized()));
 		}
 		if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
-			format += "%-16s";
+		    System.out.printf(FORMAT, "", "constructor", String.valueOf(method.isConstructor()));
 		}
 		if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
-			format += "%-16s";
+		    System.out.printf(FORMAT, "", "initializer", String.valueOf(method.isStaticInitializer()));
 		}
 		if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
-			format += "%-10s";
+		    System.out.printf(FORMAT, "", "variable", String.valueOf(method.isVarArgs()));
 		}
 		if (FLAG_LINE == (FLAG_LINE & flags)) {
-			format += "%-8s";
-		}		
-		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			format += "%s";
-		}
-		if (FLAG_RETURN == (FLAG_RETURN & flags)) {
-			format += "%s";
-		}
-		return format + "\n";
-	}
-
-	private Object[] arguments() {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add("#"); objects.add("method");
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add("package");
-		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			objects.add("access");
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add("modifier");
-		}
-		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			objects.add("abstract");
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add("final");
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			objects.add("static");
-		}
-		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			objects.add("synthetic");
-		}
-		if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
-			objects.add("bridge");
-		}
-		if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
-			objects.add("native");
-		}
-		if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
-			objects.add("synchronized");
-		}
-		if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
-			objects.add("constructor");
-		}
-		if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
-			objects.add("initializer");
-		}
-		if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
-			objects.add("varargs");
-		}
-		if (FLAG_LINE == (FLAG_LINE & flags)) {
-			objects.add("line");
+		    System.out.printf(FORMAT, "", "line", line(method));
 		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add("declare");
-		}
-		if (FLAG_RETURN == (FLAG_RETURN & flags)) {
-			objects.add("return");
-		}		
-		return objects.toArray();
-	}
-	
-	private Object[] arguments(int index, Method method) {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add(String.valueOf(index));
-		objects.add(method.name());
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add(String.valueOf(method.isPackagePrivate()));
-		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			if (method.isPrivate()) {
-				objects.add("private");
-			} else if (method.isProtected()) {
-				objects.add("protected");
-			} else if (method.isPublic()) {
-				objects.add("public");
-			} else {
-				objects.add("n/a");
-			}
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add(String.valueOf(method.modifiers()));
-		}
-		if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
-			objects.add(String.valueOf(method.isAbstract()));
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add(String.valueOf(method.isFinal()));
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			objects.add(String.valueOf(method.isStatic()));
-		}
-		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			objects.add(String.valueOf(method.isSynthetic()));
-		}
-		if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
-			objects.add(String.valueOf(method.isBridge()));
-		}
-		if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
-			objects.add(String.valueOf(method.isNative()));
-		}
-		if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
-			objects.add(String.valueOf(method.isSynchronized()));
-		}
-		if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
-			objects.add(String.valueOf(method.isConstructor()));
-		}
-		if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
-			objects.add(String.valueOf(method.isStaticInitializer()));
-		}
-		if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
-			objects.add(String.valueOf(method.isVarArgs()));
-		}
-		if (FLAG_LINE == (FLAG_LINE & flags)) {
-			if (method.isAbstract()) {
-				objects.add("n/a");
-			} else {
-				int line = method.location().lineNumber();
-				objects.add(String.valueOf((-1 == line) ? "n/a" : line));
-			}			
-		}
-		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(method.declaringType().name());
+		    System.out.printf(FORMAT, "", "declare", method.declaringType().name());
 		}			
 		if (FLAG_RETURN == (FLAG_RETURN & flags)) {
-			objects.add(method.returnTypeName());
-		}				
-		return objects.toArray();
+		    System.out.printf(FORMAT, "", "return", method.returnTypeName());
+		}
 	}
+
+	private String access(Method method) {
+		if (method.isPrivate()) {
+			return "private";
+		} else if (method.isProtected()) {
+			return "protected";
+		} else if (method.isPublic()) {
+			return "public";
+		}
+		return "n/a";
+	}
+
+	private String line(Method method) {
+		if (!method.isAbstract()) {
+			int line = method.location().lineNumber();
+			return String.valueOf((-1 == line) ? "n/a" : line);			
+		}
+		return "n/a";
+	}
+	
+	// private String format() {
+	// 	String format = "%-5s" + "%-24s";
+	// 	if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
+	// 		format += "%-10s";
+	// 	}
+	// 	if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
+	// 		format += "%-12s";
+	// 	}
+	// 	if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
+	// 		format += "%-12s";
+	// 	}
+	// 	if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
+	// 		format += "%-10s";
+	// 	}
+	// 	if (FLAG_FINAL == (FLAG_FINAL & flags)) {
+	// 		format += "%-8s";
+	// 	}
+	// 	if (FLAG_STATIC == (FLAG_STATIC & flags)) {
+	// 		format += "%-8s";
+	// 	}
+	// 	if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
+	// 		format += "%-12s";
+	// 	}
+	// 	if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
+	// 		format += "%-8s";
+	// 	}
+	// 	if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
+	// 		format += "%-8s";
+	// 	}
+	// 	if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
+	// 		format += "%-16s";
+	// 	}
+	// 	if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
+	// 		format += "%-16s";
+	// 	}
+	// 	if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
+	// 		format += "%-16s";
+	// 	}
+	// 	if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
+	// 		format += "%-10s";
+	// 	}
+	// 	if (FLAG_LINE == (FLAG_LINE & flags)) {
+	// 		format += "%-8s";
+	// 	}		
+	// 	if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
+	// 		format += "%s";
+	// 	}
+	// 	if (FLAG_RETURN == (FLAG_RETURN & flags)) {
+	// 		format += "%s";
+	// 	}
+	// 	return format + "\n";
+	// }
+
+	// private Object[] arguments() {
+	// 	List<Object> objects = new LinkedList<Object>();
+	// 	objects.add("#"); objects.add("method");
+	// 	if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
+	// 		objects.add("package");
+	// 	}
+	// 	if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
+	// 		objects.add("access");
+	// 	}
+	// 	if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
+	// 		objects.add("modifier");
+	// 	}
+	// 	if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
+	// 		objects.add("abstract");
+	// 	}
+	// 	if (FLAG_FINAL == (FLAG_FINAL & flags)) {
+	// 		objects.add("final");
+	// 	}
+	// 	if (FLAG_STATIC == (FLAG_STATIC & flags)) {
+	// 		objects.add("static");
+	// 	}
+	// 	if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
+	// 		objects.add("synthetic");
+	// 	}
+	// 	if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
+	// 		objects.add("bridge");
+	// 	}
+	// 	if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
+	// 		objects.add("native");
+	// 	}
+	// 	if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
+	// 		objects.add("synchronized");
+	// 	}
+	// 	if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
+	// 		objects.add("constructor");
+	// 	}
+	// 	if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
+	// 		objects.add("initializer");
+	// 	}
+	// 	if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
+	// 		objects.add("varargs");
+	// 	}
+	// 	if (FLAG_LINE == (FLAG_LINE & flags)) {
+	// 		objects.add("line");
+	// 	}
+	// 	if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
+	// 		objects.add("declare");
+	// 	}
+	// 	if (FLAG_RETURN == (FLAG_RETURN & flags)) {
+	// 		objects.add("return");
+	// 	}		
+	// 	return objects.toArray();
+	// }
+	
+	// private Object[] arguments(int index, Method method) {
+	// 	List<Object> objects = new LinkedList<Object>();
+	// 	objects.add(String.valueOf(index));
+	// 	objects.add(method.name());
+	// 	if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
+	// 		objects.add(String.valueOf(method.isPackagePrivate()));
+	// 	}
+	// 	if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
+	// 		if (method.isPrivate()) {
+	// 			objects.add("private");
+	// 		} else if (method.isProtected()) {
+	// 			objects.add("protected");
+	// 		} else if (method.isPublic()) {
+	// 			objects.add("public");
+	// 		} else {
+	// 			objects.add("n/a");
+	// 		}
+	// 	}
+	// 	if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
+	// 		objects.add(String.valueOf(method.modifiers()));
+	// 	}
+	// 	if (FLAG_ABSTRACT == (FLAG_ABSTRACT & flags)) {
+	// 		objects.add(String.valueOf(method.isAbstract()));
+	// 	}
+	// 	if (FLAG_FINAL == (FLAG_FINAL & flags)) {
+	// 		objects.add(String.valueOf(method.isFinal()));
+	// 	}
+	// 	if (FLAG_STATIC == (FLAG_STATIC & flags)) {
+	// 		objects.add(String.valueOf(method.isStatic()));
+	// 	}
+	// 	if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
+	// 		objects.add(String.valueOf(method.isSynthetic()));
+	// 	}
+	// 	if (FLAG_BRIDGE == (FLAG_BRIDGE & flags)) {
+	// 		objects.add(String.valueOf(method.isBridge()));
+	// 	}
+	// 	if (FLAG_NATIVE == (FLAG_NATIVE & flags)) {
+	// 		objects.add(String.valueOf(method.isNative()));
+	// 	}
+	// 	if (FLAG_SYNCHRONIZED == (FLAG_SYNCHRONIZED & flags)) {
+	// 		objects.add(String.valueOf(method.isSynchronized()));
+	// 	}
+	// 	if (FLAG_CONSTRUCTOR == (FLAG_CONSTRUCTOR & flags)) {
+	// 		objects.add(String.valueOf(method.isConstructor()));
+	// 	}
+	// 	if (FLAG_INITIALIZER == (FLAG_INITIALIZER & flags)) {
+	// 		objects.add(String.valueOf(method.isStaticInitializer()));
+	// 	}
+	// 	if (FLAG_VARIABLE == (FLAG_VARIABLE & flags)) {
+	// 		objects.add(String.valueOf(method.isVarArgs()));
+	// 	}
+	// 	if (FLAG_LINE == (FLAG_LINE & flags)) {
+	// 		if (method.isAbstract()) {
+	// 			objects.add("n/a");
+	// 		} else {
+	// 			int line = method.location().lineNumber();
+	// 			objects.add(String.valueOf((-1 == line) ? "n/a" : line));
+	// 		}			
+	// 	}
+	// 	if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
+	// 		objects.add(method.declaringType().name());
+	// 	}			
+	// 	if (FLAG_RETURN == (FLAG_RETURN & flags)) {
+	// 		objects.add(method.returnTypeName());
+	// 	}				
+	// 	return objects.toArray();
+	// }
 }
