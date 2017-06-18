@@ -35,8 +35,7 @@ public class ClassQueryCommand extends ClassCommand {
     @Override
     public boolean execute() throws Exception {
         if (null != clazz) {			
-            List<ReferenceType> classes = MachineManager.instance().allClasses();
-			System.out.printf("%-8s%s\n", "#", "class");
+            List<ReferenceType> classes = MachineManager.instance().allClasses();			
             int i = 0; for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {
 					if (Pattern.compile(clazz).matcher(type.name()).matches()) {						
@@ -45,8 +44,7 @@ public class ClassQueryCommand extends ClassCommand {
 				}
             }
         } else {
-			List<ReferenceType> classes = MachineManager.instance().allClasses();
-			System.out.printf("%-8s%s\n", "#", "class");
+			List<ReferenceType> classes = MachineManager.instance().allClasses();			
             int i = 0; for (ReferenceType type : classes) {
 				if (!(type instanceof ArrayType)) {					
 					print(i++, type);
@@ -98,7 +96,7 @@ public class ClassQueryCommand extends ClassCommand {
 	}
 
 	private void print(int index, ReferenceType type) throws Exception {
-		System.out.printf("%-8s%s\n", String.valueOf(index), type.name());		
+		System.out.printf("#%-7s%s\n", String.valueOf(index), type.name());		
 		final String FORMAT = "%-8s%-16s%s\n";
 		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
 			System.out.printf(FORMAT, "", "package", String.valueOf(type.isPackagePrivate()));
@@ -128,29 +126,63 @@ public class ClassQueryCommand extends ClassCommand {
 		    System.out.printf(FORMAT, "", "verified", String.valueOf(type.isVerified()));
 		}
 		if (FLAG_VERSION == (FLAG_VERSION & flags)) {
-		    System.out.printf(FORMAT, "", "version", type.majorVersion() + "." + type.minorVersion());
+		    System.out.printf(FORMAT, "", "version", version(type));
 		}
 		if (FLAG_SOURCE == (FLAG_SOURCE & flags)) {
 			System.out.printf(FORMAT, "", "source", source(type));
 		}
+		if (FLAG_INSTANCE == (FLAG_INSTANCE & flags)) {
+			System.out.printf(FORMAT, "", "instance", instances(type));
+		}
+		if (FLAG_LOADER == (FLAG_LOADER & flags)) {
+			System.out.printf(FORMAT, "", "loader", type.classLoader().type().name());
+		}
+		if (FLAG_CLASS == (FLAG_CLASS & flags)) {
+			System.out.printf(FORMAT, "", "class", type.classObject().type().name());
+		}
 	}
 
 	private String access(ReferenceType type) {
-		if (type.isPrivate()) {
-			return "private";
-		} else if (type.isProtected()) {
-			return "protected";
-		} else if (type.isPublic()) {
-			return "public";
+		if (null != type) {
+			if (type.isPrivate()) {
+				return "private";
+			} else if (type.isProtected()) {
+				return "protected";
+			} else if (type.isPublic()) {
+				return "public";
+			}
 		}
 		return "n/a";
 	}
 
-	private String source(ReferenceType type) {
-		try {
-			return type.sourceName();
-		} catch (AbsentInformationException e) {
-			return "n/a";
+	private String version(ReferenceType type) {
+		if (null != type) {
+			try {
+				return type.majorVersion() + "." + type.minorVersion();
+			} catch (UnsupportedOperationException e) {}
 		}
+		return "n/a";
+	}
+	
+	private String source(ReferenceType type) {
+		if (null != type) {
+			try {
+				return type.sourceName();
+			} catch (AbsentInformationException e) {}
+		}
+		return "n/a";
+	}
+
+	private String instances(final ReferenceType type) {
+		if (null != type) {
+			List<ReferenceType> types = new LinkedList<ReferenceType>() {{add(type);}};
+			try {
+				long[] counts = MachineManager.instance().get().instanceCounts(types);
+				if (null != counts) {
+					return String.valueOf(counts[0]);
+				}
+			} catch (UnsupportedOperationException e) {}
+		}
+		return "n/a";
 	}
 }
