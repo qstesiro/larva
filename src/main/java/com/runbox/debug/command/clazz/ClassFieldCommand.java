@@ -38,19 +38,19 @@ public class ClassFieldCommand extends ClassCommand {
     @Override
     public boolean execute() throws Exception {
         List<ReferenceType> types = MachineManager.instance().allClasses();
-		System.out.printf(format(), arguments());
+		System.out.printf("%-8s%s\n", "#", "field");
         int i = 0; for (ReferenceType type : types) {
 			if (!(type instanceof ArrayType)) {
 				if (type.name().equals(clazz)) {
 					List<Field> fields = type.allFields();
-					for (Field item : fields) {
-						if (Pattern.compile(field).matcher(item.name()).matches()) {
-							System.out.printf(format(), arguments(i++, item));
+					for (Field element : fields) {
+						if (Pattern.compile(field).matcher(element.name()).matches()) {
+							print(i++, element);
 						}
 					}
 				}
 			}
-        }        
+        }
         return super.execute();
     }			
 
@@ -82,7 +82,7 @@ public class ClassFieldCommand extends ClassCommand {
 
 	private String field = null;
 
-	protected String field() throws Exception {
+	private String field() throws Exception {
 		if (null != values && REGEX < values.size()) {
 			String value = values.getString(REGEX);
 			int index = value.lastIndexOf(".*");
@@ -117,137 +117,57 @@ public class ClassFieldCommand extends ClassCommand {
 	
 	private int flags() throws Exception {
 		if (null != values && FLAGS < values.size()) {
-			flags = values.getInteger(FLAGS);
-			if (FLAG_DECLARE == (FLAG_DECLARE & flags) &&
-				FLAG_TYPE == (FLAG_TYPE & flags)) {
-				throw new Exception("invalid flags combine");
-			}			
+			flags = values.getInteger(FLAGS);			
 		}
 		return flags;
 	}
 
-	private String format() {
-		String format = "%-5s" + "%-24s";
+	private void print(int index, Field field) {
+		System.out.printf("%-8s%s\n", String.valueOf(index), field.name());		
+		final String FORMAT = "%-8s%-16s%s\n";
 		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			format += "%-10s";
+			System.out.printf(FORMAT, "", "package", String.valueOf(field.isPackagePrivate()));
 		}
 		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			format += "%-12s";
+			System.out.printf(FORMAT, "", "access", access(field));
 		}
 		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			format += "%-10s";
+		    System.out.printf(FORMAT, "", "modifier", String.valueOf(field.modifiers()));
 		}
 		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "final", String.valueOf(field.isFinal()));
 		}
 		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "static", String.valueOf(field.isStatic()));
 		}
 		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			format += "%-12s";
+		    System.out.printf(FORMAT, "", "synthetic", String.valueOf(field.isSynthetic()));
 		}
 		if (FLAG_ENUM == (FLAG_ENUM & flags)) {
-			format += "%-8s";
+		    System.out.printf(FORMAT, "", "enum", String.valueOf(field.isEnumConstant()));
 		}
 		if (FLAG_TRANSIENT == (FLAG_TRANSIENT & flags)) {
-			format += "%-12s";
+		    System.out.printf(FORMAT, "", "transient", String.valueOf(field.isTransient()));
 		}
 		if (FLAG_VOLATILE == (FLAG_VOLATILE & flags)) {
-			format += "%-10s";
-		}		
+		    System.out.printf(FORMAT, "", "volatile", String.valueOf(field.isVolatile()));
+		}
 		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			format += "%s";
+		    System.out.printf(FORMAT, "", "declare", field.declaringType().name());
 		}
 		if (FLAG_TYPE == (FLAG_TYPE & flags)) {
-			format += "%s";
+		    System.out.printf(FORMAT, "", "type", field.typeName());
 		}
-		return format + "\n";
 	}
 
-	private Object[] arguments() {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add("#"); objects.add("field");
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add("package");
+	private String access(Field field) {
+		if (field.isPrivate()) {
+			return "private";
+		} else if (field.isProtected()) {
+			return "protected";
+		} else if (field.isPublic()) {
+			return "public";
 		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			objects.add("access");
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add("modifier");
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add("final");
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			objects.add("static");
-		}
-		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			objects.add("synthetic");
-		}
-		if (FLAG_ENUM == (FLAG_ENUM & flags)) {
-			objects.add("enum");
-		}
-		if (FLAG_TRANSIENT == (FLAG_TRANSIENT & flags)) {
-			objects.add("transient");
-		}
-		if (FLAG_VOLATILE == (FLAG_VOLATILE & flags)) {
-			objects.add("volatile");
-		}
-		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add("declare");
-		}				
-		if (FLAG_TYPE == (FLAG_TYPE & flags)) {
-			objects.add("type");
-		}				
-		return objects.toArray();
-	}
-	
-	private Object[] arguments(int index, Field field) {
-		List<Object> objects = new LinkedList<Object>();
-		objects.add(String.valueOf(index));
-		objects.add(field.name());
-		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
-			objects.add(String.valueOf(field.isPackagePrivate()));
-		}
-		if (FLAG_ACCESS == (FLAG_ACCESS & flags)) {
-			if (field.isPrivate()) {
-				objects.add("private");
-			} else if (field.isProtected()) {
-				objects.add("protected");
-			} else if (field.isPublic()) {
-				objects.add("public");
-			} else {
-				objects.add("n/a");
-			}
-		}
-		if (FLAG_MODIFIER == (FLAG_MODIFIER & flags)) {
-			objects.add(String.valueOf(field.modifiers()));
-		}
-		if (FLAG_FINAL == (FLAG_FINAL & flags)) {
-			objects.add(String.valueOf(field.isFinal()));
-		}
-		if (FLAG_STATIC == (FLAG_STATIC & flags)) {
-			objects.add(String.valueOf(field.isStatic()));
-		}
-		if (FLAG_SYNTHETIC == (FLAG_SYNTHETIC & flags)) {
-			objects.add(String.valueOf(field.isSynthetic()));
-		}
-		if (FLAG_ENUM == (FLAG_ENUM & flags)) {
-			objects.add(String.valueOf(field.isEnumConstant()));
-		}
-		if (FLAG_TRANSIENT == (FLAG_TRANSIENT & flags)) {
-			objects.add(String.valueOf(field.isTransient()));
-		}
-		if (FLAG_VOLATILE == (FLAG_VOLATILE & flags)) {
-			objects.add(String.valueOf(field.isVolatile()));
-		}
-		if (FLAG_DECLARE == (FLAG_DECLARE & flags)) {
-			objects.add(field.declaringType().name());
-		}
-		if (FLAG_TYPE == (FLAG_TYPE & flags)) {
-			objects.add(field.typeName());
-		}		
-		return objects.toArray();
-	}
+		return "n/a";
+	}		
 }
