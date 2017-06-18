@@ -37,8 +37,7 @@ public class ClassFieldCommand extends ClassCommand {
 	
     @Override
     public boolean execute() throws Exception {
-        List<ReferenceType> types = MachineManager.instance().allClasses();
-		System.out.printf("%-8s%s\n", "#", "field");
+        List<ReferenceType> types = MachineManager.instance().allClasses();		
         int i = 0; for (ReferenceType type : types) {
 			if (!(type instanceof ArrayType)) {
 				if (type.name().equals(clazz)) {
@@ -123,7 +122,7 @@ public class ClassFieldCommand extends ClassCommand {
 	}
 
 	private void print(int index, Field field) {
-		System.out.printf("%-8s%s\n", String.valueOf(index), field.name());		
+		System.out.printf("#%-7s%s\n", String.valueOf(index), field.name());
 		final String FORMAT = "%-8s%-16s%s\n";
 		if (FLAG_PACKAGE == (FLAG_PACKAGE & flags)) {
 			System.out.printf(FORMAT, "", "package", String.valueOf(field.isPackagePrivate()));
