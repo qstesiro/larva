@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.sun.jdi.Bootstrap;
+import com.sun.jdi.VirtualMachine;
 import com.sun.jdi.connect.*;
 import com.sun.jdi.event.EventQueue;
 import com.sun.jdi.event.EventSet;
@@ -59,7 +60,7 @@ public class Debugger implements SignalHandler {
                     Map<String, com.sun.jdi.connect.Connector.Argument> map = connector.defaultArguments();
                     map.get("hostname").setValue(ConfigManager.instance().ip());
                     map.get("port").setValue(String.valueOf(ConfigManager.instance().port()));
-                    MachineManager.set(connector.attach(map));
+                    MachineManager.set(connector.attach(map));					
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (IllegalConnectorArgumentsException e) {
@@ -82,10 +83,17 @@ public class Debugger implements SignalHandler {
                 if (null != set) {
                     EventIterator iterator = set.eventIterator();
                     while (iterator.hasNext()) {
-                        handle(iterator); if (CONTINUE != flag) break;
+						if (CONTINUE == flag) {
+							handle(iterator);
+							if (CONTINUE != flag) break;
+						}
                     }
                 }
-            } finally {
+            } catch (java.lang.NullPointerException e) {
+				// this exception will be thrown in dalvik
+				// when remove mehtod is invoked
+				// if we set TRACE_EVENTS 
+			} finally {
                 if (null != set) {
                     set.resume();
                 }
