@@ -168,7 +168,7 @@
 &emsp;&emsp;&emsp;package 包路径，是可选的；<br>
 &emsp;&emsp;&emsp;className 类名称，必须的参数，<br>
 &emsp;&emsp;&emsp;以上参数必须组成字符串类型，必须是精确匹配不能使用正则表达式；<br>
-&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在监控事件被触发后执行；
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在监控事件被触发后执行；<br>
 样例：import.class "com.runbox.demo.Demo"; class.monitor.prepare "Demo";<br>
 &emsp;&emsp;&emsp;class.monitor.prepare "com.runbox.demo.Demo";<br>
 ### class.monitor.unload expr {block}
@@ -266,8 +266,8 @@
 样例：import.class "com.runbox.demo.Demo";<br>
 &emsp;&emsp;&emsp;import.class "com.runbox.demo.Demo$Inner";<br>
 &emsp;&emsp;&emsp;breakpoint.method "Demo.method(String, Integer, Map)" {<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print.value @id; <br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print.field @thread; <br>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print.value @id; // 尾块的隐式参数<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print.field @thread; // 尾块的隐式参数<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print.value "this is a method breakpoint"; <br>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;execute.run;<br>
 &emsp;&emsp;&emsp;};<br>
@@ -364,8 +364,8 @@
 ### execute.file file (此功暂未完成)
 说明：运行一个外部的文件，文件内容是larva脚本；<br>
 参数：文件全路径，必须是字符串类型；<br>
-样例：execute.file ".\debug.jdb";<br>
-&emsp;&emsp;&emsp;@file = ".\debug.jdb"; execute.file @file;<br>
+样例：execute.file ".\\\\debug.jdb";<br>
+&emsp;&emsp;&emsp;@file = ".\\\\debug.jdb"; execute.file @file;<br>
 ## 显示变量
 ### print.value expr 
 说明：计算一个表达式并显示其结果<br>
@@ -539,10 +539,13 @@
 &emsp;&emsp;&emsp;[id[, id]] 每个id都是一个子表达式，运算结果必须为整形，如果不给出参数则挂起所有线程<br>
 样例：thread.resume 1, 2, 3;<br>
 &emsp;&emsp;&emsp;thread.resume;<br>
-### thread.interrupt (此功能暂未实现)
-说明：<br>
-参数：<br>
-样例：<br>
+### thread.interrupt expr<br>
+说明：中断一个线程或多个线程<br>
+参数：expr 表达式，由以下几部分组成：<br>
+&emsp;&emsp;&emsp;id[, id] 每个id都是一个子表达式，运算结果必须为整形<br>
+&emsp;&emsp;&emsp;被中断的线程不能被挂起，如果被挂起则此操作不生效；<br>
+样例：thread.interrupt 4086, 1983;<br>
+&emsp;&emsp;&emsp;@id = 10; thread.interrupt @id, 4086, 1983;<br>
 ### thread.stack expr
 说明：显示当前线程的所有栈帧（当前线程必须处于挂起状态，如果未挂起可以使用thread.suspend）<br>
 参数：expr 一个表达式，运算结果必须是整形，代表标志位：<br>
@@ -584,9 +587,9 @@
 ### source.append expr
 说明：添加源码路径<br>
 参数：expr 标准表达式，运算结果必须是字符串，路径只需要给出包名称之前的路径即可<br>
-&emsp;&emsp;&emsp;例如："d:\\program\\demo\\com\\runbox\\demo\\Demo.java", 只需要添加"d:\\program\\demo\\"就可以了；<br>
-样例：source.append "d:\\program\\demo";<br>
-&emsp;&emsp;&emsp;@var = "d:\\program\\demo"; source.append @var;<br>
+&emsp;&emsp;&emsp;例如："d:\\\\program\\\\demo\\\\com\\\\runbox\\\\demo\\\\Demo.java", 只需要添加"d:\\\\program\\\\demo"<br>
+样例：source.append "d:\\\\program\\demo";<br>
+&emsp;&emsp;&emsp;@var = "d:\\\\program\\demo"; source.append @var;<br>
 ### source.delete expr
 说明：删除已经增加的源码路径<br>
 参数：expr 标准表达式，如果不给出参数则删除所有路径；<br>
@@ -598,18 +601,26 @@
 参数：无<br>
 样例：source.query;<br>
 ## 异常捕获
-### exception.monitor
-说明：<br>
-参数：<br>
-样例：<br>
-### exception.delete
-说明：<br>
-参数：<br>
-样例：<br>
+### exception.monitor expr
+说明：监控某种异常类型是否发生；
+参数：expr 标准表达式，由以下几部分组成：<br>
+&emsp;&emsp;&emsp;type 某中异常类型的名称，支持import.class，可以只写类名称需要注意的是这个异常类型<br>&emsp;&emsp;&emsp;在执行此命令时<br>
+&emsp;&emsp;&emsp;必须是已经被目标虚拟机装载；<br>
+&emsp;&emsp;&emsp;caught 是否捕获一个能被目标程序自己捕获的异常，一个子表达式，运行结果必须为布尔类型，<br>
+&emsp;&emsp;&emsp;如果不省略此参数默认为true<br>
+&emsp;&emsp;&emsp;uncaught 是否捕获一个不能被目标程序自己捕获的异常，一个子表达式，运行结果必须为布尔类型，<br>
+&emsp;&emsp;&emsp;如果不省略此参数默认为true<br>
+样例：exception.monitor "java.io.IOException", true, true;<br>
+### exception.delete expr
+说明：删除某种异常类型的监控<br>
+参数：expr 标准表达式，如果不给出参数则删除所有异常监控；<br>
+&emsp;&emsp;&emsp;[id[, id]] 每一个ID为一个子表达式，运算结果必须为整形数<br>
+样例：@id = 10; exception.delete 1, 2, @id;<br>
+&emsp;&emsp;&emsp;exception.delete;<br>
 ### exception.query
-说明：<br>
-参数：<br>
-样例：<br>
+说明：查询当前所有异常监控<br>
+参数：无<br>
+样例：exception.query<br>
 ## 虚拟机
 ### machine.name
 说明：获取当前被调试的目标虚拟机名称<br>
@@ -635,6 +646,29 @@
 说明：获取当前被调试的目标虚拟机状态（运行或挂起）以及挂起次数<br>
 参数：无<br>
 样例：machine.status<br>
+## 信息跟踪
+### trace.mode expr
+说明：设置跟踪模式<br>
+参数：expr 是一个表达式，运算结果必须为整形，可选的模式如下：<br>
+&emsp;&emsp;&emsp;0x00 无任何跟踪（默认）<br> 
+&emsp;&emsp;&emsp;0x01 跟踪JDI包发送<br>
+&emsp;&emsp;&emsp;0x02 跟踪JDI包接收<br>
+&emsp;&emsp;&emsp;0x04 跟踪产生的事件<br>
+&emsp;&emsp;&emsp;0x08 跟踪类型引用<br>
+&emsp;&emsp;&emsp;0x10 跟踪对象引用<br>
+&emsp;&emsp;&emsp;以上值可以通过或运算组合0x1f用于跟踪所有事件，此功能通常用于分析调试器本身的错误或是观察<br>
+&emsp;&emsp;&emsp;JDI工作原理用<br>
+样例：trace.mode 0x4;<br>
+&emsp;&emsp;&emsp;@mode = 0x1 | 0x2; trace.mode @mode;<br>
+### trace.redirect expr
+说明：此命令将跟踪到的信息通过重定向到指定的文件中<br>
+参数：expr 标准表达式，运算结果必须是字符串，此字符串必须为一个文件路径，如果文件不存在<br>
+&emsp;&emsp;&emsp;创建一个新文件，如果文件存在则删除再创建一个新文件；<br>
+样例：@path = "D:\\\\program\\\\maven\\\\larva\\\\trace.log" trace.redirect @path;<br>
+### trace.query
+说明：查询当前跟踪的设置信息<br>
+参数：无<br>
+样例：trace.query<br>
 ## 退出
 ### quit 
 说明：结束调试并终结被调试的目标虚拟机<br>
@@ -644,7 +678,7 @@
 说明：结束调试但不结果目标虚拟机<br>
 参数：无<br>
 样例：detach;<br>
-## 帮助 暂未实现
+## 帮助 （暂未实现）
 ### help 
 说明：<br>
 参数：<br>
