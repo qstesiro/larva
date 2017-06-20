@@ -58,6 +58,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 			// method.bytecode() will throw UnsupportedOperationException
 			// though canGetBytecode() return true		
 			Method method = location.method();
+			// System.out.println(location.codeIndex());
 			try {
 				BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
 															 ReaderFactory.create(location.declaringType().constantPool(),

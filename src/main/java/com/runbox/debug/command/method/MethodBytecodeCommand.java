@@ -27,8 +27,9 @@ public class MethodBytecodeCommand extends MethodCommand {
             if (type.name().equals(clazz)) {
                 for (Method element : type.allMethods()) {
                     if (element.name().equals(method)) {
-						if (null == arguments ||
-							arguments(arguments, element)) print(element);						
+						if (null == arguments || arguments(arguments, element)) {
+							print(element);
+						}
 					}
                 }
             }
@@ -56,6 +57,12 @@ public class MethodBytecodeCommand extends MethodCommand {
 		if (method.isFinal()) System.out.printf(" final");
 		System.out.printf(" %s", method.returnTypeName());
 		System.out.printf(" %s%s {\n", method.name(), arguments(method));
+		// byte[] codes = method.bytecodes();
+		// System.out.println(codes.length);
+		// for (int i = 0; i < codes.length; ++i) {
+		// 	System.out.printf("%02x", codes[i]);
+		// 	if (0 == i % 100 && 0 != i) System.out.println();
+		// }		
 		BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
 													 ReaderFactory.create(method.declaringType().constantPool(),
 																		  method.declaringType().constantPoolCount()));
