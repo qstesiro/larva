@@ -4,7 +4,7 @@
 
   <groupId>com.runbox</groupId>
   <artifactId>larva</artifactId>
-  <version>1.1.5</version>
+  <version>1.2.6</version>
   <packaging>jar</packaging>
 
   <name>larva</name>
