@@ -18,16 +18,13 @@ public class ThreadInterruptCommand extends ThreadCommand {
 		if (null != ids) {
 			for (ThreadReference thread : MachineManager.instance().allThreads()) {
 				for (long id : ids()) {
-					if (thread.uniqueID() == id) {
+					if (thread.uniqueID() == id && thread.isSuspended()) {
 						thread.interrupt();
 					}
 				}
-			}			
-		} else {
-			for (ThreadReference thread : MachineManager.instance().allThreads()) {
-				thread.interrupt();
 			}
-		}                
-		return super.execute();
+			return super.execute();
+		}
+		throw new Exception("invalid argument");
 	}
 }
