@@ -24,7 +24,7 @@ public class MachineManager extends Manager {
     private VirtualMachine machine = null;
 
     public static void set(VirtualMachine machine) {
-        instance.machine = machine;
+        instance.machine = machine;		
     }
 
 	public static VirtualMachine get() {
@@ -96,11 +96,15 @@ public class MachineManager extends Manager {
 		return count;
 	}
 
+	private String version = null;
+	
 	public String version() {
 		if (null != machine) {
-			return machine.version();
+			if (null == version) {
+				version = machine.version().trim().toLowerCase();				
+			}			
 		}
-		return null;
+		return version;
 	}
 
 	private String name = null;
@@ -108,14 +112,12 @@ public class MachineManager extends Manager {
 	public String name() {
 		if (null != machine) {
 			if (null == name) {
-				name = machine.name();
-				return name;				
-			}
-			return name;
+				name = machine.name().trim().toLowerCase();				
+			}			
 		}
-		return null;
-	}
-
+		return name;
+	}	
+	
 	public void exit(int code) {
 		if (null != machine) {			
 			machine.exit(code);

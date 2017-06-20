@@ -12,6 +12,8 @@ import com.sun.jdi.IntegerValue;
 import com.sun.jdi.StringReference;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.ArrayType;
+import com.sun.jdi.ClassLoaderReference;
+import com.sun.jdi.ClassObjectReference;
 import com.sun.jdi.AbsentInformationException;
 
 import com.runbox.debug.manager.MachineManager;
@@ -135,10 +137,12 @@ public class ClassQueryCommand extends ClassCommand {
 			System.out.printf(FORMAT, "", "instance", instances(type));
 		}
 		if (FLAG_LOADER == (FLAG_LOADER & flags)) {
-			System.out.printf(FORMAT, "", "loader", type.classLoader().type().name());
+			ClassLoaderReference loader = type.classLoader();
+			System.out.printf(FORMAT, "", "loader", (null != loader ? loader.type().name() : "n/a"));
 		}
 		if (FLAG_CLASS == (FLAG_CLASS & flags)) {
-			System.out.printf(FORMAT, "", "class", type.classObject().type().name());
+			ClassObjectReference clazz = type.classObject();
+			System.out.printf(FORMAT, "", "class", (null != clazz ? clazz.type().name() : "n/a"));
 		}
 	}
 

@@ -15,6 +15,7 @@ import com.runbox.debug.command.template.*;
 import com.runbox.debug.command.thread.*;
 import com.runbox.debug.command.print.*;
 import com.runbox.debug.command.exception.*;
+import com.runbox.debug.command.trace.*;
 import com.runbox.debug.command.quit.*;
 
 public class CommandFactory extends com.runbox.command.CommandFactory {
@@ -145,6 +146,12 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExceptionDeleteCommand(command.command());
 		} else if (command.key().equals(EXCEPTION_QUERY)) {
 			return new ExceptionQueryCommand(command.command());
+		} else if (command.key().equals(TRACE_MODE)) {
+			return new TraceModeCommand(command.command());
+		} else if (command.key().equals(TRACE_REDIRECT)) {
+			return new TraceRedirectCommand(command.command());
+		} else if (command.key().equals(TRACE_QUERY)) {
+			return new TraceQueryCommand(command.command());
 		} else if (command.key().equals(DETACH)) {
 			return new DetachCommand(command.command());
 		} else if (command.key().equals(QUIT)) {
@@ -230,7 +237,7 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 
     public final static int COMMAND_TEMPLATE = COMMAND_PRINT + 1;
     public final static String TEMPLATE_LIST = "template.list";
-    public final static String TEMPLATE_MAP = "template.map";    
+    public final static String TEMPLATE_MAP = "template.map";
     public final static String TEMPLATE_QUEUE = "template.queue";
 	public final static String TEMPLATE_SET = "template.set";
     public final static String TEMPLATE_STACK = "template.stack";
@@ -244,8 +251,13 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 	public final static String EXCEPTION_MONITOR = "exception.monitor";
 	public final static String EXCEPTION_DELETE = "exception.delete";
 	public final static String EXCEPTION_QUERY = "exception.query";
+
+	public final static int COMMAND_TRACE = COMMAND_EXCEPTION + 1;
+	public final static String TRACE_MODE = "trace.mode";
+	public final static String TRACE_REDIRECT = "trace.redirect";
+	public final static String TRACE_QUERY = "trace.query";
 	
-    public final static int COMMAND_QUIT = COMMAND_EXCEPTION + 1;
+    public final static int COMMAND_QUIT = COMMAND_TRACE + 1;
     public final static String QUIT = "quit";
     public final static String DETACH = "detach";
 
@@ -325,6 +337,10 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 		add(EXCEPTION_MONITOR);
 		add(EXCEPTION_DELETE);
 		add(EXCEPTION_QUERY);
+		// trace
+		add(TRACE_MODE);
+		add(TRACE_REDIRECT);
+		add(TRACE_QUERY);
         // quit 
         add(QUIT);     
         add(DETACH);
