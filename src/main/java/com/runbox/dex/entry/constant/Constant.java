@@ -1,15 +1,12 @@
-package com.runbox.clazz.entry.constant;
+package com.runbox.dex.entry.constant;
 
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.runbox.clazz.entry.Entry;
-import com.runbox.clazz.reader.ConstantReader;
-
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+import com.runbox.dex.entry.Entry;
+import com.runbox.dex.reader.ConstantReader;
 
 public class Constant extends Entry {
 
@@ -181,8 +178,4 @@ public class Constant extends Entry {
 			return null;
 		}
 	}
-	
-    public JsonObjectBuilder toJson() {
-        return Json.createObjectBuilder().add("type", type).add("name", name());
-    }
 }

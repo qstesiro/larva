@@ -59,7 +59,7 @@ public class ConstantReader extends Reader {
 
     public FieldRefConstant getFieldRef(int index) {
         Constant constant = get(index);
-        if (constant instanceof FieldRefConstant)  {
+        if (constant instanceof FieldRefConstant) {
             return (FieldRefConstant)constant;
         }
         return null;
@@ -67,7 +67,7 @@ public class ConstantReader extends Reader {
 
     public MethodRefConstant getMethodRef(int index) {
         Constant constant = get(index);
-        if (constant instanceof MethodRefConstant)  {
+        if (constant instanceof MethodRefConstant) {
             return (MethodRefConstant)constant;
         }
         return null;
@@ -83,7 +83,7 @@ public class ConstantReader extends Reader {
 
     public StringConstant getString(int index) {
         Constant constant = get(index);
-        if (constant instanceof StringConstant)  {
+        if (constant instanceof StringConstant) {
             return (StringConstant)constant;
         }
         return null;
@@ -91,7 +91,7 @@ public class ConstantReader extends Reader {
 
     public IntegerConstant getInteger(int index) {
         Constant constant = get(index);
-        if (constant instanceof IntegerConstant)  {
+        if (constant instanceof IntegerConstant) {
             return (IntegerConstant)constant;
         }
         return null;
@@ -99,7 +99,7 @@ public class ConstantReader extends Reader {
 
     public LongConstant getLong(int index) {
         Constant constant = get(index);
-        if (constant instanceof LongConstant)  {
+        if (constant instanceof LongConstant) {
             return (LongConstant)constant;
         }
         return null;
@@ -107,7 +107,7 @@ public class ConstantReader extends Reader {
 
     public FloatConstant getFloat(int index) {
         Constant constant = get(index);
-        if (constant instanceof FloatConstant)  {
+        if (constant instanceof FloatConstant) {
             return (FloatConstant)constant;
         }
         return null;
@@ -115,7 +115,7 @@ public class ConstantReader extends Reader {
 
     public DoubleConstant getDouble(int index) {
         Constant constant = get(index);
-        if (constant instanceof DoubleConstant)  {
+        if (constant instanceof DoubleConstant) {
             return (DoubleConstant)constant;
         }
         return null;
@@ -123,7 +123,7 @@ public class ConstantReader extends Reader {
 
     public NameTypeConstant getNameType(int index) {
         Constant constant = get(index);
-        if (constant instanceof NameTypeConstant)  {
+        if (constant instanceof NameTypeConstant) {
             return (NameTypeConstant)constant;
         }
         return null;
@@ -131,7 +131,7 @@ public class ConstantReader extends Reader {
 
     public UTF8Constant getUTF8(int index) {
         Constant constant = get(index);
-        if (constant instanceof UTF8Constant)  {
+        if (constant instanceof UTF8Constant) {
             return (UTF8Constant)constant;
         }
         return null;
@@ -139,7 +139,7 @@ public class ConstantReader extends Reader {
 
     public MethodHandleConstant getMethodHandle(int index) {
         Constant constant = get(index);
-        if (constant instanceof MethodHandleConstant)  {
+        if (constant instanceof MethodHandleConstant) {
             return (MethodHandleConstant)constant;
         }
         return null;
@@ -147,7 +147,7 @@ public class ConstantReader extends Reader {
 
     public MethodTypeConstant getMethodType(int index) {
         Constant constant = get(index);
-        if (constant instanceof MethodTypeConstant)  {
+        if (constant instanceof MethodTypeConstant) {
             return (MethodTypeConstant)constant;
         }
         return null;
@@ -155,7 +155,7 @@ public class ConstantReader extends Reader {
 
     public InvokeDynamicConstant getInvokeDynamic(int index) {
         Constant constant = get(index);
-        if (constant instanceof InvokeDynamicConstant)  {
+        if (constant instanceof InvokeDynamicConstant) {
             return (InvokeDynamicConstant)constant;
         }
         return null;

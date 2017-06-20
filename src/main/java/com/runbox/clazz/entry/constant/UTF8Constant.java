@@ -18,8 +18,7 @@ public class UTF8Constant extends Constant {
         string = new String(data, Charset.forName("UTF-8"));
     }
 
-    private byte[] data = null;
-    private String string = null;
+    private byte[] data = null;    
     
     public UTF8Constant data(byte[] data) {
         this.data = data;
@@ -31,6 +30,8 @@ public class UTF8Constant extends Constant {
         return data;
     }
 
+	private String string = null;
+	
 	public UTF8Constant string(String string) throws Exception {
 		this.string = string;
 		data = string.getBytes("UTF-8");

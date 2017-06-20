@@ -1,10 +1,7 @@
-package com.runbox.clazz.reader;
+package com.runbox.dex.reader;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 
 public abstract class Reader {    
     
@@ -122,30 +119,4 @@ public abstract class Reader {
 	protected long available() throws IOException {
 		return stream().available();
 	}
-
-	// private short toShort(byte value) {
-    //     return ;
-    // }
-    
-    // private int toInteger(byte[] data) {
-    //     if (SIZE2 == data.length) {
-			
-    //         // return (int)data[0] << 0x18 >> 0x10 | (int)data[1] << 0x18 >>> 0x18;
-    //     }
-    //     return 0;
-    // }
-
-    // private long toLong(byte[] data) {
-    //     if (SIZE4 == data.length) {			
-    //         // return (long)((int)data[0] << 0x18
-	// 		// 			  | (int)data[1] << 0x18 >>> 0x8
-	// 		// 			  | (int)data[2] << 0x18 >>> 0x10
-	// 		// 			  | (int)data[3] << 0x18 >>> 0x18) << 0x20 >>> 0x20;			
-    //     }
-    //     return 0;
-    // }
-	
-    public JsonObjectBuilder toJson() {
-        return Json.createObjectBuilder();
-    }	
 }
