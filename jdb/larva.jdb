@@ -1,0 +1,72 @@
+alias.define "alias.define", "a.d";
+
+a.d "alias.query", "a.q";
+a.d "source.append", "s.a";
+a.d "source.query", "s.q";
+a.d "import.class", "i.c";
+a.d "class.monitor.prepare", "c.m.p";
+a.d "breakpoint.method", "b.m";
+a.d "breakpoint.line", "b.l";
+a.d "breakpoint.access", "b.a";
+a.d "breakpoint.modify", "b.y";
+a.d "breakpoint.query", "b.q";
+a.d "breakpoint.enable", "b.e";
+a.d "breakpoint.disable", "b.dis";
+a.d "breakpoint.delete", "b.del";
+a.d "execute.run", "e.r";
+a.d "execute.next.over", "e.n.o";
+a.d "execute.next.into", "e.n.i";
+a.d "execute.step.over", "e.s.o";
+a.d "execute.step.into", "e.s.i";
+a.d "thread.query", "t.q";
+a.d "thread.switch", "t.w";
+a.d "thread.stack", "t.s";
+a.d "config.query", "c.q";
+a.d "config.set", "c.s";
+a.d "print.value", "p.v";
+a.d "print.field", "p.f";
+a.d "print.local", "p.l";
+a.d "print.array", "p.a";
+a.d "print.string", "p.s";
+a.d "template.list", "t.l";
+a.d "template.map", "t.m";
+
+s.a "D:\\program\\maven\\larva\\src\\main\\java";
+
+i.c "java.util.LinkedList";
+i.c "com.runbox.dex.reader.ReaderFactory";
+i.c "com.runbox.dex.reader.Reader";
+i.c "com.runbox.dex.reader.DexReader";
+i.c "com.runbox.dex.reader.HeaderReader";
+i.c "com.runbox.dex.reader.StringReader";
+
+c.s "line", 9;
+c.s "bytecode", false;
+
+def $print(@list) {
+	if (null != @list) {
+	   if (@list instanceof LinkedList) {
+	   	  @first = @list.first;		  
+		  @last = @list.last;
+		  @next = @first;
+		  while (@next != @last) {
+		  		// print.value @next.item, 0x3;
+				print.field @next.item, 0x3;
+				@next = @next.next;
+		  }
+	   }
+	}
+}
+
+// b.m "Reader.read(int)";
+// b.m "Reader.readU1()";
+// b.m "Reader.readU2()";
+// b.m "Reader.readU4()";
+// b.m "Reader.position(long)";
+
+// b.m "DexReader.load(long)";
+// b.m "DexReader.load()";
+// b.m "HeaderReader.load()";
+b.m "StringReader.load()";
+
+e.r;

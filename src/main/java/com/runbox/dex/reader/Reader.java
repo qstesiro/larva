@@ -1,44 +1,24 @@
 package com.runbox.dex.reader;
 
-import java.io.DataInputStream;
+import java.nio.channels.FileChannel;
+import java.nio.ByteBuffer;
+
 import java.io.IOException;
 
 public abstract class Reader {    
     
-    public Reader(DataInputStream stream, ConstantReader reader) throws Exception {
-        this.stream = stream;
+    public Reader(FileChannel channel, DexReader reader) throws Exception {
+        this.channel = channel;
         this.reader = reader;				
     }    
 
-	private DataInputStream stream = null;
+	private FileChannel channel = null;
 	
-    protected DataInputStream stream() {
-        return stream;
+    protected FileChannel channel() {
+        return channel;
     }	
 	
-    private ConstantReader reader = null;
-
-    protected void constants(ConstantReader reader) {
-        this.reader = reader;
-    }
-
-    protected ConstantReader constants() {
-        return reader;
-    }
-
-	private long offset = 0;
-
-	public void offset(long offset) {
-		this.offset = offset;
-	}
-	
-    public long offset() {
-        return offset;
-    }
-
-	public long length() {
-		return offset;
-	}
+    private DexReader reader = null;
     
     protected abstract Reader load() throws Exception;    
 
@@ -48,75 +28,190 @@ public abstract class Reader {
     protected static final int SIZE8 = 8;
 
     protected byte[] read(int size) throws IOException {
-        offset += size;
-        byte[] data = new byte[size];
-        stream.readFully(data);
-        return data;
+		if (0 < size) {
+			byte[] data = new byte[size];
+			ByteBuffer buffer = ByteBuffer.wrap(data); 
+			channel.read(buffer);                
+			return data;
+		}
+		return null;
     }
     
     protected short readU1() throws IOException {
-		offset += SIZE1; return (short)(0x00ff & stream.readByte());
+        ByteBuffer buffer = ByteBuffer.allocate(SIZE1); 
+        channel.read(buffer);
+        return (short)(0x00ff & buffer.get(0));
     }
 
     protected int readU2() throws IOException {
-        offset += SIZE2;
         byte[] data = new byte[SIZE2];
-        stream().readFully(data);
-		return ((0x0000ff00 & (data[0] << 8)) | (0x000000ff & data[1]));
-    }
+        ByteBuffer buffer = ByteBuffer.wrap(data); 
+        channel.read(buffer);
+		return ((0x0000ff00 & (data[1] << 8)) | (0x000000ff & data[0]));
+    }	
+	
+	protected int readU128() throws Exception {
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE1);
+		channel.read(buffer);
+		long value = 0x00000000000000ff & buffer.get(0);
+		if (0x7f < value) {
+			buffer = ByteBuffer.allocate(SIZE1);
+			channel.read(buffer);
+			value = (value & 0x7f) | ((buffer.get(0) & 0x7f) << 7);
+			if (0x7f < buffer.get(0)) {
+				buffer = ByteBuffer.allocate(SIZE1);
+				channel.read(buffer);
+				value |= (buffer.get(0) & 0x7f) << 14;
+				if (0x7f < buffer.get(0)) {
+					buffer = ByteBuffer.allocate(SIZE1);
+					channel.read(buffer);
+					value |= (buffer.get(0) & 0x7f) << 21;
+					if (0x7f < buffer.get(0)) {
+						buffer = ByteBuffer.allocate(SIZE1);
+						channel.read(buffer);
+						value |= (buffer.get(0) & 0x7f) << 28;
+					}
+				}
+			}
+		}
+		if (Integer.MAX_VALUE < value) {
+			throw new Exception("beyond max value");
+		}
+		return (int)value;
+	}
 
+	protected int readU128P1() throws Exception {		
+		return readU128() - 1;
+	}
+	
     protected long readU4() throws IOException {
-        offset += SIZE4;
         byte[] data = new byte[SIZE4];
-        stream().readFully(data);
-		return ((0x00000000ff000000L & (long)(data[0] << 24)) |
-				(0x0000000000ff0000L & (long)(data[1] << 16)) |
-				(0x000000000000ff00L & (long)(data[2] << 8)) |
-				(0x00000000000000ffL & (long)(data[3])));
-    }
-
+        ByteBuffer buffer = ByteBuffer.wrap(data); 
+        channel.read(buffer);
+		return ((0x00000000ff000000L & (long)(data[3] << 24)) |
+				(0x0000000000ff0000L & (long)(data[2] << 16)) |
+				(0x000000000000ff00L & (long)(data[1] << 8)) |
+				(0x00000000000000ffL & (long)(data[0])));		
+    }		
+	
 	protected byte readS1() throws IOException {        
-		offset += SIZE1; return stream().readByte();
+        ByteBuffer buffer = ByteBuffer.allocate(SIZE1);
+        channel.read(buffer);
+		return buffer.get(0);
 	}
 
 	protected short readS2() throws IOException {
-        offset += SIZE2;
 		byte[] data = new byte[SIZE2];
-		stream().readFully(data);
-		return (short)(data[0] << 8 | (0x000000ff & data[1]));
+        ByteBuffer buffer = ByteBuffer.wrap(data); 
+        channel.read(buffer);		
+		return (short)(data[1] << 8 | (0x000000ff & data[0]));
 	}
 
 	protected int readS4() throws IOException {
-        offset += SIZE4;
 		byte[] data = new byte[SIZE4];
-		stream().readFully(data);
-		return ((data[0] << 24) |
-				(0x00ff0000 & data[1] << 16) |
-				(0x0000ff00 & data[2] << 8) |
-				(0x000000ff & data[3])); 
+		ByteBuffer buffer = ByteBuffer.wrap(data); 
+        channel.read(buffer);
+		return ((data[3] << 24) |
+				(0x00ff0000 & data[2] << 16) |
+				(0x0000ff00 & data[1] << 8) |
+				(0x000000ff & data[0])); 
 	}
 
+	protected int readS128() throws IOException {
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE1);
+		channel.read(buffer);
+		int value = buffer.get(0);
+		if (0x7f >= value) {
+			value = (value << 25) >> 25;			
+		} else {
+			buffer = ByteBuffer.allocate(SIZE1);
+			channel.read(buffer);
+			value = (value & 0x7f) | ((buffer.get(0) & 0x7f) << 7);
+			if (0x7f >= buffer.get(0)) {
+				value = (value << 18) >> 18;
+			} else {
+				buffer = ByteBuffer.allocate(SIZE1);
+				channel.read(buffer);
+				value |= (buffer.get(0) & 0x7f) << 14;
+				if (0x7f >= buffer.get(0)) {
+					value = (value << 11) >> 11;
+				} else {
+					buffer = ByteBuffer.allocate(SIZE1);
+					channel.read(buffer);
+					value |= (buffer.get(0) & 0x7f) << 21;
+					if (0x7f >= buffer.get(0)) {
+						value = (value << 4) >> 4;
+					} else {
+						buffer = ByteBuffer.allocate(SIZE1);
+						channel.read(buffer);
+						value |= buffer.get(0) << 28;
+					}
+				}
+			}
+		}
+		return value;
+	}
+	
     protected int readInt() throws IOException {
-        offset += SIZE4; return stream().readInt();
+        byte[] data = new byte[SIZE4];
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+        channel.read(buffer);
+        return buffer.getInt();
     }
 
     protected long readLong() throws IOException {
-        offset += SIZE8; return stream().readLong();
+        byte[] data = new byte[SIZE8];
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+        channel.read(buffer);
+        return buffer.getLong();
     }
 
     protected float readFloat() throws IOException {
-        offset += SIZE4; return stream().readFloat();
+        byte[] data = new byte[SIZE4];
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+        channel.read(buffer);
+        return buffer.getFloat();
     }
 
     protected double readDouble() throws IOException {
-        offset += SIZE8; return stream().readDouble();
+        byte[] data = new byte[SIZE8];
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+        channel.read(buffer);
+        return buffer.getDouble();
     }
 	
+    protected long position(long position) throws IOException {
+        return channel.position(position).position();
+    }
+
 	protected long skip(long count) throws IOException {
-        offset += count; return stream().skip(count);
+        return channel.position(channel.position() + count).position();        
 	}
 
-	protected long available() throws IOException {
-		return stream().available();
+	protected static class Item {
+
+		public Item(int type, int unused, long count, long offset) {
+			this.type = type;
+			this.count = count;
+			this.offset = offset;
+		}
+
+		private int type = 0;
+
+		public int type() {
+			return type;
+		}				
+	   
+		private long count = 0;
+
+		public long count() {
+			return count;
+		}
+		
+		private long offset = 0;
+
+		public long offset() {
+			return offset;
+		}
 	}
 }

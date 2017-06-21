@@ -1,19 +1,12 @@
 package com.runbox.dex.entry.bytecode;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+public class Bytecode {        
 
-import com.runbox.dex.entry.Entry;
-
-public class Bytecode extends Entry {        
-
-    public Bytecode(long offset, String name) {
-        super(offset); this.name = name.trim().toLowerCase();
+    public Bytecode(String name) {
+        this.name = name.trim().toLowerCase();
     }	
 	
-    public Bytecode(long offset, String name, byte opcode) {
-        super(offset); 
+    public Bytecode(String name, byte opcode) {
 		this.name = name.trim().toLowerCase();
 		this.opcode = opcode; 		
     }       
