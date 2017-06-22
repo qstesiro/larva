@@ -1,3 +1,36 @@
+alias.define "alias.define", "a.d";
+
+a.d "alias.query", "a.q";
+a.d "source.append", "s.a";
+a.d "source.query", "s.q";
+a.d "import.class", "i.c";
+a.d "class.monitor.prepare", "c.m.p";
+a.d "breakpoint.method", "b.m";
+a.d "breakpoint.line", "b.l";
+a.d "breakpoint.access", "b.a";
+a.d "breakpoint.modify", "b.y";
+a.d "breakpoint.query", "b.q";
+a.d "breakpoint.enable", "b.e";
+a.d "breakpoint.disable", "b.dis";
+a.d "breakpoint.delete", "b.del";
+a.d "execute.run", "e.r";
+a.d "execute.next.over", "e.n.o";
+a.d "execute.next.into", "e.n.i";
+a.d "execute.step.over", "e.s.o";
+a.d "execute.step.into", "e.s.i";
+a.d "thread.query", "t.q";
+a.d "thread.switch", "t.w";
+a.d "thread.stack", "t.s";
+a.d "config.query", "c.q";
+a.d "config.set", "c.s";
+a.d "print.value", "p.v";
+a.d "print.field", "p.f";
+a.d "print.local", "p.l";
+a.d "print.array", "p.a";
+a.d "print.string", "p.s";
+a.d "template.list", "t.l";
+a.d "template.map", "t.m";
+
 def $count(@arg) {		
 	def $count1() {
 		print.value "I`m $count1";
@@ -44,11 +77,6 @@ config.query "line";
 // class.monitor.prepare "Inner";
 // class.monitor.unload "Demo";
 // class.monitor.disable;
-
-// alias.define "breakpoint.query", "b.q";
-// alias.define "breakpoint.enable", "b.e";
-// alias.define "breakpoint.disable", "b.d";
-// alias.define "alias.query", "a.q";
 
 breakpoint.method "Demo.method()" {
 				  print.value @id;

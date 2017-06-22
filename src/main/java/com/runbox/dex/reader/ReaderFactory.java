@@ -12,7 +12,7 @@ public class ReaderFactory {
 	public static DexReader create(String path) throws Exception {
         RandomAccessFile file = new RandomAccessFile(path, "r");
 		FileChannel channel = file.getChannel();
-        DexReader reader = new DexReader(channel, null).load();
+        DexReader reader = new DexReader(channel).load();
         channel.close(); file.close();
         return reader;
     }

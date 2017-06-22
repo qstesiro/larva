@@ -1,44 +1,44 @@
 package com.runbox.dex.reader;
 
-import java.util.List;
-import java.util.LinkedList;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.channels.FileChannel;
+
+import com.runbox.dex.entry.StringId;
+import com.runbox.dex.entry.StringData;
 
 public class StringReader extends Reader {
 
-	public StringReader(FileChannel channel, Item item, DexReader reader) throws Exception {
-		super(channel, reader);		
-		this.item = item;
-	}
-
-	private Item item = null;
+	public StringReader(FileChannel channel, Map map, DexReader reader) throws Exception {
+		super(channel, map, reader);				
+		ids = new StringId[map.count()];
+	}	
 	
 	@Override
-	public StringReader load() throws Exception {
-		position(item.offset());
-		for (long offset : offsets()) {
-			position(offset);
+	public StringReader load() throws Exception {		
+		int[] offsets = offsets();
+		for (int i = 0; i < offsets.length; ++i) {
+			position(offsets[i]); 
 			int size = readU128();
-			if (0 == size) strings.add(new String(""));
-			else strings.add(new String(read(size), Charset.forName("UTF-8")));			
+			if (0 == size) {
+				ids[i] = new StringId(offsets[i], new StringData(null));
+			} else {
+				ids[i] = new StringId(offsets[i], new StringData(read(size)));
+			}
 		}
 		return this;
 	}
 
-	public List<Long> offsets() throws Exception {
-		List<Long> offsets = new LinkedList<Long>();
-		for (int i = 0; i < item.count(); ++i) {
-			offsets.add(readU4());
+	private int[] offsets() throws Exception {
+		position(map().offset());
+		int[] offsets = new int[map().count()];
+		for (int i = 0; i < offsets.length; ++i) {
+			offsets[i] = readU4();
 		}
 		return offsets;
 	}
 
-	private List<String> strings = new LinkedList<String>();
+	private StringId[] ids = null;
 
-	public List<String> strings() {
-		return strings;
+	public StringId[] get() {
+		return ids;
 	}
 }

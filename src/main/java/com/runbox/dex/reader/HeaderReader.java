@@ -5,16 +5,13 @@ import java.nio.channels.FileChannel;
 
 public class HeaderReader extends Reader {
 
-	public HeaderReader(FileChannel channel, Item item, DexReader reader) throws Exception {
-		super(channel, reader);		
-		this.item = item;
-	}
-
-	private Item item = null;
+	public HeaderReader(FileChannel channel, Map map, DexReader reader) throws Exception {
+		super(channel, map, reader);				
+	}	
 	
 	@Override
 	public HeaderReader load() throws Exception {
-		position(item.offset());
+		position(map().offset());
 		magic = read(SIZE8);
 		checksum = readU4();
 		signature = read(20);

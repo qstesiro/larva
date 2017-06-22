@@ -39,6 +39,8 @@ i.c "com.runbox.dex.reader.Reader";
 i.c "com.runbox.dex.reader.DexReader";
 i.c "com.runbox.dex.reader.HeaderReader";
 i.c "com.runbox.dex.reader.StringReader";
+i.c "com.runbox.dex.reader.TypeReader";
+i.c "com.runbox.dex.reader.ProtoReader";
 
 c.s "line", 9;
 c.s "bytecode", false;
@@ -58,6 +60,19 @@ def $print(@list) {
 	}
 }
 
+def $printString(@list) {
+	if (null != @list) {
+	   if (@list instanceof LinkedList) {	   
+		  @last = @list.last;
+		  @next = @list.first;
+		  while (@next != @last) {		  		
+				p.s @next.item.data.string, 0x2;
+				@next = @next.next;
+		  }
+	   }
+	}
+}
+
 // b.m "Reader.read(int)";
 // b.m "Reader.readU1()";
 // b.m "Reader.readU2()";
@@ -66,7 +81,10 @@ def $print(@list) {
 
 // b.m "DexReader.load(long)";
 // b.m "DexReader.load()";
+// b.l "DexReader:23";
 // b.m "HeaderReader.load()";
-b.m "StringReader.load()";
+// b.m "StringReader.load()";
+b.m "TypeReader.load()";
+b.m "ProtoReader.load()";
 
 e.r;

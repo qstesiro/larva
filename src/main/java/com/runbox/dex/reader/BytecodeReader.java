@@ -15,7 +15,7 @@ import com.runbox.dex.entry.bytecode.*;
 public class BytecodeReader extends Reader {
 
     public BytecodeReader(FileChannel channel, DexReader reader) throws Exception {
-        super(channel, reader); 
+        super(channel, null, reader); 
 		this.size = channel.size();
     }	
 	
@@ -59,7 +59,7 @@ public class BytecodeReader extends Reader {
     }
 
 	@Override
-    protected long readU4() throws IOException {
+    protected int readU4() throws Exception {
 		size -= SIZE4;
         return super.readU4();        
     }

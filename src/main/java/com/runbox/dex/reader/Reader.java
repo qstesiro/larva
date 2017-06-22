@@ -7,8 +7,9 @@ import java.io.IOException;
 
 public abstract class Reader {    
     
-    public Reader(FileChannel channel, DexReader reader) throws Exception {
+    public Reader(FileChannel channel, Map map, DexReader reader) throws Exception {
         this.channel = channel;
+		this.map = map;
         this.reader = reader;				
     }    
 
@@ -17,6 +18,12 @@ public abstract class Reader {
     protected FileChannel channel() {
         return channel;
     }	
+
+	private Map map = null;
+
+	protected Map map() {
+		return map;
+	}
 	
     private DexReader reader = null;
     
@@ -84,14 +91,18 @@ public abstract class Reader {
 		return readU128() - 1;
 	}
 	
-    protected long readU4() throws IOException {
+    protected int readU4() throws Exception {
         byte[] data = new byte[SIZE4];
         ByteBuffer buffer = ByteBuffer.wrap(data); 
         channel.read(buffer);
-		return ((0x00000000ff000000L & (long)(data[3] << 24)) |
-				(0x0000000000ff0000L & (long)(data[2] << 16)) |
-				(0x000000000000ff00L & (long)(data[1] << 8)) |
-				(0x00000000000000ffL & (long)(data[0])));		
+		long value = ((0x00000000ff000000L & (long)(data[3] << 24)) |
+					  (0x0000000000ff0000L & (long)(data[2] << 16)) |
+					  (0x000000000000ff00L & (long)(data[1] << 8)) |
+					  (0x00000000000000ffL & (long)(data[0])));
+		if (Integer.MAX_VALUE < value) {
+			throw new Exception("beyond max value");
+		}
+		return (int)value;
     }		
 	
 	protected byte readS1() throws IOException {        
@@ -179,6 +190,10 @@ public abstract class Reader {
         channel.read(buffer);
         return buffer.getDouble();
     }
+
+	protected long position() throws IOException {
+		return channel.position();
+	}
 	
     protected long position(long position) throws IOException {
         return channel.position(position).position();
@@ -188,9 +203,9 @@ public abstract class Reader {
         return channel.position(channel.position() + count).position();        
 	}
 
-	protected static class Item {
+	protected static class Map {
 
-		public Item(int type, int unused, long count, long offset) {
+		public Map(int type, int unused, int count, int offset) {
 			this.type = type;
 			this.count = count;
 			this.offset = offset;
@@ -202,15 +217,15 @@ public abstract class Reader {
 			return type;
 		}				
 	   
-		private long count = 0;
+		private int count = 0;
 
-		public long count() {
+		public int count() {
 			return count;
 		}
 		
-		private long offset = 0;
+		private int offset = 0;
 
-		public long offset() {
+		public int offset() {
 			return offset;
 		}
 	}
