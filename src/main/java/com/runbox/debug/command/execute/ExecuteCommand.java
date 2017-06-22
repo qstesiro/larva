@@ -42,8 +42,8 @@ public class ExecuteCommand extends Command {
 	
 	protected void config(StepRequest request) {
 		if (null != request) {
-			request.disable();
-			request.addCountFilter(count);
+			request.disable();			
+			request.addCountFilter(1);
 			request.putProperty(COUNT, count);
 			request.enable();
 		}

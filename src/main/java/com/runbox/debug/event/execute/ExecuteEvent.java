@@ -22,17 +22,23 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 
 	@Override
 	public boolean handle() throws Exception {		
-		if (0 != count()) {			
+		if (0 < count()) {
+			EventRequest request = event().request();
+			if (null != request) {
+				request.disable();
+				request.addCountFilter(1);
+				request.enable();
+			}			
 			return !super.handle();
 		}
-		// print();
+		// print();		
         return super.handle();
 	}
 
 	private int count() {
 		EventRequest request = event().request();
-		int count = (Integer)request.getProperty(ExecuteCommand.COUNT);
-		request.putProperty(ExecuteCommand.COUNT, --count);
+		int count = (Integer)request.getProperty(ExecuteCommand.COUNT);		
+		request.putProperty(ExecuteCommand.COUNT, --count);		
 		return count;
 	}
 
