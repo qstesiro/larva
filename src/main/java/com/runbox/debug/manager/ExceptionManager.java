@@ -70,7 +70,7 @@ public class ExceptionManager extends Manager {
     private ExceptionRequest request = null;
 
     @Override
-    public void monitor(boolean flag) {
+    public void monitor(boolean flag) throws Exception {
         if (flag && null == request) {
             request = RequestManager.instance().createExceptionRequest(null, false, true, null);
         } else if (!flag && null != request) {
@@ -79,7 +79,7 @@ public class ExceptionManager extends Manager {
     }
 
     @Override
-    public boolean need(Event event) {
+    public boolean need(Event event) throws Exception {
         if (event instanceof ExceptionEvent && event.request() == request) {
 			return super.need(event);
         }

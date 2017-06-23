@@ -3,6 +3,7 @@ package com.runbox.debug.event;
 import com.sun.jdi.event.VMStartEvent;
 import com.sun.jdi.event.VMDeathEvent;
 import com.sun.jdi.event.VMDisconnectEvent;
+import com.sun.jdi.event.MethodExitEvent;
 import com.sun.jdi.event.BreakpointEvent;
 import com.sun.jdi.event.AccessWatchpointEvent;
 import com.sun.jdi.event.ModificationWatchpointEvent;
@@ -17,6 +18,8 @@ import com.runbox.debug.event.breakpoint.BreakpointMethodEvent;
 import com.runbox.debug.event.breakpoint.BreakpointModifyEvent;
 import com.runbox.debug.event.clazz.ClassPrepareEvent;
 import com.runbox.debug.event.clazz.ClassUnloadEvent;
+import com.runbox.debug.event.method.MethodEntryEvent;
+import com.runbox.debug.event.method.MethodReturnEvent;
 import com.runbox.debug.event.execute.ExecuteNextEvent;
 import com.runbox.debug.event.execute.ExecuteStepEvent;
 import com.runbox.debug.event.machine.MachineDeathEvent;
@@ -40,7 +43,9 @@ public class EventFactory {
         } else if (event instanceof com.sun.jdi.event.ClassUnloadEvent) {
             return new ClassUnloadEvent((com.sun.jdi.event.ClassUnloadEvent)event);
         } else if (event instanceof com.sun.jdi.event.MethodEntryEvent) {
-        } else if (event instanceof com.sun.jdi.event.MethodExitEvent) {
+            return new MethodEntryEvent((com.sun.jdi.event.MethodEntryEvent)event);
+        } else if (event instanceof MethodExitEvent) {
+            return new MethodReturnEvent((MethodExitEvent)event);
         } else if (event instanceof com.sun.jdi.event.ThreadStartEvent) {
             return new ThreadStartEvent((com.sun.jdi.event.ThreadStartEvent)event);
         } else if (event instanceof com.sun.jdi.event.ThreadDeathEvent) {

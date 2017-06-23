@@ -7,9 +7,10 @@ import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.StepRequest;
 import com.sun.jdi.event.StepEvent;
 
-import com.runbox.debug.command.execute.ExecuteCommand;
 import com.runbox.debug.event.LocatableEvent;
 import com.runbox.debug.manager.ContextManager;
+
+import com.runbox.debug.command.execute.ExecuteWalkCommand;
 
 import com.runbox.debug.script.expression.token.operand.Operand;
 import com.runbox.debug.script.expression.token.operand.ConstOperand;
@@ -23,23 +24,28 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 	@Override
 	public boolean handle() throws Exception {		
 		if (0 < count()) {
-			EventRequest request = event().request();
-			if (null != request) {
-				request.disable();
-				request.addCountFilter(1);
-				request.enable();
-			}			
-			return !super.handle();
+			reset(); return !super.handle();
 		}
-		// print();		
+		// print();
+		printCode(event().location());
+		printLine(event().location());
         return super.handle();
 	}
 
 	private int count() {
 		EventRequest request = event().request();
-		int count = (Integer)request.getProperty(ExecuteCommand.COUNT);		
-		request.putProperty(ExecuteCommand.COUNT, --count);		
+		int count = (Integer)request.getProperty(ExecuteWalkCommand.COUNT);		
+		request.putProperty(ExecuteWalkCommand.COUNT, --count);		
 		return count;
+	}
+
+	private void reset() {
+		EventRequest request = event().request();
+		if (null != request) {
+			request.disable();
+			request.addCountFilter(1);
+			request.enable();
+		}			
 	}
 
 	private void arguments() {

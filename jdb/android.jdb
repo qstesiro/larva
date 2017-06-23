@@ -69,6 +69,8 @@ a.d "execute.next.over", "e.n.o";
 a.d "execute.next.into", "e.n.i";
 a.d "execute.step.over", "e.s.o";
 a.d "execute.step.into", "e.s.i";
+a.d "execute.upon", "e.u";
+a.d "execute.goto", "e.g";
 a.d "thread.query", "t.q";
 a.d "thread.switch", "t.w";
 a.d "thread.stack", "t.s";
@@ -111,15 +113,15 @@ def $print(@list) {
 
 // trace.mode 0x01 | 0x02;
 // trace.mode 0x08 | 0x10;
-// trace.mode 0x04;
+trace.mode 0x04;
 // trace.redirect "D:\\program\\maven\\larva\\trace.log";
 
 b.m "MainActivity.onCreate(Bundle)";
-b.l "MainActivity:29" {/*method.bytecode "MainActivity.onCreate"; $print(this.views);*/};
-b.m "MainActivity.onClick(View)";
-b.m "DigestActivity.onCreate(Bundle)";
-b.m "DigestActivity.onClick(View)";
+//b.l "MainActivity:29" {/*method.bytecode "MainActivity.onCreate"; $print(this.views);*/};
+// b.m "MainActivity.onClick(View)";
+// b.m "DigestActivity.onCreate(Bundle)";
+// b.m "DigestActivity.onClick(View)";
 b.m "SymmetryActivity.onCreate(Bundle)";
-b.m "SymmetryActivity.onClick(View)";
+//b.m "SymmetryActivity.onClick(View)";
 
 e.r;

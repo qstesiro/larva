@@ -18,6 +18,8 @@ a.d "execute.next.over", "e.n.o";
 a.d "execute.next.into", "e.n.i";
 a.d "execute.step.over", "e.s.o";
 a.d "execute.step.into", "e.s.i";
+a.d "execute.upon", "e.u";
+a.d "execute.goto", "e.g";
 a.d "thread.query", "t.q";
 a.d "thread.switch", "t.w";
 a.d "thread.stack", "t.s";
@@ -75,7 +77,7 @@ config.query "line";
 // class.monitor.prepare "com.runbox.demo.Demo*";
 // class.monitor.prepare "*.Demo";
 // class.monitor.prepare "Inner";
-// class.monitor.unload "Demo";
+class.monitor.prepare "Demo";
 // class.monitor.disable;
 
 breakpoint.method "Demo.method()" {
@@ -127,6 +129,8 @@ def $array2() {
 def $array3() {
 	return array3;
 }
+
+trace.mode 0x4;
 
 // print.value "current time -> " + $time();
 // print.value "enter sleep ...";

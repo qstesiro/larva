@@ -4,11 +4,11 @@ import com.sun.jdi.event.Event;
 
 public class Manager extends com.runbox.manager.Manager {    
 
-    public void monitor(boolean flag) {
+    public void monitor(boolean flag) throws Exception {
 
     }
 
-    public boolean need(Event event) {
+    public boolean need(Event event) throws Exception {
         return true;
     }
 

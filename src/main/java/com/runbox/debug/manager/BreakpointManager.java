@@ -321,7 +321,7 @@ public class BreakpointManager extends Manager {
     }	
 	
     @Override
-    public boolean need(Event event) {        
+    public boolean need(Event event) throws Exception {        
         if (event instanceof ClassPrepareEvent) {
 			String clazz = ((ClassPrepareEvent)event).referenceType().name();
 			for (String key : requests.keySet()) {

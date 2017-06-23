@@ -6,6 +6,7 @@ import java.util.Map;
 import com.sun.jdi.Location;
 import com.sun.jdi.ReferenceType;
 import com.sun.jdi.Method;
+import com.sun.jdi.event.StepEvent;
 
 import com.runbox.manager.ConfigManager;
 
@@ -26,13 +27,15 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
     }
 
     @Override
-    public boolean handle() throws Exception {		
-		printCode(event().location());
-		printLine(event().location());		
+    public boolean handle() throws Exception {
+		if (!(event() instanceof StepEvent)) {
+			printCode(event().location());
+			printLine(event().location());
+		}
         return super.handle();
-    }		
+    }  
 	
-	private void printLine(Location location) throws Exception {
+	protected void printLine(Location location) throws Exception {
 		int count = ConfigManager.instance().line();
 		if (0 < count) {
 			Map<Integer, String> lines = SourceManager.instance().lines(location);
@@ -51,7 +54,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 		}
 	}
 
-	private void printCode(Location location) throws Exception {
+	protected void printCode(Location location) throws Exception {
 		if (ConfigManager.instance().bytecode()) {
 			// MachineManager.instance().get().canGetBytecodes()
 			// this is a bug in davlik

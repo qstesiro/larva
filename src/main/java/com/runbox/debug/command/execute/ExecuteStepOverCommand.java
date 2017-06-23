@@ -11,19 +11,19 @@ public class ExecuteStepOverCommand extends ExecuteStepCommand {
         super(command);
     }	
 
-    @Override
-    public boolean execute() throws Exception {
-        if (null != ContextManager.instance().current()) {
-            StepRequest request = ExecuteManager.instance().get(ContextManager.instance().current());
-            if (null != request) {										
-                if (StepRequest.STEP_MIN != request.size() || StepRequest.STEP_OVER != request.depth()) {
-                    ExecuteManager.instance().delete(ContextManager.instance().current());
-                    request = create();
-                }				
-            } 			
-            config((null != request) ? request : create());
-            return !super.execute();
-        }
-        throw new Exception("thread context is null, don`t execute.");
-    }
+    // @Override
+    // public boolean execute() throws Exception {
+    //     if (null != ContextManager.instance().current()) {
+    //         StepRequest request = ExecuteManager.instance().get(ContextManager.instance().current());
+    //         if (null != request) {										
+    //             if (StepRequest.STEP_MIN != request.size() || StepRequest.STEP_OVER != request.depth()) {
+    //                 ExecuteManager.instance().delete(ContextManager.instance().current());
+    //                 request = create();
+    //             }				
+    //         } 			
+    //         config((null != request) ? request : create());
+    //         return !super.execute();
+    //     }
+    //     throw new Exception("thread context is null, don`t execute.");
+    // }
 }

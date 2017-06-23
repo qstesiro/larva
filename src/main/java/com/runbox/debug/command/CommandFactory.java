@@ -110,6 +110,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExecuteStepOverCommand(command.command());
 		} else if (command.key().equals(EXECUTE_STEP_INTO)) {
 			return new ExecuteStepIntoCommand(command.command());
+		} else if (command.key().equals(EXECUTE_UPON)) {
+			return new ExecuteUponCommand(command.command());
 		} else if (command.key().equals(EXECUTE_FILE)) {
 			return new ExecuteFileCommand(command.command());
 		} else if (command.key().equals(PRINT_VALUE)) {
@@ -225,6 +227,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static String EXECUTE_NEXT_INTO = "execute.next.into";
     public final static String EXECUTE_STEP_OVER = "execute.step.over";	
 	public final static String EXECUTE_STEP_INTO = "execute.step.into";
+	public final static String EXECUTE_UPON = "execute.upon";
+	public final static String EXECUTE_GOTO = "execute.goto";
     public final static String EXECUTE_FILE = "execute.file";    
 
     public final static int COMMAND_PRINT = COMMAND_EXECUTE + 1;
@@ -315,6 +319,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(EXECUTE_NEXT_INTO);
         add(EXECUTE_STEP_OVER);		
         add(EXECUTE_STEP_INTO);
+		add(EXECUTE_UPON);
+        add(EXECUTE_GOTO);
         add(EXECUTE_FILE);
         // print command
         add(PRINT_VALUE);

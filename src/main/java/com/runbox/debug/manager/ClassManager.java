@@ -120,7 +120,7 @@ public class ClassManager extends Manager {
     }
 	
 	@Override
-    public boolean need(Event event) {
+    public boolean need(Event event) throws Exception {
         if (event instanceof ClassPrepareEvent) {
 			for (int key : map.keySet()) {
 				Entry entry = map.get(key);

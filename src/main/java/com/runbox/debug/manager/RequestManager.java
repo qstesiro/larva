@@ -7,6 +7,7 @@ import com.sun.jdi.request.*;
 import com.runbox.debug.command.Command;
 import com.runbox.debug.command.clazz.ClassCommand;
 import com.runbox.debug.manager.BreakpointManager;
+import com.runbox.debug.manager.ExecuteManager;
 import com.runbox.script.statement.node.RoutineNode;
 
 public class RequestManager extends Manager {
@@ -135,10 +136,13 @@ public class RequestManager extends Manager {
         return null;
     }
 
-    public MethodEntryRequest createMethodEntryRequest(RoutineNode routine) {
+    public MethodEntryRequest createMethodEntryRequest(ThreadReference thread, RoutineNode routine) {
         if (null != manager) {
             MethodEntryRequest request = manager.createMethodEntryRequest();
 			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
+			if (null != thread) {
+				request.addThreadFilter(thread);
+			}
 			if (null != routine) {
                 request.putProperty(Command.ROUTINE, routine);
             }
@@ -146,13 +150,22 @@ public class RequestManager extends Manager {
         }
         return null;
     }
-
-    public MethodExitRequest createMethodExitRequest(RoutineNode routine) {
-        if (null != manager) {
+	
+    public MethodExitRequest createMethodExitRequest(ExecuteManager.ReturnEntry entry) {
+        if (null != manager && null != entry) {
             MethodExitRequest request = manager.createMethodExitRequest();
 			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
-			if (null != routine) {
-                request.putProperty(Command.ROUTINE, routine);
+			if (null != entry.thread()) {
+				request.addThreadFilter(entry.thread());
+			}
+			if (null != entry.type()) {
+				request.addClassFilter(entry.type());
+			}
+			if (null != entry.clazz()) {
+				request.addClassFilter(entry.clazz());
+			}
+			if (null != entry.routine()) {
+                request.putProperty(Command.ROUTINE, entry.routine());
             }
 			request.enable(); return request;
         }
