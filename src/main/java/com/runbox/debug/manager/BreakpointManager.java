@@ -58,54 +58,42 @@ public class BreakpointManager extends Manager {
     private Map<Integer, Breakpoint> map = new HashMap<Integer, Breakpoint>();    
     
     public boolean append(MethodBreakpoint breakpoint) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key) instanceof MethodBreakpoint) {
-                if (((MethodBreakpoint)map.get(key)).equals(breakpoint)) {
-                    return true;
-                }
-            }
-        }
-        map.put(id(), breakpoint);
-        append(breakpoint.clazz());
+        if (!contain(breakpoint)) {
+			map.put(id(), breakpoint);
+			if (!breakpoint.solve()) {
+				append(breakpoint.clazz());
+			}
+		}
         return true;
     }
 
     public boolean append(LineBreakpoint breakpoint) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key) instanceof LineBreakpoint) {
-                if (((LineBreakpoint)map.get(key)).equals(breakpoint)) {
-                    return true;
-                }
-            }
-        }
-        map.put(id(), breakpoint);
-        append(breakpoint.clazz());
+        if (!contain(breakpoint)) {
+			map.put(id(), breakpoint);
+			if (!breakpoint.solve()) {
+				append(breakpoint.clazz());
+			}
+		}
         return true;
     }
 
     public boolean append(AccessBreakpoint breakpoint) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key) instanceof AccessBreakpoint) {
-                if (((AccessBreakpoint)map.get(key)).equals(breakpoint)) {
-                    return true;
-                }
-            }
-        }
-        map.put(id(), breakpoint);
-        append(breakpoint.clazz());
+        if (!contain(breakpoint)) {
+			map.put(id(), breakpoint);
+			if (!breakpoint.solve()) {
+				append(breakpoint.clazz());
+			}
+		}
         return true;
     }
 
     public boolean append(ModifyBreakpoint breakpoint) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key) instanceof ModifyBreakpoint) {
-                if (((ModifyBreakpoint)map.get(key)).equals(breakpoint)) {
-                    return true;
-                }
-            }
-        }
-        map.put(id(), breakpoint);
-        append(breakpoint.clazz());
+        if (!contain(breakpoint)) {
+			map.put(id(), breakpoint);
+			if (!breakpoint.solve()) {
+				append(breakpoint.clazz());
+			}
+		}
         return true;
     }
 
@@ -288,37 +276,7 @@ public class BreakpointManager extends Manager {
                 requests.remove(entry);
             }
         }
-    }
-
-    private static class Entry {
-
-        public Entry(ClassPrepareRequest prepare, ClassUnloadRequest unload) {
-            this.prepare = prepare;
-            this.unload = unload;
-        }
-
-        private int count = 0;
-
-        public int increase() {
-            return ++count;
-        }
-
-        public int decrease() {
-            return --count;
-        }   
-
-        private ClassPrepareRequest prepare = null;
-
-        public ClassPrepareRequest prepare() {
-            return prepare;
-        }
-
-        private ClassUnloadRequest unload = null;
-
-        public ClassUnloadRequest unload() {
-            return unload;
-        }
-    }	
+    }    	
 	
     @Override
     public boolean need(Event event) throws Exception {        
@@ -411,7 +369,7 @@ public class BreakpointManager extends Manager {
 
     public static class Breakpoint {
 
-        public static String OBJECT = "object";
+        public static String OBJECT = "04e97dc6-425d-45f6-a187-05802b3c1954";
 
         public Breakpoint(String clazz, RoutineNode routine) {
             this.clazz = clazz;        
@@ -632,6 +590,36 @@ public class BreakpointManager extends Manager {
                 return true;
             }
             return false;
+        }
+    }
+
+	private static class Entry {
+
+        public Entry(ClassPrepareRequest prepare, ClassUnloadRequest unload) {
+            this.prepare = prepare;
+            this.unload = unload;
+        }
+
+        private int count = 0;
+
+        public int increase() {
+            return ++count;
+        }
+
+        public int decrease() {
+            return --count;
+        }   
+
+        private ClassPrepareRequest prepare = null;
+
+        public ClassPrepareRequest prepare() {
+            return prepare;
+        }
+
+        private ClassUnloadRequest unload = null;
+
+        public ClassUnloadRequest unload() {
+            return unload;
         }
     }
 }

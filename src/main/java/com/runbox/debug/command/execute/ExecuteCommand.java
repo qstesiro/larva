@@ -12,7 +12,8 @@ public class ExecuteCommand extends Command {
         super(command);		
 		ThreadReference thread = ContextManager.instance().current();
 		if (null != thread) {
-            ExecuteManager.instance().clean(thread); return;
+            ExecuteManager.instance().clean(thread);
+			return;
         } else if (this instanceof ExecuteRunCommand) {
 			return;
 		}

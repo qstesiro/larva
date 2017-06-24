@@ -9,11 +9,8 @@ public class ExecuteStepCommand extends ExecuteWalkCommand {
     }	
 
     @Override
-    public boolean execute() throws Exception {		
-        if (null != ContextManager.instance().current()) {
-            config(create());
-            return !super.execute();
-        }
-        throw new Exception("thread context is null, don`t execute.");
+    public boolean execute() throws Exception {		        
+		config(create());
+		return !super.execute();        
     }
 }
