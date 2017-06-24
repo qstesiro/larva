@@ -89,9 +89,14 @@ i.c "android.view.View";
 i.c "android.view.Menu";
 i.c "android.view.MenuItem";
 i.c "android.content.Intent";
+
 i.c "com.example.huangmengmeng01.encryption.MainActivity";
 i.c "com.example.huangmengmeng01.encryption.DigestActivity";
 i.c "com.example.huangmengmeng01.encryption.SymmetryActivity";
+i.c "com.example.huangmengmeng01.encryption.AsymmetryActivity";
+i.c "com.example.huangmengmeng01.encryption.SignatureActivity";
+i.c "com.example.huangmengmeng01.encryption.CertificateActivity";
+i.c "com.example.huangmengmeng01.encryption.SSLActivity";
 
 // only support LinkedList
 // if you want to enum other list type
@@ -113,15 +118,27 @@ def $print(@list) {
 
 // trace.mode 0x01 | 0x02;
 // trace.mode 0x08 | 0x10;
-trace.mode 0x04;
+// trace.mode 0x04;
 // trace.redirect "D:\\program\\maven\\larva\\trace.log";
 
 b.m "MainActivity.onCreate(Bundle)";
-//b.l "MainActivity:29" {/*method.bytecode "MainActivity.onCreate"; $print(this.views);*/};
+// b.l "MainActivity:29" {/*method.bytecode "MainActivity.onCreate"; $print(this.views);*/};
+b.l "MainActivity:49";
 // b.m "MainActivity.onClick(View)";
 // b.m "DigestActivity.onCreate(Bundle)";
 // b.m "DigestActivity.onClick(View)";
-b.m "SymmetryActivity.onCreate(Bundle)";
-//b.m "SymmetryActivity.onClick(View)";
+// b.m "SymmetryActivity.onCreate(Bundle)";
+// b.m "SymmetryActivity.onClick(View)";
+// b.m "AsymmetryActivity.onCreate(Bundle)";
+// b.m "SignatureActivity.onCreate(Bundle)";
+// b.m "CertificateActivity.onCreate(Bundle)";
+// b.m "SSLActivity.onCreate(Bundle)";
 
 e.r;
+
+// e.g "DigestActivity:24";
+// e.g "SymmetryActivity:35";
+// e.g "AsymmetryActivity:38";
+// e.g "SignatureActivity:27";
+// e.g "CertificateActivity:67";
+// e.g "SSLActivity:80";

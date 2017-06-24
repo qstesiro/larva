@@ -12,6 +12,8 @@ import com.sun.jdi.event.StepEvent;
 import com.sun.jdi.request.StepRequest;
 
 import com.runbox.debug.manager.BreakpointManager;
+import com.runbox.debug.manager.ExecuteManager;
+
 import com.runbox.debug.event.breakpoint.BreakpointAccessEvent;
 import com.runbox.debug.event.breakpoint.BreakpointLineEvent;
 import com.runbox.debug.event.breakpoint.BreakpointMethodEvent;
@@ -67,13 +69,19 @@ public class EventFactory {
     private static Event build(BreakpointEvent event) throws Exception {
         Object object = event.request().getProperty(BreakpointManager.Breakpoint.OBJECT);
         if (null != object) {
-            if (object instanceof BreakpointManager.MethodBreakpoint) {
+            if (object instanceof BreakpointManager.MethodBreakpoint) {				
                 return new BreakpointMethodEvent(event);
             } else if (object instanceof BreakpointManager.LineBreakpoint) {
                 return new BreakpointLineEvent(event);
-            }
-            
-        }
+            }			
+        } else {			
+			object = event.request().getProperty(ExecuteManager.Breakpoint.OBJECT);
+			if (null != object) {				
+				if (object instanceof ExecuteManager.Breakpoint) {
+					return new BreakpointLineEvent(event);
+				}
+			}
+		}		
         throw new Exception("invalid breakpoint event -> " + event.toString());
     }
 
