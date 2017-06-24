@@ -112,6 +112,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new ExecuteStepIntoCommand(command.command());
 		} else if (command.key().equals(EXECUTE_UPON)) {
 			return new ExecuteUponCommand(command.command());
+		} else if (command.key().equals(EXECUTE_GOTO)) {
+			return new ExecuteGotoCommand(command.command());
 		} else if (command.key().equals(EXECUTE_FILE)) {
 			return new ExecuteFileCommand(command.command());
 		} else if (command.key().equals(PRINT_VALUE)) {
