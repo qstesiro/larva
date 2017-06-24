@@ -19,8 +19,8 @@ public class BreakpointLineCommand extends BreakpointSetCommand {
     public boolean execute() throws Exception {
         BreakpointManager.LineBreakpoint breakpoint = new BreakpointManager.LineBreakpoint(clazz(), line(), routine()); 
         if (!BreakpointManager.instance().contain(breakpoint)) {
-            BreakpointManager.instance().append(breakpoint);
-            search(breakpoint);
+			search(breakpoint);
+            BreakpointManager.instance().append(breakpoint);            
         }
         return super.execute();
     }

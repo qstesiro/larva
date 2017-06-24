@@ -20,8 +20,8 @@ public class BreakpointMethodCommand extends BreakpointSetCommand {
     public boolean execute() throws Exception {
         BreakpointManager.MethodBreakpoint breakpoint = new BreakpointManager.MethodBreakpoint(clazz(), method(), arguments(), routine());
         if (!BreakpointManager.instance().contain(breakpoint)) {
-            BreakpointManager.instance().append(breakpoint);
-            search(breakpoint);
+			search(breakpoint);
+            BreakpointManager.instance().append(breakpoint);			
         }
         return super.execute();
     }
