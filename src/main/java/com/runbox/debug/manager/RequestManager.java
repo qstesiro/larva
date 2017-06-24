@@ -57,13 +57,37 @@ public class RequestManager extends Manager {
         }
         return null;
     }
-    
+
+	public BreakpointRequest createBreakpointRequest(Location location, ExecuteManager.Breakpoint breakpoint) {
+		if (null != manager) {
+			if (null != location && null != breakpoint) {
+				return fill(manager.createBreakpointRequest(location), breakpoint);				
+			}
+        }
+        return null;
+	}
+
+	private BreakpointRequest fill(BreakpointRequest request, ExecuteManager.Breakpoint breakpoint) {
+        if (null != breakpoint && null != request) {
+			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);			
+			request.putProperty(ExecuteManager.Breakpoint.OBJECT, breakpoint);
+			request.addCountFilter(1);
+			if (null != breakpoint.thread()) {
+				request.addThreadFilter(breakpoint.thread());
+			}
+            if (null != breakpoint.routine()) {
+                request.putProperty(Command.ROUTINE, breakpoint.routine());
+            }
+			breakpoint.request(request);
+			request.enable();                        
+        }
+        return request;
+    }
+	
     public EventRequest createBreakpointRequest(Location location, BreakpointManager.Breakpoint breakpoint) {
         if (null != manager) {
-			if (null != location && null != breakpoint) {
-				EventRequest request = manager.createBreakpointRequest(location);
-				fill(request, breakpoint);
-				return request;
+			if (null != location && null != breakpoint) {				
+				return fill(manager.createBreakpointRequest(location), breakpoint);
 			}
         }
         return null;
@@ -92,10 +116,10 @@ public class RequestManager extends Manager {
             request.putProperty(BreakpointManager.Breakpoint.OBJECT, breakpoint);
             if (null != breakpoint.routine()) {
                 request.putProperty(Command.ROUTINE, breakpoint.routine());
-            }
-            request.setEnabled(breakpoint.status());
+            }						
             breakpoint.solve(true);
-            breakpoint.request(request);
+			breakpoint.request(request);
+			request.setEnabled(breakpoint.status());
         }
         return request;
     }
@@ -151,21 +175,15 @@ public class RequestManager extends Manager {
         return null;
     }
 	
-    public MethodExitRequest createMethodExitRequest(ExecuteManager.ReturnEntry entry) {
-        if (null != manager && null != entry) {
+    public MethodExitRequest createMethodExitRequest(ThreadReference thread, RoutineNode routine) {
+        if (null != manager) {
             MethodExitRequest request = manager.createMethodExitRequest();
 			request.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
-			if (null != entry.thread()) {
-				request.addThreadFilter(entry.thread());
-			}
-			if (null != entry.type()) {
-				request.addClassFilter(entry.type());
-			}
-			if (null != entry.clazz()) {
-				request.addClassFilter(entry.clazz());
-			}
-			if (null != entry.routine()) {
-                request.putProperty(Command.ROUTINE, entry.routine());
+			if (null != thread) {
+				request.addThreadFilter(thread);
+			}			
+			if (null != routine) {
+                request.putProperty(Command.ROUTINE, routine);
             }
 			request.enable(); return request;
         }
