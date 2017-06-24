@@ -9,6 +9,7 @@ import com.sun.jdi.IncompatibleThreadStateException;
 
 import com.runbox.debug.command.Command;
 import com.runbox.debug.manager.MachineManager;
+import com.runbox.debug.manager.ContextManager;
 
 import com.runbox.debug.script.expression.Expression;
 import com.runbox.debug.script.expression.token.operand.Operand;
@@ -92,7 +93,13 @@ public class ThreadQueryCommand extends ThreadCommand {
 	private Object[] arguments(int index, ThreadReference thread) throws Exception {
 		List<Object> objects = new LinkedList<Object>();
 		objects.add(String.valueOf(index));
-		objects.add(String.valueOf(thread.uniqueID()));
+		if (ContextManager.instance().thread().uniqueID() == thread.uniqueID()) {
+			objects.add(String.valueOf(thread.uniqueID()) + "*");
+		} else if (ContextManager.instance().current().uniqueID() == thread.uniqueID()) {
+			objects.add(String.valueOf(thread.uniqueID()) + ".");
+		} else {
+			objects.add(String.valueOf(thread.uniqueID()));
+		}
 		if (FLAG_GROUP == (FLAG_GROUP & flags)) {
 			ThreadGroupReference group = thread.threadGroup();
 			objects.add(null != group ? String.valueOf(group.uniqueID()) : "n/a");
