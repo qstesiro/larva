@@ -35,11 +35,11 @@ public class MachineManager extends Manager {
 	private final static String DALVIK = "dalvik";
 	
 	public boolean hotspot() {
-		return name().toLowerCase().equals(HOTSPOT);
+		return (-1 != name().indexOf(HOTSPOT));
 	}
 
 	public boolean dalvik() {
-		return name().toLowerCase().equals(DALVIK);
+		return (-1 != name().indexOf(DALVIK));
 	}
 	
 	public EventRequestManager eventRequestManager() {
