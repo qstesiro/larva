@@ -67,7 +67,7 @@ import.class "com.runbox.demo.Demo$Inner";
 import.class "java.lang.NullPointerException";
 
 config.set "line", 9;
-config.set "bytecode", false;
+// config.set "bytecode", false;
 config.query;
 config.query "line";
 
@@ -130,7 +130,7 @@ def $array3() {
 	return array3;
 }
 
-trace.mode 0x4;
+// trace.mode 0x4;
 
 // print.value "current time -> " + $time();
 // print.value "enter sleep ...";

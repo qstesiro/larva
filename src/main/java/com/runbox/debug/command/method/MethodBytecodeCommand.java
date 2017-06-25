@@ -66,7 +66,7 @@ public class MethodBytecodeCommand extends MethodCommand {
 		BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
 													 ReaderFactory.create(method.declaringType().constantPool(),
 																		  method.declaringType().constantPoolCount()));
-		reader.printer().prefix("    ");		
+		reader.printer().prefix("  ");		
 		for (Bytecode code : reader.get()) {
 			reader.printer().print(code);
 		}

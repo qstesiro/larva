@@ -66,6 +66,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 				BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
 															 ReaderFactory.create(location.declaringType().constantPool(),
 																				  location.declaringType().constantPoolCount()));
+				reader.printer().prefix("  ");
 				reader.printer().print(reader.get(location.codeIndex()));
 			} catch (UnsupportedOperationException e) {}
 		}
