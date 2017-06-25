@@ -26,8 +26,8 @@ public class ConfigSetCommand extends ConfigCommand {
 		if (null != name && MAX == values.size()) {
 			if (name.equals(ConfigManager.LINE) && values.isInteger(VALUE)) {
 				ConfigManager.instance().line(values.getInteger(VALUE));
-			} else if (name.equals(ConfigManager.BYTECODE) && values.isBoolean(VALUE)) {
-				ConfigManager.instance().bytecode(values.getBoolean(VALUE));
+			} else if (name.equals(ConfigManager.BYTECODE) && values.isInteger(VALUE)) {
+				ConfigManager.instance().bytecode(values.getInteger(VALUE));
 			} else {
 				throw new Exception("invalid config name");
 			}

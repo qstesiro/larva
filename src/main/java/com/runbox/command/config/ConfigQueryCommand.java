@@ -57,10 +57,10 @@ public class ConfigQueryCommand extends ConfigCommand {
 				System.out.printf("%-5d%-10s%s\n", i++, ConfigManager.SCRIPT, ConfigManager.instance().script());
 			} else if (name.equals(ConfigManager.MODE)) {
 				System.out.printf("%-5d%-10s%s\n", i++, ConfigManager.MODE, ConfigManager.instance().mode());
+			} else if (name.equals(ConfigManager.BYTECODE)) {
+				System.out.printf("%-5d%-10s%d\n", i++, ConfigManager.BYTECODE, ConfigManager.instance().bytecode());
 			} else if (name.equals(ConfigManager.LINE)) {
 				System.out.printf("%-5d%-10s%d\n", i++, ConfigManager.LINE, ConfigManager.instance().line());
-			} else if (name.equals(ConfigManager.BYTECODE)) {
-				System.out.printf("%-5d%-10s%b\n", i++, ConfigManager.BYTECODE, ConfigManager.instance().bytecode());
 			} else {
 				throw new Exception("invalid config name");
 			}
@@ -73,7 +73,7 @@ public class ConfigQueryCommand extends ConfigCommand {
 		System.out.printf("%-5d%-10s%s\n", i++, ConfigManager.PORT, ConfigManager.instance().port());
 		System.out.printf("%-5d%-10s%s\n", i++, ConfigManager.SCRIPT, ConfigManager.instance().script());
 		System.out.printf("%-5d%-10s%s\n", i++, ConfigManager.MODE, ConfigManager.instance().mode());
+		System.out.printf("%-5d%-10s%d\n", i++, ConfigManager.BYTECODE, ConfigManager.instance().bytecode());
 		System.out.printf("%-5d%-10s%d\n", i++, ConfigManager.LINE, ConfigManager.instance().line());
-		System.out.printf("%-5d%-10s%b\n", i++, ConfigManager.BYTECODE, ConfigManager.instance().bytecode());
 	}
 }

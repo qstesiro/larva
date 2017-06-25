@@ -37,13 +37,13 @@ public class ConfigManager extends Manager {
     }
 
 	public final static String PREFIX = "-";
-    public final static String ADDRESS = "address"; // not exist in config map
+    public final static String ADDRESS = "address";
 	public final static String IP = "ip";
 	public final static String PORT = "port";
     public final static String SCRIPT = "script";
     public final static String MODE = "mode";
-	public final static String LINE = "line";
 	public final static String BYTECODE = "bytecode";
+	public final static String LINE = "line";	
 	
     private String find(String arguments[], String key) {
         for (int i = 0; i < arguments.length; ++i) {
@@ -121,6 +121,16 @@ public class ConfigManager extends Manager {
 		}
 		return false;
 	}
+
+	private int bytecode = 1;
+
+	public void bytecode(int value) {
+		bytecode = value;
+	}
+
+	public int bytecode() {
+		return bytecode;
+	}
 	
 	private int line = 1;
 
@@ -130,17 +140,7 @@ public class ConfigManager extends Manager {
 
 	public int line() {
 		return line;
-	}
-
-	private boolean bytecode = true;
-
-	public void bytecode(boolean value) {
-		bytecode = value;
-	}
-
-	public boolean bytecode() {
-		return bytecode;
-	}   
+	}	
 
 	private String arguments[] = null;
 	

@@ -8,6 +8,8 @@ import com.sun.jdi.ReferenceType;
 import com.sun.jdi.Method;
 import com.sun.jdi.event.StepEvent;
 
+import com.runbox.clazz.entry.bytecode.Bytecode;
+
 import com.runbox.manager.ConfigManager;
 
 import com.runbox.debug.event.Event;
@@ -34,41 +36,55 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 		}
         return super.handle();
     }  
-	
-	protected void printLine(Location location) throws Exception {
-		int count = ConfigManager.instance().line();
-		if (0 < count) {
-			Map<Integer, String> lines = SourceManager.instance().lines(location);
-			if (null != lines && 0 < location.lineNumber()) {
-				int start = location.lineNumber() - count / 2;
-				for (int i = 0; i < count; ++i) {
-					int number = start + i;
-					if (null != lines.get(number)) {
-						if (location.lineNumber() == number)
-							System.out.printf("> %-4d%s\n", number, lines.get(number));
-						else
-							System.out.printf("  %-4d%s\n", number, lines.get(number));
-					}
-				}
-			}
-		}
-	}
 
 	protected void printCode(Location location) throws Exception {
-		if (ConfigManager.instance().bytecode()) {
+		int count = ConfigManager.instance().bytecode();
+		if (0 < count && 0 < location.lineNumber()) {
 			// MachineManager.instance().get().canGetBytecodes()
 			// this is a bug in davlik
 			// method.bytecode() will throw UnsupportedOperationException
 			// though canGetBytecode() return true		
 			Method method = location.method();
-			// System.out.println(location.codeIndex());
 			try {
 				BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
 															 ReaderFactory.create(location.declaringType().constantPool(),
 																				  location.declaringType().constantPoolCount()));
-				reader.printer().prefix("  ");
-				reader.printer().print(reader.get(location.codeIndex()));
+				BytecodeReader.Printer printer = reader.printer();
+				List<Bytecode> codes = reader.get();
+				if (null != codes && 0 < codes.size()) {
+					int current = codes.indexOf(reader.get(location.codeIndex()));					
+					int start = current - count / 2;
+					for (int i = 0; i < count; ++i) {
+						int index = start + i;
+						if (0 <= index && codes.size() > index) {
+							if (null != codes.get(index)) {
+								if (index == current) printer.prefix("> ");
+								else printer.prefix("  ");													
+								printer.print(codes.get(index));
+							}
+						}
+					}
+				}
 			} catch (UnsupportedOperationException e) {}
 		}
 	}
+	
+	protected void printLine(Location location) throws Exception {
+		int count = ConfigManager.instance().line();
+		if (0 < count && 0 < location.lineNumber()) {
+			Map<Integer, String> lines = SourceManager.instance().lines(location);
+			if (null != lines && 0 < lines.size()) {
+				int start = location.lineNumber() - count / 2;
+				for (int i = 0; i < count; ++i) {
+					int number = start + i;
+					if (0 < number && lines.size() > number) {
+						if (null != lines.get(number)) {
+							if (location.lineNumber() == number) System.out.printf("> %-4d%s\n", number, lines.get(number));
+							else System.out.printf("  %-4d%s\n", number, lines.get(number));
+						}
+					}
+				}
+			}
+		}
+	}	
 }
