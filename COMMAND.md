@@ -361,6 +361,22 @@
 样例：execute.step.into；<br>
 &emsp;&emsp;&emsp;execute.step.into 2；<br>
 &emsp;&emsp;&emsp;@count = 0x3; execute.step.into @count;<br>
+### execute.upon {block}
+说明：执行完当前方法剩余的代码直到方法返回<br>
+参数：无<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在程序执行到指定位置后被执行；<br>
+样例：execute.upon;<br>
+### execute.goto expr {block}
+说明：执行程序到指定的位置<br>
+参数：expr larva表达式，运行结果必须是字符串类型，"class:line"<br>
+&emsp;&emsp;&emsp;class 类全路径，如果通过import.class，可以只给出只给出类名称<br>
+&emsp;&emsp;&emsp;line 行号<br>
+&emsp;&emsp;&emsp;类名称可以省略，如果不给出类名称则代表当前类，但是冒号不可以省略<br>
+&emsp;&emsp;&emsp;{block} 命令尾块，这个块中的脚本会在程序执行到指定位置后被执行；<br>
+样例：execute.goto "com.runbox.demo.Demo:10";<br>
+&emsp;&emsp;&emsp;import.class "com.runbox.demo.Demo"; execute.goto "Demo:20";<br>
+&emsp;&emsp;&emsp;execute.goto ":30";<br>
+&emsp;&emsp;&emsp;@location = ":40"; execute.goto @location;<br>
 ### execute.file file (此功暂未完成)
 说明：运行一个外部的文件，文件内容是larva脚本；<br>
 参数：文件全路径，必须是字符串类型；<br>
@@ -441,6 +457,16 @@
 &emsp;&emsp;&emsp;print.string string2, 2; (index, count, line 可以被省略)<br>
 &emsp;&emsp;&emsp;print.string string3; (flags, index, count, line 都可以被省略)<br>
 &emsp;&emsp;&emsp;print.string string4, 3, 0, 100, 20; (当前命令主要想每行显示20个元素，但是第两个flags, index，count参数不能省略)<br>
+### print.radix expr
+说明：以某中进制形式显示整形数<br>
+参数：expr 标准表达式，由以下两部分组成：<br>
+&emsp;&emsp;&emsp;value 子表达式，运行结果必须是整形数，类型可以是byte, short, int, long<br>
+&emsp;&emsp;&emsp;radix 可以是 2，8，10， 16<br>
+样例：print.radix 10, 2;<br>
+&emsp;&emsp;&emsp;print.radix 10, 8;<br>
+&emsp;&emsp;&emsp;print.raidx 012, 16;<br>
+&emsp;&emsp;&emsp;print.radix 0b1010, 10;<br>
+&emsp;&emsp;&emsp;print.radix 0xa, 8;<br>
 ## 显示模板
 ### template.list expr
 说明：显示某种列表类型的数据<br>
