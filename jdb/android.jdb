@@ -78,6 +78,12 @@ a.d "config.query", "c.q";
 a.d "config.set", "c.s";
 a.d "template.list", "t.l";
 a.d "template.map", "t.m";
+a.d "print.value", "p.v";
+a.d "print.field", "p.f";
+a.d "print.local", "p.l";
+a.d "print.array", "p.a";
+a.d "print.string", "p.s";
+a.d "print.radix", "p.r";
 
 s.a "D:\\AndroidStudioProjects\\Encryption\\app\\src\\main\\java";
 

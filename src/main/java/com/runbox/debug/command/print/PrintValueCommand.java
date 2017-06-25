@@ -23,9 +23,7 @@ public class PrintValueCommand extends PrintCommand {
 
 	@Override
     public boolean execute() throws Exception {
-        if (null != operand) {            
-            print();
-        }
+        if (null != operand) print();        
 		return super.execute();        
     }
 	

@@ -128,6 +128,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
 			return new PrintArrayCommand(command.command());
 		} else if (command.key().equals(PRINT_STRING)) {
 			return new PrintStringCommand(command.command());
+		} else if (command.key().equals(PRINT_RADIX)) {
+			return new PrintRadixCommand(command.command());
 		} else if (command.key().equals(TEMPLATE_LIST)) {
 			return new TemplateListCommand(command.command());
 		} else if (command.key().equals(TEMPLATE_MAP)) {
@@ -239,7 +241,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
     public final static String PRINT_LOCAL = "print.local";
 	public final static String PRINT_AUTO = "print.auto";
     public final static String PRINT_ARRAY = "print.array";
-    public final static String PRINT_STRING = "print.string";	
+    public final static String PRINT_STRING = "print.string";
+	public final static String PRINT_RADIX = "print.radix";
 
     public final static int COMMAND_TEMPLATE = COMMAND_PRINT + 1;
     public final static String TEMPLATE_LIST = "template.list";
@@ -330,7 +333,8 @@ public class CommandFactory extends com.runbox.command.CommandFactory {
         add(PRINT_LOCAL);
 		add(PRINT_AUTO);
         add(PRINT_ARRAY);
-        add(PRINT_STRING);		
+        add(PRINT_STRING);
+		add(PRINT_RADIX);
         // template command
         add(TEMPLATE_LIST);
         add(TEMPLATE_MAP);        
