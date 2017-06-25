@@ -42,8 +42,8 @@ i.c "com.runbox.dex.reader.StringReader";
 i.c "com.runbox.dex.reader.TypeReader";
 i.c "com.runbox.dex.reader.ProtoReader";
 
+c.s "bytecode", 9;
 c.s "line", 9;
-c.s "bytecode", false;
 
 def $print(@list) {
 	if (null != @list) {

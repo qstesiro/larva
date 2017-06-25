@@ -87,6 +87,7 @@ a.d "print.radix", "p.r";
 
 s.a "D:\\AndroidStudioProjects\\Encryption\\app\\src\\main\\java";
 
+c.s "bytecode", 9;
 c.s "line", 9;
 
 i.c "java.util.LinkedList";

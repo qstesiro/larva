@@ -66,10 +66,9 @@ import.class "com.runbox.demo.Demo";
 import.class "com.runbox.demo.Demo$Inner";
 import.class "java.lang.NullPointerException";
 
+config.set "bytecode", 9;
 config.set "line", 9;
-// config.set "bytecode", false;
 config.query;
-config.query "line";
 
 // class.monitor.prepare "java.lang.String";
 // class.monitor.unload "java.lang.String";
@@ -77,7 +76,7 @@ config.query "line";
 // class.monitor.prepare "com.runbox.demo.Demo*";
 // class.monitor.prepare "*.Demo";
 // class.monitor.prepare "Inner";
-class.monitor.prepare "Demo";
+// class.monitor.prepare "Demo";
 // class.monitor.disable;
 
 breakpoint.method "Demo.method()" {
