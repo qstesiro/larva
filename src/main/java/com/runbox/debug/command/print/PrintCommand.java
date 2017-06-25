@@ -48,10 +48,12 @@ public class PrintCommand extends Command {
         List<Operand> operands = new LinkedList<Operand>();
         StackFrame frame = ContextManager.instance().frame();
         if (null != frame) {
-            List<LocalVariable> locals = frame.visibleVariables();
-            for (LocalVariable local : locals) {
-                operands.add(new LocalOperand(local.name()));
-            }			
+			try {
+				List<LocalVariable> locals = frame.visibleVariables();
+				for (LocalVariable local : locals) {
+					operands.add(new LocalOperand(local.name()));
+				}
+			} catch (AbsentInformationException e) {}
         }		
         return operands;
     }
