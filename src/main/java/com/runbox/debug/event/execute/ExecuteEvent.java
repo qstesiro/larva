@@ -25,8 +25,7 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 	public boolean handle() throws Exception {		
 		if (0 < count()) {
 			reset(); return !super.handle();
-		}
-		// print();
+		}		
 		printCode(event().location());
 		printLine(event().location());
         return super.handle();
@@ -55,12 +54,5 @@ public class ExecuteEvent<T extends StepEvent> extends LocatableEvent<T> {
 			autos.add(new ConstOperand(event().thread()));
 			arguments(autos);
 		}
-	}
-	
-	private void print() {
-		StepRequest request = (StepRequest)event().request();
-		String string = (StepRequest.STEP_LINE == request.size() ? "next" : "step");
-		string += " " + (StepRequest.STEP_OVER == request.depth() ? "over" : "into");
-		System.out.println(string);
-	}	
+	}   	
 }
