@@ -18,10 +18,10 @@
 &emsp;&emsp;&emsp;script 启动后先运行的脚本，启动调试时通过-script参数传递（只读）<br>
 &emsp;&emsp;&emsp;line 当断点事件、单步执行事件、异常事件被触发，如果有源码可以显示的情况，显示多少行源码（读写）<br>
 &emsp;&emsp;&emsp;value 子表达式，运算结果必须是整形数；<br>
-&emsp;&emsp;&emsp;bytecode 当断点事件、单步执行事件、异常事件被触发，如果有字节码可以显示的情况，是否显示字节码（读写）<br>
-&emsp;&emsp;&emsp;value 子表达式，运算结果必须是布尔类型；<br>
+&emsp;&emsp;&emsp;bytecode 当断点事件、单步执行事件、异常事件被触发，如果有字节码可以显示的情况，显示多少条虚拟指令（读写）<br>
+&emsp;&emsp;&emsp;value 子表达式，运算结果必须是整形数；<br>
 样例：config.set "line", 9;<br>
-&emsp;&emsp;&emsp;@var = "bytecode"; config.set @var, true;<br>
+&emsp;&emsp;&emsp;@var = "bytecode"; config.set @var, 9;<br>
 ## 别名定义
 ### alias.define expr
 说明：为某条命令定义一个别名，这个别名可以在后续使用效果如同命令本身一样，不能对某个别名再定义别名;<br>
