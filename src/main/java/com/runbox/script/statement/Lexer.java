@@ -21,16 +21,25 @@ public abstract class Lexer {
         return false;
     }
 
+	private static final int BIN = 2;
+	private static final int OCT = 8;
+	private static final int DEC = 10;
+	private static final int HEX = 16;
+	
     protected static boolean number(char lookup, int radix) {
-        if (10 == radix) {
-            if ('0' <= lookup && '9' >= lookup) {
-                return true;
-            }
-        } else if (8 == radix) {
+        if (BIN == radix) {
+			if ('0' == lookup || '1' == lookup) {
+				return true;
+			}
+		} else if (OCT == radix) {
             if ('0' <= lookup && '7' >= lookup) {
                 return true;
             }
-        } else if (16 == radix) {
+        } else if (DEC == radix) {
+            if ('0' <= lookup && '9' >= lookup) {
+                return true;
+            }
+        } else if (HEX == radix) {
             if (('0' <= lookup && '9' >= lookup) ||
                 ('A' <= lookup && 'F' >= lookup) ||
                 ('a' <= lookup && 'f' >= lookup)) {

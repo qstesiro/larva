@@ -446,7 +446,7 @@ public class Lexer extends com.runbox.script.statement.Lexer {
                 buffer = new StringBuffer(buffer.substring(2, buffer.length()));
                 next(); return new ConstOperand(Long.valueOf(buffer.toString(), 2));
             } else {
-                buffer = new StringBuffer(buffer.substring(2, buffer.length()));
+                buffer = new StringBuffer(buffer.substring(2, buffer.length()));				
                 return new ConstOperand(Integer.valueOf(buffer.toString(), 2));
             }
         }
