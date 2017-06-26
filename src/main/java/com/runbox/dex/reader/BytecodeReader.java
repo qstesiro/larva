@@ -16,7 +16,7 @@ public class BytecodeReader extends Reader {
 
     public BytecodeReader(FileChannel channel, DexReader reader) throws Exception {
         super(channel, null, reader); 
-		this.size = channel.size();
+		this.size = (int)channel.size();
     }	
 	
     private List<Bytecode> codes = new LinkedList<Bytecode>();	
@@ -38,53 +38,54 @@ public class BytecodeReader extends Reader {
         return 0;
     }
 	
-	private long size = 0;
+	private int size = 0;
+    private int offset = 0;
 
 	@Override
 	protected byte[] read(int size) throws IOException {
-		this.size -= size;
+		this.size -= size; offset += size;
         return super.read(size);
     }
 
 	@Override
     protected short readU1() throws IOException {
-		--size;
+		--size; ++offset;
         return super.readU1();
     }
 
 	@Override
     protected int readU2() throws IOException {
-		size -= SIZE2;
+		size -= SIZE2; offset += SIZE2;
         return super.readU2();        
     }
 
 	@Override
     protected int readU4() throws Exception {
-		size -= SIZE4;
+		size -= SIZE4; offset += SIZE4;
         return super.readU4();        
     }
 
 	@Override
 	protected byte readS1() throws IOException {
-		--size;
+		--size; ++offset;
         return super.readS1();
 	}
 
 	@Override
 	protected short readS2() throws IOException {
-		size -= SIZE2;
+		size -= SIZE2; offset += SIZE2;
         return super.readS2();		
 	}
 
 	@Override
 	protected int readS4() throws IOException {
-		size -= SIZE4;
+		size -= SIZE4; offset += SIZE4;
         return super.readS4();
 	}
 
 	@Override
 	protected long skip(long count) throws IOException {
-		size -= count;
+		size -= count; offset += count;
         return super.skip(count);
 	}
 

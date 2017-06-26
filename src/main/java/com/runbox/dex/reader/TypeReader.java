@@ -2,7 +2,7 @@ package com.runbox.dex.reader;
 
 import java.nio.channels.FileChannel;
 
-import com.runbox.dex.entry.TypeId;
+import com.runbox.dex.entry.constant.TypeId;
 
 public class TypeReader extends Reader {
 
@@ -27,9 +27,15 @@ public class TypeReader extends Reader {
 	}
 
 	public TypeId get(int index) {
-		if (0 < index && ids.length > index) {
+		if (0 <= index && ids.length > index) {
 			return ids[index];
 		}
 		return null;
+	}
+
+	public void print() {
+		for (TypeId id : ids) {
+			System.out.println(id.descriptor());
+		}
 	}
 }

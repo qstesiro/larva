@@ -2,7 +2,7 @@ package com.runbox.dex.reader;
 
 import java.nio.channels.FileChannel;
 
-import com.runbox.dex.entry.FieldId;
+import com.runbox.dex.entry.constant.FieldId;
 
 public class FieldReader extends Reader {
 
@@ -27,9 +27,17 @@ public class FieldReader extends Reader {
 	}
 
 	public FieldId get(int index) {
-		if (0 < index && ids.length > index) {
+		if (0 <= index && ids.length > index) {
 			return ids[index];
 		}
 		return null;
+	}
+
+	public void print() {
+		for (FieldId id : ids) {
+			System.out.println(id.clazz());
+			System.out.println(id.name());
+			System.out.println(id.type());			
+		}
 	}
 }

@@ -18,6 +18,8 @@ a.d "execute.next.over", "e.n.o";
 a.d "execute.next.into", "e.n.i";
 a.d "execute.step.over", "e.s.o";
 a.d "execute.step.into", "e.s.i";
+a.d "execute.upon", "e.u";
+a.d "execute.goto", "e.g";
 a.d "thread.query", "t.q";
 a.d "thread.switch", "t.w";
 a.d "thread.stack", "t.s";
@@ -84,7 +86,9 @@ def $printString(@list) {
 // b.l "DexReader:23";
 // b.m "HeaderReader.load()";
 // b.m "StringReader.load()";
-b.m "TypeReader.load()";
-b.m "ProtoReader.load()";
+// b.m "TypeReader.load()";
+// b.m "ProtoReader.load()";
+
+// b.m "ProtoReader.print()";
 
 e.r;

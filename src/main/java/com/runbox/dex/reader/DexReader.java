@@ -2,6 +2,12 @@ package com.runbox.dex.reader;
 
 import java.nio.channels.FileChannel;
 
+import com.runbox.dex.entry.constant.StringId;
+import com.runbox.dex.entry.constant.TypeId;
+import com.runbox.dex.entry.constant.ProtoId;
+import com.runbox.dex.entry.constant.FieldId;
+import com.runbox.dex.entry.constant.MethodId;
+
 public class DexReader extends Reader {
 
     public DexReader(FileChannel channel) throws Exception {
@@ -14,12 +20,29 @@ public class DexReader extends Reader {
 		position(MAP_OFFSET); position(readU4());
 		for (Map map : load(readU4())) {
 			switch (map.type()) {
-			case TYPE_HEADER_ITEM: headerReader = new HeaderReader(channel(), map, this).load(); break;
-			case TYPE_STRING_ID_ITEM: stringReader = new StringReader(channel(), map, this).load(); break;
-			case TYPE_TYPE_ID_ITEM: typeReader = new TypeReader(channel(), map, this).load(); break;
-			case TYPE_PROTO_ID_ITEM: protoReader = new ProtoReader(channel(), map, this).load(); break;
-			case TYPE_FIELD_ID_ITEM: fieldReader = new FieldReader(channel(), map, this).load(); break;
-			case TYPE_METHOD_ID_ITEM: methodReader = new MethodReader(channel(), map, this).load(); break;
+			case TYPE_HEADER_ITEM:
+				headerReader = new HeaderReader(channel(), map, this).load();				
+				break;
+			case TYPE_STRING_ID_ITEM:
+				stringReader = new StringReader(channel(), map, this).load();
+				// stringReader.print();
+				break;
+			case TYPE_TYPE_ID_ITEM:
+				typeReader = new TypeReader(channel(), map, this).load();
+				// typeReader.print();
+				break;
+			case TYPE_PROTO_ID_ITEM:
+				protoReader = new ProtoReader(channel(), map, this).load();
+				// protoReader.print();
+				break;
+			case TYPE_FIELD_ID_ITEM:
+				fieldReader = new FieldReader(channel(), map, this).load();
+				// fieldReader.print();
+				break;
+			case TYPE_METHOD_ID_ITEM:
+				methodReader = new MethodReader(channel(), map, this).load();
+				// methodReader.print();
+				break;
 			default: System.out.println(type(map.type()));
 			}
 		}
@@ -42,14 +65,28 @@ public class DexReader extends Reader {
 
 	private StringReader stringReader = null;
 	
-	public StringReader stringEntryReader() {
+	public StringReader stringReader() {
 		return stringReader;
+	}
+
+	public StringId getStringId(int index) {
+		if (null != stringReader) {
+			return stringReader.get(index);
+		}
+		return null;
 	}
 
 	private TypeReader typeReader = null;
 
-	public TypeReader typeReader() {
+	public TypeReader typeReader() {		
 		return typeReader;
+	}
+
+	public TypeId getTypeId(int index) {
+		if (null != typeReader) {
+			return typeReader.get(index);
+		}
+		return null;
 	}
 	
 	private ProtoReader protoReader = null;
@@ -58,10 +95,24 @@ public class DexReader extends Reader {
 		return protoReader;
 	}
 
+	public ProtoId getProtoId(int index) {
+		if (null != protoReader) {
+			return protoReader.get(index);
+		}
+		return null;
+	}
+
 	private FieldReader fieldReader = null;
 
 	public FieldReader fieldReader() {
 		return fieldReader;
+	}
+
+	public FieldId getFieldId(int index) {
+		if (null != fieldReader) {
+			return fieldReader.get(index);
+		}
+		return null;
 	}
 
 	private MethodReader methodReader = null;
@@ -69,6 +120,13 @@ public class DexReader extends Reader {
 	public MethodReader methodReader() {
 		return methodReader;
 	}   			
+
+	public MethodId getMethodId(int index) {
+		if (null != methodReader) {
+			return methodReader.get(index);
+		}
+		return null;
+	}
 	
 	private static final int TYPE_HEADER_ITEM = 0x0000;
 	private static final int TYPE_STRING_ID_ITEM = 0x0001;

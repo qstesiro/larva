@@ -2,8 +2,8 @@ package com.runbox.dex.reader;
 
 import java.nio.channels.FileChannel;
 
-import com.runbox.dex.entry.StringId;
-import com.runbox.dex.entry.StringData;
+import com.runbox.dex.entry.constant.StringId;
+import com.runbox.dex.entry.constant.StringData;
 
 public class StringReader extends Reader {
 
@@ -43,9 +43,15 @@ public class StringReader extends Reader {
 	}
 
 	public StringId get(int index) {
-		if (0 < index && ids.length > index) {
+		if (0 <= index && ids.length > index) {
 			return ids[index];
 		}
 		return null;
-	}	
+	}
+
+	public void print() {
+		for (StringId id : ids) {
+			System.out.println(id.string());
+		}
+	}
 }

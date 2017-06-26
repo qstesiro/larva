@@ -11,16 +11,16 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            ConfigManager.instance().set(args);
-			String mode = ConfigManager.instance().mode();
-			if (null != mode) {
-				if (mode.equals(ConfigManager.instance().MODE_DEBUG)) {
-					Debugger.instance().debug();
-				} else if (mode.equals(ConfigManager.instance().MODE_TRACE)) {
-					Tracer.instance().trace();
-				}
-			}
-			// DexReader reader = ReaderFactory.create("d:\\program\\maven\\larva\\classes.dex");
+            // ConfigManager.instance().set(args);
+			// String mode = ConfigManager.instance().mode();
+			// if (null != mode) {
+			// 	if (mode.equals(ConfigManager.instance().MODE_DEBUG)) {
+			// 		Debugger.instance().debug();
+			// 	} else if (mode.equals(ConfigManager.instance().MODE_TRACE)) {
+			// 		Tracer.instance().trace();
+			// 	}
+			// }
+			DexReader reader = ReaderFactory.create("d:\\program\\maven\\larva\\classes.dex");
         } catch (Exception e) {
             e.printStackTrace();
         }

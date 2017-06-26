@@ -2,10 +2,10 @@ package com.runbox.dex.reader;
 
 import java.nio.channels.FileChannel;
 
-import com.runbox.dex.entry.ProtoId;
-import com.runbox.dex.entry.Parameter;
-import com.runbox.dex.entry.TypeList;
-import com.runbox.dex.entry.Type;
+import com.runbox.dex.entry.constant.ProtoId;
+import com.runbox.dex.entry.constant.Parameter;
+import com.runbox.dex.entry.constant.TypeList;
+import com.runbox.dex.entry.constant.Type;
 
 public class ProtoReader extends Reader {
 
@@ -49,9 +49,17 @@ public class ProtoReader extends Reader {
 	}
 
 	public ProtoId get(int index) {
-		if (0 < index && ids.length > index) {
+		if (0 <= index && ids.length > index) {
 			return ids[index];
 		}
 		return null;
+	}
+
+	public void print() {
+		for (ProtoId id : ids) {
+			System.out.println(id.descriptor());
+			System.out.println(id.returnType());
+			System.out.println(id.parameterString());
+		}
 	}
 }
