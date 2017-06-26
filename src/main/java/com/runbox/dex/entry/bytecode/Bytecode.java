@@ -514,71 +514,211 @@ public class Bytecode {
 
 	public static class CONST_STRING extends Bytecode {
 
-		public CONST_STRING(int offset) {
+		public CONST_STRING(int offset, short vAA, int index) {
 			super(offset, "CONST_STRING", CONST_STRING);
+			this.vAA = vAA;
+			this.index = index;
 		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
+		}		
 	}
 
 	public static class CONST_STRING_JUMBO extends Bytecode {
 
-		public CONST_STRING_JUMBO(int offset) {
+		public CONST_STRING_JUMBO(int offset, short vAA, int index) {
 			super(offset, "CONST_STRING_JUMBO", CONST_STRING_JUMBO);
+			this.vAA = vAA;
+			this.index = index;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class CONST_CLASS extends Bytecode {
 
-		public CONST_CLASS(int offset) {
+		public CONST_CLASS(int offset, short vAA, int index) {
 			super(offset, "CONST_CLASS", CONST_CLASS);
+			this.vAA = vAA;
+			this.index = index;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class MONITOR_ENTER extends Bytecode {
 
-		public MONITOR_ENTER(int offset) {
+		public MONITOR_ENTER(int offset, short vAA) {
 			super(offset, "MONITOR_ENTER", MONITOR_ENTER);
+			this.vAA = vAA;			
 		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}	   		
 	}
 
 	public static class MONITOR_EXIT extends Bytecode {
 
-		public MONITOR_EXIT(int offset) {
+		public MONITOR_EXIT(int offset, short vAA) {
 			super(offset, "MONITOR_EXIT", MONITOR_EXIT);
+			this.vAA = vAA;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
 		}
 	}
 
 	public static class CHECK_CAST extends Bytecode {
 
-		public CHECK_CAST(int offset) {
+		public CHECK_CAST(int offset, short vAA, int index) {
 			super(offset, "CHECK_CAST", CHECK_CAST);
+			this.vAA = vAA;
+			this.index = index;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class INSTANCE_OF extends Bytecode {
 
-		public INSTANCE_OF(int offset) {
+		public INSTANCE_OF(int offset, byte vA, byte vB, int index) {
 			super(offset, "INSTANCE_OF", INSTANCE_OF);
+			this.vA = vA;
+			this.vB = vB;
+			this.index = index;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
+		}
+
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class ARRAY_LENGTH extends Bytecode {
 
-		public ARRAY_LENGTH(int offset) {
+		public ARRAY_LENGTH(int offset, byte vA, byte vB) {
 			super(offset, "ARRAY_LENGTH", ARRAY_LENGTH);
+			this.vA = vA;
+			this.vB = vB;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
 		}
 	}
 
 	public static class NEW_INSTANCE extends Bytecode {
 
-		public NEW_INSTANCE(int offset) {
+		public NEW_INSTANCE(int offset, short vAA, int index) {
 			super(offset, "NEW_INSTANCE", NEW_INSTANCE);
+			this.vAA = vAA;
+			this.index = index;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class NEW_ARRAY extends Bytecode {
 
-		public NEW_ARRAY(int offset) {
+		public NEW_ARRAY(int offset, byte vA, byte vB, int index) {
 			super(offset, "NEW_ARRAY", NEW_ARRAY);
+			this.vA = vA;
+			this.vB = vB;
+			this.index = index;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
@@ -605,497 +745,665 @@ public class Bytecode {
 
 	public static class THROW extends Bytecode {
 
-		public THROW(int offset) {
+		public THROW(int offset, short vAA) {
 			super(offset, "THROW", THROW);
+			this.vAA = vAA;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
 		}
 	}
 
 	public static class GOTO extends Bytecode {
 
-		public GOTO(int offset) {
+		public GOTO(int offset, byte value) {
 			super(offset, "GOTO", GOTO);
+			this.value = value;
+		}
+
+		private byte value = 0;
+
+		public byte value() {
+			return value;
 		}
 	}
 
 	public static class GOTO16 extends Bytecode {
 
-		public GOTO16(int offset) {
+		public GOTO16(int offset, short value) {
 			super(offset, "GOTO16", GOTO16);
+			this.value = value;
+		}
+
+		private short value = 0;
+
+		public short value() {
+			return value;
 		}
 	}
 
 	public static class GOTO32 extends Bytecode {
 
-		public GOTO32(int offset) {
+		public GOTO32(int offset, int value) {
 			super(offset, "GOTO32", GOTO32);
+			this.value = value;
+		}
+
+		private int value = 0;
+
+		public int value() {
+			return value;
 		}
 	}
 
 	public static class PACKED_SWITCH extends Bytecode {
 
-		public PACKED_SWITCH(int offset) {
+		public PACKED_SWITCH(int offset, short vAA, int value) {
 			super(offset, "PACKED_SWITCH", PACKED_SWITCH);
+			this.vAA = vAA;
+			this.value = value;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int value = 0;
+
+		public int value() {
+			return value;
 		}
 	}
 
 	public static class SPARSE_SWITCH extends Bytecode {
 
-		public SPARSE_SWITCH(int offset) {
+		public SPARSE_SWITCH(int offset, short vAA, int value) {
 			super(offset, "SPARSE_SWITCH", SPARSE_SWITCH);
+			this.vAA = vAA;
+			this.value = value;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int value = 0;
+
+		public int value() {
+			return value;
 		}
 	}
 
 	public static class CMP_KIND extends Bytecode {
 
-		public CMP_KIND(int offset, String name, byte opcode) {
+		public CMP_KIND(int offset, String name, byte opcode, short vAA, short vBB, short vCC) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.vBB = vBB;
+			this.vCC = vCC;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private short vBB = 0;
+
+		public short vBB() {
+			return vBB;
+		}
+
+		private short vCC = 0;	   
+
+		public short vCC() {
+			return vCC;
 		}
 	}
 
 	public static class CMPL_FLOAT extends CMP_KIND {
 
-		public CMPL_FLOAT(int offset) {
-			super(offset, "CMPL_FLOAT", CMPL_FLOAT);
+		public CMPL_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "CMPL_FLOAT", CMPL_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class CMPG_FLOAT extends CMP_KIND {
 
-		public CMPG_FLOAT(int offset) {
-			super(offset, "CMPG_FLOAT", CMPG_FLOAT);
+		public CMPG_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "CMPG_FLOAT", CMPG_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class CMPL_DOUBLE extends CMP_KIND {
 
-		public CMPL_DOUBLE(int offset) {
-			super(offset, "CMPL_DOUBLE", CMPL_DOUBLE);
+		public CMPL_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "CMPL_DOUBLE", CMPL_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class CMPG_DOUBLE extends CMP_KIND {
 
-		public CMPG_DOUBLE(int offset) {
-			super(offset, "CMPG_DOUBLE", CMPG_DOUBLE);
+		public CMPG_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "CMPG_DOUBLE", CMPG_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class CMP_LONG extends CMP_KIND {
 
-		public CMP_LONG(int offset) {
-			super(offset, "CMP_LONG", CMP_LONG);
+		public CMP_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "CMP_LONG", CMP_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class IF_TEST extends Bytecode {
 
-		public IF_TEST(int offset, String name, byte opcode) {
+		public IF_TEST(int offset, String name, byte opcode, byte vA, byte vB, short value) {
 			super(offset, name, opcode);
+			this.vA = vA;
+			this.vB = vB;
+			this.value = value;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
+		}
+
+		private short value = 0;
+
+		public short value() {
+			return value;
 		}
 	}
 
 	public static class IF_EQ extends IF_TEST {
 
-		public IF_EQ(int offset) {
-			super(offset, "IF_EQ", IF_EQ);
+		public IF_EQ(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_EQ", IF_EQ, vA, vB, value);
 		}
 	}
 	
 	public static class IF_NE extends IF_TEST {
 
-		public IF_NE(int offset) {
-			super(offset, "IF_NE", IF_NE);
+		public IF_NE(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_NE", IF_NE, vA, vB, value);
 		}
 	}
 
 	public static class IF_LT extends IF_TEST {
 
-		public IF_LT(int offset) {
-			super(offset, "IF_LT", IF_LT);
+		public IF_LT(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_LT", IF_LT, vA, vB, value);
 		}
 	}
 
 	public static class IF_GE extends IF_TEST {
 
-		public IF_GE(int offset) {
-			super(offset, "IF_GE", IF_GE);
+		public IF_GE(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_GE", IF_GE, vA, vB, value);
 		}
 	}
 
 	public static class IF_GT extends IF_TEST {
 
-		public IF_GT(int offset) {
-			super(offset, "IF_GT", IF_GT);
+		public IF_GT(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_GT", IF_GT, vA, vB, value);
 		}
 	}
 
 	public static class IF_LE extends IF_TEST {
 
-		public IF_LE(int offset) {
-			super(offset, "IF_LE", IF_LE);
+		public IF_LE(int offset, byte vA, byte vB, short value) {
+			super(offset, "IF_LE", IF_LE, vA, vB, value);
 		}
 	}
 
 	public static class IF_TESTZ extends Bytecode {
 
-		public IF_TESTZ(int offset, String name, byte opcode) {
+		public IF_TESTZ(int offset, String name, byte opcode, short vAA, short value) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.value = value;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private short value = 0;
+
+		public short value() {
+			return value;
 		}
 	}
 
 	public static class IF_EQZ extends IF_TESTZ {
 
-		public IF_EQZ(int offset) {
-			super(offset, "IF_EQZ", IF_EQZ);
+		public IF_EQZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_EQZ", IF_EQZ, vAA, value);
 		}
 	}
 	
 	public static class IF_NEZ extends IF_TESTZ {
 
-		public IF_NEZ(int offset) {
-			super(offset, "IF_NEZ", IF_NEZ);
+		public IF_NEZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_NEZ", IF_NEZ, vAA, value);
 		}
 	}
 
 	public static class IF_LTZ extends IF_TESTZ {
 
-		public IF_LTZ(int offset) {
-			super(offset, "IF_LTZ", IF_LTZ);
+		public IF_LTZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_LTZ", IF_LTZ, vAA, value);
 		}
 	}
 
 	public static class IF_GEZ extends IF_TESTZ {
 
-		public IF_GEZ(int offset) {
-			super(offset, "IF_GEZ", IF_GEZ);
+		public IF_GEZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_GEZ", IF_GEZ, vAA, value);
 		}
 	}
 
 	public static class IF_GTZ extends IF_TESTZ {
 
-		public IF_GTZ(int offset) {
-			super(offset, "IF_GTZ", IF_GTZ);
+		public IF_GTZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_GTZ", IF_GTZ, vAA, value);
 		}
 	}
 
 	public static class IF_LEZ extends IF_TESTZ {
 
-		public IF_LEZ(int offset) {
-			super(offset, "IF_LEZ", IF_LEZ);
+		public IF_LEZ(int offset, byte opcode, short vAA, short value) {
+			super(offset, "IF_LEZ", IF_LEZ, vAA, value);
 		}
 	}
 	
 	public static class ARRAY_OP extends Bytecode {
-		public ARRAY_OP(int offset, String name, byte opcode) {
+		public ARRAY_OP(int offset, String name, byte opcode, short vAA, short vBB, short vCC) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.vBB = vBB;
+			this.vCC = vCC;			
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private short vBB = 0;
+
+		public short vBB() {
+			return vBB;
+		}		
+		
+		private short vCC = 0;
+
+		public short vCC() {
+			return vCC;
 		}
 	}
 
 	public static class AGET extends ARRAY_OP {
 
-		public AGET(int offset) {
-			super(offset, "AGET", AGET);
+		public AGET(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET", AGET, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_WIDE extends ARRAY_OP {
 
-		public AGET_WIDE(int offset) {
-			super(offset, "AGET_WIDE", AGET_WIDE);
+		public AGET_WIDE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_WIDE", AGET_WIDE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_OBJECT extends ARRAY_OP {
 
-		public AGET_OBJECT(int offset) {
-			super(offset, "AGET_OBJECT", AGET_OBJECT);
+		public AGET_OBJECT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_OBJECT", AGET_OBJECT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_BOOLEAN extends ARRAY_OP {
 
-		public AGET_BOOLEAN(int offset) {
-			super(offset, "AGET_BOOLEAN", AGET_BOOLEAN);
+		public AGET_BOOLEAN(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_BOOLEAN", AGET_BOOLEAN, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_BYTE extends ARRAY_OP {
 
-		public AGET_BYTE(int offset) {
-			super(offset, "AGET_BYTE", AGET_BYTE);
+		public AGET_BYTE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_BYTE", AGET_BYTE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_CHAR extends ARRAY_OP {
 
-		public AGET_CHAR(int offset) {
-			super(offset, "AGET_CHAR", AGET_CHAR);
+		public AGET_CHAR(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_CHAR", AGET_CHAR, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AGET_SHORT extends ARRAY_OP {
 
-		public AGET_SHORT(int offset) {
-			super(offset, "AGET_SHORT", AGET_SHORT);
+		public AGET_SHORT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AGET_SHORT", AGET_SHORT, vAA, vBB, vCC);
 		}
 	}
 	
 	public static class APUT extends ARRAY_OP {
 
-		public APUT(int offset) {
-			super(offset, "APUT", APUT);
+		public APUT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT", APUT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_WIDE extends ARRAY_OP {
 
-		public APUT_WIDE(int offset) {
-			super(offset, "APUT_WIDE", APUT_WIDE);
+		public APUT_WIDE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_WIDE", APUT_WIDE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_OBJECT extends ARRAY_OP {
 
-		public APUT_OBJECT(int offset) {
-			super(offset, "APUT_OBJECT", APUT_OBJECT);
+		public APUT_OBJECT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_OBJECT", APUT_OBJECT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_BOOLEAN extends ARRAY_OP {
 
-		public APUT_BOOLEAN(int offset) {
-			super(offset, "APUT_BOOLEAN", APUT_BOOLEAN);
+		public APUT_BOOLEAN(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_BOOLEAN", APUT_BOOLEAN, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_BYTE extends ARRAY_OP {
 
-		public APUT_BYTE(int offset) {
-			super(offset, "APUT_BYTE", APUT_BYTE);
+		public APUT_BYTE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_BYTE", APUT_BYTE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_CHAR extends ARRAY_OP {
 
-		public APUT_CHAR(int offset) {
-			super(offset, "APUT_CHAR", APUT_CHAR);
+		public APUT_CHAR(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_CHAR", APUT_CHAR, vAA, vBB, vCC);
 		}
 	}
 
 	public static class APUT_SHORT extends ARRAY_OP {
 
-		public APUT_SHORT(int offset) {
-			super(offset, "APUT_SHORT", APUT_SHORT);
+		public APUT_SHORT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "APUT_SHORT", APUT_SHORT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class IOP extends Bytecode {
 
-		public IOP(int offset, String name, byte opcode) {
+		public IOP(int offset, String name, byte opcode, byte vA, byte vB, int index) {
 			super(offset, name, opcode);
+			this.vA = vA;
+			this.vB = vB;
+			this.index = index;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
+		}
+		
+		private int index = 0;
+		
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class IGET extends IOP {
 
-		public IGET(int offset) {
-			super(offset, "IGET", IGET);
+		public IGET(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET", IGET, vA, vB, index);
 		}
 	}
 
 	public static class IGET_WIDE extends IOP {
 
-		public IGET_WIDE(int offset) {
-			super(offset, "IGET_WIDE", IGET_WIDE);
+		public IGET_WIDE(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_WIDE", IGET_WIDE, vA, vB, index);
 		}
 	}
 
 	public static class IGET_OBJECT extends IOP {
 
-		public IGET_OBJECT(int offset) {
-			super(offset, "IGET_OBJECT", IGET_OBJECT);
+		public IGET_OBJECT(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_OBJECT", IGET_OBJECT, vA, vB, index);
 		}
 	}
 
 	public static class IGET_BOOLEAN extends IOP {
 
-		public IGET_BOOLEAN(int offset) {
-			super(offset, "IGET_BOOLEAN", IGET_BOOLEAN);
+		public IGET_BOOLEAN(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_BOOLEAN", IGET_BOOLEAN, vA, vB, index);
 		}
 	}
 
 	public static class IGET_BYTE extends IOP {
 
-		public IGET_BYTE(int offset) {
-			super(offset, "IGET_BYTE", IGET_BYTE);
+		public IGET_BYTE(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_BYTE", IGET_BYTE, vA, vB, index);
 		}
 	}
 
 	public static class IGET_CHAR extends IOP {
 
-		public IGET_CHAR(int offset) {
-			super(offset, "IGET_CHAR", IGET_CHAR);
+		public IGET_CHAR(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_CHAR", IGET_CHAR, vA, vB, index);
 		}
 	}
 
 	public static class IGET_SHORT extends IOP {
 
-		public IGET_SHORT(int offset) {
-			super(offset, "IGET_SHORT", IGET_SHORT);
+		public IGET_SHORT(int offset, byte vA, byte vB, int index) {
+			super(offset, "IGET_SHORT", IGET_SHORT, vA, vB, index);
 		}
 	}
 	
 	public static class IPUT extends IOP {
 
-		public IPUT(int offset) {
-			super(offset, "IPUT", IPUT);
+		public IPUT(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT", IPUT, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_WIDE extends IOP {
 
-		public IPUT_WIDE(int offset) {
-			super(offset, "IPUT_WIDE", IPUT_WIDE);
+		public IPUT_WIDE(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_WIDE", IPUT_WIDE, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_OBJECT extends IOP {
 
-		public IPUT_OBJECT(int offset) {
-			super(offset, "IPUT_OBJECT", IPUT_OBJECT);
+		public IPUT_OBJECT(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_OBJECT", IPUT_OBJECT, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_BOOLEAN extends IOP {
 
-		public IPUT_BOOLEAN(int offset) {
-			super(offset, "IPUT_BOOLEAN", IPUT_BOOLEAN);
+		public IPUT_BOOLEAN(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_BOOLEAN", IPUT_BOOLEAN, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_BYTE extends IOP {
 
-		public IPUT_BYTE(int offset) {
-			super(offset, "IPUT_BYTE", IPUT_BYTE);
+		public IPUT_BYTE(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_BYTE", IPUT_BYTE, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_CHAR extends IOP {
 
-		public IPUT_CHAR(int offset) {
-			super(offset, "IPUT_CHAR", IPUT_CHAR);
+		public IPUT_CHAR(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_CHAR", IPUT_CHAR, vA, vB, index);
 		}
 	}
 
 	public static class IPUT_SHORT extends IOP {
 
-		public IPUT_SHORT(int offset) {
-			super(offset, "IPUT_SHORT", IPUT_SHORT);
+		public IPUT_SHORT(int offset, byte vA, byte vB, int index) {
+			super(offset, "IPUT_SHORT", IPUT_SHORT, vA, vB, index);
 		}
 	}
 
 	public static class SOP extends Bytecode {
 
-		public SOP(int offset, String name, byte opcode) {
+		public SOP(int offset, String name, byte opcode, short vAA, int index) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.index = index;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private int index = 0;
+
+		public int index() {
+			return index;
 		}
 	}
 
 	public static class SGET extends SOP {
 
-		public SGET(int offset) {
-			super(offset, "SGET", SGET);
+		public SGET(int offset, short vAA, int index) {
+			super(offset, "SGET", SGET, vAA, index);
 		}
 	}
 
 	public static class SGET_WIDE extends SOP {
 
-		public SGET_WIDE(int offset) {
-			super(offset, "SGET_WIDE", SGET_WIDE);
+		public SGET_WIDE(int offset, short vAA, int index) {
+			super(offset, "SGET_WIDE", SGET_WIDE, vAA, index);
 		}
 	}
 
 	public static class SGET_OBJECT extends SOP {
 
-		public SGET_OBJECT(int offset) {
-			super(offset, "SGET_OBJECT", SGET_OBJECT);
+		public SGET_OBJECT(int offset, short vAA, int index) {
+			super(offset, "SGET_OBJECT", SGET_OBJECT, vAA, index);
 		}
 	}
 
 	public static class SGET_BOOLEAN extends SOP {
 
-		public SGET_BOOLEAN(int offset) {
-			super(offset, "SGET_BOOLEAN", SGET_BOOLEAN);
+		public SGET_BOOLEAN(int offset, short vAA, int index) {
+			super(offset, "SGET_BOOLEAN", SGET_BOOLEAN, vAA, index);
 		}
 	}
 
 	public static class SGET_BYTE extends SOP {
 
-		public SGET_BYTE(int offset) {
-			super(offset, "SGET_BYTE", SGET_BYTE);
+		public SGET_BYTE(int offset, short vAA, int index) {
+			super(offset, "SGET_BYTE", SGET_BYTE, vAA, index);
 		}
 	}
 
 	public static class SGET_CHAR extends SOP {
 
-		public SGET_CHAR(int offset) {
-			super(offset, "SGET_CHAR", SGET_CHAR);
+		public SGET_CHAR(int offset, short vAA, int index) {
+			super(offset, "SGET_CHAR", SGET_CHAR, vAA, index);
 		}
 	}
 
 	public static class SGET_SHORT extends SOP {
 
-		public SGET_SHORT(int offset) {
-			super(offset, "SGET_SHORT", SGET_SHORT);
+		public SGET_SHORT(int offset, short vAA, int index) {
+			super(offset, "SGET_SHORT", SGET_SHORT, vAA, index);
 		}
 	}
 	
 	public static class SPUT extends SOP {
 
-		public SPUT(int offset) {
-			super(offset, "SPUT", SPUT);
+		public SPUT(int offset, short vAA, int index) {
+			super(offset, "SPUT", SPUT, vAA, index);
 		}
 	}
 
 	public static class SPUT_WIDE extends SOP {
 
-		public SPUT_WIDE(int offset) {
-			super(offset, "SPUT_WIDE", SPUT_WIDE);
+		public SPUT_WIDE(int offset, short vAA, int index) {
+			super(offset, "SPUT_WIDE", SPUT_WIDE, vAA, index);
 		}
 	}
 
 	public static class SPUT_OBJECT extends SOP {
 
-		public SPUT_OBJECT(int offset) {
-			super(offset, "SPUT_OBJECT", SPUT_OBJECT);
+		public SPUT_OBJECT(int offset, short vAA, int index) {
+			super(offset, "SPUT_OBJECT", SPUT_OBJECT, vAA, index);
 		}
 	}
 
 	public static class SPUT_BOOLEAN extends SOP {
 
-		public SPUT_BOOLEAN(int offset) {
-			super(offset, "SPUT_BOOLEAN", SPUT_BOOLEAN);
+		public SPUT_BOOLEAN(int offset, short vAA, int index) {
+			super(offset, "SPUT_BOOLEAN", SPUT_BOOLEAN, vAA, index);
 		}
 	}
 
 	public static class SPUT_BYTE extends SOP {
 
-		public SPUT_BYTE(int offset) {
-			super(offset, "SPUT_BYTE", SPUT_BYTE);
+		public SPUT_BYTE(int offset, short vAA, int index) {
+			super(offset, "SPUT_BYTE", SPUT_BYTE, vAA, index);
 		}
 	}
 
 	public static class SPUT_CHAR extends SOP {
 
-		public SPUT_CHAR(int offset) {
-			super(offset, "SPUT_CHAR", SPUT_CHAR);
+		public SPUT_CHAR(int offset, short vAA, int index) {
+			super(offset, "SPUT_CHAR", SPUT_CHAR, vAA, index);
 		}
 	}
 
 	public static class SPUT_SHORT extends SOP {
 
-		public SPUT_SHORT(int offset) {
-			super(offset, "SPUT_SHORT", SPUT_SHORT);
+		public SPUT_SHORT(int offset, short vAA, int index) {
+			super(offset, "SPUT_SHORT", SPUT_SHORT, vAA, index);
 		}
 	}
 
@@ -1185,765 +1493,855 @@ public class Bytecode {
 
 	public static class UNOP extends Bytecode {
 
-		public UNOP(int offset, String name, byte opcode) {
+		public UNOP(int offset, String name, byte opcode, byte vA, byte vB) {
 			super(offset, name, opcode);
+			this.vA = vA;
+			this.vB = vB;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
 		}
 	}
 
 	public static class NEG_INT extends UNOP {
 
-		public NEG_INT(int offset) {
-			super(offset, "NEG_INT", NEG_INT);
+		public NEG_INT(int offset, byte vA, byte vB) {
+			super(offset, "NEG_INT", NEG_INT, vA, vB);
 		}
 	}
 
 	public static class NOT_INT extends UNOP {
 
-		public NOT_INT(int offset) {
-			super(offset, "NOT_INT", NOT_INT);
+		public NOT_INT(int offset, byte vA, byte vB) {
+			super(offset, "NOT_INT", NOT_INT, vA, vB);
 		}
 	}	
 
 	public static class NEG_LONG extends UNOP {
 
-		public NEG_LONG(int offset) {
-			super(offset, "NEG_LONG", NEG_LONG);
+		public NEG_LONG(int offset, byte vA, byte vB) {
+			super(offset, "NEG_LONG", NEG_LONG, vA, vB);
 		}
 	}	
 
 	public static class NOT_LONG extends UNOP {
 
-		public NOT_LONG(int offset) {
-			super(offset, "NOT_LONG", NOT_LONG);
+		public NOT_LONG(int offset, byte vA, byte vB) {
+			super(offset, "NOT_LONG", NOT_LONG, vA, vB);
 		}
 	}	
 
 	public static class NEG_FLOAT extends UNOP {
 
-		public NEG_FLOAT(int offset) {
-			super(offset, "NEG_FLOAT", NEG_FLOAT);
+		public NEG_FLOAT(int offset, byte vA, byte vB) {
+			super(offset, "NEG_FLOAT", NEG_FLOAT, vA, vB);
 		}
 	}	
 
 	public static class NEG_DOUBLE extends UNOP {
 
-		public NEG_DOUBLE(int offset) {
-			super(offset, "NEG_DOUBLE", NEG_DOUBLE);
+		public NEG_DOUBLE(int offset, byte vA, byte vB) {
+			super(offset, "NEG_DOUBLE", NEG_DOUBLE, vA, vB);
 		}
 	}	
 
 	public static class INT_TO_LONG extends UNOP {
 
-		public INT_TO_LONG(int offset) {
-			super(offset, "INT_TO_LONG", INT_TO_LONG);
+		public INT_TO_LONG(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_LONG", INT_TO_LONG, vA, vB);
 		}
 	}	
 
 	public static class INT_TO_FLOAT extends UNOP {
 
-		public INT_TO_FLOAT(int offset) {
-			super(offset, "INT_TO_FLOAT", INT_TO_FLOAT);
+		public INT_TO_FLOAT(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_FLOAT", INT_TO_FLOAT, vA, vB);
 		}
 	}	
 
 	public static class INT_TO_DOUBLE extends UNOP {
 
-		public INT_TO_DOUBLE(int offset) {
-			super(offset, "INT_TO_DOUBLE", INT_TO_DOUBLE);
+		public INT_TO_DOUBLE(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_DOUBLE", INT_TO_DOUBLE, vA, vB);
 		}
 	}	
 
-
 	public static class LONG_TO_INT extends UNOP {
 
-		public LONG_TO_INT(int offset) {
-			super(offset, "LONG_TO_INT", LONG_TO_INT);
+		public LONG_TO_INT(int offset, byte vA, byte vB) {
+			super(offset, "LONG_TO_INT", LONG_TO_INT, vA, vB);
 		}
 	}	
 
 	public static class LONG_TO_FLOAT extends UNOP {
 
-		public LONG_TO_FLOAT(int offset) {
-			super(offset, "LONG_TO_FLOAT", LONG_TO_FLOAT);
+		public LONG_TO_FLOAT(int offset, byte vA, byte vB) {
+			super(offset, "LONG_TO_FLOAT", LONG_TO_FLOAT, vA, vB);
 		}
 	}	
 
 	public static class LONG_TO_DOUBLE extends UNOP {
 
-		public LONG_TO_DOUBLE(int offset) {
-			super(offset, "LONG_TO_DOUBLE", LONG_TO_DOUBLE);
+		public LONG_TO_DOUBLE(int offset, byte vA, byte vB) {
+			super(offset, "LONG_TO_DOUBLE", LONG_TO_DOUBLE, vA, vB);
 		}
 	}	
 
 	public static class FLOAT_TO_INT extends UNOP {
 
-		public FLOAT_TO_INT(int offset) {
-			super(offset, "FLOAT_TO_INT", FLOAT_TO_INT);
+		public FLOAT_TO_INT(int offset, byte vA, byte vB) {
+			super(offset, "FLOAT_TO_INT", FLOAT_TO_INT, vA, vB);
 		}
 	}	
 
 	public static class FLOAT_TO_LONG extends UNOP {
 
-		public FLOAT_TO_LONG(int offset) {
-			super(offset, "FLOAT_TO_LONG", FLOAT_TO_LONG);
+		public FLOAT_TO_LONG(int offset, byte vA, byte vB) {
+			super(offset, "FLOAT_TO_LONG", FLOAT_TO_LONG, vA, vB);
 		}
 	}	
 
 	public static class FLOAT_TO_DOUBLE extends UNOP {
 
-		public FLOAT_TO_DOUBLE(int offset) {
-			super(offset, "FLOAT_TO_DOUBLE", FLOAT_TO_DOUBLE);
+		public FLOAT_TO_DOUBLE(int offset, byte vA, byte vB) {
+			super(offset, "FLOAT_TO_DOUBLE", FLOAT_TO_DOUBLE, vA, vB);
 		}
 	}
 
 	public static class DOUBLE_TO_INT extends UNOP {
 
-		public DOUBLE_TO_INT(int offset) {
-			super(offset, "DOUBLE_TO_INT", DOUBLE_TO_INT);
+		public DOUBLE_TO_INT(int offset, byte vA, byte vB) {
+			super(offset, "DOUBLE_TO_INT", DOUBLE_TO_INT, vA, vB);
 		}
 	}
 
 	public static class DOUBLE_TO_LONG extends UNOP {
 
-		public DOUBLE_TO_LONG(int offset) {
-			super(offset, "DOUBLE_TO_LONG", DOUBLE_TO_LONG);
+		public DOUBLE_TO_LONG(int offset, byte vA, byte vB) {
+			super(offset, "DOUBLE_TO_LONG", DOUBLE_TO_LONG, vA, vB);
 		}
 	}
 
 	public static class DOUBLE_TO_FLOAT extends UNOP {
 
-		public DOUBLE_TO_FLOAT(int offset) {
-			super(offset, "DOUBLE_TO_FLOAT", DOUBLE_TO_FLOAT);
+		public DOUBLE_TO_FLOAT(int offset, byte vA, byte vB) {
+			super(offset, "DOUBLE_TO_FLOAT", DOUBLE_TO_FLOAT, vA, vB);
 		}
 	}
 
 	public static class INT_TO_BYTE extends UNOP {
 
-		public INT_TO_BYTE(int offset) {
-			super(offset, "INT_TO_BYTE", INT_TO_BYTE);
+		public INT_TO_BYTE(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_BYTE", INT_TO_BYTE, vA, vB);
 		}
 	}
 
 	public static class INT_TO_CHAR extends UNOP {
 
-		public INT_TO_CHAR(int offset) {
-			super(offset, "INT_TO_CHAR", INT_TO_CHAR);
+		public INT_TO_CHAR(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_CHAR", INT_TO_CHAR, vA, vB);
 		}
 	}
 
 	public static class INT_TO_SHORT extends UNOP {
 
-		public INT_TO_SHORT(int offset) {
-			super(offset, "INT_TO_SHORT", INT_TO_SHORT);
+		public INT_TO_SHORT(int offset, byte vA, byte vB) {
+			super(offset, "INT_TO_SHORT", INT_TO_SHORT, vA, vB);
 		}
 	}
 
 	public static class BINOP extends Bytecode {
 
-		public BINOP(int offset, String name, byte opcode) {
+		public BINOP(int offset, String name, byte opcode, short vAA, short vBB, short vCC) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.vBB = vBB;
+			this.vCC = vCC;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private short vBB = 0;
+
+		public short vBB() {
+			return vBB;
+		}
+
+		private short vCC = 0;
+
+		public short vCC() {
+			return vCC;
 		}
 	}
 
 	public static class ADD_INT extends BINOP {
 
-		public ADD_INT(int offset) {
-			super(offset, "ADD_INT", ADD_INT);
+		public ADD_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "ADD_INT", ADD_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SUB_INT extends BINOP {
 
-		public SUB_INT(int offset) {
-			super(offset, "SUB_INT", SUB_INT);
+		public SUB_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SUB_INT", SUB_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class MUL_INT extends BINOP {
 
-		public MUL_INT(int offset) {
-			super(offset, "MUL_INT", SUB_INT);
+		public MUL_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "MUL_INT", SUB_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class DIV_INT extends BINOP {
 
-		public DIV_INT(int offset) {
-			super(offset, "DIV_INT", DIV_INT);
+		public DIV_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "DIV_INT", DIV_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class REM_INT extends BINOP {
 
-		public REM_INT(int offset) {
-			super(offset, "REM_INT", REM_INT);
+		public REM_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "REM_INT", REM_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AND_INT extends BINOP {
 
-		public AND_INT(int offset) {
-			super(offset, "AND_INT", AND_INT);
+		public AND_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AND_INT", AND_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class OR_INT extends BINOP {
 
-		public OR_INT(int offset) {
-			super(offset, "OR_INT", OR_INT);
+		public OR_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "OR_INT", OR_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class XOR_INT extends BINOP {
 
-		public XOR_INT(int offset) {
-			super(offset, "XOR_INT", XOR_INT);
+		public XOR_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "XOR_INT", XOR_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SHL_INT extends BINOP {
 
-		public SHL_INT(int offset) {
-			super(offset, "SHL_INT", SHL_INT);
+		public SHL_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SHL_INT", SHL_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SHR_INT extends BINOP {
 
-		public SHR_INT(int offset) {
-			super(offset, "SHR_INT", SHR_INT);
+		public SHR_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SHR_INT", SHR_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class USHR_INT extends BINOP {
 
-		public USHR_INT(int offset) {
-			super(offset, "USHR_INT", USHR_INT);
+		public USHR_INT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "USHR_INT", USHR_INT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class ADD_LONG extends BINOP {
 
-		public ADD_LONG(int offset) {
-			super(offset, "ADD_LONG", ADD_LONG);
+		public ADD_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "ADD_LONG", ADD_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SUB_LONG extends BINOP {
 
-		public SUB_LONG(int offset) {
-			super(offset, "SUB_LONG", SUB_LONG);
+		public SUB_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SUB_LONG", SUB_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class MUL_LONG extends BINOP {
 
-		public MUL_LONG(int offset) {
-			super(offset, "MUL_LONG", MUL_LONG);
+		public MUL_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "MUL_LONG", MUL_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class DIV_LONG extends BINOP {
 
-		public DIV_LONG(int offset) {
-			super(offset, "DIV_LONG", DIV_LONG);
+		public DIV_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "DIV_LONG", DIV_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class REM_LONG extends BINOP {
 
-		public REM_LONG(int offset) {
-			super(offset, "REM_LONG", REM_LONG);
+		public REM_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "REM_LONG", REM_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class AND_LONG extends BINOP {
 
-		public AND_LONG(int offset) {
-			super(offset, "AND_LONG", AND_LONG);
+		public AND_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "AND_LONG", AND_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class OR_LONG extends BINOP {
 
-		public OR_LONG(int offset) {
-			super(offset, "OR_LONG", OR_LONG);
+		public OR_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "OR_LONG", OR_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class XOR_LONG extends BINOP {
 
-		public XOR_LONG(int offset) {
-			super(offset, "XOR_LONG", XOR_LONG);
+		public XOR_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "XOR_LONG", XOR_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SHL_LONG extends BINOP {
 
-		public SHL_LONG(int offset) {
-			super(offset, "SHL_LONG", SHL_LONG);
+		public SHL_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SHL_LONG", SHL_LONG, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SHR_LONG extends BINOP {
 
-		public SHR_LONG(int offset) {
-			super(offset, "SHR_LONG", SHR_LONG);
+		public SHR_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SHR_LONG", SHR_LONG, vAA, vBB, vCC);
 		}
 	}	
 
 	public static class USHR_LONG extends BINOP {
 
-		public USHR_LONG(int offset) {
-			super(offset, "USHR_LONG", USHR_LONG);
+		public USHR_LONG(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "USHR_LONG", USHR_LONG, vAA, vBB, vCC);
 		}
 	}
 	
 	public static class ADD_FLOAT extends BINOP {
 
-		public ADD_FLOAT(int offset) {
-			super(offset, "ADD_FLOAT", ADD_FLOAT);
+		public ADD_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "ADD_FLOAT", ADD_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SUB_FLOAT extends BINOP {
 
-		public SUB_FLOAT(int offset) {
-			super(offset, "SUB_FLOAT", SUB_FLOAT);
+		public SUB_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SUB_FLOAT", SUB_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class MUL_FLOAT extends BINOP {
 
-		public MUL_FLOAT(int offset) {
-			super(offset, "MUL_FLOAT", MUL_FLOAT);
+		public MUL_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "MUL_FLOAT", MUL_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class DIV_FLOAT extends BINOP {
 
-		public DIV_FLOAT(int offset) {
-			super(offset, "DIV_FLOAT", DIV_FLOAT);
+		public DIV_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "DIV_FLOAT", DIV_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class REM_FLOAT extends BINOP {
 
-		public REM_FLOAT(int offset) {
-			super(offset, "REM_FLOAT", REM_FLOAT);
+		public REM_FLOAT(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "REM_FLOAT", REM_FLOAT, vAA, vBB, vCC);
 		}
 	}
 
 	public static class ADD_DOUBLE extends BINOP {
 
-		public ADD_DOUBLE(int offset) {
-			super(offset, "ADD_DOUBLE", ADD_DOUBLE);
+		public ADD_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "ADD_DOUBLE", ADD_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class SUB_DOUBLE extends BINOP {
 
-		public SUB_DOUBLE(int offset) {
-			super(offset, "SUB_DOUBLE", SUB_DOUBLE);
+		public SUB_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "SUB_DOUBLE", SUB_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class MUL_DOUBLE extends BINOP {
 
-		public MUL_DOUBLE(int offset) {
-			super(offset, "MUL_DOUBLE", MUL_DOUBLE);
+		public MUL_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "MUL_DOUBLE", MUL_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class DIV_DOUBLE extends BINOP {
 
-		public DIV_DOUBLE(int offset) {
-			super(offset, "DIV_DOUBLE", DIV_DOUBLE);
+		public DIV_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "DIV_DOUBLE", DIV_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class REM_DOUBLE extends BINOP {
 
-		public REM_DOUBLE(int offset) {
-			super(offset, "REM_DOUBLE", REM_DOUBLE);
+		public REM_DOUBLE(int offset, short vAA, short vBB, short vCC) {
+			super(offset, "REM_DOUBLE", REM_DOUBLE, vAA, vBB, vCC);
 		}
 	}
 
 	public static class BINOP_2ADDR extends Bytecode {
 
-		public BINOP_2ADDR(int offset, String name, byte opcode) {
+		public BINOP_2ADDR(int offset, String name, byte opcode, byte vA, byte vB) {
 			super(offset, name, opcode);
+			this.vA = vA;
+			this.vB = vB;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
 		}
 	}
 
 	public static class ADD_INT_2ADDR extends BINOP_2ADDR {
 
-		public ADD_INT_2ADDR(int offset) {
-			super(offset, "ADD_INT_2ADDR", ADD_INT_2ADDR);
+		public ADD_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "ADD_INT_2ADDR", ADD_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_INT_2ADDR extends BINOP_2ADDR {
 
-		public SUB_INT_2ADDR(int offset) {
-			super(offset, "SUB_INT_2ADDR", SUB_INT_2ADDR);
+		public SUB_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SUB_INT_2ADDR", SUB_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_INT_2ADDR extends BINOP_2ADDR {
 
-		public MUL_INT_2ADDR(int offset) {
-			super(offset, "MUL_INT_2ADDR", MUL_INT_2ADDR);
+		public MUL_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "MUL_INT_2ADDR", MUL_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_INT_2ADDR extends BINOP_2ADDR {
 
-		public DIV_INT_2ADDR(int offset) {
-			super(offset, "DIV_INT_2ADDR", DIV_INT_2ADDR);
+		public DIV_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "DIV_INT_2ADDR", DIV_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_INT_2ADDR extends BINOP_2ADDR {
 
-		public REM_INT_2ADDR(int offset) {
-			super(offset, "REM_INT_2ADDR", REM_INT_2ADDR);
+		public REM_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "REM_INT_2ADDR", REM_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class AND_INT_2ADDR extends BINOP_2ADDR {
 
-		public AND_INT_2ADDR(int offset) {
-			super(offset, "AND_INT_2ADDR", AND_INT_2ADDR);
+		public AND_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "AND_INT_2ADDR", AND_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class OR_INT_2ADDR extends BINOP_2ADDR {
 
-		public OR_INT_2ADDR(int offset) {
-			super(offset, "OR_INT_2ADDR", OR_INT_2ADDR);
+		public OR_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "OR_INT_2ADDR", OR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class XOR_INT_2ADDR extends BINOP_2ADDR {
 
-		public XOR_INT_2ADDR(int offset) {
-			super(offset, "XOR_INT_2ADDR", XOR_INT_2ADDR);
+		public XOR_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "XOR_INT_2ADDR", XOR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHL_INT_2ADDR extends BINOP_2ADDR {
 
-		public SHL_INT_2ADDR(int offset) {
-			super(offset, "SHL_INT_2ADDR", SHL_INT_2ADDR);
+		public SHL_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SHL_INT_2ADDR", SHL_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHR_INT_2ADDR extends BINOP_2ADDR {
 
-		public SHR_INT_2ADDR(int offset) {
-			super(offset, "SHR_INT_2ADDR", SHR_INT_2ADDR);
+		public SHR_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SHR_INT_2ADDR", SHR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class USHR_INT_2ADDR extends BINOP_2ADDR {
 
-		public USHR_INT_2ADDR(int offset) {
-			super(offset, "USHR_INT_2ADDR", USHR_INT_2ADDR);
+		public USHR_INT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "USHR_INT_2ADDR", USHR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class ADD_LONG_2ADDR extends BINOP_2ADDR {
 
-		public ADD_LONG_2ADDR(int offset) {
-			super(offset, "ADD_LONG_2ADDR", ADD_LONG_2ADDR);
+		public ADD_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "ADD_LONG_2ADDR", ADD_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_LONG_2ADDR extends BINOP_2ADDR {
 
-		public SUB_LONG_2ADDR(int offset) {
-			super(offset, "SUB_LONG_2ADDR", SUB_LONG_2ADDR);
+		public SUB_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SUB_LONG_2ADDR", SUB_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_LONG_2ADDR extends BINOP_2ADDR {
 
-		public MUL_LONG_2ADDR(int offset) {
-			super(offset, "MUL_LONG_2ADDR", MUL_LONG_2ADDR);
+		public MUL_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "MUL_LONG_2ADDR", MUL_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_LONG_2ADDR extends BINOP_2ADDR {
 
-		public DIV_LONG_2ADDR(int offset) {
-			super(offset, "DIV_LONG_2ADDR", DIV_LONG_2ADDR);
+		public DIV_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "DIV_LONG_2ADDR", DIV_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_LONG_2ADDR extends BINOP_2ADDR {
 
-		public REM_LONG_2ADDR(int offset) {
-			super(offset, "REM_LONG_2ADDR", REM_LONG_2ADDR);
+		public REM_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "REM_LONG_2ADDR", REM_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class AND_LONG_2ADDR extends BINOP_2ADDR {
 
-		public AND_LONG_2ADDR(int offset) {
-			super(offset, "AND_LONG_2ADDR", AND_LONG_2ADDR);
+		public AND_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "AND_LONG_2ADDR", AND_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class OR_LONG_2ADDR extends BINOP_2ADDR {
 
-		public OR_LONG_2ADDR(int offset) {
-			super(offset, "OR_LONG_2ADDR", OR_LONG_2ADDR);
+		public OR_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "OR_LONG_2ADDR", OR_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class XOR_LONG_2ADDR extends BINOP_2ADDR {
 
-		public XOR_LONG_2ADDR(int offset) {
-			super(offset, "XOR_LONG_2ADDR", XOR_LONG_2ADDR);
+		public XOR_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "XOR_LONG_2ADDR", XOR_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHL_LONG_2ADDR extends BINOP_2ADDR {
 
-		public SHL_LONG_2ADDR(int offset) {
-			super(offset, "SHL_LONG_2ADDR", SHL_LONG_2ADDR);
+		public SHL_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SHL_LONG_2ADDR", SHL_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHR_LONG_2ADDR extends BINOP_2ADDR {
 
-		public SHR_LONG_2ADDR(int offset) {
-			super(offset, "SHR_LONG_2ADDR", SHR_LONG_2ADDR);
+		public SHR_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SHR_LONG_2ADDR", SHR_LONG_2ADDR, vA, vB);
 		}
 	}	
 
 	public static class USHR_LONG_2ADDR extends BINOP_2ADDR {
 
-		public USHR_LONG_2ADDR(int offset) {
-			super(offset, "USHR_LONG_2ADDR", USHR_LONG_2ADDR);
+		public USHR_LONG_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "USHR_LONG_2ADDR", USHR_LONG_2ADDR, vA, vB);
 		}
 	}
 	
 	public static class ADD_FLOAT_2ADDR extends BINOP_2ADDR {
 
-		public ADD_FLOAT_2ADDR(int offset) {
-			super(offset, "ADD_FLOAT_2ADDR", ADD_FLOAT_2ADDR);
+		public ADD_FLOAT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "ADD_FLOAT_2ADDR", ADD_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_FLOAT_2ADDR extends BINOP_2ADDR {
 
-		public SUB_FLOAT_2ADDR(int offset) {
-			super(offset, "SUB_FLOAT_2ADDR", SUB_FLOAT_2ADDR);
+		public SUB_FLOAT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SUB_FLOAT_2ADDR", SUB_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_FLOAT_2ADDR extends BINOP_2ADDR {
 
-		public MUL_FLOAT_2ADDR(int offset) {
-			super(offset, "MUL_FLOAT_2ADDR", MUL_FLOAT_2ADDR);
+		public MUL_FLOAT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "MUL_FLOAT_2ADDR", MUL_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_FLOAT_2ADDR extends BINOP_2ADDR {
 
-		public DIV_FLOAT_2ADDR(int offset) {
-			super(offset, "DIV_FLOAT_2ADDR", DIV_FLOAT_2ADDR);
+		public DIV_FLOAT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "DIV_FLOAT_2ADDR", DIV_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_FLOAT_2ADDR extends BINOP_2ADDR {
 
-		public REM_FLOAT_2ADDR(int offset) {
-			super(offset, "REM_FLOAT_2ADDR", REM_FLOAT_2ADDR);
+		public REM_FLOAT_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "REM_FLOAT_2ADDR", REM_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class ADD_DOUBLE_2ADDR extends BINOP_2ADDR {
 
-		public ADD_DOUBLE_2ADDR(int offset) {
-			super(offset, "ADD_DOUBLE_2ADDR", ADD_DOUBLE_2ADDR);
+		public ADD_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "ADD_DOUBLE_2ADDR", ADD_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_DOUBLE_2ADDR extends BINOP_2ADDR {
 
-		public SUB_DOUBLE_2ADDR(int offset) {
-			super(offset, "SUB_DOUBLE_2ADDR", SUB_DOUBLE_2ADDR);
+		public SUB_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "SUB_DOUBLE_2ADDR", SUB_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_DOUBLE_2ADDR extends BINOP_2ADDR {
 
-		public MUL_DOUBLE_2ADDR(int offset) {
-			super(offset, "MUL_DOUBLE_2ADDR", MUL_DOUBLE_2ADDR);
+		public MUL_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "MUL_DOUBLE_2ADDR", MUL_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_DOUBLE_2ADDR extends BINOP_2ADDR {
 
-		public DIV_DOUBLE_2ADDR(int offset) {
-			super(offset, "DIV_DOUBLE_2ADDR", DIV_DOUBLE_2ADDR);
+		public DIV_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "DIV_DOUBLE_2ADDR", DIV_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_DOUBLE_2ADDR extends BINOP_2ADDR {
 
-		public REM_DOUBLE_2ADDR(int offset) {
-			super(offset, "REM_DOUBLE_2ADDR", REM_DOUBLE_2ADDR);
+		public REM_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
+			super(offset, "REM_DOUBLE_2ADDR", REM_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class BINOP_LIT16 extends Bytecode {
 
-		public BINOP_LIT16(int offset, String name, byte opcode) {
+		public BINOP_LIT16(int offset, String name, byte opcode, byte vA, byte vB, short value) {
 			super(offset, name, opcode);
+			this.vA = vA;
+			this.vB = vB;
+			this.value = value;
+		}
+
+		private byte vA = 0;
+
+		public byte vA() {
+			return vA;
+		}
+		
+		private byte vB = 0;
+
+		public byte vB() {
+			return vB;
+		}
+		
+		private short value = 0;
+
+		public short value() {
+			return value;
 		}
 	}
 
 	public static class ADD_INT_LIT16 extends BINOP_LIT16 {
 
-		public ADD_INT_LIT16(int offset) {
-			super(offset, "ADD_INT_LIT16", ADD_INT_LIT16);
+		public ADD_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "ADD_INT_LIT16", ADD_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class RSUB_INT_LIT16 extends BINOP_LIT16 {
 
-		public RSUB_INT_LIT16(int offset) {
-			super(offset, "RSUB_INT_LIT16", RSUB_INT_LIT16);
+		public RSUB_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "RSUB_INT_LIT16", RSUB_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class MUL_INT_LIT16 extends BINOP_LIT16 {
 
-		public MUL_INT_LIT16(int offset) {
-			super(offset, "MUL_INT_LIT16", MUL_INT_LIT16);
+		public MUL_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "MUL_INT_LIT16", MUL_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class DIV_INT_LIT16 extends BINOP_LIT16 {
 
-		public DIV_INT_LIT16(int offset) {
-			super(offset, "DIV_INT_LIT16", DIV_INT_LIT16);
+		public DIV_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "DIV_INT_LIT16", DIV_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class REM_INT_LIT16 extends BINOP_LIT16 {
 
-		public REM_INT_LIT16(int offset) {
-			super(offset, "REM_INT_LIT16", REM_INT_LIT16);
+		public REM_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "REM_INT_LIT16", REM_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class AND_INT_LIT16 extends BINOP_LIT16 {
 
-		public AND_INT_LIT16(int offset) {
-			super(offset, "AND_INT_LIT16", AND_INT_LIT16);
+		public AND_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "AND_INT_LIT16", AND_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class OR_INT_LIT16 extends BINOP_LIT16 {
 
-		public OR_INT_LIT16(int offset) {
-			super(offset, "OR_INT_LIT16", OR_INT_LIT16);
+		public OR_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "OR_INT_LIT16", OR_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class XOR_INT_LIT16 extends BINOP_LIT16 {
 
-		public XOR_INT_LIT16(int offset) {
-			super(offset, "XOR_INT_LIT16", XOR_INT_LIT16);
+		public XOR_INT_LIT16(int offset, byte vA, byte vB, short value) {
+			super(offset, "XOR_INT_LIT16", XOR_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class BINOP_LIT8 extends Bytecode {
 
-		public BINOP_LIT8(int offset, String name, byte opcode) {
+		public BINOP_LIT8(int offset, String name, byte opcode, short vAA, short vBB, byte value) {
 			super(offset, name, opcode);
+			this.vAA = vAA;
+			this.vBB = vBB;
+			this.value = value;
+		}
+
+		private short vAA = 0;
+
+		public short vAA() {
+			return vAA;
+		}
+		
+		private short vBB = 0;
+
+		public short vBB() {
+			return vBB;
+		}
+		
+		private byte value = 0;
+
+		public byte value() {
+			return value;
 		}
 	}
 
 	public static class ADD_INT_LIT8 extends BINOP_LIT8 {
 
-		public ADD_INT_LIT8(int offset) {
-			super(offset, "ADD_INT_LIT8", ADD_INT_LIT8);
+		public ADD_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "ADD_INT_LIT8", ADD_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class RSUB_INT_LIT8 extends BINOP_LIT8 {
 
-		public RSUB_INT_LIT8(int offset) {
-			super(offset, "RSUB_INT_LIT8", RSUB_INT_LIT8);
+		public RSUB_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "RSUB_INT_LIT8", RSUB_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class MUL_INT_LIT8 extends BINOP_LIT8 {
 
-		public MUL_INT_LIT8(int offset) {
-			super(offset, "MUL_INT_LIT8", MUL_INT_LIT8);
+		public MUL_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "MUL_INT_LIT8", MUL_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class DIV_INT_LIT8 extends BINOP_LIT8 {
 
-		public DIV_INT_LIT8(int offset) {
-			super(offset, "DIV_INT_LIT8", DIV_INT_LIT8);
+		public DIV_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "DIV_INT_LIT8", DIV_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class REM_INT_LIT8 extends BINOP_LIT8 {
 
-		public REM_INT_LIT8(int offset) {
-			super(offset, "REM_INT_LIT8", REM_INT_LIT8);
+		public REM_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "REM_INT_LIT8", REM_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class AND_INT_LIT8 extends BINOP_LIT8 {
 
-		public AND_INT_LIT8(int offset) {
-			super(offset, "AND_INT_LIT8", AND_INT_LIT8);
+		public AND_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "AND_INT_LIT8", AND_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class OR_INT_LIT8 extends BINOP_LIT8 {
 
-		public OR_INT_LIT8(int offset) {
-			super(offset, "OR_INT_LIT8", OR_INT_LIT8);
+		public OR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "OR_INT_LIT8", OR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class XOR_INT_LIT8 extends BINOP_LIT8 {
 
-		public XOR_INT_LIT8(int offset) {
-			super(offset, "XOR_INT_LIT8", XOR_INT_LIT8);
+		public XOR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "XOR_INT_LIT8", XOR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class SHL_INT_LIT8 extends BINOP_LIT8 {
 
-		public SHL_INT_LIT8(int offset) {
-			super(offset, "SHL_INT_LIT8", SHL_INT_LIT8);
+		public SHL_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "SHL_INT_LIT8", SHL_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class SHR_INT_LIT8 extends BINOP_LIT8 {
 
-		public SHR_INT_LIT8(int offset) {
-			super(offset, "SHR_INT_LIT8", SHR_INT_LIT8);
+		public SHR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "SHR_INT_LIT8", SHR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class USHR_INT_LIT8 extends BINOP_LIT8 {
 
-		public USHR_INT_LIT8(int offset) {
-			super(offset, "USHR_INT_LIT8", USHR_INT_LIT8);
+		public USHR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
+			super(offset, "USHR_INT_LIT8", USHR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
