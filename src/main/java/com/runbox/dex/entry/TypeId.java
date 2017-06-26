@@ -1,8 +1,15 @@
 package com.runbox.dex.entry;
 
-public class TypeId {
+import com.runbox.dex.reader.DexReader;
 
-	public TypeId(int index) {
+public class TypeId extends Entry {
+
+	public TypeId(DexReader reader) {
+		super(reader);
+	}
+	
+	public TypeId(int index, DexReader reader) {
+		super(reader);
 		this.index = index;
 	}
 

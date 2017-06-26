@@ -26,9 +26,9 @@ public class ProtoReader extends Reader {
 				position(offset);
 				Type[] types = types();
 				position(position);
-				ids[i] = new ProtoId(index, returnIndex, new Parameter(new TypeList(types)));
+				ids[i] = new ProtoId(index, returnIndex, new Parameter(new TypeList(types)), reader());
 			} else {
-				ids[i] = new ProtoId(index, returnIndex, null);
+				ids[i] = new ProtoId(index, returnIndex, null, reader());
 			}
 		}
 		return this;
@@ -46,5 +46,12 @@ public class ProtoReader extends Reader {
 
 	public ProtoId[] get() {
 		return ids;
+	}
+
+	public ProtoId get(int index) {
+		if (0 < index && ids.length > index) {
+			return ids[index];
+		}
+		return null;
 	}
 }

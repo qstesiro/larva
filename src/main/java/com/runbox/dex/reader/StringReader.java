@@ -19,9 +19,9 @@ public class StringReader extends Reader {
 			position(offsets[i]); 
 			int size = readU128();
 			if (0 == size) {
-				ids[i] = new StringId(offsets[i], new StringData(null));
+				ids[i] = new StringId(offsets[i], new StringData(null), reader());
 			} else {
-				ids[i] = new StringId(offsets[i], new StringData(read(size)));
+				ids[i] = new StringId(offsets[i], new StringData(read(size)), reader());
 			}
 		}
 		return this;
@@ -41,4 +41,11 @@ public class StringReader extends Reader {
 	public StringId[] get() {
 		return ids;
 	}
+
+	public StringId get(int index) {
+		if (0 < index && ids.length > index) {
+			return ids[index];
+		}
+		return null;
+	}	
 }

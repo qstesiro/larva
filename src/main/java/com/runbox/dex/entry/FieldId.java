@@ -1,12 +1,15 @@
 package com.runbox.dex.entry;
 
-public class FieldId {
+import com.runbox.dex.reader.DexReader;
 
-	public FieldId() {
-		
+public class FieldId extends Entry {
+
+	public FieldId(DexReader reader) {
+		super(reader);
 	}
 
-	public FieldId(int clazz, int type, int name) {
+	public FieldId(int clazz, int type, int name, DexReader reader) {
+		super(reader);
 		this.clazz = clazz;
 		this.type = type;
 		this.name = name;

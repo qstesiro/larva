@@ -7,7 +7,7 @@ public class DexReader extends Reader {
     public DexReader(FileChannel channel) throws Exception {
         super(channel, null, null);
     }
-    
+   
     @Override
     protected DexReader load() throws Exception {
 		final long MAP_OFFSET = 0x34;

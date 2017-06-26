@@ -15,7 +15,7 @@ public class FieldReader extends Reader {
 	public FieldReader load() throws Exception {
 		position(map().offset());
 		for (int i = 0; i < ids.length; ++i) {
-			ids[i] = new FieldId(readU2(), readU2(), readU4());
+			ids[i] = new FieldId(readU2(), readU2(), readU4(), reader());
 		}
 		return this;
 	}
@@ -24,5 +24,12 @@ public class FieldReader extends Reader {
 
 	public FieldId[] get() {
 		return ids;
+	}
+
+	public FieldId get(int index) {
+		if (0 < index && ids.length > index) {
+			return ids[index];
+		}
+		return null;
 	}
 }

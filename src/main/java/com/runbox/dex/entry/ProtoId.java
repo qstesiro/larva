@@ -1,12 +1,15 @@
 package com.runbox.dex.entry;
 
-public class ProtoId {
+import com.runbox.dex.reader.DexReader;
 
-	public ProtoId() {
-		
+public class ProtoId extends Entry {
+
+	public ProtoId(DexReader reader) {
+		super(reader);
 	}
 	
-	public ProtoId(int stringIndex, int returnIndex, Parameter parameter) {
+	public ProtoId(int stringIndex, int returnIndex, Parameter parameter, DexReader reader) {
+		super(reader);
 		this.stringIndex = stringIndex;
 		this.returnIndex = returnIndex;
 		this.parameter = parameter;

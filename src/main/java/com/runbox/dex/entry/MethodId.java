@@ -1,12 +1,15 @@
 package com.runbox.dex.entry;
 
-public class MethodId {
+import com.runbox.dex.reader.DexReader;
 
-	public MethodId() {
-		
+public class MethodId extends Entry {
+
+	public MethodId(DexReader reader) {
+		super(reader);
 	}
 
-	public MethodId(int clazz, int proto, int name) {
+	public MethodId(int clazz, int proto, int name, DexReader reader) {
+		super(reader);
 		this.clazz = clazz;
 		this.proto = proto;
 		this.name = name;

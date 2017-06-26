@@ -1,8 +1,15 @@
 package com.runbox.dex.entry;
 
-public class StringId {
+import com.runbox.dex.reader.DexReader;
 
-    public StringId(long offset, StringData data) {
+public class StringId extends Entry {
+
+	public StringId(DexReader reader) {
+		super(reader);
+	}
+	
+    public StringId(long offset, StringData data, DexReader reader) {
+		super(reader);
         this.offset = offset;        
         this.data = data;
     }

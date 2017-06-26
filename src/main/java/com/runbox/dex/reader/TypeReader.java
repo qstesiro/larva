@@ -15,7 +15,7 @@ public class TypeReader extends Reader {
 	public TypeReader load() throws Exception {
 		position(map().offset());
 		for (int i = 0; i < ids.length; ++i) {
-			ids[i] = new TypeId(readU4());
+			ids[i] = new TypeId(readU4(), reader());
 		}
 		return this;
 	}
@@ -24,5 +24,12 @@ public class TypeReader extends Reader {
 
 	public TypeId[] get() {
 		return ids;
+	}
+
+	public TypeId get(int index) {
+		if (0 < index && ids.length > index) {
+			return ids[index];
+		}
+		return null;
 	}
 }

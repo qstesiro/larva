@@ -26,6 +26,14 @@ public abstract class Reader {
 	}
 	
     private DexReader reader = null;
+
+	public Reader reader(DexReader reader) {
+		this.reader = reader; return this;
+	}
+
+	public DexReader reader() {
+		return reader;
+	}
     
     protected abstract Reader load() throws Exception;    
 
