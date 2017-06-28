@@ -17,6 +17,15 @@ public class ReaderFactory {
         return reader;
     }
 
+	public static BytecodeReader create(byte[] data) throws Exception {
+		File temp = createTempFile(data);                	        		
+		RandomAccessFile file = new RandomAccessFile(temp, "r");
+		FileChannel channel = file.getChannel();
+		BytecodeReader reader = new BytecodeReader(channel, null).load();
+		channel.close(); file.close(); temp.delete();
+		return reader;
+	}
+	
 	public static BytecodeReader create(byte[] data, DexReader dex) throws Exception {
 		File temp = createTempFile(data);                	        		
 		RandomAccessFile file = new RandomAccessFile(temp, "r");

@@ -43,7 +43,7 @@ public class DexReader extends Reader {
 				methodReader = new MethodReader(channel(), map, this).load();
 				// methodReader.print();
 				break;
-			default: System.out.println(type(map.type()));
+			default: // System.out.println(type(map.type()));
 			}
 		}
         return this;

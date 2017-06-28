@@ -25,8 +25,7 @@ public class TypeId extends Constant {
 
 	public String descriptor() {
 		if (null != reader()) {
-			return convertType(reader().getStringId(index).string());
-			// return reader().getStringId(index).string();
+			return convertType(reader().getStringId(index).string());			
 		}
 		return null;
 	}	

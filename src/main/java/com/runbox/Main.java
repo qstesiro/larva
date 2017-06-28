@@ -19,8 +19,7 @@ public class Main {
 				} else if (mode.equals(ConfigManager.instance().MODE_TRACE)) {
 					Tracer.instance().trace();
 				}
-			}
-			// DexReader reader = ReaderFactory.create("d:\\program\\maven\\larva\\classes.dex");
+			}			
         } catch (Exception e) {
             e.printStackTrace();
         }

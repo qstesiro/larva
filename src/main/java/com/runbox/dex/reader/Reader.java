@@ -136,6 +136,20 @@ public abstract class Reader {
 				(0x000000ff & data[0])); 
 	}
 
+	protected long readS8() throws IOException {
+		byte[] data = new byte[SIZE8];
+		ByteBuffer buffer = ByteBuffer.wrap(data); 
+        channel.read(buffer);
+		return ((0xff00000000000000L & data[7] << 56) |
+				(0x00ff000000000000L & data[6] << 48) |
+				(0x0000ff0000000000L & data[5] << 40) |
+				(0x000000ff00000000L & data[4] << 32) | 
+				(0x00000000ff000000L & data[3] << 24) |
+				(0x0000000000ff0000L & data[2] << 16) |
+				(0x000000000000ff00L & data[1] << 8) | 
+				(0x00000000000000ffL & data[0]));
+	}
+
 	protected int readS128() throws IOException {
 		ByteBuffer buffer = ByteBuffer.allocate(SIZE1);
 		channel.read(buffer);

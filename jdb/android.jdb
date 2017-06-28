@@ -128,9 +128,9 @@ def $print(@list) {
 // trace.mode 0x04;
 // trace.redirect "D:\\program\\maven\\larva\\trace.log";
 
-b.m "MainActivity.onCreate(Bundle)";
+// b.m "MainActivity.onCreate(Bundle)";
 // b.l "MainActivity:29" {/*method.bytecode "MainActivity.onCreate"; $print(this.views);*/};
-// b.l "MainActivity:49";
+b.l "MainActivity:16";
 // b.m "MainActivity.onClick(View)";
 // b.m "DigestActivity.onCreate(Bundle)";
 // b.m "DigestActivity.onClick(View)";
