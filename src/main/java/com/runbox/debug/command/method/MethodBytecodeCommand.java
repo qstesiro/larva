@@ -8,11 +8,6 @@ import com.sun.jdi.Method;
 
 import com.runbox.debug.manager.MachineManager;
 
-import com.runbox.clazz.reader.ReaderFactory;
-import com.runbox.clazz.reader.BytecodeReader;
-import com.runbox.clazz.entry.constant.*;
-import com.runbox.clazz.entry.bytecode.Bytecode;
-
 public class MethodBytecodeCommand extends MethodCommand {
 
     public MethodBytecodeCommand(String command) throws Exception {
@@ -50,27 +45,49 @@ public class MethodBytecodeCommand extends MethodCommand {
 	}
 
 	private void print(Method method) throws Exception {
-		System.out.printf("%s", access(method));		
-		if (method.isNative()) System.out.printf(" native");
-		else if (method.isAbstract()) System.out.printf(" abstract");
-		if (method.isStatic()) System.out.printf(" static");
-		if (method.isFinal()) System.out.printf(" final");
-		System.out.printf(" %s", method.returnTypeName());
-		System.out.printf(" %s%s {\n", method.name(), arguments(method));
-		// byte[] codes = method.bytecodes();
-		// System.out.println(codes.length);
-		// for (int i = 0; i < codes.length; ++i) {
-		// 	System.out.printf("%02x", codes[i]);
-		// 	if (0 == i % 100 && 0 != i) System.out.println();
-		// }		
-		BytecodeReader reader = ReaderFactory.create(method.bytecodes(), 
-													 ReaderFactory.create(method.declaringType().constantPool(),
-																		  method.declaringType().constantPoolCount()));
-		reader.printer().prefix("  ");		
-		for (Bytecode code : reader.get()) {
-			reader.printer().print(code);
+		if (null != method) {
+			System.out.printf("%s", access(method));		
+			if (method.isNative()) System.out.printf(" native");
+			else if (method.isAbstract()) System.out.printf(" abstract");
+			if (method.isStatic()) System.out.printf(" static");
+			if (method.isFinal()) System.out.printf(" final");
+			System.out.printf(" %s", method.returnTypeName());
+			System.out.printf(" %s%s {\n", method.name(), arguments(method));
+			if (MachineManager.instance().hotspot()) {
+				printHotspot(method);
+			} else if (MachineManager.instance().dalvik()) {
+				printDalvik(method);
+			} else {
+				throw new Exception("invalid vm");
+			}		
+			System.out.println("}");
 		}
-		System.out.println("}");
+	}
+
+	private void printHotspot(Method method) throws Exception {
+		if (null != method) {
+			com.runbox.clazz.reader.BytecodeReader reader = com.runbox.clazz.reader.ReaderFactory.create(
+				method.bytecodes(), 
+				com.runbox.clazz.reader.ReaderFactory.create(method.declaringType().constantPool(),
+															 method.declaringType().constantPoolCount()));
+			reader.printer().prefix("  ");		
+			for (com.runbox.clazz.entry.bytecode.Bytecode code : reader.get()) {
+				reader.printer().print(code);
+			}
+		}
+	}
+
+	private void printDalvik(Method method) throws Exception {
+		if (null != method) {			
+			// com.runbox.dex.reader.BytecodeReader reader = com.runbox.dex.reader.ReaderFactory.create(
+			// 	method.bytecodes(),
+			// 	com.runbox.dex.reader.ReaderFactory.create("d:\\program\\maven\\larva\\classes.dex"));
+			com.runbox.dex.reader.BytecodeReader reader = com.runbox.dex.reader.ReaderFactory.create(method.bytecodes(), null);
+			reader.printer().prefix("  ");
+			for (com.runbox.dex.entry.bytecode.Bytecode code : reader.get()) {
+				reader.printer().print(code);
+			}
+		}
 	}
 
 	private String access(Method method) {
