@@ -35,11 +35,7 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 	protected void printCode(Location location) throws Exception {
 		if (MachineManager.instance().hotspot()) {
 			printHotspotCode(location);
-		} else if (MachineManager.instance().dalvik()) {
-			printDalvikCode(location);
-		} else {
-			throw new Exception("invalid vm");
-		}
+		}         
 	}	
 
 	private void printHotspotCode(Location location) throws Exception {
@@ -73,7 +69,9 @@ public class LocatableEvent<T extends com.sun.jdi.event.LocatableEvent> extends 
 	}
 
 	private void printDalvikCode(Location location) throws Exception {
-		int count = ConfigManager.instance().bytecode();
+		// codeIndex may be an odd number in dalvik so we can`t get correct index
+		// System.out.println(location.codeIndex());
+		int count = ConfigManager.instance().bytecode();		
 		if (0 < count && 0 < location.lineNumber()) {
 			// MachineManager.instance().get().canGetBytecodes()
 			// this is a bug in davlik

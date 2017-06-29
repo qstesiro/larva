@@ -100,7 +100,7 @@ public class BytecodeReader extends Reader {
     protected BytecodeReader load() throws Exception {
 		while (0 < size) {
 			Bytecode code = load(readS1(), offset - 1);			
-			// System.out.printf("%04x    [%02x]  %-24s\n", code.offset(), code.opcode(), code.name());
+			// System.out.printf("%d    [%02x]  %-24s\n", code.offset(), code.opcode(), code.name());
 			codes.add(code);
 		}
         return this;
@@ -776,7 +776,7 @@ public class BytecodeReader extends Reader {
 		
 		private static final String FORMAT_OFFSET = "%04x    ";
 		private static final String FORMAT_OPCODE = "[%02x]  ";		
-		private static final String FORMAT_NAME = "%-24s";
+		private static final String FORMAT_NAME = "%-26s";
 		private static final String FORMAT = FORMAT_OFFSET + FORMAT_OPCODE + FORMAT_NAME;
 
 		public void print(Bytecode bytecode) throws Exception {
@@ -941,7 +941,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.CONST_STRING: {
 				Bytecode.CONST_STRING code = (Bytecode.CONST_STRING)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%02x, %d ", code.vAA(), code.index());
+				System.out.printf("v%02x, string@%d ", code.vAA(), code.index());
 				if (null != code.string()) {
 					System.out.printf("%s", code.string());
 				}
@@ -951,7 +951,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.CONST_STRING_JUMBO: {
 				Bytecode.CONST_STRING_JUMBO code = (Bytecode.CONST_STRING_JUMBO)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%02x, %d ", code.vAA(), code.index());
+				System.out.printf("v%02x, string@%d ", code.vAA(), code.index());
 				if (null != code.string()) {
 					System.out.printf("%s", code.string());
 				}
@@ -961,7 +961,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.CONST_CLASS: {
 				Bytecode.CONST_CLASS code = (Bytecode.CONST_CLASS)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%02x, %d ", code.vAA(), code.index());
+				System.out.printf("v%02x, type@%d ", code.vAA(), code.index());
 				if (null != code.clazz()) {
 					System.out.printf("%s", code.clazz());
 				}				
@@ -993,7 +993,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.INSTANCE_OF: {
 				Bytecode.INSTANCE_OF code = (Bytecode.INSTANCE_OF)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%01x, v%01x, %d ", code.vA(), code.vB(), code.index());
+				System.out.printf("v%01x, v%01x, type@%d ", code.vA(), code.vB(), code.index());
 				if (null != code.clazz()) {
 					System.out.printf("%s", code.clazz());
 				}
@@ -1009,7 +1009,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.NEW_INSTANCE: {
 				Bytecode.NEW_INSTANCE code = (Bytecode.NEW_INSTANCE)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%02x, %d ", code.vAA(), code.index());
+				System.out.printf("v%02x, type@%d ", code.vAA(), code.index());
 				if (null != code.clazz()) {
 					System.out.printf("%s", code.clazz());
 				}
@@ -1019,7 +1019,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.NEW_ARRAY: {
 				Bytecode.NEW_ARRAY code = (Bytecode.NEW_ARRAY)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%01x, v%01x, %d ", code.vA(), code.vB(), code.index());
+				System.out.printf("v%01x, v%01x, type@%d ", code.vA(), code.vB(), code.index());
 				if (null != code.type()) {
 					System.out.printf("%s", code.type());
 				}
@@ -1028,8 +1028,15 @@ public class BytecodeReader extends Reader {
 			}
 			case Bytecode.FILLED_NEW_ARRAY: {
 				Bytecode.FILLED_NEW_ARRAY code = (Bytecode.FILLED_NEW_ARRAY)bytecode;
-				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%02x, %d ", code.count(), code.index());
+				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());				
+			    System.out.printf("{");
+				if (1 <= code.count()) System.out.printf("v%01x", code.vC());
+				if (2 <= code.count()) System.out.printf(", v%01x", code.vD());
+				if (3 <= code.count()) System.out.printf(", v%01x", code.vE());
+				if (4 <= code.count()) System.out.printf(", v%01x", code.vF());
+				if (5 == code.count()) System.out.printf(", v%01x ", code.vG());
+				System.out.printf("}, ");
+				System.out.printf("type@%d ", code.index());
 				if (null != code.type()) {
 					System.out.printf("%s", code.type());
 				}
@@ -1039,7 +1046,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.FILLED_NEW_ARRAY_RANGE: {
 				Bytecode.FILLED_NEW_ARRAY_RANGE code = (Bytecode.FILLED_NEW_ARRAY_RANGE)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%d, %d, v%04x ", code.count(), code.index(), code.vCCCC());
+				System.out.printf("{v%04x..v%04x}, type@%d ", code.vCCCC(), code.vCCCC() + code.count() - 1, code.index());				
 				if (null != code.type()) {
 					System.out.printf("%s", code.type());
 				}
@@ -1155,7 +1162,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.IPUT_SHORT: {
 				Bytecode.IOP code = (Bytecode.IOP)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%01x, v%01x, %d ", code.vA(), code.vB(), code.index());
+				System.out.printf("v%01x, v%01x, field@%d ", code.vA(), code.vB(), code.index());
 				if (null != code.clazz() && null != code.field() && null != code.type()) {
 					System.out.printf("%s", code.clazz() + "." + code.field() + ":" + code.type());
 				}
@@ -1178,7 +1185,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.SPUT_SHORT: {
 				Bytecode.SOP code = (Bytecode.SOP)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("v%02x, %d ", code.vAA(), code.index());
+				System.out.printf("v%02x, field@%d ", code.vAA(), code.index());
 				if (null != code.clazz() && null != code.field() && null != code.type()) {
 					System.out.printf("%s", code.clazz() + "." + code.field() + ":" + code.type());
 				}
@@ -1192,7 +1199,14 @@ public class BytecodeReader extends Reader {
 			case Bytecode.INVOKE_INTERFACE: {
 				Bytecode.INVOKE_KIND code = (Bytecode.INVOKE_KIND)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%d, %d ", code.count(), code.index());
+				System.out.printf("{");
+				if (1 <= code.count()) System.out.printf("v%01x", code.vC());
+				if (2 <= code.count()) System.out.printf(", v%01x", code.vD());
+				if (3 <= code.count()) System.out.printf(", v%01x", code.vE());
+				if (4 <= code.count()) System.out.printf(", v%01x", code.vF());
+				if (5 == code.count()) System.out.printf(", v%01x ", code.vG());
+				System.out.printf("}, ");
+				System.out.printf("method@%d ", code.index());
 				if (null != code.clazz() && null != code.method() && null != code.parameter() && null != code.returnType()) {
 					System.out.printf("%s", code.clazz() + "." + code.method() + code.parameter() + ":" + code.returnType());
 				}
@@ -1206,7 +1220,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.INVOKE_INTERFACE_RANGE: {
 				Bytecode.INVOKE_KIND_RANGE code = (Bytecode.INVOKE_KIND_RANGE)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%d, %d, v%04x ", code.count(), code.index(), code.vCCCC());
+				System.out.printf("{v%04x..v%04x}, type@%d ", code.vCCCC(), code.vCCCC() + code.count() - 1, code.index());
 				if (null != code.clazz() && null != code.method() && null != code.parameter() && null != code.returnType()) {
 					System.out.printf("%s", code.clazz() + "." + code.method() + code.parameter() + ":" + code.returnType());
 				}
@@ -1345,7 +1359,14 @@ public class BytecodeReader extends Reader {
 			case Bytecode.INVOKE_POLYMORPHIC: {
 				Bytecode.INVOKE_POLYMORPHIC code = (Bytecode.INVOKE_POLYMORPHIC)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%d, %d, %d ", code.count(), code.method(), code.proto());
+				System.out.printf("{");
+				if (1 <= code.count()) System.out.printf("v%01x", code.vC());
+				if (2 <= code.count()) System.out.printf(", v%01x", code.vD());
+				if (3 <= code.count()) System.out.printf(", v%01x", code.vE());
+				if (4 <= code.count()) System.out.printf(", v%01x", code.vF());
+				if (5 == code.count()) System.out.printf(", v%01x ", code.vG());
+				System.out.printf("}, ");
+				System.out.printf("method@%d, proto@%d ", code.method(), code.proto());
 				if (null != code.clazz() && null != code.methodName() && null != code.methodParameter() && null != code.methodReturn()) {
 					System.out.printf("%s ", code.clazz() + "." + code.methodName() + code.methodParameter() + ":" + code.methodReturn());
 				}
@@ -1358,7 +1379,7 @@ public class BytecodeReader extends Reader {
 			case Bytecode.INVOKE_POLYMORPHIC_RANGE: {
 				Bytecode.INVOKE_POLYMORPHIC_RANGE code = (Bytecode.INVOKE_POLYMORPHIC_RANGE)bytecode;
 				System.out.printf(FORMAT, code.offset(), code.opcode(), code.name());
-				System.out.printf("%d, %d, %d, %d ", code.count(), code.method(), code.vCCCC(), code.proto());
+				System.out.printf("{v%04x..v%04x}, method@%d, proto@%d", code.vCCCC(), code.vCCCC() + code.count() - 1, code.method(), code.proto());
 				if (null != code.clazz() && null != code.methodName() && null != code.methodParameter() && null != code.methodReturn()) {
 					System.out.printf("%s ", code.clazz() + "." + code.methodName() + code.methodParameter() + ":" + code.methodReturn());
 				}

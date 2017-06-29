@@ -74,7 +74,7 @@ public class Bytecode {
 	public static class MOVE_FROM16 extends Bytecode {
 
 		public MOVE_FROM16(int offset, short vAA, int vBBBB) {
-			super(offset, "MOVE-FROM16", MOVE_FROM16);
+			super(offset, "MOVE/FROM16", MOVE_FROM16);
 			this.vAA = vAA;
 			this.vBBBB = vBBBB;
 		}
@@ -137,7 +137,7 @@ public class Bytecode {
 	public static class MOVE_WIDE_FROM16 extends Bytecode {
 
 		public MOVE_WIDE_FROM16(int offset, short vAA, int vBBBB) {
-			super(offset, "MOVE-WIDE-FROM16", MOVE_WIDE_FROM16);
+			super(offset, "MOVE-WIDE/FROM16", MOVE_WIDE_FROM16);
 			this.vAA = vAA;
 			this.vBBBB = vBBBB;
 		}
@@ -158,7 +158,7 @@ public class Bytecode {
 	public static class MOVE_WIDE16 extends Bytecode {
 
 		public MOVE_WIDE16(int offset, short vAA, int vBBBB) {
-			super(offset, "MOVE-WIDE16", MOVE_WIDE16);
+			super(offset, "MOVE-WIDE/16", MOVE_WIDE16);
 			this.vAA = vAA;
 			this.vBBBB = vBBBB;
 		}
@@ -200,7 +200,7 @@ public class Bytecode {
 	public static class MOVE_OBJECT_FROM16 extends Bytecode {
 
 		public MOVE_OBJECT_FROM16(int offset, short vAA, int vBBBB) {
-			super(offset, "MOVE-OBJECT-FROM16", MOVE_OBJECT_FROM16);
+			super(offset, "MOVE-OBJECT/FROM16", MOVE_OBJECT_FROM16);
 			this.vAA = vAA;
 			this.vBBBB = vBBBB;
 		}
@@ -221,7 +221,7 @@ public class Bytecode {
 	public static class MOVE_OBJECT16 extends Bytecode {
 
 		public MOVE_OBJECT16(int offset, int vAAAA, int vBBBB) {
-			super(offset, "MOVE-OBJECT16", MOVE_OBJECT16);
+			super(offset, "MOVE-OBJECT/16", MOVE_OBJECT16);
 			this.vAAAA = vAAAA;
 			this.vBBBB = vBBBB;
 		}
@@ -410,7 +410,7 @@ public class Bytecode {
 	public static class CONST_HIGH16 extends Bytecode {
 
 		public CONST_HIGH16(int offset, short vAA, int value) {
-			super(offset, "CONST-HIGH16", CONST_HIGH16);
+			super(offset, "CONST/HIGH16", CONST_HIGH16);
 			this.vAA = vAA;
 			this.value = value;
 		}
@@ -431,7 +431,7 @@ public class Bytecode {
 	public static class CONST_WIDE16 extends Bytecode {
 
 		public CONST_WIDE16(int offset, short vAA, long value) {
-			super(offset, "CONST-WIDE16", CONST_WIDE16);
+			super(offset, "CONST-WIDE/16", CONST_WIDE16);
 			this.vAA = vAA;
 			this.value = value;
 		}
@@ -452,7 +452,7 @@ public class Bytecode {
 	public static class CONST_WIDE32 extends Bytecode {
 
 		public CONST_WIDE32(int offset, short vAA, long value) {
-			super(offset, "CONST-WIDE32", CONST_WIDE32);
+			super(offset, "CONST-WIDE/32", CONST_WIDE32);
 			this.vAA = vAA;
 			this.value = value;
 		}
@@ -494,7 +494,7 @@ public class Bytecode {
 	public static class CONST_WIDE_HIGH16 extends Bytecode {
 
 		public CONST_WIDE_HIGH16(int offset, short vAA, long value) {
-			super(offset, "CONST-WIDE-HIGH16", CONST_WIDE_HIGH16);
+			super(offset, "CONST-WIDE/HIGH16", CONST_WIDE_HIGH16);
 			this.vAA = vAA;
 			this.value = value;
 		}
@@ -549,13 +549,13 @@ public class Bytecode {
 	public static class CONST_STRING_JUMBO extends Bytecode {
 
 		public CONST_STRING_JUMBO(int offset, short vAA, int index) {
-			super(offset, "CONST-STRING-JUMBO", CONST_STRING_JUMBO);
+			super(offset, "CONST-STRING/JUMBO", CONST_STRING_JUMBO);
 			this.vAA = vAA;
 			this.index = index;		
 		}
 		
 		public CONST_STRING_JUMBO(int offset, short vAA, int index, String string) {
-			super(offset, "CONST-STRING-JUMBO", CONST_STRING_JUMBO);
+			super(offset, "CONST-STRING/JUMBO", CONST_STRING_JUMBO);
 			this.vAA = vAA;
 			this.index = index;
 			this.string = string;
@@ -894,14 +894,14 @@ public class Bytecode {
 	public static class FILLED_NEW_ARRAY_RANGE extends Bytecode {
 
 		public FILLED_NEW_ARRAY_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "FILLED-NEW-ARRAY-RANGE", FILLED_NEW_ARRAY_RANGE);
+			super(offset, "FILLED-NEW-ARRAY/RANGE", FILLED_NEW_ARRAY_RANGE);
 			this.count = count;						
 			this.index = index;
 			this.vCCCC = vCCCC;
 		}
 		
 		public FILLED_NEW_ARRAY_RANGE(int offset, short count, int index, int vCCCC, String type) {
-			super(offset, "FILLED-NEW-ARRAY-RANGE", FILLED_NEW_ARRAY_RANGE);
+			super(offset, "FILLED-NEW-ARRAY/RANGE", FILLED_NEW_ARRAY_RANGE);
 			this.count = count;						
 			this.index = index;
 			this.vCCCC = vCCCC;
@@ -985,7 +985,7 @@ public class Bytecode {
 	public static class GOTO16 extends Bytecode {
 
 		public GOTO16(int offset, short value) {
-			super(offset, "GOTO16", GOTO16);
+			super(offset, "GOTO/16", GOTO16);
 			this.value = value;
 		}
 
@@ -999,7 +999,7 @@ public class Bytecode {
 	public static class GOTO32 extends Bytecode {
 
 		public GOTO32(int offset, int value) {
-			super(offset, "GOTO32", GOTO32);
+			super(offset, "GOTO/32", GOTO32);
 			this.value = value;
 		}
 
@@ -2010,12 +2010,12 @@ public class Bytecode {
 	public static class INVOKE_VIRTUAL_RANGE extends INVOKE_KIND_RANGE {
 
 		public INVOKE_VIRTUAL_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "INVOKE-VIRTUAL-RANGE", INVOKE_VIRTUAL_RANGE, count, index, vCCCC);
+			super(offset, "INVOKE-VIRTUAL/RANGE", INVOKE_VIRTUAL_RANGE, count, index, vCCCC);
 		}
 		
 		public INVOKE_VIRTUAL_RANGE(int offset, short count, int index, int vCCCC,
 							  String clazz, String method, String returnType, String parameter) {
-			super(offset, "INVOKE-VIRTUAL-RANGE", INVOKE_VIRTUAL_RANGE, count, index, vCCCC,
+			super(offset, "INVOKE-VIRTUAL/RANGE", INVOKE_VIRTUAL_RANGE, count, index, vCCCC,
 				  clazz, method, returnType, parameter);
 		}
 	}
@@ -2023,12 +2023,12 @@ public class Bytecode {
 	public static class INVOKE_SUPER_RANGE extends INVOKE_KIND_RANGE {
 
 		public INVOKE_SUPER_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "INVOKE-SUPER-RANGE", INVOKE_SUPER_RANGE, count, index, vCCCC);
+			super(offset, "INVOKE-SUPER/RANGE", INVOKE_SUPER_RANGE, count, index, vCCCC);
 		}
 		
 		public INVOKE_SUPER_RANGE(int offset, short count, int index, int vCCCC,
 							  String clazz, String method, String returnType, String parameter) {
-			super(offset, "INVOKE-SUPER-RANGE", INVOKE_SUPER_RANGE, count, index, vCCCC,
+			super(offset, "INVOKE-SUPER/RANGE", INVOKE_SUPER_RANGE, count, index, vCCCC,
 				  clazz, method, returnType, parameter);
 		}
 	}
@@ -2036,12 +2036,12 @@ public class Bytecode {
 	public static class INVOKE_DIRECT_RANGE extends INVOKE_KIND_RANGE {
 
 		public INVOKE_DIRECT_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "INVOKE-DIRECT-RANGE", INVOKE_DIRECT_RANGE, count, index, vCCCC);
+			super(offset, "INVOKE-DIRECT/RANGE", INVOKE_DIRECT_RANGE, count, index, vCCCC);
 		}
 		
 		public INVOKE_DIRECT_RANGE(int offset, short count, int index, int vCCCC,
 							  String clazz, String method, String returnType, String parameter) {
-			super(offset, "INVOKE-DIRECT-RANGE", INVOKE_DIRECT_RANGE, count, index, vCCCC,
+			super(offset, "INVOKE-DIRECT/RANGE", INVOKE_DIRECT_RANGE, count, index, vCCCC,
 				  clazz, method, returnType, parameter);
 		}
 	}
@@ -2049,12 +2049,12 @@ public class Bytecode {
 	public static class INVOKE_STATIC_RANGE extends INVOKE_KIND_RANGE {
 
 		public INVOKE_STATIC_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "INVOKE-STATIC-RANGE", INVOKE_STATIC_RANGE, count, index, vCCCC);
+			super(offset, "INVOKE-STATIC/RANGE", INVOKE_STATIC_RANGE, count, index, vCCCC);
 		}
 		
 		public INVOKE_STATIC_RANGE(int offset, short count, int index, int vCCCC,
 							  String clazz, String method, String returnType, String parameter) {
-			super(offset, "INVOKE-STATIC-RANGE", INVOKE_STATIC_RANGE, count, index, vCCCC,
+			super(offset, "INVOKE-STATIC/RANGE", INVOKE_STATIC_RANGE, count, index, vCCCC,
 				  clazz, method, returnType, parameter);
 		}
 	}
@@ -2062,12 +2062,12 @@ public class Bytecode {
 	public static class INVOKE_INTERFACE_RANGE extends INVOKE_KIND_RANGE {
 
 		public INVOKE_INTERFACE_RANGE(int offset, short count, int index, int vCCCC) {
-			super(offset, "INVOKE-INTERFACE-RANGE", INVOKE_INTERFACE_RANGE, count, index, vCCCC);
+			super(offset, "INVOKE-INTERFACE/RANGE", INVOKE_INTERFACE_RANGE, count, index, vCCCC);
 		}
 		
 		public INVOKE_INTERFACE_RANGE(int offset, short count, int index, int vCCCC,
 							  String clazz, String method, String returnType, String parameter) {
-			super(offset, "INVOKE-INTERFACE-RANGE", INVOKE_INTERFACE_RANGE, count, index, vCCCC,
+			super(offset, "INVOKE-INTERFACE/RANGE", INVOKE_INTERFACE_RANGE, count, index, vCCCC,
 				  clazz, method, returnType, parameter);
 		}
 	}
@@ -2516,224 +2516,224 @@ public class Bytecode {
 	public static class ADD_INT_2ADDR extends BINOP_2ADDR {
 
 		public ADD_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "ADD-INT-2ADDR", ADD_INT_2ADDR, vA, vB);
+			super(offset, "ADD-INT/2ADDR", ADD_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_INT_2ADDR extends BINOP_2ADDR {
 
 		public SUB_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SUB-INT-2ADDR", SUB_INT_2ADDR, vA, vB);
+			super(offset, "SUB-INT/2ADDR", SUB_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_INT_2ADDR extends BINOP_2ADDR {
 
 		public MUL_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "MUL-INT-2ADDR", MUL_INT_2ADDR, vA, vB);
+			super(offset, "MUL-INT/2ADDR", MUL_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_INT_2ADDR extends BINOP_2ADDR {
 
 		public DIV_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "DIV-INT-2ADDR", DIV_INT_2ADDR, vA, vB);
+			super(offset, "DIV-INT/2ADDR", DIV_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_INT_2ADDR extends BINOP_2ADDR {
 
 		public REM_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "REM-INT-2ADDR", REM_INT_2ADDR, vA, vB);
+			super(offset, "REM-INT/2ADDR", REM_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class AND_INT_2ADDR extends BINOP_2ADDR {
 
 		public AND_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "AND-INT-2ADDR", AND_INT_2ADDR, vA, vB);
+			super(offset, "AND-INT/2ADDR", AND_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class OR_INT_2ADDR extends BINOP_2ADDR {
 
 		public OR_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "OR-INT-2ADDR", OR_INT_2ADDR, vA, vB);
+			super(offset, "OR-INT/2ADDR", OR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class XOR_INT_2ADDR extends BINOP_2ADDR {
 
 		public XOR_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "XOR-INT-2ADDR", XOR_INT_2ADDR, vA, vB);
+			super(offset, "XOR-INT/2ADDR", XOR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHL_INT_2ADDR extends BINOP_2ADDR {
 
 		public SHL_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SHL-INT-2ADDR", SHL_INT_2ADDR, vA, vB);
+			super(offset, "SHL-INT/2ADDR", SHL_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHR_INT_2ADDR extends BINOP_2ADDR {
 
 		public SHR_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SHR-INT-2ADDR", SHR_INT_2ADDR, vA, vB);
+			super(offset, "SHR-INT/2ADDR", SHR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class USHR_INT_2ADDR extends BINOP_2ADDR {
 
 		public USHR_INT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "USHR-INT-2ADDR", USHR_INT_2ADDR, vA, vB);
+			super(offset, "USHR-INT/2ADDR", USHR_INT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class ADD_LONG_2ADDR extends BINOP_2ADDR {
 
 		public ADD_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "ADD-LONG-2ADDR", ADD_LONG_2ADDR, vA, vB);
+			super(offset, "ADD-LONG/2ADDR", ADD_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_LONG_2ADDR extends BINOP_2ADDR {
 
 		public SUB_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SUB-LONG-2ADDR", SUB_LONG_2ADDR, vA, vB);
+			super(offset, "SUB-LONG/2ADDR", SUB_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_LONG_2ADDR extends BINOP_2ADDR {
 
 		public MUL_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "MUL-LONG-2ADDR", MUL_LONG_2ADDR, vA, vB);
+			super(offset, "MUL-LONG/2ADDR", MUL_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_LONG_2ADDR extends BINOP_2ADDR {
 
 		public DIV_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "DIV-LONG-2ADDR", DIV_LONG_2ADDR, vA, vB);
+			super(offset, "DIV-LONG/2ADDR", DIV_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_LONG_2ADDR extends BINOP_2ADDR {
 
 		public REM_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "REM-LONG-2ADDR", REM_LONG_2ADDR, vA, vB);
+			super(offset, "REM-LONG/2ADDR", REM_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class AND_LONG_2ADDR extends BINOP_2ADDR {
 
 		public AND_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "AND-LONG-2ADDR", AND_LONG_2ADDR, vA, vB);
+			super(offset, "AND-LONG/2ADDR", AND_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class OR_LONG_2ADDR extends BINOP_2ADDR {
 
 		public OR_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "OR-LONG-2ADDR", OR_LONG_2ADDR, vA, vB);
+			super(offset, "OR-LONG/2ADDR", OR_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class XOR_LONG_2ADDR extends BINOP_2ADDR {
 
 		public XOR_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "XOR-LONG-2ADDR", XOR_LONG_2ADDR, vA, vB);
+			super(offset, "XOR-LONG/2ADDR", XOR_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHL_LONG_2ADDR extends BINOP_2ADDR {
 
 		public SHL_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SHL-LONG-2ADDR", SHL_LONG_2ADDR, vA, vB);
+			super(offset, "SHL-LONG/2ADDR", SHL_LONG_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SHR_LONG_2ADDR extends BINOP_2ADDR {
 
 		public SHR_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SHR-LONG-2ADDR", SHR_LONG_2ADDR, vA, vB);
+			super(offset, "SHR-LONG/2ADDR", SHR_LONG_2ADDR, vA, vB);
 		}
 	}	
 
 	public static class USHR_LONG_2ADDR extends BINOP_2ADDR {
 
 		public USHR_LONG_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "USHR-LONG-2ADDR", USHR_LONG_2ADDR, vA, vB);
+			super(offset, "USHR-LONG/2ADDR", USHR_LONG_2ADDR, vA, vB);
 		}
 	}
 	
 	public static class ADD_FLOAT_2ADDR extends BINOP_2ADDR {
 
 		public ADD_FLOAT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "ADD-FLOAT-2ADDR", ADD_FLOAT_2ADDR, vA, vB);
+			super(offset, "ADD-FLOAT/2ADDR", ADD_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_FLOAT_2ADDR extends BINOP_2ADDR {
 
 		public SUB_FLOAT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SUB-FLOAT-2ADDR", SUB_FLOAT_2ADDR, vA, vB);
+			super(offset, "SUB-FLOAT/2ADDR", SUB_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_FLOAT_2ADDR extends BINOP_2ADDR {
 
 		public MUL_FLOAT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "MUL-FLOAT-2ADDR", MUL_FLOAT_2ADDR, vA, vB);
+			super(offset, "MUL-FLOAT/2ADDR", MUL_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_FLOAT_2ADDR extends BINOP_2ADDR {
 
 		public DIV_FLOAT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "DIV-FLOAT-2ADDR", DIV_FLOAT_2ADDR, vA, vB);
+			super(offset, "DIV-FLOAT/2ADDR", DIV_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_FLOAT_2ADDR extends BINOP_2ADDR {
 
 		public REM_FLOAT_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "REM-FLOAT-2ADDR", REM_FLOAT_2ADDR, vA, vB);
+			super(offset, "REM-FLOAT/2ADDR", REM_FLOAT_2ADDR, vA, vB);
 		}
 	}
 
 	public static class ADD_DOUBLE_2ADDR extends BINOP_2ADDR {
 
 		public ADD_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "ADD-DOUBLE-2ADDR", ADD_DOUBLE_2ADDR, vA, vB);
+			super(offset, "ADD-DOUBLE/2ADDR", ADD_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class SUB_DOUBLE_2ADDR extends BINOP_2ADDR {
 
 		public SUB_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "SUB-DOUBLE-2ADDR", SUB_DOUBLE_2ADDR, vA, vB);
+			super(offset, "SUB-DOUBLE/2ADDR", SUB_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class MUL_DOUBLE_2ADDR extends BINOP_2ADDR {
 
 		public MUL_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "MUL-DOUBLE-2ADDR", MUL_DOUBLE_2ADDR, vA, vB);
+			super(offset, "MUL-DOUBLE/2ADDR", MUL_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class DIV_DOUBLE_2ADDR extends BINOP_2ADDR {
 
 		public DIV_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "DIV-DOUBLE-2ADDR", DIV_DOUBLE_2ADDR, vA, vB);
+			super(offset, "DIV-DOUBLE/2ADDR", DIV_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
 	public static class REM_DOUBLE_2ADDR extends BINOP_2ADDR {
 
 		public REM_DOUBLE_2ADDR(int offset, byte vA, byte vB) {
-			super(offset, "REM-DOUBLE-2ADDR", REM_DOUBLE_2ADDR, vA, vB);
+			super(offset, "REM-DOUBLE/2ADDR", REM_DOUBLE_2ADDR, vA, vB);
 		}
 	}
 
@@ -2768,56 +2768,56 @@ public class Bytecode {
 	public static class ADD_INT_LIT16 extends BINOP_LIT16 {
 
 		public ADD_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "ADD-INT-LIT16", ADD_INT_LIT16, vA, vB, value);
+			super(offset, "ADD-INT/LIT16", ADD_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class RSUB_INT_LIT16 extends BINOP_LIT16 {
 
 		public RSUB_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "RSUB-INT-LIT16", RSUB_INT_LIT16, vA, vB, value);
+			super(offset, "RSUB-INT/LIT16", RSUB_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class MUL_INT_LIT16 extends BINOP_LIT16 {
 
 		public MUL_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "MUL-INT-LIT16", MUL_INT_LIT16, vA, vB, value);
+			super(offset, "MUL-INT/LIT16", MUL_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class DIV_INT_LIT16 extends BINOP_LIT16 {
 
 		public DIV_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "DIV-INT-LIT16", DIV_INT_LIT16, vA, vB, value);
+			super(offset, "DIV-INT/LIT16", DIV_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class REM_INT_LIT16 extends BINOP_LIT16 {
 
 		public REM_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "REM-INT-LIT16", REM_INT_LIT16, vA, vB, value);
+			super(offset, "REM-INT/LIT16", REM_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class AND_INT_LIT16 extends BINOP_LIT16 {
 
 		public AND_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "AND-INT-LIT16", AND_INT_LIT16, vA, vB, value);
+			super(offset, "AND-INT/LIT16", AND_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class OR_INT_LIT16 extends BINOP_LIT16 {
 
 		public OR_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "OR-INT-LIT16", OR_INT_LIT16, vA, vB, value);
+			super(offset, "OR-INT/LIT16", OR_INT_LIT16, vA, vB, value);
 		}
 	}
 
 	public static class XOR_INT_LIT16 extends BINOP_LIT16 {
 
 		public XOR_INT_LIT16(int offset, byte vA, byte vB, short value) {
-			super(offset, "XOR-INT-LIT16", XOR_INT_LIT16, vA, vB, value);
+			super(offset, "XOR-INT/LIT16", XOR_INT_LIT16, vA, vB, value);
 		}
 	}
 
@@ -2852,77 +2852,77 @@ public class Bytecode {
 	public static class ADD_INT_LIT8 extends BINOP_LIT8 {
 
 		public ADD_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "ADD-INT-LIT8", ADD_INT_LIT8, vAA, vBB, value);
+			super(offset, "ADD-INT/LIT8", ADD_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class RSUB_INT_LIT8 extends BINOP_LIT8 {
 
 		public RSUB_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "RSUB-INT-LIT8", RSUB_INT_LIT8, vAA, vBB, value);
+			super(offset, "RSUB-INT/LIT8", RSUB_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class MUL_INT_LIT8 extends BINOP_LIT8 {
 
 		public MUL_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "MUL-INT-LIT8", MUL_INT_LIT8, vAA, vBB, value);
+			super(offset, "MUL-INT/LIT8", MUL_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class DIV_INT_LIT8 extends BINOP_LIT8 {
 
 		public DIV_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "DIV-INT-LIT8", DIV_INT_LIT8, vAA, vBB, value);
+			super(offset, "DIV-INT/LIT8", DIV_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class REM_INT_LIT8 extends BINOP_LIT8 {
 
 		public REM_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "REM-INT-LIT8", REM_INT_LIT8, vAA, vBB, value);
+			super(offset, "REM-INT/LIT8", REM_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class AND_INT_LIT8 extends BINOP_LIT8 {
 
 		public AND_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "AND-INT-LIT8", AND_INT_LIT8, vAA, vBB, value);
+			super(offset, "AND-INT/LIT8", AND_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class OR_INT_LIT8 extends BINOP_LIT8 {
 
 		public OR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "OR-INT-LIT8", OR_INT_LIT8, vAA, vBB, value);
+			super(offset, "OR-INT/LIT8", OR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class XOR_INT_LIT8 extends BINOP_LIT8 {
 
 		public XOR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "XOR-INT-LIT8", XOR_INT_LIT8, vAA, vBB, value);
+			super(offset, "XOR-INT/LIT8", XOR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class SHL_INT_LIT8 extends BINOP_LIT8 {
 
 		public SHL_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "SHL-INT-LIT8", SHL_INT_LIT8, vAA, vBB, value);
+			super(offset, "SHL-INT/LIT8", SHL_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class SHR_INT_LIT8 extends BINOP_LIT8 {
 
 		public SHR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "SHR-INT-LIT8", SHR_INT_LIT8, vAA, vBB, value);
+			super(offset, "SHR-INT/LIT8", SHR_INT_LIT8, vAA, vBB, value);
 		}
 	}
 
 	public static class USHR_INT_LIT8 extends BINOP_LIT8 {
 
 		public USHR_INT_LIT8(int offset, short vAA, short vBB, byte value) {
-			super(offset, "USHR-INT-LIT8", USHR_INT_LIT8, vAA, vBB, value);			
+			super(offset, "USHR-INT/LIT8", USHR_INT_LIT8, vAA, vBB, value);			
 		}		
 	}
 
@@ -3057,7 +3057,7 @@ public class Bytecode {
 	public static class INVOKE_POLYMORPHIC_RANGE extends Bytecode {
 
 		public INVOKE_POLYMORPHIC_RANGE(int offset, short count, int method, int vCCCC, int proto) {
-			super(offset, "INVOKE-POLYMORPHIC-RANGE", INVOKE_POLYMORPHIC_RANGE);
+			super(offset, "INVOKE-POLYMORPHIC/RANGE", INVOKE_POLYMORPHIC_RANGE);
 			this.count = count;			
 			this.method = method;
 			this.vCCCC = vCCCC;
@@ -3067,7 +3067,7 @@ public class Bytecode {
 		public INVOKE_POLYMORPHIC_RANGE(int offset, short count, int method, int vCCCC, int proto,
 								  String clazz, String methodName, String methodReturn, String methodParameter,
 								  String descriptor, String protoReturn, String protoParameter) {
-			super(offset, "INVOKE-POLYMORPHIC-RANGE", INVOKE_POLYMORPHIC_RANGE);
+			super(offset, "INVOKE-POLYMORPHIC/RANGE", INVOKE_POLYMORPHIC_RANGE);
 			this.count = count;			
 			this.method = method;
 			this.vCCCC = vCCCC;
@@ -3158,7 +3158,7 @@ public class Bytecode {
 	public static class INVOKE_CUSTOM_RANGE extends Bytecode {
 
 		public INVOKE_CUSTOM_RANGE(int offset) {
-			super(offset, "INVOKE-CUSTOM-RANGE", INVOKE_CUSTOM_RANGE);
+			super(offset, "INVOKE-CUSTOM/RANGE", INVOKE_CUSTOM_RANGE);
 		}
 	}
 
