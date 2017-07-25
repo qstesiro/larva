@@ -6,17 +6,17 @@ import javax.json.JsonObjectBuilder;
 
 public class TypeRefConstant extends Constant {
 
-    public TypeRefConstant(long offset, ConstantReader reader, short type) {
-        super(offset, reader, type);
+    public TypeRefConstant(ConstantReader reader, short type) {
+        super(reader, type);
     }
 
-	public TypeRefConstant(long offset, ConstantReader reader, short type, int index) {
-		super(offset, reader, type);
+	public TypeRefConstant(ConstantReader reader, short type, int index) {
+		super(reader, type);
 		this.index = index;
 	}
 	
-    public TypeRefConstant(long offset, ConstantReader reader, short type, int clazz, int index) {
-        super(offset, reader, type);
+    public TypeRefConstant(ConstantReader reader, short type, int clazz, int index) {
+        super(reader, type);
         this.clazz = clazz;
         this.index = index;
     }

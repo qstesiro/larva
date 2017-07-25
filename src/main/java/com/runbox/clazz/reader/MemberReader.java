@@ -2,8 +2,6 @@ package com.runbox.clazz.reader;
 
 import java.io.DataInputStream;
 
-import com.runbox.clazz.entry.Entry;
-
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
@@ -42,9 +40,8 @@ public class MemberReader extends Reader {
     protected MemberReader load() throws Exception {
 		if (null != members) {
 			for (int i = 0; i < members.length; ++i) {				
-				members[i] = new Member(offset(), readU2(), readU2(), readU2(),
+				members[i] = new Member(readU2(), readU2(), readU2(),
 										new AttributeReader(stream(), readU2(), constants()).load());
-				offset(offset() + members[i].reader().length());
 			}
 		}
         return this;
@@ -62,14 +59,9 @@ public class MemberReader extends Reader {
         return super.toJson();
     }
 
-    public class Member extends Entry {
+    public class Member {
                                 
-        public Member(long offset) {
-            super(offset);
-        }
-        
-        public Member(long offset, int flags, int name, int descriptor, AttributeReader reader) {
-            super(offset);
+        public Member(int flags, int name, int descriptor, AttributeReader reader) {
             this.flags = flags;
             this.name = name;
             this.descriptor = descriptor;

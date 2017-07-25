@@ -4,12 +4,9 @@ import javax.json.JsonObjectBuilder;
 
 public class AnnotationDefault extends Annotations {
 
-    public AnnotationDefault(long offset) {        
-        super(offset, "AnnotationDefault");
-    }
     
-    public AnnotationDefault(long offset, Value value) {
-        super(offset, "AnnotationDefault"); this.value = value;
+    public AnnotationDefault(Value value) {
+        super("AnnotationDefault"); this.value = value;
     }
 
     private Value value = null;

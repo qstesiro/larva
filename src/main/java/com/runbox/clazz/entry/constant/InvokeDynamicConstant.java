@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class InvokeDynamicConstant extends Constant {
 
-    public InvokeDynamicConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_INVOKE_DYNAMIC);
+    public InvokeDynamicConstant(ConstantReader reader) {
+        super(reader, TYPE_INVOKE_DYNAMIC);
     }
     
-    public InvokeDynamicConstant(long offset, ConstantReader reader, int method, int name) {
-        super(offset, reader, TYPE_INVOKE_DYNAMIC);
+    public InvokeDynamicConstant(ConstantReader reader, int method, int name) {
+        super(reader, TYPE_INVOKE_DYNAMIC);
         this.method = method;
         this.name = name;
     }

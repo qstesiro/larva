@@ -1,14 +1,12 @@
 package com.runbox.clazz.entry.attribute;
 
-import com.runbox.clazz.entry.Entry;
-
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
-public class Attribute extends Entry {    
+public class Attribute {    
     
-    public Attribute(long offset, String name) {
-        super(offset); this.name = name;
+    public Attribute(String name) {
+        this.name = name;
     }
 
     private String name = null;

@@ -4,12 +4,12 @@ import com.runbox.clazz.reader.ConstantReader;
 
 public class ClassConstant extends ClassStringConstant {
 
-    public ClassConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_CLASS);
+    public ClassConstant(ConstantReader reader) {
+        super(reader, TYPE_CLASS);
     }
     
-    public ClassConstant(long offset, ConstantReader reader, int index) {
-        super(offset, reader, TYPE_CLASS, index);
+    public ClassConstant(ConstantReader reader, int index) {
+        super(reader, TYPE_CLASS, index);
 	}   	
 
 	public String className() {

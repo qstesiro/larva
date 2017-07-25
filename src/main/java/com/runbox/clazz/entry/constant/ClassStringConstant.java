@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class ClassStringConstant extends Constant {
 
-    public ClassStringConstant(long offset, ConstantReader reader, short type) {
-        super(offset, reader, type);		
+    public ClassStringConstant(ConstantReader reader, short type) {
+        super(reader, type);		
     }
     
-    public ClassStringConstant(long offset, ConstantReader reader, short type, int index) {
-        super(offset, reader, type); this.index = index;
+    public ClassStringConstant(ConstantReader reader, short type, int index) {
+        super(reader, type); this.index = index;
     }	
 	
     private int index = 0;

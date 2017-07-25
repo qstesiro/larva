@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class LocalTable extends Attribute {
-
-    public LocalTable(long offset, String name) {
-        super(offset, name);
-    }
     
-    public LocalTable(long offset, String name, Variable[] variables) {
-        super(offset, name); this.variables = variables;
+    public LocalTable(String name, Variable[] variables) {
+        super(name); this.variables = variables;
     }
 
     private Variable[] variables = null;

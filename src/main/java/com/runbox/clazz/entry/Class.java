@@ -1,9 +1,8 @@
 package com.runbox.clazz.entry;
 
-public class Class extends Entry {
+public class Class {
 
-    public Class(long offset, int thisClass, int superClass) {
-        super(offset);
+    public Class(int thisClass, int superClass) {
         thisClass = thisClass;
         superClass = superClass;
     }

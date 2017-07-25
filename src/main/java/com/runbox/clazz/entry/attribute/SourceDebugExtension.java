@@ -1,13 +1,9 @@
 package com.runbox.clazz.entry.attribute;
 
 public class SourceDebugExtension extends Attribute {
-
-    public SourceDebugExtension(long offset) {
-        super(offset, "SourceDebugExtension");
-    }
     
-    public SourceDebugExtension(long offset, byte[] data) {
-        super(offset, "SourceDebugExtension"); this.data = data;
+    public SourceDebugExtension(byte[] data) {
+        super("SourceDebugExtension"); this.data = data;
     }
 
     private byte[] data = null;

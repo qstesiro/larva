@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class InnerClasses extends Attribute {
-
-    public InnerClasses(long offset) {
-        super(offset, "InnerClasses");
-    }
     
-    public InnerClasses(long offset, Class[] classes) {
-        super(offset, "InnerClasses"); this.classes = classes;
+    public InnerClasses(Class[] classes) {
+        super("InnerClasses"); this.classes = classes;
     }
 
     public Class[] classes = null;

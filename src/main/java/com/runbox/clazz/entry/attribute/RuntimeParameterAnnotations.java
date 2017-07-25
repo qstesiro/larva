@@ -7,13 +7,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class RuntimeParameterAnnotations extends Annotations {
-
-    public RuntimeParameterAnnotations(long offset, java.lang.String name) {
-        super(offset, name);
-    }
     
-    public RuntimeParameterAnnotations(long offset, java.lang.String name, List<Annotation[]> parameters) {
-        super(offset, name); this.parameters = parameters;
+    public RuntimeParameterAnnotations(java.lang.String name, List<Annotation[]> parameters) {
+        super(name); this.parameters = parameters;
     }
     
     public List<Annotation[]> parameters = null;

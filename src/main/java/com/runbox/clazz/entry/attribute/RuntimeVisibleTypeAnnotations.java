@@ -8,13 +8,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class RuntimeVisibleTypeAnnotations extends Annotations {    
-    
-    public RuntimeVisibleTypeAnnotations(long offset) {
-        super(offset, "RuntimeVisibleTypeAnnotations");
-    }
 
-    public RuntimeVisibleTypeAnnotations(long offset, TypeAnnotation[] annotations) {
-        super(offset, "RuntimeVisibleTypeAnnotations"); this.annotations = annotations;
+    public RuntimeVisibleTypeAnnotations(TypeAnnotation[] annotations) {
+        super("RuntimeVisibleTypeAnnotations"); this.annotations = annotations;
     }
 
     private TypeAnnotation[] annotations = null;

@@ -3,13 +3,9 @@ package com.runbox.clazz.entry.attribute;
 import javax.json.JsonObjectBuilder;
 
 public class ConstantValue extends Attribute {
-
-    public ConstantValue(long offset) {
-        super(offset, "ConstantValue");
-    }
     
-    public ConstantValue(long offset, int index) {
-        super(offset, "ConstantValue"); this.index = index;
+    public ConstantValue(int index) {
+        super("ConstantValue"); this.index = index;
     }
 
     private int index = 0;

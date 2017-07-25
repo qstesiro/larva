@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class StackMapTable extends Attribute {
-
-    public StackMapTable(long offset) {
-        super(offset, "StackMapTable");
-    }
     
-    public StackMapTable(long offset, Frame[] frames) {
-        super(offset, "StackMapTable"); this.frames = frames;        
+    public StackMapTable(Frame[] frames) {
+        super("StackMapTable"); this.frames = frames;        
     }
 
     private Frame[] frames = null;

@@ -4,19 +4,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.runbox.clazz.entry.Entry;
-
-public class Bytecode extends Entry {        
+public class Bytecode {        
 
     public Bytecode(long offset, String name) {
-        super(offset); this.name = name.trim().toLowerCase();
+		this.offset = offset;
+        this.name = name.trim().toLowerCase();
     }	
 	
     public Bytecode(long offset, String name, byte opcode) {
-        super(offset); 
+		this.offset = offset;
 		this.name = name.trim().toLowerCase();
 		this.opcode = opcode; 		
     }       
+
+	private long offset = 0;
+
+	public Bytecode offset(long offset) {
+		this.offset = offset; return this;
+	}
+
+	public long offset() {
+		return offset;
+	}
 
 	private String name = null;
 

@@ -87,14 +87,14 @@ public class AttributeReader extends Reader {
             return loadCode();
         } else if (name.equals("StackMapTable")) {
             // return loadStackMapTable();
-			skip(length); return new Attribute(offset(), "StackMapTable");
+			skip(length); return new Attribute("StackMapTable");
         } else if (name.equals("Exceptions")) {
             return loadExceptions();                    
         } else if (name.equals("InnerClasses")) {
             return loadInnerClasses();
         } else if (name.equals("EnclosingMethod")) {
             // return loadEnclosingMethod();
-			skip(length); return new Attribute(offset(), "EnclosingMethod");
+			skip(length); return new Attribute("EnclosingMethod");
         } else if (name.equals("Synthetic")) {
             return loadSynthetic();
         } else if (name.equals("Signature")) {
@@ -113,28 +113,28 @@ public class AttributeReader extends Reader {
             return loadDeprecated();
         } else if (name.equals("RuntimeVisibleAnnotations")) {
             // return loadRuntimeVisibleAnnotations();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "RuntimeVisibleAnnotations");
+			skip(length);
+			return new Attribute("RuntimeVisibleAnnotations");
         } else if (name.equals("RuntimeInvisibleAnnotations")) {
             // return loadRuntimeInvisibleAnnotations();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "RuntimeInvisibleAnnotations");
+			skip(length);
+			return new Attribute("RuntimeInvisibleAnnotations");
         } else if (name.equals("RuntimeVisibleParameterAnnotations")) {
             // return loadRuntimeVisibleParameterAnnotations();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "RuntimeVisibleParameterAnnotations");
+			skip(length);
+			return new Attribute("RuntimeVisibleParameterAnnotations");
         } else if (name.equals("RuntimeInvisibleParameterAnnotations")) {
             // return loadRuntimeInvisibleParameterAnnotations();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "RuntimeInvisibleParameterAnnotations");
+			skip(length);
+			return new Attribute("RuntimeInvisibleParameterAnnotations");
         } else if (name.equals("RuntimeVisibleTypeAnnotations")) {
             // return loadRuntimeVisibleTypeAnnotations();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "RuntimeVisibleTypeAnnotations");
+			skip(length);
+			return new Attribute("RuntimeVisibleTypeAnnotations");
         } else if (name.equals("AnnotationDefault")) {
             // return loadAnnotationDefault();
-			skip(length); offset(offset() + length);
-			return new Attribute(offset(), "AnnotationDefault");
+			skip(length);
+			return new Attribute("AnnotationDefault");
         } else if (name.equals("BootstrapMethods")) {
             return loadBootstrapMethods();
         } else if (name.equals("MethodParameters")) {
@@ -145,15 +145,13 @@ public class AttributeReader extends Reader {
     }
 
     private ConstantValue loadConstantValue() throws Exception {
-        return new ConstantValue(offset(), readU2());
+        return new ConstantValue(readU2());
     }	
 	
     private Code loadCode() throws Exception {        
-        long offset = offset();
         int stack = readU2();
         int locals = readU2();
         BytecodeReader codes = new BytecodeReader(stream(), (int)readU4(), constants()).load();
-		offset(offset() + codes.length());
         int length = readU2(); Code.Exception[] exceptions = null;
         if (0 < length) {
             exceptions = new Code.Exception[length];
@@ -162,12 +160,10 @@ public class AttributeReader extends Reader {
             }
         }
         AttributeReader attributes = new AttributeReader(stream(), readU2(), constants()).load();
-		offset(offset() + attributes.length());
-        return new Code(offset, stack, locals, codes, exceptions, attributes);
+        return new Code(stack, locals, codes, exceptions, attributes);
     }
     
     private StackMapTable loadStackMapTable() throws Exception {
-        long offset = offset();
         int length = readU2(); StackMapTable.Frame[] frames = null;        
         if (0 < length) {
             frames = new StackMapTable.Frame[length];
@@ -175,7 +171,7 @@ public class AttributeReader extends Reader {
                 frames[i] = loadFrame();            
             }
         }
-        return new StackMapTable(offset, frames);
+        return new StackMapTable(frames);
     }
 
     private StackMapTable.Frame loadFrame() throws Exception {
@@ -231,7 +227,6 @@ public class AttributeReader extends Reader {
     }
     
     private Exceptions loadExceptions() throws Exception {
-        long offset = offset();
         int length = readU2(); int[] tables = null;        
         if (0 < length) {
             tables = new int[length];
@@ -239,11 +234,10 @@ public class AttributeReader extends Reader {
                 tables[i] = readU2();
             }
         }
-        return new Exceptions(offset, tables);
+        return new Exceptions(tables);
     }
 
     private InnerClasses loadInnerClasses() throws Exception {
-        long offset = offset();
         int length = readU2(); InnerClasses.Class[] classes = null;        
         if (0 < length) {
             classes = new InnerClasses.Class[length];
@@ -251,31 +245,30 @@ public class AttributeReader extends Reader {
                 classes[i] = new InnerClasses.Class(new int[] {readU2(), readU2(), readU2(), readU2()});            
             }
         }
-        return new InnerClasses(offset, classes);
+        return new InnerClasses(classes);
     }
 
     private EnclosingMethod loadEnclosingMethod() throws Exception {
-        return new EnclosingMethod(offset(), readU2(), readU2());
+        return new EnclosingMethod(readU2(), readU2());
     }
 
     private Synthetic loadSynthetic() throws Exception {
-        return new Synthetic(offset());
+        return new Synthetic();
     }
 
     private Signature loadSignature() throws Exception {
-        return new Signature(offset(), readU2());
+        return new Signature(readU2());
     }
 
     private SourceFile loadSourceFile() throws Exception {
-        return new SourceFile(offset(), readU2());
+        return new SourceFile(readU2());
     }
 
     private SourceDebugExtension loadSourceDebugExtension(long length) throws Exception {        
-        return new SourceDebugExtension(offset(), read((int)length));
+        return new SourceDebugExtension(read((int)length));
     }
 
     private LineNumberTable loadLineNumberTable() throws Exception {        
-        long offset = offset();
         int length = readU2(); LineNumberTable.LineNumber[] lines = null;        
         if (0 < length) {
             lines = new LineNumberTable.LineNumber[length];
@@ -283,11 +276,10 @@ public class AttributeReader extends Reader {
                 lines[i] = new LineNumberTable.LineNumber(readU2(), readU2());
             }
         }
-        return new LineNumberTable(offset, lines);
+        return new LineNumberTable(lines);
     }
 
     private LocalVariableTable loadLocalVariableTable() throws Exception {
-        long offset = offset();
         int length = readU2(); LocalTable.Variable[] variables = null;        
         if (0 < length) {
             variables = new LocalTable.Variable[length];
@@ -295,11 +287,10 @@ public class AttributeReader extends Reader {
                 variables[i] = new LocalTable.Variable(readU2(), readU2(), readU2(), readU2(), readU2());            
             }
         }
-        return new LocalVariableTable(offset, variables);
+        return new LocalVariableTable(variables);
     }
 
     private LocalVariableTypeTable loadLocalVariableTypeTable() throws Exception {
-        long offset = offset();
         int length = readU2(); LocalTable.Variable[] variables = null;        
         if (0 < length) {
             variables = new LocalTable.Variable[length];
@@ -307,19 +298,19 @@ public class AttributeReader extends Reader {
                 variables[i] = new LocalTable.Variable(readU2(), readU2(), readU2(), readU2(), readU2());            
             }
         }
-        return new LocalVariableTypeTable(offset, variables);
+        return new LocalVariableTypeTable(variables);
     }
 
     private Deprecated loadDeprecated() throws Exception {
-        return new Deprecated(offset());
+        return new Deprecated();
     }
 
     private RuntimeVisibleAnnotations loadRuntimeVisibleAnnotations() throws Exception {        
-        return new RuntimeVisibleAnnotations(offset(), loadAnnotationArray());
+        return new RuntimeVisibleAnnotations(loadAnnotationArray());
     }
 
     private RuntimeInvisibleAnnotations loadRuntimeInvisibleAnnotations() throws Exception {        
-        return new RuntimeInvisibleAnnotations(offset(), loadAnnotationArray());
+        return new RuntimeInvisibleAnnotations(loadAnnotationArray());
     }
 
     private Annotations.Annotation[] loadAnnotationArray() throws Exception {
@@ -334,11 +325,11 @@ public class AttributeReader extends Reader {
     }
 
     private RuntimeVisibleParameterAnnotations loadRuntimeVisibleParameterAnnotations() throws Exception {        
-        return new RuntimeVisibleParameterAnnotations(offset(), loadAnnotationList());                
+        return new RuntimeVisibleParameterAnnotations(loadAnnotationList());                
     }
     
     private RuntimeInvisibleParameterAnnotations loadRuntimeInvisibleParameterAnnotations() throws Exception {        
-        return new RuntimeInvisibleParameterAnnotations(offset(), loadAnnotationList());
+        return new RuntimeInvisibleParameterAnnotations(loadAnnotationList());
     }
 
     private List<Annotations.Annotation[]> loadAnnotationList() throws Exception {
@@ -360,7 +351,6 @@ public class AttributeReader extends Reader {
     }
 
     private RuntimeVisibleTypeAnnotations loadRuntimeVisibleTypeAnnotations() throws Exception {
-        long offset = offset();
         int length = readU2(); Annotations.TypeAnnotation[] annotations = null;        
         if (0 < length) {
             annotations = new Annotations.TypeAnnotation[length];
@@ -368,11 +358,11 @@ public class AttributeReader extends Reader {
                 annotations[i] = loadTypeAnnotation();
             }
         }
-        return new RuntimeVisibleTypeAnnotations(offset, annotations);
+        return new RuntimeVisibleTypeAnnotations(annotations);
     }    
         
     private AnnotationDefault loadAnnotationDefault() throws Exception {
-        return new AnnotationDefault(offset(), loadValue());
+        return new AnnotationDefault(loadValue());
     }    
 
     private Annotations.Annotation loadAnnotation() throws Exception {
@@ -485,7 +475,6 @@ public class AttributeReader extends Reader {
     }
 
     private BootstrapMethods loadBootstrapMethods() throws Exception {
-        long offset = offset();
         int length = readU2(); BootstrapMethods.Method[] methods = null;        
         if (0 < length) {
             methods = new BootstrapMethods.Method[length];
@@ -501,11 +490,10 @@ public class AttributeReader extends Reader {
                 methods[i] = new BootstrapMethods.Method(index, arguments);
             }
         }
-        return new BootstrapMethods(offset, methods);
+        return new BootstrapMethods(methods);
     }
 
     private MethodParameters loadMethodParameters() throws Exception {
-        long offset = offset();
         int length = readU2(); MethodParameters.Parameter[] parameters = null;        
         if (0 < length) {
             parameters = new MethodParameters.Parameter[length];
@@ -513,7 +501,7 @@ public class AttributeReader extends Reader {
                 parameters[i] = new MethodParameters.Parameter(readU2(), readU2());
             }
         }
-        return new MethodParameters(offset, parameters);
+        return new MethodParameters(parameters);
     }
     
     private String toName(int index) throws Exception {

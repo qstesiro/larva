@@ -9,8 +9,8 @@ import javax.json.JsonArrayBuilder;
 
 public class Annotations extends Attribute {
 
-    public Annotations(long offset, java.lang.String name) {
-        super(offset, name);
+    public Annotations(java.lang.String name) {
+        super(name);
     }
 
     public static class Annotation extends Value {

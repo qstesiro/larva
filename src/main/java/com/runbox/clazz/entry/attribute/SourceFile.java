@@ -1,13 +1,9 @@
 package com.runbox.clazz.entry.attribute;
 
 public class SourceFile extends Attribute {
-
-    public SourceFile(long offset) {
-        super(offset, "SourceFile");
-    }
     
-    public SourceFile(long offset, int index) {
-        super(offset, "SourceFile"); this.index = index;
+    public SourceFile(int index) {
+        super("SourceFile"); this.index = index;
     }
 
     private int index = 0;

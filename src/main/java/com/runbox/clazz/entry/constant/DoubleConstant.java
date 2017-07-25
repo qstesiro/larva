@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class DoubleConstant extends Constant {
 
-    public DoubleConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_DOUBLE);
+    public DoubleConstant(ConstantReader reader) {
+        super(reader, TYPE_DOUBLE);
     }
     
-    public DoubleConstant(long offset, ConstantReader reader, double value) {
-        super(offset, reader, TYPE_DOUBLE); this.value = value;
+    public DoubleConstant(ConstantReader reader, double value) {
+        super(reader, TYPE_DOUBLE); this.value = value;
     }
 
     public double value = 0;

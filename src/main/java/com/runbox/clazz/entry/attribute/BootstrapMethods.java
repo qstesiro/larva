@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class BootstrapMethods extends Attribute {
-
-    public BootstrapMethods(long offset) {
-        super(offset, "BootstrapMethods");
-    }
     
-    public BootstrapMethods(long offset, Method[] methods) {
-        super(offset, "BootstrapMethods"); this.methods = methods;
+    public BootstrapMethods(Method[] methods) {
+        super("BootstrapMethods"); this.methods = methods;
     }
 
     private Method[] methods = null;

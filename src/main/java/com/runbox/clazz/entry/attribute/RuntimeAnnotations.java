@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class RuntimeAnnotations extends Annotations {
-
-    public RuntimeAnnotations(long offset, java.lang.String name) {
-        super(offset, name);
-    }
     
-    public RuntimeAnnotations(long offset, java.lang.String name, Annotation[] annotations) {
-        super(offset, name); this.annotations = annotations;
+    public RuntimeAnnotations(java.lang.String name, Annotation[] annotations) {
+        super(name); this.annotations = annotations;
     }
 
     private Annotation[] annotations = null;    

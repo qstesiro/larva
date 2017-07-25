@@ -8,12 +8,12 @@ import javax.json.JsonObjectBuilder;
 
 public class UTF8Constant extends Constant {
 
-    public UTF8Constant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_UTF8);
+    public UTF8Constant(ConstantReader reader) {
+        super(reader, TYPE_UTF8);
     }
     
-    public UTF8Constant(long offset, ConstantReader reader, byte[] data) {
-        super(offset, reader, TYPE_UTF8);
+    public UTF8Constant(ConstantReader reader, byte[] data) {
+        super(reader, TYPE_UTF8);
         this.data = data;
         string = new String(data, Charset.forName("UTF-8"));
     }

@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class MethodHandleConstant extends Constant {
 
-    public MethodHandleConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_METHOD_HANDLE);
+    public MethodHandleConstant(ConstantReader reader) {
+        super(reader, TYPE_METHOD_HANDLE);
     }
     
-    public MethodHandleConstant(long offset, ConstantReader reader, short kind, int index) {
-        super(offset, reader, TYPE_METHOD_HANDLE);
+    public MethodHandleConstant(ConstantReader reader, short kind, int index) {
+        super(reader, TYPE_METHOD_HANDLE);
         this.kind = kind;
         this.index = index;
     }

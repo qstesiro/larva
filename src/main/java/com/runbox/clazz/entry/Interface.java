@@ -1,13 +1,8 @@
 package com.runbox.clazz.entry;
 
-public class Interface extends Entry {
+public class Interface {
 
-    public Interface(long offset) {
-        super(offset);
-    }
-
-    public Interface(long offset, int[] array) {
-        super(offset);
+    public Interface(int[] array) {
         this.array = array;
     }
 

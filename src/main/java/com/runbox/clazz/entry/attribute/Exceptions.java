@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class Exceptions extends Attribute {
-
-    public Exceptions(long offset) {
-        super(offset, "Exceptions");
-    }
     
-    public Exceptions(long offset, int[] tables) {
-        super(offset, "Exceptions"); this.tables = tables;
+    public Exceptions(int[] tables) {
+        super("Exceptions"); this.tables = tables;
     }
 
     private int[] tables = null;

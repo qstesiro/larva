@@ -4,13 +4,9 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
 public class Signature extends Attribute {
-
-    public Signature(long offset) {
-        super(offset, "Signature");
-    }
     
-    public Signature(long offset, int index) {
-        super(offset, "Signature"); this.index = index;
+    public Signature(int index) {
+        super("Signature"); this.index = index;
     }
 
     private int index = 0;

@@ -1,9 +1,8 @@
 package com.runbox.clazz.entry;
 
-public class Version extends Entry {
+public class Version {
 
-    public Version(long offset, int minor, int major) {
-        super(offset);
+    public Version(int minor, int major) {
         this.minor = minor;
         this.major = major;
     }

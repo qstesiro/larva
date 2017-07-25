@@ -36,29 +36,25 @@ public class ClassReader extends Reader {
     @Override
     protected ClassReader load() throws Exception {
         magic = readU4(); 
-        version = new Version(offset(), readU2(), readU2());         
+        version = new Version(readU2(), readU2());         
         constants(new ConstantReader(stream(), readU2()).load());        
         flags = readU2();
-        clazz = new Class(offset(), readU2(), readU2());
+        clazz = new Class(readU2(), readU2());
         interfaces = loadInterfaces();
         fields = new FieldReader(stream(), readU2(), constants()).load();
-		offset(offset() + fields.length());
         methods = new MethodReader(stream(), readU2(), constants()).load();
-		offset(offset() + methods.length());
         attributes = new AttributeReader(stream(), readU2(), constants()).load();
-		offset(offset() + attributes.length());
         return this;
     }                
     
     private Interface loadInterfaces() throws Exception {        
-        long offset = offset();
         int length = readU2(); 
         if (0 < length) {
             int[] array = new int[length];
             for (int i = 0; i < length; ++i)  {
                 array[i] = readU2();
             }
-            return new Interface(offset, array);
+            return new Interface(array);
         }
         return null;
     }    

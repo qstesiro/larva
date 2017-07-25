@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class NameTypeConstant extends Constant {
 
-    public NameTypeConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_NAME_TYPE);
+    public NameTypeConstant(ConstantReader reader) {
+        super(reader, TYPE_NAME_TYPE);
     }
     
-    public NameTypeConstant(long offset, ConstantReader reader, int name, int descriptor) {
-        super(offset, reader, TYPE_NAME_TYPE);
+    public NameTypeConstant(ConstantReader reader, int name, int descriptor) {
+        super(reader, TYPE_NAME_TYPE);
         this.name = name;
         this.descriptor = descriptor;
     }

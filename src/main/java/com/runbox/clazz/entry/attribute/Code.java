@@ -8,14 +8,10 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
-public class Code extends Attribute {    
-
-    public Code(long offset) {
-        super(offset, "Code");
-    }       
+public class Code extends Attribute {        
 		
-	public Code(long offset, int stack, int locals, BytecodeReader bytecodes, Exception[] exceptions, AttributeReader attributes) {
-        super(offset, "Code");
+	public Code(int stack, int locals, BytecodeReader bytecodes, Exception[] exceptions, AttributeReader attributes) {
+        super("Code");
         this.stack = stack;
         this.locals = locals;
 		this.bytecodes = bytecodes;

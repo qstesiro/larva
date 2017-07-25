@@ -3,13 +3,9 @@ package com.runbox.clazz.entry.attribute;
 import javax.json.JsonObjectBuilder;
 
 public class EnclosingMethod extends Attribute {
-
-    public EnclosingMethod(long offset) {
-        super(offset, "EnclosingMethod");
-    }
     
-    public EnclosingMethod(long offset, int clazz, int method) {
-        super(offset, "EnclosingMethod");
+    public EnclosingMethod(int clazz, int method) {
+        super("EnclosingMethod");
         this.clazz = clazz;
         this.method = method;
     }

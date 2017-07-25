@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class LineNumberTable extends Attribute {
-
-    public LineNumberTable(long offset) {
-        super(offset, "LineNumberTable");
-    }
     
-    public LineNumberTable(long offset, LineNumber[] lines) {
-        super(offset, "LineNumberTable"); this.lines = lines;
+    public LineNumberTable(LineNumber[] lines) {
+        super("LineNumberTable"); this.lines = lines;
     }
 
     private LineNumber[] lines = null;

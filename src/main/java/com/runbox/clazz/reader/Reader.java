@@ -28,20 +28,6 @@ public abstract class Reader {
     protected ConstantReader constants() {
         return reader;
     }
-
-	private long offset = 0;
-
-	public void offset(long offset) {
-		this.offset = offset;
-	}
-	
-    public long offset() {
-        return offset;
-    }
-
-	public long length() {
-		return offset;
-	}
     
     protected abstract Reader load() throws Exception;    
 
@@ -51,25 +37,22 @@ public abstract class Reader {
     protected static final int SIZE8 = 8;
 
     protected byte[] read(int size) throws IOException {
-        offset += size;
         byte[] data = new byte[size];
         stream.readFully(data);
         return data;
     }
     
     protected short readU1() throws IOException {
-		offset += SIZE1; return (short)(0x00ff & stream.readByte());
+		return (short)(0x00ff & stream.readByte());
     }
 
     protected int readU2() throws IOException {
-        offset += SIZE2;
         byte[] data = new byte[SIZE2];
         stream().readFully(data);
 		return ((0x0000ff00 & (data[0] << 8)) | (0x000000ff & data[1]));
     }
 
     protected long readU4() throws IOException {
-        offset += SIZE4;
         byte[] data = new byte[SIZE4];
         stream().readFully(data);
 		return ((0x00000000ff000000L & (long)(data[0] << 24)) |
@@ -79,18 +62,16 @@ public abstract class Reader {
     }
 
 	protected byte readS1() throws IOException {        
-		offset += SIZE1; return stream().readByte();
+		return stream().readByte();
 	}
 
 	protected short readS2() throws IOException {
-        offset += SIZE2;
 		byte[] data = new byte[SIZE2];
 		stream().readFully(data);
 		return (short)(data[0] << 8 | (0x000000ff & data[1]));
 	}
 
 	protected int readS4() throws IOException {
-        offset += SIZE4;
 		byte[] data = new byte[SIZE4];
 		stream().readFully(data);
 		return ((data[0] << 24) |
@@ -100,23 +81,23 @@ public abstract class Reader {
 	}
 
     protected int readInt() throws IOException {
-        offset += SIZE4; return stream().readInt();
+        return stream().readInt();
     }
 
     protected long readLong() throws IOException {
-        offset += SIZE8; return stream().readLong();
+        return stream().readLong();
     }
 
     protected float readFloat() throws IOException {
-        offset += SIZE4; return stream().readFloat();
+        return stream().readFloat();
     }
 
     protected double readDouble() throws IOException {
-        offset += SIZE8; return stream().readDouble();
+        return stream().readDouble();
     }
 	
 	protected long skip(long count) throws IOException {
-        offset += count; return stream().skip(count);
+        return stream().skip(count);
 	}
 
 	protected long available() throws IOException {

@@ -5,13 +5,12 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.runbox.clazz.entry.Entry;
 import com.runbox.clazz.reader.ConstantReader;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
-public class Constant extends Entry {
+public class Constant {
 
     public static final short TYPE_UNUSED = 0;
     public static final short TYPE_CLASS = 7;
@@ -29,12 +28,11 @@ public class Constant extends Entry {
     public static final short TYPE_METHOD_TYPE = 16;
     public static final short TYPE_INVOKE_DYNAMIC = 18;
 
-    public Constant(long offset, ConstantReader reader) {
-        super(offset); this.reader = reader;
+    public Constant(ConstantReader reader) {
+        this.reader = reader;
     }
 
-    public Constant(long offset, ConstantReader reader, short type) {
-        super(offset);
+    public Constant(ConstantReader reader, short type) {
 		this.reader = reader;
 		this.type = type;
     }

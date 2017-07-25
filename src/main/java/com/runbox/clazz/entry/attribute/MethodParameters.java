@@ -5,13 +5,9 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 
 public class MethodParameters extends Attribute {
-
-    public MethodParameters(long offset) {
-        super(offset, "MethodParameters");
-    }
     
-    public MethodParameters(long offset, Parameter[] parameters) {
-        super(offset, "MethodParameters"); this.parameters = parameters;
+    public MethodParameters(Parameter[] parameters) {
+        super("MethodParameters"); this.parameters = parameters;
     }
 
     private Parameter[] parameters = null;

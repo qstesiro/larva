@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class LongConstant extends Constant {
 
-    public LongConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_LONG);
+    public LongConstant(ConstantReader reader) {
+        super(reader, TYPE_LONG);
     }
     
-    public LongConstant(long offset, ConstantReader reader, long value) {
-        super(offset, reader, TYPE_LONG); this.value = value;
+    public LongConstant(ConstantReader reader, long value) {
+        super(reader, TYPE_LONG); this.value = value;
     }
 
     private long value = 0;

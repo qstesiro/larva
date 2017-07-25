@@ -4,11 +4,7 @@ import java.util.List;
 
 public class RuntimeInvisibleParameterAnnotations extends RuntimeParameterAnnotations {
 
-    public RuntimeInvisibleParameterAnnotations(long offset) {
-        super(offset, "RuntimeInvisibleParameterAnnotations");
-    }
-    
-    public RuntimeInvisibleParameterAnnotations(long offset, List<Annotations.Annotation[]> parameters) {
-        super(offset, "RuntimeInvisibleParameterAnnotations", parameters);
+    public RuntimeInvisibleParameterAnnotations(List<Annotations.Annotation[]> parameters) {
+        super("RuntimeInvisibleParameterAnnotations", parameters);
     }
 }

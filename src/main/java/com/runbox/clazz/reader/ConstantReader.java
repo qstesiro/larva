@@ -31,7 +31,7 @@ public class ConstantReader extends Reader {
     public ConstantReader(DataInputStream stream, int count) throws Exception { 
         super(stream, null);
 		constants = new Constant[count];
-		constants[0] = new Constant(offset(), this);
+		constants[0] = new Constant(this);
     }
 
     private Constant[] constants = null;
@@ -175,7 +175,7 @@ public class ConstantReader extends Reader {
 				short type = readU1();
 				constants[i] = load(type);
 				if (constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant) {
-					constants[++i] = new Constant(offset(), this);
+					constants[++i] = new Constant(this);
 				}				
 			}		   
 		}
@@ -184,20 +184,20 @@ public class ConstantReader extends Reader {
 	
     private Constant load(short type) throws Exception {
         switch (type) {
-        case Constant.TYPE_CLASS: return new ClassConstant(offset(), this, readU2());
-        case Constant.TYPE_FIELD_REF: return new FieldRefConstant(offset(), this, readU2(), readU2());
-        case Constant.TYPE_METHOD_REF: return new MethodRefConstant(offset(), this, readU2(), readU2());
-        case Constant.TYPE_INTERFACE_METHOD_REF: return new InterfaceMethodRefConstant(offset(), this, readU2(), readU2());
-        case Constant.TYPE_STRING: return new StringConstant(offset(), this, readU2());	
-        case Constant.TYPE_INTEGER: return new IntegerConstant(offset(), this, readInt());
-        case Constant.TYPE_FLOAT: return new FloatConstant(offset(), this, readFloat());
-        case Constant.TYPE_LONG: return new LongConstant(offset(), this, readLong());
-        case Constant.TYPE_DOUBLE: return new DoubleConstant(offset(), this, readDouble());
-        case Constant.TYPE_NAME_TYPE: return new NameTypeConstant(offset(), this, readU2(), readU2());
-        case Constant.TYPE_UTF8: return new UTF8Constant(offset(), this, read(readU2()));
-        case Constant.TYPE_METHOD_HANDLE: return new MethodHandleConstant(offset(), this, readU1(), readU2());
-        case Constant.TYPE_METHOD_TYPE: return new MethodTypeConstant(offset(), this, readU2());
-        case Constant.TYPE_INVOKE_DYNAMIC: return new InvokeDynamicConstant(offset(), this, readU2(), readU2());
+        case Constant.TYPE_CLASS: return new ClassConstant(this, readU2());
+        case Constant.TYPE_FIELD_REF: return new FieldRefConstant(this, readU2(), readU2());
+        case Constant.TYPE_METHOD_REF: return new MethodRefConstant(this, readU2(), readU2());
+        case Constant.TYPE_INTERFACE_METHOD_REF: return new InterfaceMethodRefConstant(this, readU2(), readU2());
+        case Constant.TYPE_STRING: return new StringConstant(this, readU2());	
+        case Constant.TYPE_INTEGER: return new IntegerConstant(this, readInt());
+        case Constant.TYPE_FLOAT: return new FloatConstant(this, readFloat());
+        case Constant.TYPE_LONG: return new LongConstant(this, readLong());
+        case Constant.TYPE_DOUBLE: return new DoubleConstant(this, readDouble());
+        case Constant.TYPE_NAME_TYPE: return new NameTypeConstant(this, readU2(), readU2());
+        case Constant.TYPE_UTF8: return new UTF8Constant(this, read(readU2()));
+        case Constant.TYPE_METHOD_HANDLE: return new MethodHandleConstant(this, readU1(), readU2());
+        case Constant.TYPE_METHOD_TYPE: return new MethodTypeConstant(this, readU2());
+        case Constant.TYPE_INVOKE_DYNAMIC: return new InvokeDynamicConstant(this, readU2(), readU2());
         default: throw new Exception("unknow constant type #" + type);
         }            
     }    

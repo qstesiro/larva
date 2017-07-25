@@ -6,12 +6,12 @@ import javax.json.JsonObjectBuilder;
 
 public class FloatConstant extends Constant {
 
-    public FloatConstant(long offset, ConstantReader reader) {
-        super(offset, reader, TYPE_FLOAT);
+    public FloatConstant(ConstantReader reader) {
+        super(reader, TYPE_FLOAT);
     }
     
-    public FloatConstant(long offset, ConstantReader reader, float value) {
-        super(offset, reader, TYPE_FLOAT); this.value = value;
+    public FloatConstant(ConstantReader reader, float value) {
+        super(reader, TYPE_FLOAT); this.value = value;
     }
 
     public float value = 0;
