@@ -38,9 +38,11 @@ mvn clean compile package <br>
 启动调试器 <br>
 %JAVA_HOME%\java.exe -jar larva-<version>.jar -address 地址:端口 -script "Larva脚本文件"<br>
 样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025(不包含所有依赖的jar,编译生成的lib目录必须与larva-1.0.1.jar在同级目录)<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025<br>
+&emsp;&emsp;&emsp;(不包含所有依赖的jar,编译生成的lib目录必须与larva-1.0.1.jar在同级目录)<br>
 样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1-jar-with-dependencies.jar -address 192.168.1.123:1025(所有依赖的jar)<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1-jar-with-dependencies.jar -address 192.168.1.123:1025<br>
+&emsp;&emsp;&emsp;(所有依赖的jar)<br>
 参数：-address 被调试目标的监听地址包括IP与Port（必须）<br>
 &emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
 
