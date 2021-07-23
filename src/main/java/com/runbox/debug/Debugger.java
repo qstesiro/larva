@@ -162,9 +162,9 @@ public class Debugger implements SignalHandler {
 
     private void prompt() {
         if (null == ContextManager.instance().current()) {
-            System.out.print("0> ");
+            System.out.print("0 > ");
         } else {
-            System.out.print(ContextManager.instance().current().uniqueID() + "> ");
+            System.out.print(ContextManager.instance().current().uniqueID() + " > ");
         }
     }
 

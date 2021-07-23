@@ -15,16 +15,17 @@ Larva是一个基于命令行调试器，使用Java语言编写，它可以调�
 如果你喜欢在命令行下工作或是调试程序，但是主要的工作平台是windows系统的话，我个人强烈建议你使用以下软件<br>
 Online documentation: https://conemu.github.io/en/TableOfContents.html<br>
 这个软件我用了有几年了，现在的功能已经比较稳定了，平时我在工作与学习时都使用它，强烈推荐<br>
-如果再结合EMACS的终端模式，不管是windows平台还是linux简直是，我只能说我保证不哭（^V^）<br>
+如果再结合EMACS的终端模式，不管是windows平台还是方便,如果是Linux平台还是直接使用EMACS（^V^）<br>
 
 ## 编译程序
 第一步：编译Larva需要提前配制好Java环境（需要1.8版本）与Maven环境（3.0版本）<br>
-第二步：安装tools.jar到Maven，安装这个主要是为了后续打成可执行Jar的Lib目录中会拷贝tools.jar<br>
-mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.8 -Dfile=%JAVA_HOME%\lib\tools.jar -Dpackaging=jar<br>
+第二步：安装tools.jar(JDK9被移除所以较高jdk版本如何编译还没有找到办法)到Maven，安装这个主要是为了后续打成可执行Jar的Lib目录中会拷贝tools.jar<br>
+mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.8 -Dfile=${JAVA_HOME}/lib/tools.jar -Dpackaging=jar (linux)<br>
+mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.8 -Dfile=%JAVA_HOME%\lib\tools.jar -Dpackaging=jar (windows)<br>
 其中%JAVA_HOME%替换成具体的安装路径<br>
 第三步：进入Larva目录下，使用Maven编译、打包程序，生成可执行Jar包；<br>
 mvn clean compile package <br>
-成功后会在target目录下生成lib目录（包含所有依赖的Jar包）与larva-1.0.1.jar
+成功后会在target目录下生成lib目录（包含所有依赖的Jar包）与larva-1.0.1.jar(也可以修改pom.xml打包一个包含所有依赖的jar)
 
 ## 启动调试
 当前调试器只支持通过网络附着目标程序，首先启动被调试的程序，再启动调试器<br>
@@ -37,7 +38,9 @@ mvn clean compile package <br>
 启动调试器 <br>
 %JAVA_HOME%\java.exe -jar larva-<version>.jar -address 地址:端口 -script "Larva脚本文件"<br>
 样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025(不包含所有依赖的jar)<br>
+样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1-jar-with-dependencies.jar -address 192.168.1.123:1025(所有依赖的jar)<br>
 参数：-address 被调试目标的监听地址包括IP与Port（必须）<br>
 &emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
 
