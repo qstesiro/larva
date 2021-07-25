@@ -19,7 +19,7 @@ Online documentation: https://conemu.github.io/en/TableOfContents.html<br>
 
 ## 编译程序
 第一步：编译Larva需要提前配制好Java环境（需要1.8版本）与Maven环境（3.0版本）<br>
-第二步：安装tools.jar(JDK9被移除所以较高jdk版本如何编译还没有找到办法)到Maven，安装这个主要是为了后续打成可执行Jar的Lib目录中会拷贝tools.jar<br>
+第二步：安装tools.jar到Maven，安装这个主要是为了后续打成可执行Jar的Lib目录中会拷贝tools.jar (jdk8需要且需要将pom.xml文件中被注释的依赖放开,>jdk8不需要执行此步骤直接执行第三步) <br>
 mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.8 -Dfile=${JAVA_HOME}/lib/tools.jar -Dpackaging=jar (linux)<br>
 mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.8 -Dfile=%JAVA_HOME%\lib\tools.jar -Dpackaging=jar (windows)<br>
 其中%JAVA_HOME%替换成具体的安装路径<br>
@@ -41,7 +41,7 @@ mvn clean compile package <br>
 &emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address 192.168.1.123:1025<br>
 &emsp;&emsp;&emsp;(不包含所有依赖的jar,编译生成的lib目录必须与larva-1.0.1.jar在同级目录)<br>
 样例：%JAVA_HOME%\java.exe -jar larva-1.0.1.jar -address localhost:1025 -script D:\demo\debug.jdb<br>
-&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1-jar-with-dependencies.jar -address 192.168.1.123:1025<br>
+&emsp;&emsp;&emsp;%JAVA_HOME%\java.exe -jar larva-1.0.1-final.jar -address 192.168.1.123:1025<br>
 &emsp;&emsp;&emsp;(所有依赖的jar)<br>
 参数：-address 被调试目标的监听地址包括IP与Port（必须）<br>
 &emsp;&emsp;&emsp;-script 自定义的调试脚本（可选）
