@@ -12,12 +12,12 @@ java -classpath ./target/classes com.runbox.Main -address localhost:1025
 # maven未安装tools.jar
 # https://blog.csdn.net/LovePluto/article/details/79403414
 java -Djava.ext.dirs=${JAVA_HOME}/lib::${JAVA_HOME}/lib/ext \
-     -jar ~/github.com/qstesiro/larva/target/larva-1.5.10-jar-with-dependencies.jar \
+     -jar ~/github.com/qstesiro/larva/target/larva-1.5.10-final.jar \
           -address localhost:1025 \
           -script .dbg/java-demo.jdb
 
 # maven已安装tools.jar
-java -jar ~/github.com/qstesiro/larva/target/larva-1.5.10-jar-with-dependencies.jar \
+java -jar ~/github.com/qstesiro/larva/target/larva-1.5.10-final.jar \
           -address localhost:1025 \
           -script .dbg/java-demo.jdb
 
